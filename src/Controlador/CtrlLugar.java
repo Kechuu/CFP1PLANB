@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import modelo.Lugar;
 
 /**
  *
@@ -20,14 +21,15 @@ public class CtrlLugar {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(Lugar lugar){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO lugar (nombre, nivel, de) VALUES (?,?,?)");
         
-            ps.setString(1, "");
-            ps.setString(2, "");
-            ps.setString(3, "");
+            ps.setString(1, lugar.getNombre());
+            ps.setInt(2, lugar.getNivel());
+            //validar la dependencia
+            ps.setInt(3, lugar.getDe().getIdLugar());
             
             int res = ps.executeUpdate();
             con.close();
@@ -84,23 +86,58 @@ public class CtrlLugar {
         }
     }
     
-    public void leer(){
+    public Lugar leer(int id){
+        Lugar lugar = new Lugar();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE idLugar = ?");
             
-            ps.setString(1,"");
+            ps.setInt(1, id);
             rs = ps.executeQuery();
             
             if(rs.next()){
-                //Cargar Caja de texto y combo box
+                lugar.setNombre("nombre");
+                lugar.setNivel(Integer.parseInt("nivel"));
+                lugar.setDe(leer(rs.getInt("de")));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
-            
+            rs.close();
             con.close();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
+        return lugar;
     }
+    
+    public Lugar leer(String nombre, int nivel){
+        Lugar lugar = new Lugar();
+        
+        try {
+            con = clases.Conectar.conexion();
+            
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE nombre = ? AND nivel = ?");
+            
+            ps.setString(1, nombre);
+            ps.setInt(2, nivel);
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                lugar.setNombre("nombre");
+                lugar.setNivel(Integer.parseInt("nivel"));
+                lugar.setDe(leer(rs.getInt("de")));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            rs.close();
+            con.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        
+        return lugar;
+    }
+    
+    //Leer todas las localidades, barrios, calles etc :v
 }

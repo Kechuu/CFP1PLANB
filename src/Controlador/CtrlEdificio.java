@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import modelo.Edificio;
 
 /**
  *
@@ -83,16 +84,20 @@ public class CtrlEdificio {
         }
     }
     
-    public void leer(){
+    public Edificio leer(int id){
+        Edificio edificio = new Edificio();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM edificio WHERE idEdificio = ?");
             
-            ps.setString(1,"");
+            ps.setInt(1,id);
             rs = ps.executeQuery();
             
             if(rs.next()){
-                //Cargar Caja de texto y combo box
+                edificio.setIdEdificio(rs.getInt("idEdificio"));
+                edificio.setDepto(rs.getInt("depto"));
+                edificio.setPiso(rs.getInt("piso"));
+                edificio.setTorre(rs.getInt("torre"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -101,5 +106,6 @@ public class CtrlEdificio {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
+        return edificio;
     }
 }

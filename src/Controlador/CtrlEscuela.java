@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-
+import modelo.Escuela;
 /**
  *
  * @author jesus
@@ -69,7 +69,8 @@ public class CtrlEscuela {
         }
     }
     
-    public void leer(){
+    public Escuela leer(int id){
+        Escuela escuela = new Escuela();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM escuela");
@@ -77,7 +78,13 @@ public class CtrlEscuela {
             rs = ps.executeQuery();
             
             if(rs.next()){
-                //Cargar Caja de texto y combo box
+                escuela.setNombreEscuela(rs.getString("nombreEscuela"));
+                escuela.setDireccion(rs.getString("direccion"));
+                escuela.setTelefono(rs.getString("telefono"));
+                escuela.setCorreo(rs.getString("correo"));
+                escuela.setDirector(rs.getString("director"));
+                escuela.setLogo(rs.getBlob("logo"));
+                escuela.setFondo(rs.getBlob("fondo"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -86,5 +93,6 @@ public class CtrlEscuela {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
+        return escuela;
     }
 }

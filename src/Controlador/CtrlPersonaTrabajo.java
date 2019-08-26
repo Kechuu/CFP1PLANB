@@ -5,11 +5,20 @@
  */
 package Controlador;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import modelo.PersonaTrabajo;
 /**
  *
  * @author jesus
  */
 public class CtrlPersonaTrabajo {
+    
+    Connection con = null;
+    PreparedStatement ps;
+    ResultSet rs;
     
     public void crear(){
         
@@ -23,7 +32,29 @@ public class CtrlPersonaTrabajo {
         
     }
     
-    public void leer(){
+    public PersonaTrabajo leer(int id){
+        PersonaTrabajo personaTrabajo = new PersonaTrabajo();
+        CtrlTrabajo ctrlTrabajo = new CtrlTrabajo();
+        CtrlPersona ctrlPersona = new CtrlPersona();
         
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoAlumno WHERE idCursoAlumno = ?");
+            
+            ps.setInt(1, id);
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                personaTrabajo.setIdTrabajo(ctrlTrabajo.leer(rs.getInt("idTrabajo")));
+                personaTrabajo.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        return personaTrabajo;
     }
 }

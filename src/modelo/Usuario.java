@@ -13,7 +13,7 @@ public class Usuario {
     
     private int idUsuario;
     private String pass;
-    private Jerarquia idJerarquia;
+    private int jerarquia;
     private Persona idPersona;
 
     public int getIdUsuario() {
@@ -32,12 +32,12 @@ public class Usuario {
         this.pass = pass;
     }
 
-    public Jerarquia getIdJerarquia() {
-        return idJerarquia;
+    public int getJerarquia() {
+        return jerarquia;
     }
 
-    public void setIdJerarquia(Jerarquia idJerarquia) {
-        this.idJerarquia = idJerarquia;
+    public void setJerarquia(int jerarquia) {
+        this.jerarquia = jerarquia;
     }
 
     public Persona getIdPersona() {

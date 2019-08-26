@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-
+import modelo.MotivoBaja;
 /**
  *
  * @author jesus
@@ -80,16 +80,17 @@ public class CtrlMotivoBaja {
         }
     }
     
-    public void leer(){
+    public MotivoBaja leer(int id){
+        MotivoBaja motivoBaja = new MotivoBaja();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM motivoBaja WHERE idMotivoBaja = ?");
             
-            ps.setString(1,"");
+            ps.setInt (1, id);
             rs = ps.executeQuery();
             
             if(rs.next()){
-                //Cargar Caja de texto y combo box
+                motivoBaja.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -98,5 +99,6 @@ public class CtrlMotivoBaja {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
+        return motivoBaja;
     }
 }

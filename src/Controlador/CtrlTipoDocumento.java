@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-
+import modelo.TipoDocumento;
 /**
  *
  * @author jesus
@@ -80,16 +80,17 @@ public class CtrlTipoDocumento {
         }
     }
     
-    public void leer(){
+    public TipoDocumento leer(int id){
+        TipoDocumento tipoDocumento = new TipoDocumento();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM tipoDocumento WHERE idTipoDocumento = ?");
             
-            ps.setString(1,"");
+            ps.setInt(1, id);
             rs = ps.executeQuery();
             
             if(rs.next()){
-                //Cargar Caja de texto y combo box
+                tipoDocumento.setDetalle("detalle");
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -98,5 +99,6 @@ public class CtrlTipoDocumento {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
+        return tipoDocumento;
     }
 }

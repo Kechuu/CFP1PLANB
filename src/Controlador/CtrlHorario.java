@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-
+import modelo.Horario;
 /**
  *
  * @author jesus
@@ -84,16 +84,19 @@ public class CtrlHorario {
         }
     }
     
-    public void leer(){
+    public Horario leer(int id){
+        Horario horario = new Horario();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM horario WHERE idHorario = ?");
             
-            ps.setString(1,"");
+            ps.setInt(1, id);
             rs = ps.executeQuery();
             
             if(rs.next()){
-                //Cargar Caja de texto y combo box
+                horario.setDesde(rs.getDate("desde"));
+                horario.setHasta(rs.getDate("hasta"));
+                horario.setDia(rs.getInt("dia"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -102,5 +105,6 @@ public class CtrlHorario {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
+        return horario;
     }
 }

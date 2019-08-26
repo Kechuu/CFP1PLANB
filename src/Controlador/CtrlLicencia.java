@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-
+import modelo.Licencia;
 /**
  *
  * @author jesus
@@ -82,16 +82,18 @@ public class CtrlLicencia {
         }
     }
     
-    public void leer(){
+    public Licencia leer(int id){
+        Licencia licencia = new Licencia();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM licencia WHERE idLicencia = ?");
             
-            ps.setString(1,"");
+            ps.setInt(1, id);
             rs = ps.executeQuery();
             
             if(rs.next()){
-                //Cargar Caja de texto y combo box
+                licencia.setArticulo(rs.getInt("articulo"));
+                licencia.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -100,5 +102,6 @@ public class CtrlLicencia {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
+        return licencia;
     }
 }
