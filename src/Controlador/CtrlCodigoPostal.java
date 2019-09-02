@@ -19,13 +19,13 @@ public class CtrlCodigoPostal {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(int idLocalidad, int idCodigoPostal){
+    public void crear(int idLocalidad, String codigoPostal){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO codigoPostal (localidad,codigoPostal) VALUES (?,?)");
             
             ps.setInt(1, idLocalidad);
-            ps.setInt(2, idCodigoPostal);
+            ps.setString(2, codigoPostal);
             
             int res = ps.executeUpdate();
             con.close();
@@ -35,13 +35,13 @@ public class CtrlCodigoPostal {
         }
     }
     
-    public void editar(int idLocalidad, int idCodigoPostal){
+    public void editar(int idLocalidad, String codigoPostal){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("UPDATE codigoPostal SET codigoPostal = ? WHERE idCodigoPostal = ?");
             
             ps.setInt(1, idLocalidad);
-            ps.setInt(2, idCodigoPostal);
+            ps.setString(2, codigoPostal);
             
             int res = ps.executeUpdate();
             

@@ -20,16 +20,43 @@ public class CtrlEmpleadoCargo {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(int idCargo, int idEmpleado){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO empleadoCargo (idCargo,idEmpleado) VALUES (?,?)");
         
+            ps.setInt(1, idCargo);
+            ps.setInt(2, idEmpleado);
+            
+            int res = ps.executeUpdate();
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
-    public void editar(){
+    public void modificarCargo(int idEmpleadoCargo, int idCargo, int idEmpleado){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("UPDATE empleadoCargo SET idCargo = ? WHERE idEmpleadoCargo = ? AND idEmpleado = ? ");
         
-    }
-    
-    public void borrar(){
-        
+            ps.setInt(1, idCargo);
+            ps.setInt(2, idEmpleadoCargo);
+            ps.setInt(3, idEmpleado);
+             int res = ps.executeUpdate();
+            
+            if(res > 0){
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
     public EmpleadoCargo leer(int id){

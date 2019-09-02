@@ -42,13 +42,13 @@ public class CtrlAcciones {
     }
     
     
-    public void actualizar(Acciones acciones){
+    public void cerrarSesion(int idEmpleado, Date hasta){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE acciones SET hasta = ? WHERE idAcciones = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE acciones SET hasta = ? WHERE idEmpleado = ?");
             
-            ps.setDate(1, acciones.getHasta());
-            ps.setInt(2, acciones.getIdConexion());
+            ps.setDate(1, hasta);
+            ps.setInt(2, idEmpleado);
             
             int res = ps.executeUpdate();
             

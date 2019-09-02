@@ -72,6 +72,7 @@ public class CtrlAlumno {
             
             if(rs.next()){
                 alumno.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
+                alumno.setBorrado(rs.getBoolean("borrado"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }

@@ -21,16 +21,58 @@ public class CtrlDomicilio {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(int nro, String telefono, int idCalle, int idEdificio){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO domicilio (nro,telefono,idLugar,idEdificio) VALUES (?,?,?,?)");
+            
+            ps.setInt(1, nro);
+            ps.setString(2, telefono);
+            ps.setInt(3, idCalle);
+            ps.setInt(4, idEdificio);
+            
+            int res = ps.executeUpdate();
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+    }
+    
+    public void cambiarAgregarTelefono(int idDomicilio, String telefono){
+
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("UPDATE domicilio SET telefono = ? WHERE idDomicilio = ?");
+            
+            ps.setString(1, telefono);
+            ps.setInt(2, idDomicilio);
+            
+            int res = ps.executeUpdate();
+            con.close();
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
         
     }
     
-    public void editar(){
-        
-    }
-    
-    public void borrar(){
-        
+    public void cambiarDomicilio(int idDomicilio, int nro, String telefono, int idCalle, int idEdificio){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("UPDATE domicilio SET nro = ?, telefono = ?, idLugar = ?,"
+                    + "idEdificio = ? WHERE idDomicilio = ?");
+            
+            ps.setInt(1, nro);
+            ps.setString(2, telefono);
+            ps.setInt(3, idCalle);
+            ps.setInt(4, idEdificio);
+            ps.setInt(5, idDomicilio);
+            
+            int res = ps.executeUpdate();
+            con.close();
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
     public Domicilio leer(int id){
@@ -51,8 +93,8 @@ public class CtrlDomicilio {
                 domicilio.setIdDomicilio(rs.getInt("idDomicilio"));
                 domicilio.setNro(rs.getInt("nro"));
                 domicilio.setTelefono(rs.getString("telefono"));
-                lugar = ctrlLugar.leer(rs.getInt("idLugar"));
-                edificio = ctrlEdificio.leer(rs.getInt("idEdificio"));
+                domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar")));
+                domicilio.setIdEdificio(rs.getInt("idEdificio"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }

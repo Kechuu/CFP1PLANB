@@ -20,14 +20,14 @@ public class CtrlEdificio {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(int torre, int piso, int depto){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO edificio (torre,piso,depto) VALUES (?,?,?)");
         
-            ps.setString(1, "");
-            ps.setString(2, "");
-            ps.setString(3, "");
+            ps.setInt(1, torre);
+            ps.setInt(2, piso);
+            ps.setInt(3, depto);
             
             int res = ps.executeUpdate();
             con.close();
@@ -37,37 +37,15 @@ public class CtrlEdificio {
         }
     }
     
-    public void editar(){
+    public void editar(int torre, int piso, int depto, int idEdificio){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE cargo SET torre = ?,piso = ? ,depto = ? WHERE idEdificio = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE edificio SET torre = ?,piso = ? ,depto = ? WHERE idEdificio = ?");
             
-            ps.setString(1, "");
-            ps.setString(2, "");
-            ps.setString(3, "");
-            ps.setString(4, "");
-            
-            int res = ps.executeUpdate();
-            
-            if(res > 0){
-                //Nada de Nada :v
-            }else{
-                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
-            }
-            
-            con.close();
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
-        }
-    }
-    
-    public void borrar(){
-        try {
-            con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE edificio SET borrado = TRUE WHERE idEdificio = ?");
-            
-            ps.setString(1, "");
+            ps.setInt(1, torre);
+            ps.setInt(2, piso);
+            ps.setInt(3, depto);
+            ps.setInt(4, idEdificio);
             
             int res = ps.executeUpdate();
             

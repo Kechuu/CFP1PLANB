@@ -5,13 +5,11 @@
  */
 package Controlador;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import modelo.Empleado;
-import modelo.Persona;
-import modelo.EstadoEmpleado;
-import modelo.Gremio;
 /**
  *
  * @author jesus
@@ -22,16 +20,77 @@ public class CtrlEmpleado {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(Date fechaIngreso, int idPersona, int idEstadoEmpleado, int idGremio, boolean borrado){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO empleado (fechaIngreso,idPersona,idEstadoEmpleado,"
+                    + "idGremio,borrado) VALUES (?,?,?,?,?)");
         
+            ps.setDate(1, fechaIngreso);
+            ps.setInt(2, idPersona);
+            ps.setInt(3, idEstadoEmpleado);
+            ps.setInt(4, idGremio);
+            ps.setBoolean(5, borrado);
+            
+            int res = ps.executeUpdate();
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
-    public void editar(){
-        
+    public void darDeBaja(Date fechaBaja, int idPersona, boolean borrado, int idEstadoEmpleado, int idEmpleado){
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE empleado SET fechaBaja = ?, borrado = ?, idEstadoEmpleado = ?"
+                    + " WHERE idEmpleado = ? AND idPersona = ?");
+            
+            ps.setDate(1, fechaBaja);
+            ps.setBoolean(2, borrado);
+            ps.setInt(3, idEstadoEmpleado);
+            ps.setInt(4, idEmpleado);
+            ps.setInt(5, idPersona);
+            
+            int res = ps.executeUpdate();
+            
+            if(res > 0){
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
-    public void borrar(){
-        
+    public void modificar(int idEmpleado, int idPersona, int idEstadoEmpleado, int idGremio){
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE empleado SET idEstadoEmpleado = ?, idGremio = ? "
+                    + " WHERE idEmpleado = ? AND idPersona = ?");
+            
+            ps.setInt(1, idEstadoEmpleado);
+            ps.setInt(2, idGremio);
+            ps.setInt(3, idEmpleado);
+            ps.setInt(4, idPersona);
+            
+            int res = ps.executeUpdate();
+            
+            if(res > 0){
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
     public Empleado leer(int id){

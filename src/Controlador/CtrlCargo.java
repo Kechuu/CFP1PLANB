@@ -20,12 +20,12 @@ public class CtrlCargo {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(String detalle){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO cargo (detalle) VALUES (?)");
         
-            ps.setString(1, "");
+            ps.setString(1, detalle);
             
             int res = ps.executeUpdate();
             con.close();
@@ -35,13 +35,13 @@ public class CtrlCargo {
         }
     }
     
-    public void editar(){
+    public void editar(int idCargo, String detalle){
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE cargo SET detalle = ? WHERE idCargo = ?");
             
-            ps.setString(1, "");
-            ps.setString(2, "");
+            ps.setString(1, detalle);
+            ps.setInt(2, idCargo);
             
             int res = ps.executeUpdate();
             
@@ -57,7 +57,7 @@ public class CtrlCargo {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
     }
-    
+    /*
     public void borrar(){
         try {
             con = clases.Conectar.conexion();
@@ -79,6 +79,8 @@ public class CtrlCargo {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
     }
+    */
+    
     
     public Cargo leer(int id){
         Cargo cargo = new Cargo();

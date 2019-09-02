@@ -15,7 +15,7 @@ public class Domicilio {
     private int nro;
     private String telefono;
     private Lugar idLugar;
-    private Edificio idEdificio;
+    private int idEdificio;
 
     public int getIdDomicilio() {
         return idDomicilio;
@@ -49,11 +49,11 @@ public class Domicilio {
         this.idLugar = idLugar;
     }
 
-    public Edificio getIdEdificio() {
+    public int getIdEdificio() {
         return idEdificio;
     }
 
-    public void setIdEdificio(Edificio idEdificio) {
+    public void setIdEdificio(int idEdificio) {
         this.idEdificio = idEdificio;
     }
     

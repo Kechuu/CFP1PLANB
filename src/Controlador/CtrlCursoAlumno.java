@@ -6,6 +6,7 @@
 package Controlador;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -20,16 +21,64 @@ public class CtrlCursoAlumno {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(float saldo, Date fechaIngreso, int idAlumno, int idEstadoAlumno, int idCurso,
+            int idMotivoBaja){
+        
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO cursoAlumno (saldo,fechaIngreso,"
+                    + "idAlumno,idEstadoAlumno,idCurso,idMotivoBaja) VALUES (?,?,?,?,?,?)");
+            
+            ps.setFloat(1, saldo);
+            ps.setDate(2, fechaIngreso);
+            ps.setInt(3, idAlumno);
+            ps.setInt(4, idEstadoAlumno);
+            ps.setInt(5, idCurso);
+            ps.setInt(6, idMotivoBaja);
+            
+            int res = ps.executeUpdate();
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
         
     }
     
-    public void editar(){
-        
+    public void alumnoBajaEgresado(int idAlumno,int idCurso, int idMotivoBaja,int idEstadoAlumno, Date fechaBajaEgreso){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoAlumno SET fechaBaja-Egreso = ?, idMotivoBaja = ?, idEstadoAlumno = ? WHERE idAlumno = ? AND idCurso = ?");
+            
+            ps.setDate(1, fechaBajaEgreso);
+            ps.setInt(2, idMotivoBaja);
+            ps.setInt(3, idEstadoAlumno);
+            ps.setInt(4, idAlumno);
+            ps.setInt(5, idCurso);
+            
+            int res = ps.executeUpdate();
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
-    public void borrar(){
-        
+    public void pagarSaldo(int idAlumno,int idCurso, float saldo){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoAlumno SET saldo = ? WHERE idAlumno = ? AND idCurso = ?");
+            
+            ps.setFloat(1, saldo);
+            ps.setInt(2, idAlumno);
+            ps.setInt(3, idCurso);
+            
+            int res = ps.executeUpdate();
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
     public CursoAlumno leer(int id){

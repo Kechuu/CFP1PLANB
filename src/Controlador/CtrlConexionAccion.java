@@ -21,14 +21,14 @@ public class CtrlConexionAccion {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(ConexionAcciones accion, String motivo){
+    public void crear(int idEmpleado, String detalle, Date fecha){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO conexionAccion (idEmpleado,detalle,fecha) VALUES (?,?,?)");
             
-            ps.setInt(1, accion.getIdEmpleado().getIdEmpleado());
-            ps.setString(2, motivo);
-            ps.setDate(3, accion.getFecha());
+            ps.setInt(1, idEmpleado);
+            ps.setString(2, detalle);
+            ps.setDate(3, fecha);
             
             int res = ps.executeUpdate();
             

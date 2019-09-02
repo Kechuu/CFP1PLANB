@@ -20,16 +20,90 @@ public class CtrlCursoHora {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
-        
+    public void crear(int idHorario, int idCurso){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO cursoHora (idHorario,idCurso) VALUES (?,?)");
+            
+            ps.setInt(1, idHorario);
+            ps.setInt(2, idCurso);
+            
+            int res = ps.executeUpdate();
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
-    public void editar(){
-        
+    public void modificarHorario(int idHorario, int idCursoHora){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoHora SET idHorario = ? WHERE idCursoHora = ?");
+            
+            ps.setInt(1, idHorario);
+            ps.setInt(2, idCursoHora);
+            
+            int res = ps.executeUpdate();
+            
+            if (res > 0) {
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
-    public void borrar(){
-        
+    public void modificarCurso(int idCurso, int idCursoHora){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoHora SET idCurso = ? WHERE idCursoHora = ?");
+            
+            ps.setInt(1, idCurso);
+            ps.setInt(2, idCursoHora);
+            
+            int res = ps.executeUpdate();
+            
+            if (res > 0) {
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+    }
+    
+    public void modificarCursoHora(int idHorario, int idCurso, int idCursoHora){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoHora SET idHorario = ?, idCurso = ? WHERE idCursoHora = ?");
+            
+            ps.setInt(1, idHorario);
+            ps.setInt(2, idCurso);
+            ps.setInt(3, idCursoHora);
+            
+            int res = ps.executeUpdate();
+            
+            if (res > 0) {
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
     public CursoHora leer(int id){
