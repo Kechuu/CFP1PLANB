@@ -38,13 +38,6 @@ public class CtrlConexionAccion {
         }
     }
     
-    public void editar(){
-    }
-    
-    public void borrar(){
-    }
-    
-    
     public ConexionAcciones leerTodoHistorialPersonal(int idEmpleado){
         ConexionAcciones accion = new ConexionAcciones();
         CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();

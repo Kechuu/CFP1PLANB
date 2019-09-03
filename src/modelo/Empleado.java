@@ -16,7 +16,6 @@ public class Empleado {
     private int idEmpleado;
     private Date fechaIngreso;
     private Date fechaBaja;
-    private String legajo;
     private Persona idPersona;
     private EstadoEmpleado idEstadoEmpleado;
     private Gremio idGremio;
@@ -44,14 +43,6 @@ public class Empleado {
 
     public void setFechaBaja(Date fechaBaja) {
         this.fechaBaja = fechaBaja;
-    }
-
-    public String getLegajo() {
-        return legajo;
-    }
-
-    public void setLegajo(String legajo) {
-        this.legajo = legajo;
     }
 
     public Persona getIdPersona() {

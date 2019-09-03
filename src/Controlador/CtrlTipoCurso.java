@@ -61,6 +61,7 @@ public class CtrlTipoCurso {
         }
     }
     
+    //Preguntar si la ara aprueba este cambio :v
     public void borrar(int idTipoCurso){
         try {
             con = clases.Conectar.conexion();
@@ -83,14 +84,14 @@ public class CtrlTipoCurso {
         }
     }
     
-    public TipoCurso leer(int id){
+    public TipoCurso leer(int idTipoCurso){
         TipoCurso tipoCurso = new TipoCurso();
         CtrlPeriodo ctrlPeriodo = new CtrlPeriodo();
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("SELECT * FROM tipoCurso WHERE idTipoCurso = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idTipoCurso);
             rs = ps.executeQuery();
             
             if (rs.next()) {

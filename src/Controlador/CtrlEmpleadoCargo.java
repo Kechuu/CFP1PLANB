@@ -44,6 +44,7 @@ public class CtrlEmpleadoCargo {
             ps.setInt(1, idCargo);
             ps.setInt(2, idEmpleadoCargo);
             ps.setInt(3, idEmpleado);
+            
              int res = ps.executeUpdate();
             
             if(res > 0){
@@ -59,7 +60,7 @@ public class CtrlEmpleadoCargo {
         }
     }
     
-    public EmpleadoCargo leer(int id){
+    public EmpleadoCargo leer(int idEmpleadoCargo){
         EmpleadoCargo empleadoCargo = new EmpleadoCargo();
         CtrlCargo ctrlCargo = new CtrlCargo();
         CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
@@ -68,7 +69,7 @@ public class CtrlEmpleadoCargo {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM empleadoCargo WHERE idEmpleadoCargo = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idEmpleadoCargo);
             
             rs = ps.executeQuery();
             

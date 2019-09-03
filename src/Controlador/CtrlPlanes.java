@@ -20,13 +20,13 @@ public class CtrlPlanes {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(String detalle, boolean borrado){
+    public void crear(String detalle){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO planes (detalle,borrado) VALUES (?,?)");
         
             ps.setString(1, detalle);
-            ps.setBoolean(2, borrado);
+            ps.setBoolean(2, false);
             
             int res = ps.executeUpdate();
             con.close();
@@ -81,13 +81,13 @@ public class CtrlPlanes {
         }
     }
     
-    public Planes leer(int id){
+    public Planes leer(int idPlanes){
         Planes planes = new Planes();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM planes WHERE idPlanes = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idPlanes);
             rs = ps.executeQuery();
             
             if(rs.next()){

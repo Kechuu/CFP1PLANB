@@ -65,14 +65,14 @@ public class CtrlAcciones {
         }
     }
     
-    public Acciones leer(int id){
+    public Acciones leer(int idAcciones){
         Acciones acciones = new Acciones();
         CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM acciones WHERE idAcciones = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idAcciones);
             rs = ps.executeQuery();
             
             if(rs.next()){

@@ -58,13 +58,13 @@ public class CtrlLugarCurso {
         }
     }
     
-    public LugarCurso leer(int id){
+    public LugarCurso leer(int idLugarCurso){
         LugarCurso lugarCurso = new LugarCurso();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM lugarCurso WHERE idLugarCurso = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idLugarCurso);
             rs = ps.executeQuery();
             
             if(rs.next()){

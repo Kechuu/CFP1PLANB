@@ -58,13 +58,13 @@ public class CtrlGremio {
         }
     }
     
-    public Gremio leer(int id){
+    public Gremio leer(int idGremio){
         Gremio gremio = new Gremio();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM gremio WHERE idGremio = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idGremio);
             rs = ps.executeQuery();
             
             if(rs.next()){

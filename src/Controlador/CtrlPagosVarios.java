@@ -24,7 +24,8 @@ public class CtrlPagosVarios {
     public void crear(Date fecha, String detalle, float importe, int idEmpleado, int idAlumno){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO pagosVarios (fecha,detalle,importe,idEmpleado,idAlumno) VALUES (?,?,?,?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO pagosVarios (fecha,detalle,importe,idEmpleado,idAlumno) "
+                    + "VALUES (?,?,?,?,?)");
         
             ps.setDate(1, fecha);
             ps.setString(2, detalle);
@@ -40,16 +41,16 @@ public class CtrlPagosVarios {
         }
     }
     
-    public PagoVarios leer(int id){
+    public PagoVarios leer(int idPagosVarios){
         PagoVarios pagoVarios = new PagoVarios();
         CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
         CtrlAlumno ctrlAlumno = new CtrlAlumno();
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoAlumno WHERE idCursoAlumno = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM pagosVarios WHERE idPagosVarios = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idPagosVarios);
             
             rs = ps.executeQuery();
             

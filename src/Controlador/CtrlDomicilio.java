@@ -75,7 +75,7 @@ public class CtrlDomicilio {
         }
     }
     
-    public Domicilio leer(int id){
+    public Domicilio leer(int idDomicilio){
         Domicilio domicilio = new Domicilio();
         Lugar lugar = new Lugar();
         CtrlLugar ctrlLugar = new CtrlLugar();
@@ -83,14 +83,13 @@ public class CtrlDomicilio {
         CtrlEdificio ctrlEdificio = new CtrlEdificio();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM empleado WHERE idEmpleado = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM domicilio WHERE idDomicilio = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idDomicilio);
             
             rs = ps.executeQuery();
             
             if (rs.next()) {
-                domicilio.setIdDomicilio(rs.getInt("idDomicilio"));
                 domicilio.setNro(rs.getInt("nro"));
                 domicilio.setTelefono(rs.getString("telefono"));
                 domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar")));

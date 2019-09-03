@@ -59,16 +59,16 @@ public class CtrlEmpleadoTitulo {
         }
     }
     
-    public EmpleadoTitulo leer(int id){
+    public EmpleadoTitulo leer(int idEmpleadoTitulo){
         EmpleadoTitulo empleadoTitulo = new EmpleadoTitulo();
         CtrlTitulo ctrlTitulo = new CtrlTitulo();
         CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoAlumno WHERE idCursoAlumno = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM empleadoTitulo WHERE idEmpleadoTitulo = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idEmpleadoTitulo);
             
             rs = ps.executeQuery();
             

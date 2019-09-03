@@ -38,12 +38,13 @@ public class CtrlAlumno {
     }
     
     
-    public void borrar(int idPersona){
+    public void borrar(int idPersona, int idAlumno){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE alumno borrado SET = TRUE WHERE idAlumno = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE alumno borrado SET = TRUE WHERE idPersona = ? AND idAlumno = ?");
             
             ps.setInt(1, idPersona);
+            ps.setInt(2, idAlumno);
             
             int res = ps.executeUpdate();
             
@@ -60,19 +61,43 @@ public class CtrlAlumno {
         }
     }
     
-    public Alumno leer(int id){
+    public Alumno leer(int idPersona){
         Alumno alumno = new Alumno();
         CtrlPersona ctrlPersona = new CtrlPersona();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM alumno WHERE idPersona = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM alumno WHERE idPersona = ? AND borrado = FALSE");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idPersona);
             rs = ps.executeQuery();
             
             if(rs.next()){
                 alumno.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
                 alumno.setBorrado(rs.getBoolean("borrado"));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            
+            con.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        
+        return alumno;
+    }
+    
+    public Alumno leerBorrado(int idPersona){
+        Alumno alumno = new Alumno();
+        CtrlPersona ctrlPersona = new CtrlPersona();
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM alumno WHERE idPersona = ? AND borrado = TRUE");
+            
+            ps.setInt(1, idPersona);
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                alumno.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }

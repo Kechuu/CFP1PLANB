@@ -57,38 +57,14 @@ public class CtrlCargo {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
     }
-    /*
-    public void borrar(){
-        try {
-            con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE cargo SET borrado = TRUE WHERE idCargo = ?");
-            
-            ps.setString(1, "");
-            
-            int res = ps.executeUpdate();
-            
-            if(res > 0){
-                //Nada de Nada :v
-            }else{
-                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
-            }
-            
-            con.close();
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
-        }
-    }
-    */
     
-    
-    public Cargo leer(int id){
+    public Cargo leer(int idCargo){
         Cargo cargo = new Cargo();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cargo WHERE idCargo = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idCargo);
             rs = ps.executeQuery();
             
             if(rs.next()){

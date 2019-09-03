@@ -62,7 +62,7 @@ public class CtrlEmpleadoLicencia {
         }
     }
     
-    public EmpleadoLicencia leer(int id){
+    public EmpleadoLicencia leer(int idEmpleadoLicencia){
         EmpleadoLicencia empleadoLicencia = new EmpleadoLicencia();
         CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
         CtrlLicencia ctrlLicencia = new CtrlLicencia();
@@ -71,7 +71,7 @@ public class CtrlEmpleadoLicencia {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM empleadoLicencia WHERE idEmpleadoLicencia = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idEmpleadoLicencia);
             
             rs = ps.executeQuery();
             

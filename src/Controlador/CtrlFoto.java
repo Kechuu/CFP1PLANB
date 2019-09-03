@@ -59,36 +59,14 @@ public class CtrlFoto {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
     }
-    //¿?
-    public void borrar(){
-        try {
-            con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE foto SET borrado = TRUE WHERE idFoto = ?");
-            
-            ps.setString(1, "");
-            
-            int res = ps.executeUpdate();
-            
-            if(res > 0){
-                //Nada de Nada :v
-            }else{
-                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
-            }
-            
-            con.close();
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
-        }
-    }
     
-    public Foto leer(int id){
+    public Foto leer(int idFoto){
         Foto foto = new Foto();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM foto WHERE idFoto = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idFoto);
             rs = ps.executeQuery();
             
             if(rs.next()){

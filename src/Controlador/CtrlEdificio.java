@@ -62,17 +62,16 @@ public class CtrlEdificio {
         }
     }
     
-    public Edificio leer(int id){
+    public Edificio leer(int idEdificio){
         Edificio edificio = new Edificio();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM edificio WHERE idEdificio = ?");
             
-            ps.setInt(1,id);
+            ps.setInt(1,idEdificio);
             rs = ps.executeQuery();
             
             if(rs.next()){
-                edificio.setIdEdificio(rs.getInt("idEdificio"));
                 edificio.setDepto(rs.getInt("depto"));
                 edificio.setPiso(rs.getInt("piso"));
                 edificio.setTorre(rs.getInt("torre"));

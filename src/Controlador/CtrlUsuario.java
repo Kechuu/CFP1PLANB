@@ -20,16 +20,17 @@ public class CtrlUsuario {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(String user, String pass, int jerarquia, int idPersona, boolean borrado){
+    public void crear(String user, String pass, int jerarquia, int idPersona){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO usuario (user,pass,jerarquia,idPersona,borrado) VALUES (?,?,?,?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO usuario (user,pass,jerarquia,idPersona,borrado) "
+                    + "VALUES (?,?,?,?,?)");
         
             ps.setString(1, user);
             ps.setString(2, pass);
             ps.setInt(3, jerarquia);
             ps.setInt(4, idPersona);
-            ps.setBoolean(5, borrado);
+            ps.setBoolean(5, false);
             
             int res = ps.executeUpdate();
             con.close();
@@ -39,18 +40,17 @@ public class CtrlUsuario {
         }
     }
     
-    public void editar(int idUsuario, String user, String pass, int jerarquia, int idPersona, boolean borrado){
+    public void editar(int idUsuario, String user, String pass, int jerarquia, int idPersona){
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE usuario SET user = ?,pass = ? ,jerarquia = ?, idPersona = ?,"
-                    + "borrado = ? WHERE idUsuario = ?");
+                    + " WHERE idUsuario = ?");
             
             ps.setString(1, user);
             ps.setString(2, pass);
             ps.setInt(3, jerarquia);
             ps.setInt(4, idPersona);
-            ps.setBoolean(5, borrado);
-            ps.setInt(6, idUsuario);
+            ps.setInt(5, idUsuario);
             
             int res = ps.executeUpdate();
             
@@ -67,22 +67,41 @@ public class CtrlUsuario {
         }
     }
     
-    public void borrar(){
-        
+    public void borrar(int idUsuario){
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE usuario SET borrado = TRUE WHERE idUsuario = ?");
+            
+            ps.setInt(1, idUsuario);
+            
+            int res = ps.executeUpdate();
+            
+            if(res > 0){
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
-    public Usuario leer(int id){
+    public Usuario leer(int idUsuario){
         Usuario usuario = new Usuario();
         CtrlPersona ctrlPersona = new CtrlPersona();
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM alumno WHERE idPersona = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM usuario WHERE idUsuario = ? AND borrado = FALSE");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idUsuario);
             rs = ps.executeQuery();
             
             if(rs.next()){
+                usuario.setUser(rs.getString("user"));
                 usuario.setPass(rs.getString("pass"));
                 usuario.setJerarquia(rs.getInt("jerarquia"));
                 usuario.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));

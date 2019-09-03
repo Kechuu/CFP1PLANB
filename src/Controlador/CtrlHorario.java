@@ -63,13 +63,13 @@ public class CtrlHorario {
         }
     }
     
-    public Horario leer(int id){
+    public Horario leer(int idHorario){
         Horario horario = new Horario();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM horario WHERE idHorario = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idHorario);
             rs = ps.executeQuery();
             
             if(rs.next()){

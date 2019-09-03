@@ -35,13 +35,15 @@ public class CtrlCodigoPostal {
         }
     }
     
-    public void editar(int idLocalidad, String codigoPostal){
+    public void editar(int idCodigoPostal, int idLocalidad, String codigoPostal){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE codigoPostal SET codigoPostal = ? WHERE idCodigoPostal = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE codigoPostal SET codigoPostal = ? WHERE idCodigoPostal = ? AND "
+                    + "localidad = ?");
             
-            ps.setInt(1, idLocalidad);
-            ps.setString(2, codigoPostal);
+            ps.setString(1, codigoPostal);
+            ps.setInt(2, idCodigoPostal);
+            ps.setInt(3, idLocalidad);
             
             int res = ps.executeUpdate();
             
@@ -56,10 +58,6 @@ public class CtrlCodigoPostal {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
-    }
-    
-    public void borrar(){
-        //¿?
     }
     
     public CodigoPostal leer(int idLocalidad){

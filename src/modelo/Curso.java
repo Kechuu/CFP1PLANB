@@ -22,7 +22,6 @@ public class Curso {
     private Date fechaFinalizacion;
     private TipoCurso idTipoCurso;
     private LugarCurso idLugarCurso;
-    private Periodicidad idPeriodicidad;
     private boolean borrado;
 
     public int getIdCurso() {
@@ -95,14 +94,6 @@ public class Curso {
 
     public void setIdLugarCurso(LugarCurso idLugarCurso) {
         this.idLugarCurso = idLugarCurso;
-    }
-
-    public Periodicidad getIdPeriodicidad() {
-        return idPeriodicidad;
-    }
-
-    public void setIdPeriodicidad(Periodicidad idPeriodicidad) {
-        this.idPeriodicidad = idPeriodicidad;
     }
 
     public boolean isBorrado() {

@@ -23,11 +23,12 @@ public class CtrlCurso {
     ResultSet rs;
     
     public void crear(int cicloLectivo, int turno, float costo, int cupo, Date fechaInicio, Date fechaFinalizacion,
-    int idTipoCurso,int idLugarCurso, int idPeriodicidad, boolean borrado){
+    int idTipoCurso,int idLugarCurso, boolean borrado){
         
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO curso (cicloLectivo,turno,costo,cupo,fechaInicio,fechaFinalizacion,idTipoCurso,idLugarCurso,idPeriodicidad,borrado) VALUES (?,?,?,?,?,?,?,?,?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO curso (cicloLectivo,turno,costo,cupo,fechaInicio,"
+                    + "fechaFinalizacion,idTipoCurso,idLugarCurso,borrado) VALUES (?,?,?,?,?,?,?,?,?,?)");
             
             ps.setInt(1, cicloLectivo);
             ps.setInt(2, turno);
@@ -37,8 +38,7 @@ public class CtrlCurso {
             ps.setDate(6, fechaFinalizacion);
             ps.setInt(7, idTipoCurso);
             ps.setInt(8, idLugarCurso);
-            ps.setInt(9, idPeriodicidad);
-            ps.setBoolean(10, borrado);
+            ps.setBoolean(9, borrado);
             
             int res = ps.executeUpdate();
             
@@ -49,12 +49,12 @@ public class CtrlCurso {
         
     }
     
-    public void editar(int id, int cicloLectivo, int turno, float costo, int cupo, Date fechaInicio, Date fechaFinalizacion,
-    int idTipoCurso,int idLugarCurso, int idPeriodicidad, boolean borrado){
+    public void editar(int idCurso, int cicloLectivo, int turno, float costo, int cupo, Date fechaInicio, Date fechaFinalizacion,
+    int idTipoCurso,int idLugarCurso, boolean borrado){
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE curso SET cicloLectivo = ?, turno = ?, costo = ?, cupo = ?,"
-                    + "fechaInicio = ?, fechaFinalizacion = ?, idTipoCurso = ?, idLugarCurso = ?, idPeriodicidad = ?,  borrado = ? WHERE idCurso = ?");
+                    + "fechaInicio = ?, fechaFinalizacion = ?, idTipoCurso = ?, idLugarCurso = ?,  borrado = ? WHERE idCurso = ?");
             
             ps.setInt(1, cicloLectivo);
             ps.setInt(2, turno);
@@ -64,9 +64,8 @@ public class CtrlCurso {
             ps.setDate(6, fechaFinalizacion);
             ps.setInt(7, idTipoCurso);
             ps.setInt(8, idLugarCurso);
-            ps.setInt(9, idPeriodicidad);
-            ps.setBoolean(10, borrado);
-            ps.setInt(11, id);
+            ps.setBoolean(9, borrado);
+            ps.setInt(10, idCurso);
             
             int res = ps.executeUpdate();
             
@@ -83,12 +82,12 @@ public class CtrlCurso {
         }
     }
     
-    public void borrar(int id){
+    public void borrar(int idCurso){
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE curso SET borrado = TRUE WHERE idCurso = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idCurso);
             
             int res = ps.executeUpdate();
             
@@ -105,7 +104,7 @@ public class CtrlCurso {
         }
     }
     
-    public Curso leer(int id){
+    public Curso leer(int idCurso){
         Curso curso = new Curso();
         CtrlTipoCurso ctrlTipoCurso = new CtrlTipoCurso();
         CtrlLugarCurso ctrlLugarCurso = new CtrlLugarCurso();
@@ -113,7 +112,7 @@ public class CtrlCurso {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM curso WHERE idCurso = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idCurso);
             
             rs = ps.executeQuery();
             

@@ -60,16 +60,16 @@ public class CtrlPlanPersona {
         }
     }
     
-    public PlanPersona leer(int id){
+    public PlanPersona leer(int idPlanPersona){
         PlanPersona planPersona = new PlanPersona();
         CtrlPersona ctrlPersona = new CtrlPersona();
         CtrlPlanes ctrlPlanes = new CtrlPlanes();
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoAlumno WHERE idCursoAlumno = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM planPersona WHERE idPlanPersona = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idPlanPersona);
             
             rs = ps.executeQuery();
             

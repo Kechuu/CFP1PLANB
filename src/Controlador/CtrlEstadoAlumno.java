@@ -57,13 +57,13 @@ public class CtrlEstadoAlumno {
         }
     }
     
-    public EstadoAlumno leer(int id){
+    public EstadoAlumno leer(int idEstadoAlumno){
         EstadoAlumno estadoAlumno = new EstadoAlumno();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM estadoAlumno WHERE idEstadoAlumno = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idEstadoAlumno);
             rs = ps.executeQuery();
             
             if(rs.next()){

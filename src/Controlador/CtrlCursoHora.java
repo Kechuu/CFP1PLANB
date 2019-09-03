@@ -36,13 +36,14 @@ public class CtrlCursoHora {
         }
     }
     
-    public void modificarHorario(int idHorario, int idCursoHora){
+    public void modificarHorario(int idHorario, int idCursoHora, int idCurso){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoHora SET idHorario = ? WHERE idCursoHora = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoHora SET idHorario = ? WHERE idCursoHora = ? AND idCurso = ?");
             
             ps.setInt(1, idHorario);
             ps.setInt(2, idCursoHora);
+            ps.setInt(3, idCurso);
             
             int res = ps.executeUpdate();
             
@@ -59,13 +60,14 @@ public class CtrlCursoHora {
         }
     }
     
-    public void modificarCurso(int idCurso, int idCursoHora){
+    public void modificarCurso(int idCurso, int idCursoHora, int idHorario){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoHora SET idCurso = ? WHERE idCursoHora = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoHora SET idCurso = ? WHERE idCursoHora = ? AND idHorario = ?");
             
             ps.setInt(1, idCurso);
             ps.setInt(2, idCursoHora);
+            ps.setInt(3, idHorario);
             
             int res = ps.executeUpdate();
             
@@ -85,11 +87,14 @@ public class CtrlCursoHora {
     public void modificarCursoHora(int idHorario, int idCurso, int idCursoHora){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoHora SET idHorario = ?, idCurso = ? WHERE idCursoHora = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoHora SET idHorario = ?, idCurso = ? WHERE idCursoHora = ? AND "
+                    + "idCurso = ? AND idHorario");
             
             ps.setInt(1, idHorario);
             ps.setInt(2, idCurso);
             ps.setInt(3, idCursoHora);
+            ps.setInt(4, idCurso);
+            ps.setInt(5, idHorario);
             
             int res = ps.executeUpdate();
             
@@ -106,7 +111,7 @@ public class CtrlCursoHora {
         }
     }
     
-    public CursoHora leer(int id){
+    public CursoHora leer(int idCursoHora){
         CursoHora cursoHora = new CursoHora();
         CtrlHorario ctrlHorario = new CtrlHorario();
         CtrlCurso ctrlCurso = new CtrlCurso();
@@ -114,7 +119,7 @@ public class CtrlCursoHora {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoHora WHERE idCursoHora = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idCursoHora);
             
             rs = ps.executeQuery();
             

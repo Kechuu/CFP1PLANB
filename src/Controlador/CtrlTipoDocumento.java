@@ -58,17 +58,17 @@ public class CtrlTipoDocumento {
         }
     }
     
-    public TipoDocumento leer(int id){
+    public TipoDocumento leer(int idTipoDocumento){
         TipoDocumento tipoDocumento = new TipoDocumento();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM tipoDocumento WHERE idTipoDocumento = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idTipoDocumento);
             rs = ps.executeQuery();
             
             if(rs.next()){
-                tipoDocumento.setDetalle("detalle");
+                tipoDocumento.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }

@@ -38,15 +38,15 @@ public class CtrlErrorres {
         }
     }
     
-    public Errores leer(int id){
+    public Errores leer(int idErrores){
         Errores errores = new Errores();
         CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoAlumno WHERE idCursoAlumno = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM errores WHERE idErrores = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idErrores);
             
             rs = ps.executeQuery();
             

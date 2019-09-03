@@ -58,13 +58,13 @@ public class CtrlNacionalidad {
         }
     }
     
-    public Nacionalidad leer(int id){
+    public Nacionalidad leer(int idNacionalidad){
         Nacionalidad nacionalidad = new Nacionalidad();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM nacionalidad WHERE idNacionalidad = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idNacionalidad);
             rs = ps.executeQuery();
             
             if(rs.next()){

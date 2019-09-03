@@ -113,7 +113,7 @@ public class CtrlPersona {
         }
     }
     
-    public Persona leer(int id){
+    public Persona leer(int idPersona){
      Persona persona = new Persona();
      CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
      CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
@@ -124,7 +124,7 @@ public class CtrlPersona {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM persona WHERE idPersona = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idPersona);
             
             rs = ps.executeQuery();
             
@@ -143,7 +143,6 @@ public class CtrlPersona {
                 persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("idNacionalidad")));
                 persona.setIdFoto(ctrlFoto.leer(rs.getInt("idFoto")));
                 persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("idLugarNacimiento")));
-                persona.setBorrado(rs.getBoolean("borrado"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }

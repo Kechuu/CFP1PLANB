@@ -58,13 +58,13 @@ public class CtrlPeriodo {
         }
     }
     
-    public Periodo leer(int id){
+    public Periodo leer(int idPeriodo){
         Periodo periodo = new Periodo();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM periodo WHERE idPeriodo = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idPeriodo);
             rs = ps.executeQuery();
             
             if(rs.next()){

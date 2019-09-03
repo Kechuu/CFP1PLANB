@@ -20,10 +20,12 @@ public class CtrlEscuela {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(String nombreEscuela, String direccion, String telefono, String correo, String director, Blob logo, Blob fondo){
+    public void crear(String nombreEscuela, String direccion, String telefono, String correo, String director,
+            Blob logo, Blob fondo){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO escuela (nombreEscuela, direccion, telefono, correo, director, logo, fondo) VALUES (?,?,?,?,?,?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO escuela (nombreEscuela, direccion, telefono, correo,"
+                    + " director, logo, fondo) VALUES (?,?,?,?,?,?,?)");
         
             ps.setString(1, nombreEscuela);
             ps.setString(2, direccion);
@@ -112,7 +114,7 @@ public class CtrlEscuela {
         }
     }
     
-    public Escuela leer(int id){
+    public Escuela leer(){
         Escuela escuela = new Escuela();
         try {
             con = clases.Conectar.conexion();

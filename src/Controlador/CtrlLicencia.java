@@ -60,13 +60,13 @@ public class CtrlLicencia {
         }
     }
     
-    public Licencia leer(int id){
+    public Licencia leer(int idLicencia){
         Licencia licencia = new Licencia();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM licencia WHERE idLicencia = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idLicencia);
             rs = ps.executeQuery();
             
             if(rs.next()){

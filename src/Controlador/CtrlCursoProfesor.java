@@ -36,13 +36,15 @@ public class CtrlCursoProfesor {
         }
     }
     
-    public void modificarHorario(int idHorario, int idCursoProfesor){
+    public void cambiarProfesorCurso(int idCurso, int idCursoProfesor, int idEmpleado){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoProfesor SET idHorario = ? WHERE idCursoProfesor = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoProfesor SET idCurso = ? WHERE idCursoProfesor = ? "
+                    + "AND idEmpleado = ?");
             
-            ps.setInt(1, idHorario);
+            ps.setInt(1, idCurso);
             ps.setInt(2, idCursoProfesor);
+            ps.setInt(3, idEmpleado);
             
             int res = ps.executeUpdate();
             
@@ -59,55 +61,7 @@ public class CtrlCursoProfesor {
         }
     }
     
-    public void modificarEmpleado(int idEmpleado, int idCursoProfesor){
-        try {
-            con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoProfesor SET idEmpleado = ? WHERE idCursoProfesor = ?");
-            
-            ps.setInt(1, idEmpleado);
-            ps.setInt(2, idCursoProfesor);
-            
-            int res = ps.executeUpdate();
-            
-            if (res > 0) {
-                //Nada de Nada :v
-            }else{
-                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
-            }
-            
-            con.close();
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
-        }
-    }
-    
-    public void modificarEmpleadoHora(int idHorario, int idEmpleado, int idCursoProfesor){
-        try {
-            con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoProfesor SET idHorario = ?, idEmpleado = ? WHERE idCursoProfesor = ?");
-            
-            ps.setInt(1, idHorario);
-            ps.setInt(2, idEmpleado);
-            ps.setInt(3, idCursoProfesor);
-            
-            int res = ps.executeUpdate();
-            
-            if (res > 0) {
-                //Nada de Nada :v
-            }else{
-                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
-            }
-            
-            con.close();
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
-        }
-    }
-    
-    
-    public CursoProfesor leer(int id){
+    public CursoProfesor leer(int idCursoProfesor){
         CursoProfesor cursoProfesor = new CursoProfesor();
         CtrlCurso ctrlCurso = new CtrlCurso();
         CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
@@ -116,7 +70,7 @@ public class CtrlCursoProfesor {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoProfesor WHERE idCursoProfesor = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idCursoProfesor);
             
             rs = ps.executeQuery();
             

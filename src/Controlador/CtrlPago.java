@@ -24,7 +24,8 @@ public class CtrlPago {
     public void crear(Date fecha, float importe, int idCobrador, int idCursoAlumno){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO pago (fecha,importe,idCobrador, idCursoAlumno) VALUES (?,?,?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO pago (fecha,importe,idCobrador, idCursoAlumno) "
+                    + "VALUES (?,?,?,?)");
         
             ps.setDate(1, fecha);
             ps.setFloat(2, importe);
@@ -39,7 +40,7 @@ public class CtrlPago {
         }
     }
     
-    public Pago leer(int id){
+    public Pago leer(int idPago){
         Pago pago = new Pago();
         CtrlEmpleado ctrlCobrador = new CtrlEmpleado();
         CtrlCursoAlumno ctrlCursoAlumno = new CtrlCursoAlumno();
@@ -47,7 +48,7 @@ public class CtrlPago {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM pago WHERE idPago = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idPago);
             
             rs = ps.executeQuery();
             

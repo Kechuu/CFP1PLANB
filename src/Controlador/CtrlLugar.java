@@ -63,19 +63,19 @@ public class CtrlLugar {
         }
     }
     
-    public Lugar leer(int id){
+    public Lugar leer(int idLugar){
         Lugar lugar = new Lugar();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE idLugar = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idLugar);
             rs = ps.executeQuery();
             
             if(rs.next()){
-                lugar.setNombre("nombre");
-                lugar.setNivel(Integer.parseInt("nivel"));
-                lugar.setDe(leer(rs.getInt("de")));
+                lugar.setNombre(rs.getString("nombre"));
+                lugar.setNivel(rs.getInt("nivel"));
+                lugar.setDe(rs.getInt("de"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -101,9 +101,9 @@ public class CtrlLugar {
             rs = ps.executeQuery();
             
             if (rs.next()) {
-                lugar.setNombre("nombre");
-                lugar.setNivel(Integer.parseInt("nivel"));
-                lugar.setDe(leer(rs.getInt("de")));
+                lugar.setNombre(rs.getString("nombre"));
+                lugar.setNivel(rs.getInt("nivel"));
+                lugar.setDe(rs.getInt("de"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -116,5 +116,4 @@ public class CtrlLugar {
         return lugar;
     }
     
-    //Leer todas las localidades, barrios, calles etc :v
 }

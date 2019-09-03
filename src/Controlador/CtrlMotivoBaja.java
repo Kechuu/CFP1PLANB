@@ -58,13 +58,13 @@ public class CtrlMotivoBaja {
         }
     }
     
-    public MotivoBaja leer(int id){
+    public MotivoBaja leer(int idMotivoBaja){
         MotivoBaja motivoBaja = new MotivoBaja();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM motivoBaja WHERE idMotivoBaja = ?");
             
-            ps.setInt (1, id);
+            ps.setInt (1, idMotivoBaja);
             rs = ps.executeQuery();
             
             if(rs.next()){

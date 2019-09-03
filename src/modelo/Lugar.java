@@ -14,7 +14,7 @@ public class Lugar {
     private int idLugar;
     private String nombre;
     private int nivel;
-    private Lugar de;
+    private int de;
 
     public int getIdLugar() {
         return idLugar;
@@ -40,11 +40,11 @@ public class Lugar {
         this.nivel = nivel;
     }
 
-    public Lugar getDe() {
+    public int getDe() {
         return de;
     }
 
-    public void setDe(Lugar de) {
+    public void setDe(int de) {
         this.de = de;
     }
     

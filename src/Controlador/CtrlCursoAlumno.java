@@ -48,7 +48,8 @@ public class CtrlCursoAlumno {
     public void alumnoBajaEgresado(int idAlumno,int idCurso, int idMotivoBaja,int idEstadoAlumno, Date fechaBajaEgreso){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoAlumno SET fechaBaja-Egreso = ?, idMotivoBaja = ?, idEstadoAlumno = ? WHERE idAlumno = ? AND idCurso = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoAlumno SET fechaBaja-Egreso = ?, idMotivoBaja = ?,"
+                    + " idEstadoAlumno = ? WHERE idAlumno = ? AND idCurso = ?");
             
             ps.setDate(1, fechaBajaEgreso);
             ps.setInt(2, idMotivoBaja);
@@ -81,7 +82,7 @@ public class CtrlCursoAlumno {
         }
     }
     
-    public CursoAlumno leer(int id){
+    public CursoAlumno leer(int idCursoAlumno){
         CursoAlumno cursoAlumno = new CursoAlumno();
         CtrlAlumno ctrlAlumno = new CtrlAlumno();
         CtrlEstadoAlumno ctrlEstadoAlumno = new CtrlEstadoAlumno();
@@ -92,7 +93,7 @@ public class CtrlCursoAlumno {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoAlumno WHERE idCursoAlumno = ?");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idCursoAlumno);
             
             rs = ps.executeQuery();
             

@@ -20,7 +20,7 @@ public class CtrlEmpleado {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(Date fechaIngreso, int idPersona, int idEstadoEmpleado, int idGremio, boolean borrado){
+    public void crear(Date fechaIngreso, int idPersona, int idEstadoEmpleado, int idGremio){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO empleado (fechaIngreso,idPersona,idEstadoEmpleado,"
@@ -30,7 +30,7 @@ public class CtrlEmpleado {
             ps.setInt(2, idPersona);
             ps.setInt(3, idEstadoEmpleado);
             ps.setInt(4, idGremio);
-            ps.setBoolean(5, borrado);
+            ps.setBoolean(5, false);
             
             int res = ps.executeUpdate();
             con.close();
@@ -40,14 +40,14 @@ public class CtrlEmpleado {
         }
     }
     
-    public void darDeBaja(Date fechaBaja, int idPersona, boolean borrado, int idEstadoEmpleado, int idEmpleado){
+    public void darDeBaja(Date fechaBaja, int idPersona, int idEstadoEmpleado, int idEmpleado){
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE empleado SET fechaBaja = ?, borrado = ?, idEstadoEmpleado = ?"
                     + " WHERE idEmpleado = ? AND idPersona = ?");
             
             ps.setDate(1, fechaBaja);
-            ps.setBoolean(2, borrado);
+            ps.setBoolean(2, true);
             ps.setInt(3, idEstadoEmpleado);
             ps.setInt(4, idEmpleado);
             ps.setInt(5, idPersona);
@@ -93,25 +93,23 @@ public class CtrlEmpleado {
         }
     }
     
-    public Empleado leer(int id){
+    public Empleado leer(int idEmpleado){
         Empleado empleado = new Empleado();
         CtrlPersona ctrlPersona = new CtrlPersona();
         CtrlEstadoEmpleado ctrlEstadoEmpleado = new CtrlEstadoEmpleado();
         CtrlGremio ctrlGremio = new CtrlGremio();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM empleado WHERE idEmpleado = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM empleado WHERE idEmpleado = ? AND borrado = FALSE");
             
-            ps.setInt(1, id);
+            ps.setInt(1, idEmpleado);
             
             rs = ps.executeQuery();
             
             if (rs.next()) {
-                empleado.setLegajo(rs.getString("legajo"));
                 empleado.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
                 empleado.setIdEstadoEmpleado(ctrlEstadoEmpleado.leer(rs.getInt("idEstadoEmpleado")));
                 empleado.setIdGremio(ctrlGremio.leer(rs.getInt("idGremio")));
-                empleado.setBorrado(rs.getBoolean("borrado"));
                 }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
