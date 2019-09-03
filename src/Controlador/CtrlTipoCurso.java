@@ -18,16 +18,69 @@ public class CtrlTipoCurso {
     Connection con = null;
     PreparedStatement ps;
     ResultSet rs;
-    public void crear(){
+    public void crear(String detalle, float costo, int idPeriodo){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO tipoCurso (detalle,costo,idPeriodo) VALUES (?,?,?)");
         
+            ps.setString(1, detalle);
+            ps.setFloat(2, costo);
+            ps.setInt(3, idPeriodo);
+            
+            int res = ps.executeUpdate();
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
-    public void editar(){
-        
+    public void editar(int idTipoCurso, String detalle, float costo, int idPeriodo){
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE tipoCurso SET detalle = ?, costo = ? , idPeriodo = ? "
+                    + "WHERE idtipoCurso = ?");
+            
+            ps.setString(1, detalle);
+            ps.setFloat(2, costo);
+            ps.setInt(3, idPeriodo);
+            ps.setInt(4, idTipoCurso);
+            
+            int res = ps.executeUpdate();
+            
+            if(res > 0){
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
-    public void borrar(){
-        
+    public void borrar(int idTipoCurso){
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE curso SET borrado = TRUE WHERE idTipoCurso = ?");
+            
+            ps.setInt(1, idTipoCurso);
+            
+            int res = ps.executeUpdate();
+            
+            if(res > 0){
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
     public TipoCurso leer(int id){

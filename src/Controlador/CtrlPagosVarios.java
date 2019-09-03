@@ -6,6 +6,7 @@
 package Controlador;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -20,16 +21,23 @@ public class CtrlPagosVarios {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(Date fecha, String detalle, float importe, int idEmpleado, int idAlumno){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO pagosVarios (fecha,detalle,importe,idEmpleado,idAlumno) VALUES (?,?,?,?,?)");
         
-    }
-    
-    public void editar(){
-        
-    }
-    
-    public void borrar(){
-        
+            ps.setDate(1, fecha);
+            ps.setString(2, detalle);
+            ps.setFloat(3, importe);
+            ps.setInt(4, idEmpleado);
+            ps.setInt(5, idAlumno);
+            
+            int res = ps.executeUpdate();
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
     public PagoVarios leer(int id){

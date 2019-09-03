@@ -20,12 +20,13 @@ public class CtrlPlanes {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(String detalle, boolean borrado){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO planes (detalle) VALUES (?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO planes (detalle,borrado) VALUES (?,?)");
         
-            ps.setString(1, "");
+            ps.setString(1, detalle);
+            ps.setBoolean(2, borrado);
             
             int res = ps.executeUpdate();
             con.close();
@@ -35,13 +36,13 @@ public class CtrlPlanes {
         }
     }
     
-    public void editar(){
+    public void editar(int idPlanes, String detalle){
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE planes SET detalle = ? WHERE idPlanes = ?");
             
-            ps.setString(1, "");
-            ps.setString(2, "");
+            ps.setString(1, detalle);
+            ps.setInt(2, idPlanes);
             
             int res = ps.executeUpdate();
             
@@ -58,12 +59,12 @@ public class CtrlPlanes {
         }
     }
     
-    public void borrar(){
+    public void borrar(int idPlanes){
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE planes SET borrado = TRUE WHERE idPlanes = ?");
             
-            ps.setString(1, "");
+            ps.setInt(1, idPlanes);
             
             int res = ps.executeUpdate();
             

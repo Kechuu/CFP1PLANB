@@ -6,6 +6,7 @@
 package Controlador;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -20,16 +21,21 @@ public class CtrlErrorres {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(int idEmpleado, Date hora, String detalle){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO errores (idEmpleado, hora, detalle) VALUES (?,?,?)");
         
-    }
-    
-    public void editar(){
-        
-    }
-    
-    public void borrar(){
-        
+            ps.setInt(1, idEmpleado);
+            ps.setDate(2, hora);
+            ps.setString(3, detalle);
+            
+            int res = ps.executeUpdate();
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
     public Errores leer(int id){

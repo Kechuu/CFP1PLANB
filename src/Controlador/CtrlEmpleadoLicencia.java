@@ -39,12 +39,27 @@ public class CtrlEmpleadoLicencia {
         }
     }
     
-    public void finDeLicencia(int idLicenciaEmpleado ,int idEmpleado ,Date fin){
+    public void finDeLicencia(int idEmpleadoLicencia ,int idEmpleado ,Date fin){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("UPDATE empleadoLicencia SET fin = ? WHERE idEmpleadoLicencia = ? AND idEmpleado = ? ");
         
-    }
-    
-    public void borrar(){
-        
+            ps.setDate(1, fin);
+            ps.setInt(2, idEmpleadoLicencia);
+            ps.setInt(3, idEmpleado);
+             int res = ps.executeUpdate();
+            
+            if(res > 0){
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
     public EmpleadoLicencia leer(int id){

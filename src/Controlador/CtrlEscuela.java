@@ -5,6 +5,7 @@
  */
 package Controlador;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,18 +20,18 @@ public class CtrlEscuela {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(String nombreEscuela, String direccion, String telefono, String correo, String director, Blob logo, Blob fondo){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO escuela (nombreEscuela, direccion, telefono, correo, director, logo, fondo) VALUES (?,?,?,?,?,?,?)");
         
-            ps.setString(1, "");
-            ps.setString(2, "");
-            ps.setString(3, "");
-            ps.setString(4, "");
-            ps.setString(5, "");
-            ps.setString(6, "");
-            ps.setString(7, "");
+            ps.setString(1, nombreEscuela);
+            ps.setString(2, direccion);
+            ps.setString(3, telefono);
+            ps.setString(4, correo);
+            ps.setString(5, director);
+            ps.setBlob(6, logo);
+            ps.setBlob(7, fondo);
             
             int res = ps.executeUpdate();
             con.close();
@@ -40,19 +41,61 @@ public class CtrlEscuela {
         }
     }
     
-    public void editar(){
+    public void editarTelefonoCorreo(String telefono, String correo, int idEscuela){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE cargo SET nombreEscuela = ?, direccion = ?, telefono = ?, correo = ?, director = ?, logo = ?, fondo = ? WHERE idCargo = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE cargo SET telefono = ?, correo = ? WHERE idEscuela = ?");
             
-            ps.setString(1, "");
-            ps.setString(2, "");
-            ps.setString(3, "");
-            ps.setString(4, "");
-            ps.setString(5, "");
-            ps.setString(6, "");
-            ps.setString(7, "");
-            ps.setString(8, "");
+            ps.setString(1, telefono);
+            ps.setString(2, correo);
+            ps.setInt(3, idEscuela);
+            
+            int res = ps.executeUpdate();
+            
+            if(res > 0){
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+    }
+    
+    public void editarLogoFondo(Blob logo, Blob fondo, int idEscuela){
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE cargo SET logo = ?, fondo = ? WHERE idEscuela = ?");
+            
+            ps.setBlob(1, logo);
+            ps.setBlob(2, fondo);
+            ps.setInt(3, idEscuela);
+            
+            int res = ps.executeUpdate();
+            
+            if(res > 0){
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+    }
+    
+    public void editarDirector(String director, int idEscuela){
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE cargo SET director = ? WHERE idEscuela = ?");
+            
+            ps.setString(1, director);
+            ps.setInt(2, idEscuela);
             
             int res = ps.executeUpdate();
             

@@ -6,6 +6,7 @@
 package Controlador;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -20,14 +21,14 @@ public class CtrlHorario {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(Date desde, Date hasta, int dia){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO horario (desde,hasta,dia) VALUES (?,?,?)");
         
-            ps.setString(1, "");
-            ps.setString(2, "");
-            ps.setString(3, "");
+            ps.setDate(1, desde);
+            ps.setDate(2, hasta);
+            ps.setInt(3, dia);
             
             int res = ps.executeUpdate();
             con.close();
@@ -37,37 +38,15 @@ public class CtrlHorario {
         }
     }
     
-    public void editar(){
+    public void editar(int idHorario, Date desde, Date hasta, int dia){
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE horario SET desde = ?, hasta = ?, dia = ? WHERE idHorario = ?");
             
-            ps.setString(1, "");
-            ps.setString(2, "");
-            ps.setString(3, "");
-            ps.setString(4, "");
-            
-            int res = ps.executeUpdate();
-            
-            if(res > 0){
-                //Nada de Nada :v
-            }else{
-                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
-            }
-            
-            con.close();
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
-        }
-    }
-    
-    public void borrar(){
-        try {
-            con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE horario SET borrado = TRUE WHERE idHorario = ?");
-            
-            ps.setString(1, "");
+            ps.setDate(1, desde);
+            ps.setDate(2, hasta);
+            ps.setInt(3, dia);
+            ps.setInt(4, idHorario);
             
             int res = ps.executeUpdate();
             

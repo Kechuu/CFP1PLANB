@@ -21,15 +21,14 @@ public class CtrlLugar {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(Lugar lugar){
+    public void crear(String nombre, int nivel, int de){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO lugar (nombre, nivel, de) VALUES (?,?,?)");
         
-            ps.setString(1, lugar.getNombre());
-            ps.setInt(2, lugar.getNivel());
-            //validar la dependencia
-            ps.setInt(3, lugar.getDe().getIdLugar());
+            ps.setString(1, nombre);
+            ps.setInt(2, nivel);
+            ps.setInt(3, de);
             
             int res = ps.executeUpdate();
             con.close();
@@ -39,37 +38,15 @@ public class CtrlLugar {
         }
     }
     
-    public void editar(){
+    public void editar(int idLugar, String nombre, int nivel, int de){
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE lugar SET nombre = ?, nivel = ?, de = ? WHERE idLugar = ?");
             
-            ps.setString(1, "");
-            ps.setString(2, "");
-            ps.setString(3, "");
-            ps.setString(4, "");
-            
-            int res = ps.executeUpdate();
-            
-            if(res > 0){
-                //Nada de Nada :v
-            }else{
-                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
-            }
-            
-            con.close();
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
-        }
-    }
-    
-    public void borrar(){
-        try {
-            con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE lugar SET borrado = TRUE WHERE idLugar = ?");
-            
-            ps.setString(1, "");
+            ps.setString(1, nombre);
+            ps.setInt(2, nivel);
+            ps.setInt(3, de);
+            ps.setInt(4, idLugar);
             
             int res = ps.executeUpdate();
             

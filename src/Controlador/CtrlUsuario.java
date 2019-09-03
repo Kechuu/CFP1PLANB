@@ -20,12 +20,51 @@ public class CtrlUsuario {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(String user, String pass, int jerarquia, int idPersona, boolean borrado){
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO usuario (user,pass,jerarquia,idPersona,borrado) VALUES (?,?,?,?,?)");
         
+            ps.setString(1, user);
+            ps.setString(2, pass);
+            ps.setInt(3, jerarquia);
+            ps.setInt(4, idPersona);
+            ps.setBoolean(5, borrado);
+            
+            int res = ps.executeUpdate();
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
-    public void editar(){
-        
+    public void editar(int idUsuario, String user, String pass, int jerarquia, int idPersona, boolean borrado){
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE usuario SET user = ?,pass = ? ,jerarquia = ?, idPersona = ?,"
+                    + "borrado = ? WHERE idUsuario = ?");
+            
+            ps.setString(1, user);
+            ps.setString(2, pass);
+            ps.setInt(3, jerarquia);
+            ps.setInt(4, idPersona);
+            ps.setBoolean(5, borrado);
+            ps.setInt(6, idUsuario);
+            
+            int res = ps.executeUpdate();
+            
+            if(res > 0){
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
     }
     
     public void borrar(){

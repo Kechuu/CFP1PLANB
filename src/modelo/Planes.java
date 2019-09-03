@@ -13,6 +13,7 @@ public class Planes {
     
     private int idPlanes;
     private String detalle;
+    private boolean borrado;
 
     public int getIdPlanes() {
         return idPlanes;
@@ -28,6 +29,14 @@ public class Planes {
 
     public void setDetalle(String detalle) {
         this.detalle = detalle;
+    }
+
+    public boolean isBorrado() {
+        return borrado;
+    }
+
+    public void setBorrado(boolean borrado) {
+        this.borrado = borrado;
     }
     
             

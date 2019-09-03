@@ -109,7 +109,6 @@ public class CtrlCurso {
         Curso curso = new Curso();
         CtrlTipoCurso ctrlTipoCurso = new CtrlTipoCurso();
         CtrlLugarCurso ctrlLugarCurso = new CtrlLugarCurso();
-        CtrlPeriodicidad ctrlPeriodicidad = new CtrlPeriodicidad();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM curso WHERE idCurso = ?");
@@ -127,7 +126,6 @@ public class CtrlCurso {
             curso.setFechaFinalizacion(rs.getDate("fechaFinalizacion"));
             curso.setIdTipoCurso(ctrlTipoCurso.leer(rs.getInt("idTipoCurso")));
             curso.setIdLugarCurso(ctrlLugarCurso.leer(rs.getInt("idLugarCurso")));
-            curso.setIdPeriodicidad(ctrlPeriodicidad.leer(rs.getInt("idPeriodicidad")));
             curso.setBorrado(rs.getBoolean("borrado"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");

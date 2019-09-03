@@ -5,6 +5,7 @@
  */
 package Controlador;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,12 +22,12 @@ public class CtrlFoto {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(Blob imagen){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO foto (imagen) VALUES (?)");
         
-            ps.setString(1, "");
+            ps.setBlob(1, imagen);
             
             int res = ps.executeUpdate();
             con.close();
@@ -36,13 +37,13 @@ public class CtrlFoto {
         }
     }
     
-    public void editar(){
+    public void editar(int idFoto, Blob imagen){
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE foto SET imagen = ? WHERE idFoto = ?");
             
-            ps.setString(1, "");
-            ps.setString(2, "");
+            ps.setBlob(1, imagen);
+            ps.setInt(2, idFoto);
             
             int res = ps.executeUpdate();
             
@@ -58,7 +59,7 @@ public class CtrlFoto {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
     }
-    
+    //¿?
     public void borrar(){
         try {
             con = clases.Conectar.conexion();

@@ -19,12 +19,12 @@ public class CtrlEstadoEmpleado {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(){
+    public void crear(String detalle){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO estadoEmpleado (detalle) VALUES (?)");
         
-            ps.setString(1, "");
+            ps.setString(1, detalle);
             
             int res = ps.executeUpdate();
             con.close();
@@ -34,35 +34,13 @@ public class CtrlEstadoEmpleado {
         }
     }
     
-    public void editar(){
+    public void editar(int idEstadoEmpleado, String detalle){
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE estadoEmpleado SET detalle = ? WHERE idEstadoEmpleado = ?");
             
-            ps.setString(1, "");
-            ps.setString(2, "");
-            
-            int res = ps.executeUpdate();
-            
-            if(res > 0){
-                //Nada de Nada :v
-            }else{
-                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
-            }
-            
-            con.close();
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
-        }
-    }
-    
-    public void borrar(){
-        try {
-            con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE estadoEmpleado SET borrado = TRUE WHERE idEstadoEmpleado = ?");
-            
-            ps.setString(1, "");
+            ps.setString(1, detalle);
+            ps.setInt(2, idEstadoEmpleado);
             
             int res = ps.executeUpdate();
             
