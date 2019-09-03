@@ -37,7 +37,7 @@ public class CtrlConexionAccion {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
     }
-    
+    /*
     public ConexionAcciones leerTodoHistorialPersonal(int idEmpleado){
         ConexionAcciones accion = new ConexionAcciones();
         CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
@@ -138,4 +138,5 @@ public class CtrlConexionAccion {
         
         return accion;
     }
+    */
 }

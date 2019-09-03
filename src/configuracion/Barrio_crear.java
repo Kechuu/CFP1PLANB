@@ -5,6 +5,8 @@
  */
 package configuracion;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import menu.Principal;
 
 
@@ -13,11 +15,10 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Barrio_crear extends javax.swing.JInternalFrame {
-
     /**
      * Creates new form crearBarrio
      */
-    public Barrio_crear() {
+    public Barrio_crear() throws ClassNotFoundException {
         initComponents();
     }
 
@@ -44,6 +45,20 @@ public class Barrio_crear extends javax.swing.JInternalFrame {
         tablaBarrios = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
 
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                formMouseReleased(evt);
+            }
+        });
+
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -61,9 +76,13 @@ public class Barrio_crear extends javax.swing.JInternalFrame {
         jLabel2.setText("Localidad");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
-        cbLocalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbLocalidad.setNextFocusableComponent(txtnuevoBarrio);
-        jPanel1.add(cbLocalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 127, -1));
+        cbLocalidad.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbLocalidadItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(cbLocalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 270, -1));
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel4.setText("Nuevo barrio");
@@ -78,7 +97,7 @@ public class Barrio_crear extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 100, -1));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, 100, -1));
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -88,7 +107,7 @@ public class Barrio_crear extends javax.swing.JInternalFrame {
                 btnAceptarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, 100, -1));
+        jPanel1.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 100, -1));
 
         btnAgregarCalle.setBackground(new java.awt.Color(38, 86, 186));
         btnAgregarCalle.setForeground(new java.awt.Color(255, 255, 255));
@@ -102,13 +121,10 @@ public class Barrio_crear extends javax.swing.JInternalFrame {
 
         tablaBarrios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane2.setViewportView(tablaBarrios);
@@ -140,14 +156,37 @@ public class Barrio_crear extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCalleActionPerformed
-        // TODO add your handling code here:
-        Principal.crearCalle();
+        try {
+            // TODO add your handling code here:
+            //this.setVisible(false);
+            
+            Principal.crearCalle();//metodo que esta en la clase Principal
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Barrio_crear.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAgregarCalleActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
-        Principal.crearBarrio();
+       
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void cbLocalidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLocalidadItemStateChanged
+        // TODO add your handling code here: 
+    }//GEN-LAST:event_cbLocalidadItemStateChanged
+
+    private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
+        // TODO add your handling code here:
+     
+    }//GEN-LAST:event_formMouseReleased
+
+    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
+     
+    }//GEN-LAST:event_formFocusGained
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_formMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

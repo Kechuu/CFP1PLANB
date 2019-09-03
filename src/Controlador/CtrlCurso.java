@@ -104,15 +104,15 @@ public class CtrlCurso {
         }
     }
     
-    public Curso leer(int idCurso){
+    public Curso leer(int idTipoCurso){
         Curso curso = new Curso();
         CtrlTipoCurso ctrlTipoCurso = new CtrlTipoCurso();
         CtrlLugarCurso ctrlLugarCurso = new CtrlLugarCurso();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM curso WHERE idCurso = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM curso WHERE idTipoCurso = ?");
             
-            ps.setInt(1, idCurso);
+            ps.setInt(1, idTipoCurso);
             
             rs = ps.executeQuery();
             

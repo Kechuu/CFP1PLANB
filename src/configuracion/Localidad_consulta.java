@@ -5,6 +5,8 @@
  */
 package configuracion;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import menu.Principal;
 
 
@@ -13,12 +15,12 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Localidad_consulta extends javax.swing.JInternalFrame {
-
     /**
      * Creates new form localidad
      */
-    public Localidad_consulta() {
+    public Localidad_consulta() throws ClassNotFoundException {
         initComponents();
+       
     }
 
     /**
@@ -34,14 +36,14 @@ public class Localidad_consulta extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaLocalidad = new javax.swing.JList<>();
         txtLocalidad = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabla = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -71,14 +73,12 @@ public class Localidad_consulta extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setText("Localidades");
 
-        listaLocalidad.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(listaLocalidad);
-
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnAgregar.setBackground(new java.awt.Color(38, 86, 186));
         btnAgregar.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
@@ -120,6 +120,16 @@ public class Localidad_consulta extends javax.swing.JInternalFrame {
             }
         });
 
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(tabla);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -134,13 +144,13 @@ public class Localidad_consulta extends javax.swing.JInternalFrame {
                                 .addComponent(txtLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnBuscar))
-                            .addComponent(jScrollPane1))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addGap(26, 26, 26)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(29, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1)
@@ -157,18 +167,21 @@ public class Localidad_consulta extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                         .addComponent(btnAgregar)
                         .addGap(31, 31, 31)
                         .addComponent(btnModificar)
                         .addGap(31, 31, 31)
-                        .addComponent(btnEliminar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(30, 30, 30))
+                        .addComponent(btnEliminar)
+                        .addGap(82, 82, 82))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -188,14 +201,22 @@ public class Localidad_consulta extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        Principal.crearBarrio();
+        try {
+            Principal.crearBarrio();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Localidad_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
 
-        Principal.modificarBarrio();
+        try {
+            Principal.modificarBarrio();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Localidad_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -210,6 +231,10 @@ public class Localidad_consulta extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
@@ -221,8 +246,8 @@ public class Localidad_consulta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> listaLocalidad;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tabla;
     private javax.swing.JTextField txtLocalidad;
     // End of variables declaration//GEN-END:variables
 }

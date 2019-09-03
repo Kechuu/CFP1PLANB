@@ -39,9 +39,10 @@ public class MotivoBaja extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        txtdetalle = new javax.swing.JTextField();
         btndardebaja = new javax.swing.JButton();
         btnanterior = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDetalle = new javax.swing.JTextArea();
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
 
@@ -89,7 +90,6 @@ public class MotivoBaja extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Detalle");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 110, 170, 27));
-        jPanel1.add(txtdetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 143, 255, 34));
 
         btndardebaja.setBackground(new java.awt.Color(38, 86, 186));
         btndardebaja.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -100,7 +100,7 @@ public class MotivoBaja extends javax.swing.JInternalFrame {
                 btndardebajaActionPerformed(evt);
             }
         });
-        jPanel1.add(btndardebaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 189, 146, -1));
+        jPanel1.add(btndardebaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 146, -1));
 
         btnanterior.setBackground(new java.awt.Color(38, 86, 186));
         btnanterior.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -112,6 +112,13 @@ public class MotivoBaja extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnanterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 137, -1));
+
+        txtDetalle.setEditable(false);
+        txtDetalle.setColumns(20);
+        txtDetalle.setRows(5);
+        jScrollPane1.setViewportView(txtDetalle);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -174,6 +181,7 @@ public class MotivoBaja extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtdetalle;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea txtDetalle;
     // End of variables declaration//GEN-END:variables
 }

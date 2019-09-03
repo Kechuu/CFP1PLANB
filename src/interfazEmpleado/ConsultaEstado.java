@@ -50,7 +50,7 @@ public class ConsultaEstado extends javax.swing.JInternalFrame {
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Buscar");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 10, 100, 43));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 20, 100, 30));
 
         jLabel5.setText("Motivos:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 0));
@@ -101,7 +101,7 @@ public class ConsultaEstado extends javax.swing.JInternalFrame {
                 txtNombreActionPerformed(evt);
             }
         });
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 198, 38));
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 250, 30));
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

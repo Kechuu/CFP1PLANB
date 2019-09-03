@@ -64,15 +64,15 @@ public class CtrlAcciones {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
     }
-    
-    public Acciones leer(int idAcciones){
+    /*
+    public Acciones leer(int idEmpleado){
         Acciones acciones = new Acciones();
         CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM acciones WHERE idAcciones = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM acciones WHERE idEmpleado = ?");
             
-            ps.setInt(1, idAcciones);
+            ps.setInt(1, idEmpleado);
             rs = ps.executeQuery();
             
             if(rs.next()){
@@ -119,5 +119,5 @@ public class CtrlAcciones {
         }
     }
     //Falta el método de Leer id del empleado que se conectó
-    
+    */
 }

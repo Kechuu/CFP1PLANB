@@ -6,6 +6,8 @@
 package menu;
 
 import interfazEmpleado.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author araa
@@ -104,7 +106,8 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         this.setVisible(false);
         Principal.desactivarPanel();
         
-        Registro empleado= new Registro();
+        Registro empleado = null;
+        empleado = new Registro();
         Principal.panelPrincipal.add(empleado);
         empleado.setVisible(true);
 
@@ -115,7 +118,12 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         this.setVisible(false);
         Principal.desactivarPanel();
         
-        AsignarCurso curso=new AsignarCurso();
+        AsignarCurso curso = null;
+        try {
+            curso = new AsignarCurso();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EmpleadoMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Principal.panelPrincipal.add(curso);
         curso.setVisible(true);
     }//GEN-LAST:event_btnAsignarCursoActionPerformed

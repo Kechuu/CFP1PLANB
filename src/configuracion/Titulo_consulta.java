@@ -5,6 +5,8 @@
  */
 package configuracion;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import menu.Principal;
 
 
@@ -13,11 +15,10 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Titulo_consulta extends javax.swing.JInternalFrame {
-
     /**
      * Creates new form titulo
      */
-    public Titulo_consulta() {
+    public Titulo_consulta() throws ClassNotFoundException {
         initComponents();
     }
 
@@ -49,6 +50,11 @@ public class Titulo_consulta extends javax.swing.JInternalFrame {
         jLabel2.setText("Titulo:");
 
         btnBuscar.setText("buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -74,11 +80,6 @@ public class Titulo_consulta extends javax.swing.JInternalFrame {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        listaTitulo.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(listaTitulo);
 
         btnAgregar.setBackground(new java.awt.Color(38, 86, 186));
@@ -189,14 +190,22 @@ public class Titulo_consulta extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        Principal.crearBarrio();
+        try {
+            Principal.crearBarrio();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Titulo_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
 
-        Principal.modificarBarrio();
+        try {
+            Principal.modificarBarrio();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Titulo_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -210,6 +219,10 @@ public class Titulo_consulta extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

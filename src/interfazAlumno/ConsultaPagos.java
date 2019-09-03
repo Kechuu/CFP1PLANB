@@ -19,6 +19,11 @@ public class ConsultaPagos extends javax.swing.JInternalFrame {
      */
     public ConsultaPagos() {
         initComponents();
+        
+        /*Aqui se llenara la tabla por defecto de los ultimos pagos que se hayan realizado
+     por el mismo usuario que está usando el sistema..   
+        */
+    
     }
 
     /**
@@ -138,13 +143,13 @@ public class ConsultaPagos extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tablaEstado);
 
-        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 517, 121));
+        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 490, 120));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Motivos:");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 29, -1, -1));
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 111, -1, -1));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 111, 530, 210));
 
         btnregistrarpago.setBackground(new java.awt.Color(38, 86, 186));
         btnregistrarpago.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -155,7 +160,7 @@ public class ConsultaPagos extends javax.swing.JInternalFrame {
                 btnregistrarpagoActionPerformed(evt);
             }
         });
-        jPanel1.add(btnregistrarpago, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, 167, -1));
+        jPanel1.add(btnregistrarpago, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, 167, -1));
 
         btncancelar.setBackground(new java.awt.Color(38, 86, 186));
         btncancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -177,7 +182,7 @@ public class ConsultaPagos extends javax.swing.JInternalFrame {
                 btnbajaActionPerformed(evt);
             }
         });
-        jPanel1.add(btnbaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 167, -1));
+        jPanel1.add(btnbaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, 167, -1));
 
         btnanterior.setBackground(new java.awt.Color(38, 86, 186));
         btnanterior.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -222,6 +227,7 @@ public class ConsultaPagos extends javax.swing.JInternalFrame {
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
         // TODO add your handling code here:
+        //Llamar metodo de busqueda por dni...
     }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed

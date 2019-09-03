@@ -10,6 +10,9 @@ import usuario.*;
 import java.awt.Dimension;
 
 import clases.CambiaPanel;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author jesus
@@ -603,60 +606,60 @@ public class Principal extends javax.swing.JFrame {
         menuAlumno=0;
     }
     
-    public static void crearBarrio(){
+    public static void crearBarrio() throws ClassNotFoundException{
         Barrio_crear barrio=new Barrio_crear();
         panelPrincipal.add(barrio);
         barrio.setVisible(true);
         
     }
-    public static void modificarBarrio(){
+    public static void modificarBarrio() throws ClassNotFoundException{
         Barrio_modificar barrio=new Barrio_modificar();
         panelPrincipal.add(barrio);
         barrio.setVisible(true);
         
     }
-    public static void consultaBarrio(){
+    public static void consultaBarrio() throws SQLException, ClassNotFoundException{
         Barrio_consulta barrio=new Barrio_consulta();
         panelPrincipal.add(barrio);
         barrio.setVisible(true);
         
     }
     
-    public static void crearCalle(){
+    public static void crearCalle() throws ClassNotFoundException{
         
         Calles_crear nuevo=new Calles_crear();
         panelPrincipal.add(nuevo);
         nuevo.setVisible(true);
         
     }
-    public static void modificarCalle(){
+    public static void modificarCalle() throws ClassNotFoundException{
         
         Calles_modificar calle=new Calles_modificar();
         panelPrincipal.add(calle);
         calle.setVisible(true);
         
     }
-    public static void consultaCalle(){
+    public static void consultaCalle() throws ClassNotFoundException{
         Calles_consulta calle=new Calles_consulta();
         panelPrincipal.add(calle);
         calle.setVisible(true);
     }
     
-    public static void crearCargo(){
+    public static void crearCargo() throws ClassNotFoundException{
         Cargo_crear cargo=new Cargo_crear();
                 
         panelPrincipal.add(cargo);
         cargo.setVisible(true);
         
     }
-    public static void modificarCargo(){
+    public static void modificarCargo() throws ClassNotFoundException{
         Cargo_modificar cargo=new Cargo_modificar();
                 
         panelPrincipal.add(cargo);
         cargo.setVisible(true);
         
     }
-    public static void consultaCargo(){
+    public static void consultaCargo() throws ClassNotFoundException{
         Cargo_consulta cargo=new Cargo_consulta();
         
         panelPrincipal.add(cargo);
@@ -664,21 +667,21 @@ public class Principal extends javax.swing.JFrame {
         
     }
     
-    public static void crearCursado(){
+    public static void crearCursado() throws ClassNotFoundException{
          Cursado_crear curso=new Cursado_crear();
         
         panelPrincipal.add(curso);
         curso.setVisible(true);
         
     }
-    public static void modificarCursado(){
+    public static void modificarCursado() throws ClassNotFoundException{
          Cursado_modificar curso=new Cursado_modificar();
         
         panelPrincipal.add(curso);
         curso.setVisible(true);
         
     }
-    public static void consultaCursado(){
+    public static void consultaCursado() throws ClassNotFoundException{
         Cursado_consulta curso=new Cursado_consulta();
         
         panelPrincipal.add(curso);
@@ -686,21 +689,21 @@ public class Principal extends javax.swing.JFrame {
         
     }
     
-    public static void crearGremio(){
+    public static void crearGremio() throws ClassNotFoundException{
         Gremio_crear gremio=new Gremio_crear();
         
         panelPrincipal.add(gremio);
         gremio.setVisible(true);
         
     }
-    public static void modificarGremio(){
+    public static void modificarGremio() throws ClassNotFoundException{
         Gremio_modificar gremio=new Gremio_modificar();
         
         panelPrincipal.add(gremio);
         gremio.setVisible(true);
         
     }
-    public static void consultaGremio(){
+    public static void consultaGremio() throws ClassNotFoundException{
         Gremio_consulta gremio=new Gremio_consulta();
         
         panelPrincipal.add(gremio);
@@ -708,14 +711,14 @@ public class Principal extends javax.swing.JFrame {
         
     }
     
-    public static void crearLocalidad(){
+    public static void crearLocalidad() throws ClassNotFoundException{
         Localidad_crear localidad= new Localidad_crear();
         
         panelPrincipal.add(localidad);
         localidad.setVisible(true);
         
     }
-    public static void modificarLocalidad(){
+    public static void modificarLocalidad() throws ClassNotFoundException{
         Localidad_modificar localidad=new Localidad_modificar();
         
         
@@ -723,42 +726,42 @@ public class Principal extends javax.swing.JFrame {
         localidad.setVisible(true);
         
     }
-    public static void consultaLocalidad(){
+    public static void consultaLocalidad() throws ClassNotFoundException{
         Localidad_consulta localidad=new Localidad_consulta();
         
         panelPrincipal.add(localidad);
         localidad.setVisible(true);
     }
     
-    public static void crearNacionalidad(){
+    public static void crearNacionalidad() throws ClassNotFoundException{
         Nacionalidad_crear nacion= new Nacionalidad_crear();
         
         panelPrincipal.add(nacion);
         nacion.setVisible(true);
         
     }
-    public static void modificarNacionalidad(){
+    public static void modificarNacionalidad() throws ClassNotFoundException{
         Nacionalidad_modificar nacion= new Nacionalidad_modificar();
         
         panelPrincipal.add(nacion);
         nacion.setVisible(true);
         
     }
-    public static void consultaNacionalidad(){
+    public static void consultaNacionalidad() throws ClassNotFoundException{
         Nacionalidad_consulta nacion= new Nacionalidad_consulta();
         
         panelPrincipal.add(nacion);
         nacion.setVisible(true);
     }
     
-    public static void crearPlan(){
+    public static void crearPlan() throws ClassNotFoundException{
         Plan_crear plan=new Plan_crear();
         
         panelPrincipal.add(plan);
         plan.setVisible(true);
         
     }
-    public static void modificarPlan(){
+    public static void modificarPlan() throws ClassNotFoundException{
         
         Plan_modificar plan=new Plan_modificar();
         
@@ -766,7 +769,7 @@ public class Principal extends javax.swing.JFrame {
         plan.setVisible(true);
         
     }
-    public static void consultaPlan(){
+    public static void consultaPlan() throws ClassNotFoundException{
         Plan_consulta plan=new Plan_consulta();
         
         panelPrincipal.add(plan);
@@ -774,21 +777,21 @@ public class Principal extends javax.swing.JFrame {
         
     }
     
-    public static void crearTitulo(){
+    public static void crearTitulo() throws ClassNotFoundException{
         Titulo_crear titulo=new Titulo_crear();
              
         panelPrincipal.add(titulo);
         titulo.setVisible(true);
         
     }
-    public static void modificarTitulo(){
+    public static void modificarTitulo() throws ClassNotFoundException{
         Titulo_modificar titulo= new Titulo_modificar();
         
         panelPrincipal.add(titulo);
         titulo.setVisible(true);
         
     }
-    public static void consultaTitulo(){
+    public static void consultaTitulo() throws ClassNotFoundException{
         Titulo_consulta titulo=new Titulo_consulta();
         
         panelPrincipal.add(titulo);
@@ -796,19 +799,19 @@ public class Principal extends javax.swing.JFrame {
         
     }
     
-    public static void crearTrabajo(){
+    public static void crearTrabajo() throws ClassNotFoundException{
         Trabajo_crear trabajo=new Trabajo_crear();
         panelPrincipal.add(trabajo);
         trabajo.setVisible(true);
         
     }
-    public static void modificarTrabajo(){
+    public static void modificarTrabajo() throws ClassNotFoundException{
         Trabajo_modificar trabajo=new Trabajo_modificar();
         panelPrincipal.add(trabajo);
         trabajo.setVisible(true);
         
     }
-    public static void consultaTrabajo(){
+    public static void consultaTrabajo() throws ClassNotFoundException{
         Trabajo_consulta trabajo=new Trabajo_consulta();
         panelPrincipal.add(trabajo);
         trabajo.setVisible(true);
@@ -855,21 +858,33 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
         // TODO add your handling code here:
        desactivarPanel();
-       modificarPlan();
+        try {
+            modificarPlan();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem30ActionPerformed
 
     private void btnCalleNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalleNuevoActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        crearCalle();
+        try {
+            crearCalle();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnCalleNuevoActionPerformed
 
     private void btnCalleModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalleModificarActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        modificarCalle();
+        try {
+            modificarCalle();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnCalleModificarActionPerformed
 
     private void btnCalleConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalleConsultaActionPerformed
@@ -877,14 +892,22 @@ public class Principal extends javax.swing.JFrame {
         
         desactivarPanel();
         
-        consultaCalle();
+        try {
+            consultaCalle();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnCalleConsultaActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        crearBarrio();
+        try {
+            crearBarrio();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     
@@ -892,149 +915,239 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         desactivarPanel();
       
-        modificarBarrio();
+        try {
+            modificarBarrio();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        consultaBarrio();
+        try {
+            consultaBarrio();
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
         // TODO add your handling code here:
        desactivarPanel();
         
-       crearLocalidad();
+        try {
+            crearLocalidad();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem20ActionPerformed
 
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
-        modificarLocalidad();
+        try {
+            modificarLocalidad();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
-        consultaLocalidad();
+        try {
+            consultaLocalidad();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem22ActionPerformed
 
     private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        crearCargo();
+        try {
+            crearCargo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem23ActionPerformed
 
     private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        modificarCargo();
+        try {
+            modificarCargo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem24ActionPerformed
 
     private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        consultaCargo();
+        try {
+            consultaCargo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 
     private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        crearTitulo();
+        try {
+            crearTitulo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem26ActionPerformed
 
     private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        modificarTitulo();
+        try {
+            modificarTitulo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        consultaTitulo();
+        try {
+            consultaTitulo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
     private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        crearPlan();
+        try {
+            crearPlan();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem29ActionPerformed
 
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        consultaPlan();
+        try {
+            consultaPlan();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem31ActionPerformed
 
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        crearGremio();
+        try {
+            crearGremio();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem32ActionPerformed
 
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        modificarGremio();
+        try {
+            modificarGremio();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem33ActionPerformed
 
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        consultaGremio();
+        try {
+            consultaGremio();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem34ActionPerformed
 
     private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-       crearCursado();
+        try {
+            crearCursado();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem35ActionPerformed
 
     private void jMenuItem36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem36ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-       modificarCursado();
+        try {
+            modificarCursado();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem36ActionPerformed
 
     private void jMenuItem37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem37ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
         
-        consultaCursado();
+        try {
+            consultaCursado();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem37ActionPerformed
 
     private void jMenuItem38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem38ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
-        crearTrabajo();
+        try {
+            crearTrabajo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem38ActionPerformed
 
     private void jMenuItem39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem39ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
-        modificarTrabajo();
+        try {
+            modificarTrabajo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem39ActionPerformed
 
     private void jMenuItem40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem40ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
-        consultaTrabajo();
+        try {
+            consultaTrabajo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem40ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -1045,7 +1158,12 @@ public class Principal extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         desactivarPanel();
-        CrearUsuario user= new CrearUsuario();
+        CrearUsuario user = null;
+        try {
+            user = new CrearUsuario();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         panelPrincipal.add(user);
         user.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed

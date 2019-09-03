@@ -12,11 +12,10 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Calles_crear extends javax.swing.JInternalFrame {
-
     /**
      * Creates new form crearCalle
      */
-    public Calles_crear() {
+    public Calles_crear() throws ClassNotFoundException {
         initComponents();
     }
 
@@ -44,6 +43,24 @@ public class Calles_crear extends javax.swing.JInternalFrame {
         tablaCalles = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
 
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -65,10 +82,13 @@ public class Calles_crear extends javax.swing.JInternalFrame {
         jLabel3.setText("Barrio");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, -1, -1));
 
-        cbLocalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbLocalidad.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbLocalidadItemStateChanged(evt);
+            }
+        });
         jPanel1.add(cbLocalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 180, -1));
 
-        cbBarrio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(cbBarrio, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 150, -1));
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
@@ -79,7 +99,12 @@ public class Calles_crear extends javax.swing.JInternalFrame {
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
         btnAceptar.setText("Aceptar");
-        jPanel1.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 390, 100, -1));
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 100, -1));
 
         btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -89,17 +114,14 @@ public class Calles_crear extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 100, -1));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 390, 100, -1));
 
         tablaCalles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane2.setViewportView(tablaCalles);
@@ -118,7 +140,7 @@ public class Calles_crear extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
         );
 
         pack();
@@ -129,6 +151,19 @@ public class Calles_crear extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void cbLocalidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLocalidadItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbLocalidadItemStateChanged
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_formInternalFrameOpened
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

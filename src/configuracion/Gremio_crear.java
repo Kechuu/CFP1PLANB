@@ -13,11 +13,10 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Gremio_crear extends javax.swing.JInternalFrame {
-
     /**
      * Creates new form CrearGremio
      */
-    public Gremio_crear() {
+    public Gremio_crear() throws ClassNotFoundException {
         initComponents();
     }
 
@@ -89,13 +88,10 @@ public class Gremio_crear extends javax.swing.JInternalFrame {
 
         tablaGremios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane2.setViewportView(tablaGremios);
@@ -123,9 +119,9 @@ public class Gremio_crear extends javax.swing.JInternalFrame {
                                 .addComponent(txtGremios, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(

@@ -5,6 +5,8 @@
  */
 package configuracion;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import menu.Principal;
 
 
@@ -13,11 +15,10 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Calles_consulta extends javax.swing.JInternalFrame {
-
     /**
      * Creates new form calles
      */
-    public Calles_consulta() {
+    public Calles_consulta() throws ClassNotFoundException {
         initComponents();
     }
 
@@ -45,7 +46,7 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnAtras = new javax.swing.JButton();
 
         jList2.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -57,7 +58,11 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbLocalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbLocalidad.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbLocalidadItemStateChanged(evt);
+            }
+        });
         jPanel1.add(cbLocalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 112, -1));
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
@@ -70,7 +75,11 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 566, -1));
 
-        cbBarrio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbBarrio.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbBarrioItemStateChanged(evt);
+            }
+        });
         jPanel1.add(cbBarrio, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 111, -1));
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
@@ -81,11 +90,6 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
         jLabel3.setText("Barrio");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, -1));
 
-        listaCalle.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(listaCalle);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 402, 160));
@@ -127,16 +131,16 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
         });
         jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 310, 100, -1));
 
-        jButton1.setBackground(new java.awt.Color(38, 86, 186));
-        jButton1.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Atras");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAtras.setBackground(new java.awt.Color(38, 86, 186));
+        btnAtras.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        btnAtras.setForeground(new java.awt.Color(255, 255, 255));
+        btnAtras.setText("Atras");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAtrasActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, -1, -1));
+        jPanel1.add(btnAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -155,14 +159,22 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        Principal.crearBarrio();
+        try {
+            Principal.crearBarrio();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Calles_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
 
-        Principal.modificarBarrio();
+        try {
+            Principal.modificarBarrio();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Calles_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -171,20 +183,28 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
         // TODO add your handling code here:
         Principal.activarPanel();
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void cbBarrioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbBarrioItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbBarrioItemStateChanged
+
+    private void cbLocalidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLocalidadItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbLocalidadItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> cbBarrio;
     private javax.swing.JComboBox<String> cbLocalidad;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

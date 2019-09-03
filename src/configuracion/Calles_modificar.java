@@ -13,11 +13,10 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Calles_modificar extends javax.swing.JInternalFrame {
-
     /**
      * Creates new form modificarcalle
      */
-    public Calles_modificar() {
+    public Calles_modificar() throws ClassNotFoundException {
         initComponents();
     }
 
@@ -41,9 +40,9 @@ public class Calles_modificar extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        btnLocalidad = new javax.swing.JComboBox<>();
-        btnBarrio = new javax.swing.JComboBox<>();
-        btnCalleActual = new javax.swing.JComboBox<>();
+        cbLocalidad = new javax.swing.JComboBox<>();
+        cbBarrios = new javax.swing.JComboBox<>();
+        cbCalles = new javax.swing.JComboBox<>();
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -77,7 +76,7 @@ public class Calles_modificar extends javax.swing.JInternalFrame {
                 btnAceptarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 340, 100, -1));
+        jPanel1.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 100, -1));
 
         btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -87,7 +86,7 @@ public class Calles_modificar extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 100, -1));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 100, -1));
 
         jLabel5.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel5.setText("Barrios:");
@@ -97,41 +96,48 @@ public class Calles_modificar extends javax.swing.JInternalFrame {
         jLabel6.setText("Localidades:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 81, -1, -1));
 
-        btnLocalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(btnLocalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 109, 220, -1));
-
-        btnBarrio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(btnBarrio, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 176, 220, -1));
-
-        btnCalleActual.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        btnCalleActual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalleActualActionPerformed(evt);
+        cbLocalidad.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbLocalidadItemStateChanged(evt);
             }
         });
-        jPanel1.add(btnCalleActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 246, 225, -1));
+        jPanel1.add(cbLocalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 109, 220, -1));
+
+        cbBarrios.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbBarriosItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(cbBarrios, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 176, 220, -1));
+
+        cbCalles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCallesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cbCalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 246, 225, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    private void btnCalleActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalleActualActionPerformed
+    private void cbCallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCallesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCalleActualActionPerformed
+    }//GEN-LAST:event_cbCallesActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
@@ -139,13 +145,21 @@ public class Calles_modificar extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void cbBarriosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbBarriosItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbBarriosItemStateChanged
+
+    private void cbLocalidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLocalidadItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbLocalidadItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JComboBox<String> btnBarrio;
-    private javax.swing.JComboBox<String> btnCalleActual;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> btnLocalidad;
+    private javax.swing.JComboBox<String> cbBarrios;
+    private javax.swing.JComboBox<String> cbCalles;
+    private javax.swing.JComboBox<String> cbLocalidad;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

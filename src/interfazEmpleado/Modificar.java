@@ -37,12 +37,12 @@ public class Modificar extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jTextField6 = new javax.swing.JTextField();
         btncancelar = new javax.swing.JButton();
-        btnguardar = new javax.swing.JButton();
+        btnSiguiente = new javax.swing.JButton();
         btntomarfoto = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txtnombre = new javax.swing.JTextField();
-        txtapellido = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtApellido = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
@@ -109,6 +109,11 @@ public class Modificar extends javax.swing.JInternalFrame {
         btnbuscar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnbuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnbuscar.setText("Buscar");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 13, 142, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -129,11 +134,16 @@ public class Modificar extends javax.swing.JInternalFrame {
         });
         jPanel1.add(btncancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 320, 130, -1));
 
-        btnguardar.setBackground(new java.awt.Color(38, 86, 186));
-        btnguardar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnguardar.setForeground(new java.awt.Color(255, 255, 255));
-        btnguardar.setText("Guardar");
-        jPanel1.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 280, 130, -1));
+        btnSiguiente.setBackground(new java.awt.Color(38, 86, 186));
+        btnSiguiente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnSiguiente.setForeground(new java.awt.Color(255, 255, 255));
+        btnSiguiente.setText("Siguiente");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 280, 130, -1));
 
         btntomarfoto.setBackground(new java.awt.Color(38, 86, 186));
         btntomarfoto.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -148,11 +158,11 @@ public class Modificar extends javax.swing.JInternalFrame {
         jLabel3.setText("Nombre");
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 36, -1, -1));
 
-        txtnombre.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jPanel4.add(txtnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 65, 133, -1));
+        txtNombre.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jPanel4.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 65, 133, -1));
 
-        txtapellido.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        jPanel4.add(txtapellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 67, 133, -1));
+        txtApellido.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        jPanel4.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 67, 133, -1));
 
         jLabel4.setText("Apellido");
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 38, -1, -1));
@@ -357,11 +367,38 @@ public class Modificar extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_combotorreActionPerformed
 
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        // TODO add your handling code here:
+        
+        //verificacion...
+        
+        if(!txtNombre.getText().equals("")){
+            this.setVisible(false);
+            String nombre= txtNombre.getText()+" "+txtApellido.getText();
+        
+            AsignarCurso curso= new AsignarCurso(nombre, false);
+            Principal.panelPrincipal.add(curso);
+            curso.setVisible(true);
+        }
+        
+        
+        
+    }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        // TODO add your handling code here:
+        
+       /*Cuando haga la busqueda de dni y devuelva un registro, capturar el id para la posterior busqueda 
+       en el frame de asignar curso.
+        */
+
+    }//GEN-LAST:event_btnbuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSiguiente;
     private javax.swing.JButton btnbuscar;
     private javax.swing.JButton btncancelar;
-    private javax.swing.JButton btnguardar;
     private javax.swing.JButton btntomarfoto;
     private javax.swing.JComboBox<String> combobarrio;
     private javax.swing.JComboBox<String> combocalle;
@@ -408,7 +445,8 @@ public class Modificar extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JRadioButton masculino;
-    private javax.swing.JTextField txtapellido;
+    private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtcodigopostal;
     private javax.swing.JTextField txtcorreo;
     private javax.swing.JTextField txtcuil;
@@ -416,7 +454,6 @@ public class Modificar extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtdocumento;
     private javax.swing.JTextField txthijos;
     private javax.swing.JTextField txthijos2;
-    private javax.swing.JTextField txtnombre;
     private javax.swing.JComboBox<String> txtseleccionar;
     private javax.swing.JTextField txttelefono;
     private javax.swing.JTextField txttelefonofijo;

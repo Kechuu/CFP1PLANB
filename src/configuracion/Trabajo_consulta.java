@@ -5,6 +5,8 @@
  */
 package configuracion;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import menu.Principal;
 
 
@@ -13,11 +15,10 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Trabajo_consulta extends javax.swing.JInternalFrame {
-
     /**
      * Creates new form Trabajo
      */
-    public Trabajo_consulta() {
+    public Trabajo_consulta() throws ClassNotFoundException {
         initComponents();
     }
 
@@ -71,14 +72,14 @@ public class Trabajo_consulta extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setText("Trabajos:");
 
-        listaTrabajo.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(listaTrabajo);
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnAgregar.setBackground(new java.awt.Color(38, 86, 186));
         btnAgregar.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
@@ -188,14 +189,22 @@ public class Trabajo_consulta extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        Principal.crearBarrio();
+        try {
+            Principal.crearBarrio();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Trabajo_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
 
-        Principal.modificarBarrio();
+        try {
+            Principal.modificarBarrio();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Trabajo_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -209,6 +218,10 @@ public class Trabajo_consulta extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

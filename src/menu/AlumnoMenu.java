@@ -11,6 +11,10 @@ import interfazAlumno.Eliminar;
 import interfazAlumno.Pago;
 import interfazAlumno.ConsultaPagos;
 import interfazAlumno.Inscripcion;
+import java.awt.Frame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author araa
@@ -138,7 +142,12 @@ public class AlumnoMenu extends javax.swing.JPanel {
         Principal.desactivarPanel();
         pagoAlumno=0;
         
-        Inscripcion insc=new Inscripcion();
+        Inscripcion insc = null;
+        try {
+            insc = new Inscripcion();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AlumnoMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Principal.panelPrincipal.add(insc);
         insc.setVisible(true);
     }//GEN-LAST:event_btnInscribirActionPerformed
@@ -183,9 +192,13 @@ public class AlumnoMenu extends javax.swing.JPanel {
         Principal.desactivarPanel();
         pagoAlumno=1;
         
-        Pago pago= new Pago();
-        Principal.panelPrincipal.add(pago);
-        pago.setVisible(true);
+        Frame f= JOptionPane.getFrameForComponent(Principal.panelPrincipal);
+        
+        Frame e= JOptionPane.getRootFrame();
+        
+        Pago dial=new Pago(f, true);
+        
+        dial.setVisible(true);
     }//GEN-LAST:event_btnPagosActionPerformed
 
     private void btnConsultarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarEstadoActionPerformed

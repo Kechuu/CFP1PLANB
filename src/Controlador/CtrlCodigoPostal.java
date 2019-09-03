@@ -71,7 +71,6 @@ public class CtrlCodigoPostal {
             rs = ps.executeQuery();
             
             if (rs.next()) {
-                codigoPostal.setLocalidad(ctrlLugar.leer(rs.getInt("idLugar")));
                 codigoPostal.setCodigoPostal(rs.getString("codigoPostal"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");

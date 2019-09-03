@@ -13,13 +13,16 @@ import menu.Principal;
  */
 public class AsignarCurso extends javax.swing.JInternalFrame {
 
+    
     /**
      * Creates new form AsignarCurso
      */
-    public AsignarCurso() {
-        initComponents();
+    public AsignarCurso() throws ClassNotFoundException {
     }
 
+    public AsignarCurso(String nombre, boolean bandera){
+        initComponents();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,11 +46,11 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         btnAsignar = new javax.swing.JButton();
-        cboxCargo = new javax.swing.JComboBox<>();
-        cboxProfesor = new javax.swing.JComboBox<>();
+        cbCargo = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtTablaAsignarCurso = new javax.swing.JTable();
+        cbEmpleado = new javax.swing.JComboBox<>();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -73,10 +76,10 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
         jLabel1.setText("Asignacion de Curso");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 29, -1, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 711, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 2, 711, 70));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Profesor");
+        jLabel2.setText("Empleado");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -100,7 +103,7 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 380, 100, -1));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 380, 100, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setText("Cargo");
@@ -115,13 +118,14 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
                 btnAsignarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAsignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 380, 100, -1));
+        jPanel1.add(btnAsignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 100, -1));
 
-        cboxCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar Cargo del Profesor:", " " }));
-        jPanel1.add(cboxCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
-
-        cboxProfesor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar Profesor:", " " }));
-        jPanel1.add(cboxProfesor, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 256, -1));
+        cbCargo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbCargoItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(cbCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 260, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Cursos");
@@ -141,6 +145,8 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(txtTablaAsignarCurso);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, 371, 210));
+
+        jPanel1.add(cbEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 260, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -170,13 +176,17 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAsignarActionPerformed
 
+    private void cbCargoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCargoItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCargoItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cboxCargo;
+    private javax.swing.JComboBox<String> cbCargo;
+    private javax.swing.JComboBox<String> cbEmpleado;
     private javax.swing.JComboBox<String> cboxCurso;
-    private javax.swing.JComboBox<String> cboxProfesor;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JLabel jLabel1;

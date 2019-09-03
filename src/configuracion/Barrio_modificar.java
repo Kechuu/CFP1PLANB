@@ -13,11 +13,10 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Barrio_modificar extends javax.swing.JInternalFrame {
-
     /**
      * Creates new form modificarbarrio
      */
-    public Barrio_modificar() {
+    public Barrio_modificar() throws ClassNotFoundException {
         initComponents();
     }
 
@@ -72,7 +71,7 @@ public class Barrio_modificar extends javax.swing.JInternalFrame {
                 btnAceptarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 100, -1));
+        jPanel1.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 100, -1));
 
         btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -82,16 +81,19 @@ public class Barrio_modificar extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 300, 100, -1));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 100, -1));
 
         jLabel5.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel5.setText("Localidad:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 75, -1, -1));
 
-        cbLocalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbLocalidad.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbLocalidadItemStateChanged(evt);
+            }
+        });
         jPanel1.add(cbLocalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 110, 202, 26));
 
-        cbBarriosActuales.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(cbBarriosActuales, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 188, 248, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -102,14 +104,14 @@ public class Barrio_modificar extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -117,6 +119,10 @@ public class Barrio_modificar extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void cbLocalidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLocalidadItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbLocalidadItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

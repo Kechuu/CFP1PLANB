@@ -19,9 +19,15 @@ public class Eliminar extends javax.swing.JInternalFrame {
     public Eliminar() {
         initComponents();
         jPanel3.setVisible(false);
-        textArea.setVisible(false);
-        
-     
+        textArea.setVisible(false);     
+    }
+    
+    public Eliminar(String nombre){
+        /*En caso de que la interfaz sea llamada por ConsultarPagos
+        se traera el dni de la interfaz anterior tambien para hacer una busqueda y
+        traer la foto del estudiante...
+        */
+
     }
 
     /**
@@ -81,7 +87,7 @@ public class Eliminar extends javax.swing.JInternalFrame {
                 btncancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btncancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 280, 130, -1));
+        jPanel1.add(btncancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 270, 130, -1));
 
         btneliminar.setBackground(new java.awt.Color(38, 86, 186));
         btneliminar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N

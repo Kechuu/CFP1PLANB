@@ -5,6 +5,8 @@
  */
 package menu;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import licencia.*;
 /**
  *
@@ -91,7 +93,12 @@ public class LicenciaMenu extends javax.swing.JPanel {
         this.setVisible(false);
         Principal.desactivarPanel();
         
-        CrearLicencia crear=new CrearLicencia();
+        CrearLicencia crear = null;
+        try {
+            crear = new CrearLicencia();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LicenciaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Principal.panelPrincipal.add(crear);
         crear.setVisible(true);
     }//GEN-LAST:event_btnArticulosActionPerformed
@@ -112,7 +119,12 @@ public class LicenciaMenu extends javax.swing.JPanel {
         this.setVisible(false);
         Principal.desactivarPanel();
         
-        Licencia art=new Licencia();
+        Licencia_consulta art = null;
+        try {
+            art = new Licencia_consulta();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LicenciaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Principal.panelPrincipal.add(art);
         art.setVisible(true);
     }//GEN-LAST:event_btnConsultasActionPerformed
@@ -122,7 +134,12 @@ public class LicenciaMenu extends javax.swing.JPanel {
         this.setVisible(false);
         Principal.desactivarPanel();
         
-        ModificarLicencia modificar=new ModificarLicencia();
+        ModificarLicencia modificar = null;
+        try {
+            modificar = new ModificarLicencia();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LicenciaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Principal.panelPrincipal.add(modificar);
         modificar.setVisible(true);
     }//GEN-LAST:event_btnModificarActionPerformed
