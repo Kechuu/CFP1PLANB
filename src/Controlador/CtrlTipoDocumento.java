@@ -58,13 +58,33 @@ public class CtrlTipoDocumento {
         }
     }
     
+    public TipoDocumento leer(){
+        TipoDocumento tipoDocumento = new TipoDocumento();
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM tipoDocumento");
+            
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                tipoDocumento.setDetalle(rs.getString("detalle"));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            
+            con.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        return tipoDocumento;
+    }
+    
     public TipoDocumento leer(int idTipoDocumento){
         TipoDocumento tipoDocumento = new TipoDocumento();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM tipoDocumento WHERE idTipoDocumento = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM tipoDocumento");
             
-            ps.setInt(1, idTipoDocumento);
             rs = ps.executeQuery();
             
             if(rs.next()){

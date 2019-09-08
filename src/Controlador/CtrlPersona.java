@@ -4,11 +4,17 @@
  * and open the template in the editor.
  */
 package Controlador;
+import clases.CambiaPanel;
+import interfazAlumno.Inscripcion;
+import interfazAlumno.PanelDni;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import menu.AlumnoMenu;
+import menu.Principal;
+import static menu.Principal.panelSubMenu;
 import modelo.Persona;
 /**
  *
@@ -18,6 +24,7 @@ public class CtrlPersona {
     Connection con = null;
     PreparedStatement ps;
     ResultSet rs;
+    public int CUIL = 0;
     
     public void crear(String nombrePersona, String apellidoPersona, Date fechaNacimiento, boolean sexo, String CUIL, int hijoPersona,
             String correo, int celular, int idDomicilio, int idTipoDocumento, int idNacionalidad, int idFoto, int lugarNacimiento,
@@ -145,6 +152,76 @@ public class CtrlPersona {
                 persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("idLugarNacimiento")));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        
+     return persona;
+    }
+    
+    public void generarCUIL(int DNI) throws ClassNotFoundException{
+        PanelDni dni = new PanelDni();
+        int validarPersona = dni.validarPersona;
+    
+        /*
+        Codigo de CUIL :v
+        */
+        CUIL = DNI;
+        
+        buscarAlumno(CUIL, validarPersona);
+        
+    }
+    
+    public Persona buscarAlumno(int CUIL, int validarPersona) throws ClassNotFoundException{
+        PanelDni dni = new PanelDni();
+        Persona persona = new Persona();
+        CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
+        CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
+        CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
+        CtrlFoto ctrlFoto = new CtrlFoto();
+        CtrlLugar ctrlLugarNacimiento = new CtrlLugar();
+        
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM persona WHERE CUIL = ?");
+            
+            ps.setInt(1, CUIL);
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                persona.setIdPersona(rs.getInt("idPersona"));
+                persona.setNombrePersona(rs.getString("nombrePersona"));
+                persona.setApellidoPersona(rs.getString("apellidoPersona"));
+                persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
+                persona.setSexo(rs.getBoolean("sexo"));
+                persona.setCUIL(rs.getString("CUIL"));
+                persona.setHijoPersona(rs.getInt("hijoPersona"));
+                persona.setCorreo(rs.getString("correo"));
+                persona.setCelular(rs.getInt("celular"));
+                persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("idDomicilio")));
+                persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("idTipoDocumento")));
+                persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("idNacionalidad")));
+                persona.setIdFoto(ctrlFoto.leer(rs.getInt("idFoto")));
+                persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("idLugarNacimiento")));
+                
+                if (validarPersona == 1) {
+                    JOptionPane.showMessageDialog(null, "La persona ya está cargada. Elija una de las opciones para continuar.");
+                    validarPersona=2;
+                    dni.validarPersona = validarPersona;
+                    
+                    new CambiaPanel(panelSubMenu, new AlumnoMenu());
+                }
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                
+                Inscripcion inscripcion =new Inscripcion();
+                Principal.panelPrincipal.add(inscripcion);
+                inscripcion.setVisible(true);
+                
             }
             
         } catch (Exception e) {

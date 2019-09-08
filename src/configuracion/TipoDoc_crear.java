@@ -5,6 +5,8 @@
  */
 package configuracion;
 
+import Controlador.CtrlTipoDocumento;
+import javax.swing.JOptionPane;
 import menu.Principal;
 
 
@@ -157,6 +159,14 @@ public class TipoDoc_crear extends javax.swing.JInternalFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
 
+        CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
+        
+        if (txtTipo.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No pueden crearce registros vacios");
+        }else{
+            ctrlTipoDocumento.crear(txtTipo.getText());
+        }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

@@ -11,6 +11,7 @@ import interfazAlumno.Eliminar;
 import interfazAlumno.Pago;
 import interfazAlumno.ConsultaPagos;
 import interfazAlumno.Inscripcion;
+import interfazAlumno.PanelDni;
 import java.awt.Frame;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,12 +26,17 @@ public class AlumnoMenu extends javax.swing.JPanel {
      * Creates new form AlumnoMenu
      */
     public static int pagoAlumno;
-    public AlumnoMenu() {
+    public AlumnoMenu() throws ClassNotFoundException {
         initComponents();
         
         this.setBounds(0, 65, 240, 210);
         
         menu.Principal.menuAlumno=1;
+        
+        PanelDni dni = new PanelDni();
+        if (dni.validarPersona== 2) {
+            btnInscribir.setEnabled(false);
+        }
     }
 
     /**
