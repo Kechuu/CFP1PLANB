@@ -48,6 +48,9 @@ public class Lugar {
         this.de = de;
     }
     
-    
+    @Override
+    public String toString(){
+        return this.nombre;
+    }
     
 }

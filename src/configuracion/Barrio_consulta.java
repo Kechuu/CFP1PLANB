@@ -5,11 +5,17 @@
  */
 package configuracion;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import menu.Principal;
-
+import modelo.Lugar;
 
 
 /**
@@ -17,13 +23,74 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Barrio_consulta extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
+    
+    public static String idBarrio;
+    public static String nombreLocalidad = "";
+    public static int modificar = 0;
     /**
      * Creates new form barrio
      */
     public Barrio_consulta() throws SQLException, ClassNotFoundException {
         initComponents();
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        cargarComboLocalidad(cbLocalidad);
     }
 
+    public void cargarComboLocalidad(JComboBox<Lugar> cbLocalidad){
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM lugar WHERE nivel = 3 ORDER BY nombre ASC");
+            Lugar lugar = new Lugar();
+            lugar.setIdLugar(0);
+            lugar.setNombre("Seleccione una opcion...");
+            lugar.setNivel(0);
+            lugar.setDe(0);
+            cbLocalidad.addItem(lugar);
+            
+            while (rs.next()) {                
+                lugar = new Lugar();
+                lugar.setIdLugar(rs.getInt("idLugar"));
+                lugar.setNombre(rs.getString("nombre"));
+                lugar.setNivel(rs.getInt("nivel"));
+                lugar.setDe(rs.getInt("de"));
+                cbLocalidad.addItem(lugar);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+        }
+        
+    }
+    
+        public void cargarListaBarrios(int idLugar){
+        DefaultListModel<Lugar> modelo = new DefaultListModel<>();
+        
+        try {
+            Statement st=(Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM lugar WHERE nivel = 2 AND de = '"+ idLugar +"'ORDER BY nombre ASC");
+            
+            while (rs.next()) {
+                Lugar lugar = new Lugar();
+                lugar.setIdLugar(rs.getInt("idLugar"));
+                lugar.setNombre(rs.getString("nombre"));
+                lugar.setNivel(rs.getInt("nivel"));
+                lugar.setDe(rs.getInt("de"));
+                
+                modelo.addElement(lugar);
+            }
+            
+            listaBarrios.setModel(modelo);
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, "+e);
+        }
+    
+    }
+        
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -102,6 +169,11 @@ public class Barrio_consulta extends javax.swing.JInternalFrame {
         });
         jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 100, -1));
 
+        listaBarrios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaBarriosValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(listaBarrios);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 192, 370, 140));
@@ -164,16 +236,29 @@ public class Barrio_consulta extends javax.swing.JInternalFrame {
             Principal.crearBarrio();//Llama al frame de Crear barrio
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Barrio_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Barrio_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
+        Lugar lugarModificar = new Lugar();
+        
+        lugarModificar = listaBarrios.getSelectedValue();
+        
+        idBarrio = lugarModificar.getNombre();
+        nombreLocalidad = cbLocalidad.getSelectedItem().toString();
+        modificar = 1;
+        
+        
         this.setVisible(false);
         
         try {
             Principal.modificarBarrio();
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Barrio_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(Barrio_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -186,20 +271,25 @@ public class Barrio_consulta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void cbLocalidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLocalidadItemStateChanged
-        // TODO add your handling code here:
-    /*Este es un 'evento > Items' en el combobox de localidad.. que de seleccionar un determinado item, hara un filtrado
-    En este caso lo que hace es de seleccionar una determinada localidad del comobobox, en la lista de abajo, solo se mostrara
-    aquellos barrios que pertenecen a esa localidad.
-            
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
-            Lugarconfiguracion est = (Lugarconfiguracion) cbLocalidad.getSelectedItem();
-            est.llenarlistaBarrio(cx, listaBarrios, est.getIdLugar());
-        }*/
+        Lugar lugar = new Lugar();
+        
+        lugar = (Lugar) cbLocalidad.getSelectedItem();
+        
+        
+        cargarListaBarrios(lugar.getIdLugar());
+        
     }//GEN-LAST:event_cbLocalidadItemStateChanged
 
     private void cbLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLocalidadActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbLocalidadActionPerformed
+
+    private void listaBarriosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaBarriosValueChanged
+        
+        btnModificar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        
+    }//GEN-LAST:event_listaBarriosValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -207,7 +297,7 @@ public class Barrio_consulta extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JComboBox<String> cbLocalidad;
+    private javax.swing.JComboBox<Lugar> cbLocalidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -216,6 +306,6 @@ public class Barrio_consulta extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> listaBarrios;
+    private javax.swing.JList<Lugar> listaBarrios;
     // End of variables declaration//GEN-END:variables
 }

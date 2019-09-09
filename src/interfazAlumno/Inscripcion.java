@@ -9,6 +9,7 @@ import Controlador.CtrlTipoDocumento;
 import java.sql.Connection;
 import menu.Principal;
 import modelo.TipoDocumento;
+import modelo.Lugar;
 /**
  *
  * @author
@@ -852,7 +853,7 @@ public class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JButton btntomarfoto;
     private javax.swing.JComboBox<String> cbBarrio;
     private javax.swing.JComboBox<String> cbCalle;
-    private javax.swing.JComboBox<String> cbLocalidad;
+    private javax.swing.JComboBox<Lugar> cbLocalidad;
     private javax.swing.JComboBox<String> cbNacimiento;
     private javax.swing.JComboBox<String> cbNacionalidad;
     private javax.swing.JComboBox<String> cbPlan;

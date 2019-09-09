@@ -5,9 +5,19 @@
  */
 package configuracion;
 
+import Controlador.CtrlLugar;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import menu.Principal;
+import modelo.Lugar;
 
 
 /**
@@ -15,13 +25,68 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Barrio_crear extends javax.swing.JInternalFrame {
+    CtrlLugar lugar = new CtrlLugar();
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form crearBarrio
      */
-    public Barrio_crear() throws ClassNotFoundException {
+    public Barrio_crear() throws ClassNotFoundException, SQLException {
         initComponents();
+            cargarComboLocalidad(cbLocalidad);
+            txtnuevoBarrio.setEnabled(false);
+            btnAceptar.setEnabled(false);        
     }
 
+    
+    public void cargarComboLocalidad(JComboBox<Lugar> cbLocalidad){
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM lugar WHERE nivel = 3 ORDER BY nombre ASC");
+            Lugar lugar = new Lugar();
+            lugar.setIdLugar(0);
+            lugar.setNombre("Seleccione una opcion...");
+            lugar.setNivel(0);
+            lugar.setDe(0);
+            cbLocalidad.addItem(lugar);
+            
+            while (rs.next()) {                
+                lugar = new Lugar();
+                lugar.setIdLugar(rs.getInt("idLugar"));
+                lugar.setNombre(rs.getString("nombre"));
+                lugar.setNivel(rs.getInt("nivel"));
+                lugar.setDe(rs.getInt("de"));
+                cbLocalidad.addItem(lugar);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+        }
+        
+    }
+    
+    public void llenarTablaBarrio(JTable tabla, int idLugar){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Nombre");
+        tabla.setModel(modelo);
+        String[] dato = new String[1];
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT nombre FROM lugar WHERE nivel = 2 AND de = '"+ idLugar +"'ORDER BY nombre ASC");
+            
+            while (rs.next()) {                
+                dato[0]=rs.getString(1);
+                modelo.addRow(dato);
+            }
+            
+            tabla.setModel(modelo);
+            
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS BARRIOS EN LA TABLA"); 
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -167,11 +232,27 @@ public class Barrio_crear extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAgregarCalleActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-       
+        CtrlLugar ctrlLugar = new CtrlLugar();
+        Lugar lugar = new Lugar();
+        
+        lugar = (Lugar) cbLocalidad.getSelectedItem();
+        if (txtnuevoBarrio.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se puede cargar un registro en blanco");
+        }else{
+            ctrlLugar.crear(txtnuevoBarrio.getText(), 2, lugar.getIdLugar());
+            llenarTablaBarrio(tablaBarrios, lugar.getIdLugar());
+            txtnuevoBarrio.setText("");
+        }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void cbLocalidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLocalidadItemStateChanged
-        // TODO add your handling code here: 
+        // TODO add your handling code here:
+        Lugar lugar = new Lugar();
+        lugar = (Lugar) cbLocalidad.getSelectedItem();
+        llenarTablaBarrio(tablaBarrios, lugar.getIdLugar());
+        txtnuevoBarrio.setEnabled(true);
+        btnAceptar.setEnabled(true);
     }//GEN-LAST:event_cbLocalidadItemStateChanged
 
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
@@ -193,7 +274,7 @@ public class Barrio_crear extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregarCalle;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cbLocalidad;
+    private javax.swing.JComboBox<Lugar> cbLocalidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

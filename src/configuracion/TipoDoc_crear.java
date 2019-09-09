@@ -6,7 +6,12 @@
 package configuracion;
 
 import Controlador.CtrlTipoDocumento;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import menu.Principal;
 
 
@@ -15,13 +20,37 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class TipoDoc_crear extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form CrearTrabajo
      */
     public TipoDoc_crear() throws ClassNotFoundException {
         initComponents();
+        llenarTablaTipoDocumento(tablaTipo);
     }
 
+    public void llenarTablaTipoDocumento(JTable tabla){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Nombre");
+        tabla.setModel(modelo);
+        String[] dato = new String[1];
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT detalle FROM tipoDocumento ORDER BY detalle ASC");
+            
+            while (rs.next()) {                
+                dato[0]=rs.getString(1);
+                modelo.addRow(dato);
+            }
+            
+            tabla.setModel(modelo);
+            
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS TIPOS DE DOCUMENTOS EN LA TABLA"); 
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -158,13 +187,14 @@ public class TipoDoc_crear extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
         CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
         
         if (txtTipo.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No pueden crearce registros vacios");
         }else{
             ctrlTipoDocumento.crear(txtTipo.getText());
+            llenarTablaTipoDocumento(tablaTipo);
+            txtTipo.setText("");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

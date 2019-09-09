@@ -39,4 +39,8 @@ public class CodigoPostal {
         this.codigoPostal = codigoPostal;
     }
     
+    public String toString(){
+        return this.codigoPostal;
+    }
+    
 }
