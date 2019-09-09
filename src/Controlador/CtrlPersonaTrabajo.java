@@ -23,7 +23,7 @@ public class CtrlPersonaTrabajo {
     public void crear(int idPersona, int idTrabajo){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO persona (idPersona, idTrabajo) VALUES (?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO personaTrabajo (idTrabajo, idPersona) VALUES (?,?)");
         
             ps.setInt(1, idPersona);
             ps.setInt(2, idTrabajo);

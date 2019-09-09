@@ -95,6 +95,7 @@ public class CtrlTipoCurso {
             rs = ps.executeQuery();
             
             if (rs.next()) {
+                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCuso"));
                 tipoCurso.setDetalle(rs.getString("detalle"));
                 tipoCurso.setCosto(rs.getFloat("costo"));
                 tipoCurso.setIdPeriodo(ctrlPeriodo.leer(rs.getInt("idPeriodo")));

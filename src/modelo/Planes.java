@@ -39,5 +39,8 @@ public class Planes {
         this.borrado = borrado;
     }
     
-            
+    @Override
+    public String toString(){
+        return this.detalle;
+    }
 }

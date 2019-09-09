@@ -30,8 +30,9 @@ public class AlumnoMenu extends javax.swing.JPanel {
         initComponents();
         
         this.setBounds(0, 65, 240, 210);
-        
-        menu.Principal.menuAlumno=1;
+        this.setVisible(true);
+        JOptionPane.showMessageDialog(null, "constructor ALUMNO MENU");
+        //menu.Principal.menuAlumno=1;
         
         PanelDni dni = new PanelDni();
         if (dni.validarPersona== 2) {

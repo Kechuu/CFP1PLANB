@@ -8,6 +8,7 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import modelo.Edificio;
 
@@ -32,8 +33,8 @@ public class CtrlEdificio {
             int res = ps.executeUpdate();
             con.close();
             
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getErrorCode());
         }
     }
     
@@ -72,6 +73,32 @@ public class CtrlEdificio {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                edificio.setIdEdificio(rs.getInt("idEdificio"));
+                edificio.setDepto(rs.getInt("depto"));
+                edificio.setPiso(rs.getInt("piso"));
+                edificio.setTorre(rs.getInt("torre"));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            
+            con.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        return edificio;
+    }
+    
+    public Edificio leer(){
+        Edificio edificio = new Edificio();
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM edificio ORDER BY idEdificio DESC LIMIT 1 ");
+            
+           // ps.setInt(1,idEdificio);
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                edificio.setIdEdificio(rs.getInt("idEdificio"));
                 edificio.setDepto(rs.getInt("depto"));
                 edificio.setPiso(rs.getInt("piso"));
                 edificio.setTorre(rs.getInt("torre"));

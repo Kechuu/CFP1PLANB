@@ -32,7 +32,8 @@ public class CtrlPlanPersona {
             con.close();
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+            JOptionPane.showMessageDialog(null,"clase control plan persona");
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
     }
     

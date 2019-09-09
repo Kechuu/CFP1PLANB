@@ -48,4 +48,8 @@ public class TipoCurso {
         this.idPeriodo = idPeriodo;
     }
     
+    @Override
+    public String toString(){
+        return this.detalle;
+    }
 }

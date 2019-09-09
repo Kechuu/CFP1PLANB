@@ -35,6 +35,7 @@ public class CtrlDomicilio {
             con.close();
             
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "pasa por control domiclio");
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
     }
@@ -90,6 +91,35 @@ public class CtrlDomicilio {
             rs = ps.executeQuery();
             
             if (rs.next()) {
+                domicilio.setIdDomicilio(rs.getInt("idDomicilio"));
+                domicilio.setNro(rs.getInt("nro"));
+                domicilio.setTelefono(rs.getString("telefono"));
+                domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar")));
+                domicilio.setIdEdificio(rs.getInt("idEdificio"));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        return domicilio;
+    }
+    public Domicilio leer(){
+        Domicilio domicilio = new Domicilio();
+        Lugar lugar = new Lugar();
+        CtrlLugar ctrlLugar = new CtrlLugar();
+        Edificio edificio = new Edificio();
+        CtrlEdificio ctrlEdificio = new CtrlEdificio();
+        
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM domicilio ORDER BY idDomicilio DESC LIMIT 1");
+           
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                domicilio.setIdDomicilio(rs.getInt("idDomicilio"));
                 domicilio.setNro(rs.getInt("nro"));
                 domicilio.setTelefono(rs.getString("telefono"));
                 domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar")));

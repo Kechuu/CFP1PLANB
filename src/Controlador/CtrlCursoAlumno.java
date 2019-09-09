@@ -5,10 +5,15 @@
  */
 package Controlador;
 
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import modelo.CursoAlumno;
 /**
@@ -21,26 +26,38 @@ public class CtrlCursoAlumno {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(float saldo, Date fechaIngreso, int idAlumno, int idEstadoAlumno, int idCurso,
+    public void crear(float saldo, java.util.Date fechaIngreso, int idAlumno, int idEstadoAlumno, int idCurso,
             int idMotivoBaja){
         
+        //java.util.Date dateT=new java.util.Date();
+      
+        java.sql.Date fecha1=new java.sql.Date(fechaIngreso.getTime());
+        //JOptionPane.showMessageDialog(null, fechaIngreso+" $$"+fecha1);
+        /*
+        java.util.Date date = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
+        */
         try {
+          
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO cursoAlumno (saldo,fechaIngreso,"
-                    + "idAlumno,idEstadoAlumno,idCurso,idMotivoBaja) VALUES (?,?,?,?,?,?)");
+                    + "fechaBaja-Egreso, idAlumno,idEstadoAlumno,idCurso,idMotivoBaja) VALUES (?,?,?,?,?,?,?)");
             
             ps.setFloat(1, saldo);
-            ps.setDate(2, fechaIngreso);
-            ps.setInt(3, idAlumno);
-            ps.setInt(4, idEstadoAlumno);
-            ps.setInt(5, idCurso);
-            ps.setInt(6, idMotivoBaja);
+            ps.setDate(2, fecha1);
+            ps.setDate(3, fecha1);
+            ps.setInt(4, idAlumno);
+            ps.setInt(5, idEstadoAlumno);
+            ps.setInt(6, idCurso);
+            ps.setInt(7, idMotivoBaja);
             
             int res = ps.executeUpdate();
             con.close();
+            JOptionPane.showMessageDialog(null, "LLEGO HASTA EL FINAL. CURSO ALUMNO");
             
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        } catch (HeadlessException | SQLException e ) {
+            JOptionPane.showMessageDialog(null, "ES CURSO ALUMNO!!!");
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         
     }

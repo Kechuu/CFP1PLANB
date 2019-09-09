@@ -11,9 +11,11 @@ import java.awt.Dimension;
 
 import clases.CambiaPanel;
 import interfazAlumno.PanelDni;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author jesus
@@ -41,6 +43,8 @@ public class Principal extends javax.swing.JFrame {
         log.setVisible(true);
         
         menuAlumno=0;
+      
+        
     }
     
     @SuppressWarnings("unchecked")

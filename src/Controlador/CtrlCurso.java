@@ -25,6 +25,9 @@ public class CtrlCurso {
     public void crear(int cicloLectivo, int turno, float costo, int cupo, Date fechaInicio, Date fechaFinalizacion,
     int idTipoCurso,int idLugarCurso, boolean borrado){
         
+        java.sql.Date fecha=new Date(fechaInicio.getTime());
+        java.sql.Date fin=new Date(fechaFinalizacion.getTime());
+        
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO curso (cicloLectivo,turno,costo,cupo,fechaInicio,"
@@ -34,8 +37,8 @@ public class CtrlCurso {
             ps.setInt(2, turno);
             ps.setFloat(3, costo);
             ps.setInt(4, cupo);
-            ps.setDate(5, fechaInicio);
-            ps.setDate(6, fechaFinalizacion);
+            ps.setDate(5, fecha);
+            ps.setDate(6, fin);
             ps.setInt(7, idTipoCurso);
             ps.setInt(8, idLugarCurso);
             ps.setBoolean(9, borrado);
@@ -44,6 +47,7 @@ public class CtrlCurso {
             
             con.close();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ES AQUI!!!");
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
         
@@ -117,16 +121,18 @@ public class CtrlCurso {
             rs = ps.executeQuery();
             
             if (rs.next()) {
-            curso.setCicloLectivo(rs.getInt("cicloLectivo"));
-            curso.setTurno(rs.getInt("turno"));
-            curso.setCosto(rs.getFloat("costo"));
-            curso.setCupo(rs.getInt("cupo"));
-            curso.setFechaInicio(rs.getDate("fechaInicio"));
-            curso.setFechaFinalizacion(rs.getDate("fechaFinalizacion"));
-            curso.setIdTipoCurso(ctrlTipoCurso.leer(rs.getInt("idTipoCurso")));
-            curso.setIdLugarCurso(ctrlLugarCurso.leer(rs.getInt("idLugarCurso")));
-            curso.setBorrado(rs.getBoolean("borrado"));
+                curso.setIdCurso(rs.getInt("idCurso"));
+                curso.setCicloLectivo(rs.getInt("cicloLectivo"));
+                curso.setTurno(rs.getInt("turno"));
+                curso.setCosto(rs.getFloat("costo"));
+                curso.setCupo(rs.getInt("cupo"));
+                curso.setFechaInicio(rs.getDate("fechaInicio"));
+                curso.setFechaFinalizacion(rs.getDate("fechaFinalizacion"));
+                curso.setIdTipoCurso(ctrlTipoCurso.leer(rs.getInt("idTipoCurso")));
+                curso.setIdLugarCurso(ctrlLugarCurso.leer(rs.getInt("idLugarCurso")));
+                curso.setBorrado(rs.getBoolean("borrado"));
             }else{
+                
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
             

@@ -39,4 +39,8 @@ public class CodigoPostal {
         this.codigoPostal = codigoPostal;
     }
     
+    @Override
+    public String toString(){
+        return this.codigoPostal;
+    }
 }

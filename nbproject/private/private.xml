@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/interfazAlumno/Inscripcion.java</file>
-            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/Controlador/CtrlTipoDocumento.java</file>
+            <file>file:/home/araa/plan_b/CFP1PLANB/src/interfazAlumno/Inscripcion.java</file>
+            <file>file:/home/araa/plan_b/CFP1PLANB/src/menu/AlumnoMenu.java</file>
+            <file>file:/home/araa/plan_b/CFP1PLANB/src/interfazAlumno/PanelDni.java</file>
+            <file>file:/home/araa/plan_b/CFP1PLANB/src/Controlador/CtrlPersona.java</file>
         </group>
     </open-files>
 </project-private>

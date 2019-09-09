@@ -86,6 +86,31 @@ public class CtrlAlumno {
         return alumno;
     }
     
+    public Alumno leer(){
+        Alumno alumno = new Alumno();
+        CtrlPersona ctrlPersona = new CtrlPersona();
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM alumno ORDER BY idAlumno DESC LIMIT 1");
+            
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                alumno.setIdAlumno(rs.getInt("idAlumno"));
+                alumno.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
+                alumno.setBorrado(rs.getBoolean("borrado"));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            
+            con.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        
+        return alumno;
+    }
+    
     public Alumno leerBorrado(int idPersona){
         Alumno alumno = new Alumno();
         CtrlPersona ctrlPersona = new CtrlPersona();

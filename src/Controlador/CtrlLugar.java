@@ -34,7 +34,7 @@ public class CtrlLugar {
             con.close();
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
     }
     
@@ -110,6 +110,7 @@ public class CtrlLugar {
             rs.close();
             con.close();
         } catch (Exception e) {
+            
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
         

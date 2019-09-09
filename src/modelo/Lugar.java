@@ -48,6 +48,9 @@ public class Lugar {
         this.de = de;
     }
     
+    public String toString(){
+        return this.nombre;
+    }
     
     
 }
