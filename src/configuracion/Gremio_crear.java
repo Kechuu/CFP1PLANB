@@ -5,6 +5,13 @@
  */
 package configuracion;
 
+import Controlador.CtrlGremio;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import menu.Principal;
 
 
@@ -13,6 +20,7 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Gremio_crear extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form CrearGremio
      */
@@ -20,6 +28,28 @@ public class Gremio_crear extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public void llenarTablaCursado(JTable tabla){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Nombre");
+        tabla.setModel(modelo);
+        String[] dato = new String[1];
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT detalle FROM gremio ORDER BY detalle ASC");
+            
+            while (rs.next()) {                
+                dato[0]=rs.getString(1);
+                modelo.addRow(dato);
+            }
+            
+            tabla.setModel(modelo);
+            
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS GREMIOS EN LA TABLA"); 
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -158,7 +188,16 @@ public class Gremio_crear extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+        CtrlGremio ctrlGremio = new CtrlGremio();
+        
+        if (txtGremios.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se puede cargar un registro en blanco");
+        }else{
+            ctrlGremio.crear(txtGremios.getText());
+            llenarTablaCursado(tablaGremios);
+            txtGremios.setText("");
+        }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

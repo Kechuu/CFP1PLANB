@@ -5,20 +5,56 @@
  */
 package configuracion;
 
+import Controlador.CtrlCodigoPostal;
+import Controlador.CtrlLugar;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import menu.Principal;
+import modelo.Lugar;
 
 /**
  *
  * @author RociojulietaVazquez
  */
 public class Localidad_crear extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form crearLocalidad
      */
     public Localidad_crear() throws ClassNotFoundException {
         initComponents();
+        llenarTablaLocalidad(tablaLocalidad, 3);
     }
 
+    public void llenarTablaLocalidad(JTable tabla, int idLugar){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Codigo Postal");
+        tabla.setModel(modelo);
+        String[] dato = new String[2];
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT nombre, codigoPostal FROM lugar INNER JOIN codigoPostal"
+                    + " WHERE idLugar = localidad AND nivel = '"+idLugar+"' ORDER BY nombre ASC");
+            
+            while (rs.next()) {                
+                dato[0]=rs.getString(1);
+                dato[1]=rs.getString(2);
+                modelo.addRow(dato);
+            }
+            
+            tabla.setModel(modelo);
+            
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LAS LOCALIDADES EN LA TABLA"); 
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -183,7 +219,27 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
+        CtrlLugar ctrlLugar = new CtrlLugar();
+        CtrlCodigoPostal ctrlCodigoPostal = new CtrlCodigoPostal();
+        Lugar lugar = new Lugar();
+        
+        if (txtLocalidad.getText().equalsIgnoreCase("") || txtCodigoPostal.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "Tienen que estar cargados todos los campos para guardar");
+        }else{
+            ctrlLugar.crear(txtLocalidad.getText(), 3, 1);
+            
+            
+            lugar = ctrlLugar.leer(txtLocalidad.getText(),3);
+            
+            
+            ctrlCodigoPostal.crear(lugar.getIdLugar(), txtCodigoPostal.getText());
+            
+            
+            llenarTablaLocalidad(tablaLocalidad, 3);
+            txtLocalidad.setText("");
+            txtCodigoPostal.setText("");
+        }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
 

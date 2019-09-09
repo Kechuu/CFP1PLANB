@@ -610,13 +610,13 @@ public class Principal extends javax.swing.JFrame {
         menuAlumno=0;
     }
     
-    public static void crearBarrio() throws ClassNotFoundException{
+    public static void crearBarrio() throws ClassNotFoundException, SQLException{
         Barrio_crear barrio=new Barrio_crear();
         panelPrincipal.add(barrio);
         barrio.setVisible(true);
         
     }
-    public static void modificarBarrio() throws ClassNotFoundException{
+    public static void modificarBarrio() throws ClassNotFoundException, SQLException{
         Barrio_modificar barrio=new Barrio_modificar();
         panelPrincipal.add(barrio);
         barrio.setVisible(true);
@@ -915,6 +915,8 @@ public class Principal extends javax.swing.JFrame {
             crearBarrio();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
@@ -926,6 +928,8 @@ public class Principal extends javax.swing.JFrame {
         try {
             modificarBarrio();
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem18ActionPerformed

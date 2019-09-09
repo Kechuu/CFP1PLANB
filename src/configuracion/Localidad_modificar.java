@@ -5,7 +5,18 @@
  */
 package configuracion;
 
+import Controlador.CtrlCodigoPostal;
+import Controlador.CtrlLugar;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import menu.Principal;
+import modelo.CodigoPostal;
+import modelo.Lugar;
 
 
 /**
@@ -13,14 +24,55 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Localidad_modificar extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
+    public int idCodigoPostal;
+    CodigoPostal codigoPostal = new CodigoPostal();
+    CtrlCodigoPostal ctrlCodigoPostal = new CtrlCodigoPostal();
     /**
      * Creates new form modificarlocalidad
      */
     
     public Localidad_modificar() throws ClassNotFoundException {
-        initComponents();    
+        initComponents();
+        cargarComboLocalidad(cbLocalidadActual);
+        txtCodigoActual.setEnabled(false);
+        for (int i = 0; i < cbLocalidadActual.getItemCount(); i++) {
+                if (cbLocalidadActual.getItemAt(i).getNombre().equalsIgnoreCase(Localidad_consulta.nombreLocalidad)) {
+                    cbLocalidadActual.setSelectedIndex(i);
+                }
+            }
+        codigoPostal = ctrlCodigoPostal.leer(Localidad_consulta.idLocalidad);
+        idCodigoPostal = codigoPostal.getIdCodigoPostal();
+        txtCodigoActual.setText(codigoPostal.getCodigoPostal());
     }
 
+    public void cargarComboLocalidad(JComboBox<Lugar> cbLocalidadActual){
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM lugar WHERE nivel = 3 ORDER BY nombre ASC");
+            Lugar lugar = new Lugar();
+            lugar.setIdLugar(0);
+            lugar.setNombre("Seleccione una opcion...");
+            lugar.setNivel(0);
+            lugar.setDe(0);
+            cbLocalidadActual.addItem(lugar);
+            
+            while (rs.next()) {                
+                lugar = new Lugar();
+                lugar.setIdLugar(rs.getInt("idLugar"));
+                lugar.setNombre(rs.getString("nombre"));
+                lugar.setNivel(rs.getInt("nivel"));
+                lugar.setDe(rs.getInt("de"));
+                cbLocalidadActual.addItem(lugar);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -192,7 +244,26 @@ public class Localidad_modificar extends javax.swing.JInternalFrame {
 
     
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+        CtrlLugar ctrlLugar = new CtrlLugar();
+        CtrlCodigoPostal ctrlCodigoPostal = new CtrlCodigoPostal();
+        CodigoPostal codigoPostal = new CodigoPostal();
+        
+        if (txtLocalidad.getText().equalsIgnoreCase("") || txtCambiarCodigo.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
+        }else{
+            Lugar lugar = new Lugar();
+            Lugar lugar1 = new Lugar();
+            lugar = (Lugar) cbLocalidadActual.getSelectedItem();
+            ctrlLugar.editar(lugar.getIdLugar(), txtLocalidad.getText(), 3, 1);
+            lugar1 = ctrlLugar.leer(cbLocalidadActual.getSelectedItem().toString(), 3);
+            ctrlCodigoPostal.editar(lugar1.getIdLugar(), txtCambiarCodigo.getText());
+            //cbLocalidadActual.removeAllItems();
+            cargarComboLocalidad(cbLocalidadActual);
+            txtCodigoActual.setText("");
+            txtLocalidad.setText("");
+            txtCodigoActual.setText("");
+        }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -206,14 +277,26 @@ public class Localidad_modificar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCodigoActualActionPerformed
 
     private void cbLocalidadActualItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLocalidadActualItemStateChanged
-        // TODO add your handling code here:
+        CtrlCodigoPostal ctrlCodigoPostal = new CtrlCodigoPostal();
+        Lugar lugar = new Lugar();
+        CodigoPostal codigoPostal1 = new CodigoPostal();
+        
+        lugar = (Lugar) cbLocalidadActual.getSelectedItem();
+        
+        if (cbLocalidadActual.getSelectedIndex()!=0) {
+        
+        //codigoPostal1 = ctrlCodigoPostal.leer(lugar.getIdLugar());
+        idCodigoPostal = codigoPostal1.getIdCodigoPostal();
+        txtCodigoActual.setText(codigoPostal1.getCodigoPostal());    
+        }
+        
     }//GEN-LAST:event_cbLocalidadActualItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cbLocalidadActual;
+    private javax.swing.JComboBox<Lugar> cbLocalidadActual;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

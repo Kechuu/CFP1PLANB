@@ -5,6 +5,13 @@
  */
 package configuracion;
 
+import Controlador.CtrlPlanes;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import menu.Principal;
 
 
@@ -13,13 +20,38 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Plan_crear extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form CrearPlanes
      */
     public Plan_crear() throws ClassNotFoundException {
         initComponents();
+        llenarTablaPlan(tablaPlan);
     }
 
+    public void llenarTablaPlan(JTable tabla){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Nombre");
+        tabla.setModel(modelo);
+        String[] dato = new String[1];
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT detalle FROM planes ORDER BY detalle ASC");
+            
+            while (rs.next()) {                
+                dato[0]=rs.getString(1);
+                modelo.addRow(dato);
+            }
+            
+            tabla.setModel(modelo);
+            
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS PLANES EN LA TABLA"); 
+        }
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -157,7 +189,16 @@ public class Plan_crear extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
+        CtrlPlanes ctrlPlanes = new CtrlPlanes();
+        
+        if (txtPlan.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
+        }else{
+            ctrlPlanes.crear(txtPlan.getText());
+            llenarTablaPlan(tablaPlan);
+            txtPlan.setText("");
+        }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

@@ -63,16 +63,17 @@ public class CtrlLugar {
         }
     }
     
-    public Lugar leer(int idLugar){
+    public Lugar leer(int nivel){
         Lugar lugar = new Lugar();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE idLugar = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE nivel = ?");
             
-            ps.setInt(1, idLugar);
+            ps.setInt(1, nivel);
             rs = ps.executeQuery();
             
             if(rs.next()){
+                lugar.setIdLugar(rs.getInt("idLugar"));
                 lugar.setNombre(rs.getString("nombre"));
                 lugar.setNivel(rs.getInt("nivel"));
                 lugar.setDe(rs.getInt("de"));
@@ -84,6 +85,37 @@ public class CtrlLugar {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
+        return lugar;
+    }
+    
+    public Lugar leer(String nombre, int nivel, int de){
+        Lugar lugar = new Lugar();
+        
+        try {
+            con = clases.Conectar.conexion();
+            
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE nombre = ? AND nivel = ? AND de = ?");
+            
+            ps.setString(1, nombre);
+            ps.setInt(2, nivel);
+            ps.setInt(3, de);
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                lugar.setIdLugar(rs.getInt("idLugar"));
+                lugar.setNombre(rs.getString("nombre"));
+                lugar.setNivel(rs.getInt("nivel"));
+                lugar.setDe(rs.getInt("de"));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            rs.close();
+            con.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        
         return lugar;
     }
     
@@ -101,6 +133,7 @@ public class CtrlLugar {
             rs = ps.executeQuery();
             
             if (rs.next()) {
+                lugar.setIdLugar(rs.getInt("idLugar"));
                 lugar.setNombre(rs.getString("nombre"));
                 lugar.setNivel(rs.getInt("nivel"));
                 lugar.setDe(rs.getInt("de"));
@@ -117,4 +150,34 @@ public class CtrlLugar {
         return lugar;
     }
     
+    
+    public Lugar leer(int idLugar, int nivel){
+        Lugar lugar = new Lugar();
+        
+        try {
+            con = clases.Conectar.conexion();
+            
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE idLugar = ? AND nivel = ?");
+            
+            ps.setInt(1, idLugar);
+            ps.setInt(2, nivel);
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                lugar.setIdLugar(rs.getInt("idLugar"));
+                lugar.setNombre(rs.getString("nombre"));
+                lugar.setNivel(rs.getInt("nivel"));
+                lugar.setDe(rs.getInt("de"));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            rs.close();
+            con.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        
+        return lugar;
+    }
 }

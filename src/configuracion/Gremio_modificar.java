@@ -5,7 +5,16 @@
  */
 package configuracion;
 
+import Controlador.CtrlGremio;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import menu.Principal;
+import modelo.Gremio;
+import modelo.LugarCurso;
 
 
 /**
@@ -13,13 +22,43 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Gremio_modificar extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form ModificarGremio
      */
     public Gremio_modificar() throws ClassNotFoundException {
         initComponents();
+        cargarComboGremio(cbGremiosActuales);
+        for (int i = 0; i < cbGremiosActuales.getItemCount(); i++) {
+            if (cbGremiosActuales.getItemAt(i).getDetalle().equalsIgnoreCase(Gremio_consulta.nombreGremio)) {
+                cbGremiosActuales.setSelectedIndex(i);
+            }
+        }
     }
 
+    public void cargarComboGremio(JComboBox<Gremio> cbGremiosActuales){
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM gremio ORDER BY detalle ASC");
+            Gremio gremio = new Gremio();
+            gremio.setIdGremio(0);
+            gremio.setDetalle("Seleccione una opcion...");
+            cbGremiosActuales.addItem(gremio);
+            
+            while (rs.next()) {                
+                gremio = new Gremio();
+                gremio.setIdGremio(rs.getInt("idGremio"));
+                gremio.setDetalle(rs.getString("detalle"));
+                cbGremiosActuales.addItem(gremio);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS LUGARES DE CURSADO");       
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,7 +179,16 @@ public class Gremio_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+        CtrlGremio ctrlGremio = new CtrlGremio();
+        
+        if (txtGremios.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
+        }else{
+            ctrlGremio.editarGremio(Gremio_consulta.idGremio, txtGremios.getText());
+            cargarComboGremio(cbGremiosActuales);
+            txtGremios.setText("");
+        }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -153,7 +201,7 @@ public class Gremio_modificar extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cbGremiosActuales;
+    private javax.swing.JComboBox<Gremio> cbGremiosActuales;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

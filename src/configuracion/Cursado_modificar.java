@@ -5,20 +5,58 @@
  */
 package configuracion;
 
+import Controlador.CtrlLugarCurso;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import menu.Principal;
+import modelo.LugarCurso;
 
 /**
  *
  * @author araa
  */
 public class Cursado_modificar extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form Cursado_modificar
      */
     public Cursado_modificar() throws ClassNotFoundException {
         initComponents();
+        cargarComboCursado(cbCursado);
+        for (int i = 0; i < cbCursado.getItemCount(); i++) {
+            if (cbCursado.getItemAt(i).getDetalle().equalsIgnoreCase(Cursado_consulta.nombreLugarCursado)) {
+                cbCursado.setSelectedIndex(i);
+            }
+        }
     }
 
+    public void cargarComboCursado(JComboBox<LugarCurso> cbCursado){
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM lugarCurso ORDER BY detalle ASC");
+            LugarCurso lugarCurso = new LugarCurso();
+            lugarCurso.setIdLugarCurso(0);
+            lugarCurso.setDetalle("Seleccione una opcion...");
+            cbCursado.addItem(lugarCurso);
+            
+            while (rs.next()) {                
+                lugarCurso = new LugarCurso();
+                lugarCurso.setIdLugarCurso(rs.getInt("idLugarCurso"));
+                lugarCurso.setDetalle(rs.getString("detalle"));
+                cbCursado.addItem(lugarCurso);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS LUGARES DE CURSADO");       
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,7 +178,16 @@ public class Cursado_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+        CtrlLugarCurso ctrllugarCurso = new CtrlLugarCurso();
+        
+        if (txtCursado.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
+        }else{
+            ctrllugarCurso.editar(Cursado_consulta.idLugarCursado, txtCursado.getText());
+            cargarComboCursado(cbCursado);
+            txtCursado.setText("");
+        }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -153,7 +200,7 @@ public class Cursado_modificar extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cbCursado;
+    private javax.swing.JComboBox<LugarCurso> cbCursado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
