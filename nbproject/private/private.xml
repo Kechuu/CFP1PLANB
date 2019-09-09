@@ -3,17 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
+            <file>file:/home/araa/plan_b/CFP1PLANB/src/interfazEmpleado/Registro.java</file>
+            <file>file:/home/araa/plan_b/CFP1PLANB/src/interfazEmpleado/Modificar.java</file>
             <file>file:/home/araa/plan_b/CFP1PLANB/src/interfazAlumno/Inscripcion.java</file>
-            <file>file:/home/araa/plan_b/CFP1PLANB/src/menu/AlumnoMenu.java</file>
-            <file>file:/home/araa/plan_b/CFP1PLANB/src/interfazAlumno/PanelDni.java</file>
             <file>file:/home/araa/plan_b/CFP1PLANB/src/Controlador/CtrlPersona.java</file>
-=======
-            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/configuracion/Localidad_crear.java</file>
-            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/configuracion/Localidad_consulta.java</file>
-            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/configuracion/Localidad_modificar.java</file>
-            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/Controlador/CtrlCodigoPostal.java</file>
->>>>>>> 0fc1aca62c37cbff9225c6ec3675ae559b3b8fbb
         </group>
     </open-files>
 </project-private>

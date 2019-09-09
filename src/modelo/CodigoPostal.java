@@ -38,16 +38,9 @@ public class CodigoPostal {
     public void setCodigoPostal(String codigoPostal) {
         this.codigoPostal = codigoPostal;
     }
-    
-<<<<<<< HEAD
+
     @Override
     public String toString(){
         return this.codigoPostal;
     }
-=======
-    public String toString(){
-        return this.codigoPostal;
-    }
-    
->>>>>>> 0fc1aca62c37cbff9225c6ec3675ae559b3b8fbb
 }

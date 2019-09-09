@@ -42,12 +42,8 @@ import modelo.Persona;
 import modelo.Planes;
 import modelo.TipoCurso;
 import modelo.TipoDocumento;
-<<<<<<< HEAD
 import modelo.Trabajo;
-=======
-import modelo.Lugar;
->>>>>>> 0fc1aca62c37cbff9225c6ec3675ae559b3b8fbb
-/**
+import modelo.Lugar;/**
  *
  * @author
  */
@@ -1225,21 +1221,14 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbBarrio;
     private javax.swing.JComboBox<String> cbCalle;
     private javax.swing.JComboBox<Lugar> cbLocalidad;
-<<<<<<< HEAD
     private javax.swing.JComboBox<Lugar> cbNacimiento;
     private javax.swing.JComboBox<Nacionalidad> cbNacionalidad;
     private javax.swing.JComboBox<Planes> cbPlan;
     private javax.swing.JComboBox<TipoDocumento> cbTipo;
     private javax.swing.JComboBox<Trabajo> cbTrabajo;
-=======
-    private javax.swing.JComboBox<String> cbNacimiento;
-    private javax.swing.JComboBox<String> cbNacionalidad;
-    private javax.swing.JComboBox<String> cbPlan;
     private javax.swing.JComboBox<TipoDocumento> cbTipoDoc;
-    private javax.swing.JComboBox<String> cbTrabajo;
     private javax.swing.JComboBox<String> combopiso;
     private javax.swing.JComboBox<String> combotorre;
->>>>>>> 0fc1aca62c37cbff9225c6ec3675ae559b3b8fbb
     private com.toedter.calendar.JDateChooser fecha;
     private javax.swing.JRadioButton femenino;
     private javax.swing.JLabel jLabel1;
