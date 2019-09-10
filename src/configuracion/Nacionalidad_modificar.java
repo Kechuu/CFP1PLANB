@@ -5,7 +5,16 @@
  */
 package configuracion;
 
+import Controlador.CtrlNacionalidad;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import menu.Principal;
+import modelo.Cargo;
+import modelo.Nacionalidad;
 
 
 /**
@@ -13,13 +22,44 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Nacionalidad_modificar extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form ModificarNacionalidad
      */
     public Nacionalidad_modificar() throws ClassNotFoundException {
         initComponents();
+        cargarComboLocalidad(cbNacionalidadActual);
+           for (int i = 0; i < cbNacionalidadActual.getItemCount(); i++) {
+            if (cbNacionalidadActual.getItemAt(i).getDetalle().equalsIgnoreCase(Nacionalidad_consulta.nombreNacionalidad)) {
+                cbNacionalidadActual.setSelectedIndex(i);
+            }
+        }
+    
     }
 
+    public void cargarComboLocalidad(JComboBox<Nacionalidad> cbNacionalidadActual){
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM nacionalidad ORDER BY detalle ASC");
+            Nacionalidad nacionalidad = new Nacionalidad();
+            nacionalidad.setIdNacionalidad(0);
+            nacionalidad.setDetalle("Seleccione una opcion...");
+            cbNacionalidadActual.addItem(nacionalidad);
+            
+            while (rs.next()) {                
+                nacionalidad = new Nacionalidad();
+                nacionalidad.setIdNacionalidad(rs.getInt("idNacionalidad"));
+                nacionalidad.setDetalle(rs.getString("detalle"));
+                cbNacionalidadActual.addItem(nacionalidad);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -141,7 +181,18 @@ public class Nacionalidad_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
+        CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
+        Nacionalidad nacionalidad = new Nacionalidad();
+        if (txtNacionalidad.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
+        }else{
+            nacionalidad = (Nacionalidad) cbNacionalidadActual.getSelectedItem();
+            ctrlNacionalidad.editar(nacionalidad.getIdNacionalidad(), txtNacionalidad.getText());
+            cbNacionalidadActual.removeAllItems();
+            cargarComboLocalidad(cbNacionalidadActual);
+            txtNacionalidad.setText("");
+        }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -154,7 +205,7 @@ public class Nacionalidad_modificar extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cbNacionalidadActual;
+    private javax.swing.JComboBox<Nacionalidad> cbNacionalidadActual;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

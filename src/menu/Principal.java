@@ -11,11 +11,9 @@ import java.awt.Dimension;
 
 import clases.CambiaPanel;
 import interfazAlumno.PanelDni;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 /**
  *
  * @author jesus
@@ -757,7 +755,24 @@ public class Principal extends javax.swing.JFrame {
         panelPrincipal.add(nacion);
         nacion.setVisible(true);
     }
-    
+    public static void crearPeriodo() throws ClassNotFoundException{
+        Periodo_crear periodo = new Periodo_crear();
+        
+        panelPrincipal.add(periodo);
+        periodo.setVisible(true);
+    }
+    public static void modificarPeriodo() throws ClassNotFoundException{
+        Periodo_modificar periodo = new Periodo_modificar();
+        
+        panelPrincipal.add(periodo);
+        periodo.setVisible(true);
+    }
+    public static void consultaPeriodo() throws ClassNotFoundException{
+        Periodo_consulta periodo = new Periodo_consulta();
+        
+        panelPrincipal.add(periodo);
+        periodo.setVisible(true);
+    }
     public static void crearPlan() throws ClassNotFoundException{
         Plan_crear plan=new Plan_crear();
         
@@ -780,7 +795,24 @@ public class Principal extends javax.swing.JFrame {
         plan.setVisible(true);
         
     }
-    
+    public static void crearTipoDoc() throws ClassNotFoundException{
+        TipoDoc_consulta tipo = new TipoDoc_consulta();
+        
+        panelPrincipal.add(tipo);
+        tipo.setVisible(true);
+    }
+    public static void modificarTipoDoc() throws ClassNotFoundException{
+        TipoDoc_modificar tipo = new TipoDoc_modificar();
+        
+        panelPrincipal.add(tipo);
+        tipo.setVisible(true);
+    }
+    public static void consultaTipoDoc() throws ClassNotFoundException{
+        TipoDoc_consulta tipo = new TipoDoc_consulta();
+        
+        panelPrincipal.add(tipo);
+        tipo.setVisible(true);
+    }
     public static void crearTitulo() throws ClassNotFoundException{
         Titulo_crear titulo=new Titulo_crear();
              

@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import menu.Principal;
-import modelo.CodigoPostal;
 import modelo.Lugar;
 
 
@@ -26,7 +25,6 @@ public class Localidad_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static int idLocalidad;
     public static String nombreLocalidad;
-    public static String numeroCodigoPostal;
     /**
      * Creates new form localidad
      */

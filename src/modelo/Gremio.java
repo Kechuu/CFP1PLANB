@@ -30,6 +30,8 @@ public class Gremio {
         this.detalle = detalle;
     }
     
-    
+    public String toString(){
+        return this.detalle;
+    }
     
 }

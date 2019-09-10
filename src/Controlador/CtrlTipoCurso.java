@@ -99,6 +99,10 @@ public class CtrlTipoCurso {
                 tipoCurso.setDetalle(rs.getString("detalle"));
                 tipoCurso.setCosto(rs.getFloat("costo"));
                 tipoCurso.setIdPeriodo(ctrlPeriodo.leer(rs.getInt("idPeriodo")));
+                
+                JOptionPane.showMessageDialog(null, "El curso ya está cargado..");
+                
+                
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }

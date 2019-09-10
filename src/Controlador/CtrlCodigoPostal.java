@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import modelo.CodigoPostal;
+import modelo.Lugar;
 /**
  *
  * @author jesus
@@ -41,7 +42,7 @@ public class CtrlCodigoPostal {
             ps = (PreparedStatement) con.prepareStatement("UPDATE codigoPostal SET codigoPostal = ? WHERE localidad = ?");
             
             ps.setString(1, codigoPostal);
-            ps.setInt(3, idLocalidad);
+            ps.setInt(2, idLocalidad);
             
             int res = ps.executeUpdate();
             
@@ -70,6 +71,7 @@ public class CtrlCodigoPostal {
             
             if (rs.next()) {
                 codigoPostal.setIdCodigoPostal(rs.getInt("idCodigoPostal"));
+                //codigoPostal.setLocalidad(ctrlLugar.leer(rs.getInt("localidad"), 3));
                 codigoPostal.setCodigoPostal(rs.getString("codigoPostal"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando :v");

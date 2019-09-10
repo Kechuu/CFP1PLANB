@@ -186,13 +186,13 @@ public class PanelDni extends javax.swing.JPanel {
         try {
             //  <DESCACTIVAR PANEL>
             this.setVisible(false);
-            //Principal.desactivarPanel();
+            Principal.desactivarPanel();
             //  </FIN DESACTIVAR PANEL>
-            JOptionPane.showMessageDialog(null, "try... panel dni");
+            //JOptionPane.showMessageDialog(null, "try... panel dni");
             ctrlPersona.generarCUIL(Integer.parseInt(txtDni.getText()));
         
             
-            JOptionPane.showMessageDialog(null, "final.try... panel dni");
+            //JOptionPane.showMessageDialog(null, "final.try... panel dni");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PanelDni.class.getName()).log(Level.SEVERE, null, ex);
         }

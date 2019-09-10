@@ -5,11 +5,18 @@
  */
 package configuracion;
 
+import Controlador.CtrlTrabajo;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import menu.Principal;
+import modelo.Cargo;
+import modelo.Trabajo;
 
 
 /**
@@ -17,13 +24,43 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Trabajo_modificar extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form ModificarTrabajo
      */
     public Trabajo_modificar() throws ClassNotFoundException {
         initComponents();
+        cargarComboCargo(cbTrabajoActual);
+        for (int i = 0; i < cbTrabajoActual.getItemCount(); i++) {
+            if (cbTrabajoActual.getItemAt(i).getDetalle().equalsIgnoreCase(Trabajo_consulta.nombreTrabajo)) {
+                cbTrabajoActual.setSelectedIndex(i);
+            }
+        }
     }
 
+    public void cargarComboCargo(JComboBox<Trabajo> cbTrabajoActual){
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM trabajo ORDER BY detalle ASC");
+            Trabajo trabajo = new Trabajo();
+            trabajo.setIdTrabajo(0);
+            trabajo.setDetalle("Seleccione una opcion...");
+            cbTrabajoActual.addItem(trabajo);
+            
+            while (rs.next()) {                
+                trabajo = new Trabajo();
+                trabajo.setIdTrabajo(rs.getInt("idTrabajo"));
+                trabajo.setDetalle(rs.getString("detalle"));
+                cbTrabajoActual.addItem(trabajo);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -144,7 +181,18 @@ public class Trabajo_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
+        CtrlTrabajo ctrlTrabajo = new CtrlTrabajo();
+        Trabajo trabajo = new Trabajo();
+        if (txtTrabajo.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
+        }else{
+            trabajo = (Trabajo) cbTrabajoActual.getSelectedItem();
+            ctrlTrabajo.editar(trabajo.getIdTrabajo(), txtTrabajo.getText());
+            cbTrabajoActual.removeAllItems();
+            cargarComboCargo(cbTrabajoActual);
+            txtTrabajo.setText("");
+        }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -157,7 +205,7 @@ public class Trabajo_modificar extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cbTrabajoActual;
+    private javax.swing.JComboBox<Trabajo> cbTrabajoActual;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

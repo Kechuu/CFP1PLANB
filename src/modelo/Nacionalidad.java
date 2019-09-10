@@ -30,5 +30,8 @@ public class Nacionalidad {
         this.detalle = detalle;
     }
     
+    public String toString(){
+        return this.detalle;
+    }
     
 }
