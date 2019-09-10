@@ -5,23 +5,58 @@
  */
 package configuracion;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import menu.Principal;
-
+import modelo.Cargo;
+import modelo.Titulo;
 
 /**
  *
  * @author RociojulietaVazquez
  */
 public class Titulo_consulta extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
+    public static String nombreTitulo;
     /**
      * Creates new form titulo
      */
     public Titulo_consulta() throws ClassNotFoundException {
         initComponents();
+        cargarListaTitulo();
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
     }
 
+      public void cargarListaTitulo(){
+        DefaultListModel<Titulo> modelo = new DefaultListModel<>();
+        
+        try {
+            Statement st=(Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM titulo ORDER BY detalle ASC");
+            
+            while (rs.next()) {
+                Titulo titulo = new Titulo();
+                titulo.setIdTitulo(rs.getInt("idTitulo"));
+                titulo.setDetalle(rs.getString("detalle"));
+                
+                modelo.addElement(titulo);
+            }
+            
+            listaTitulo.setModel(modelo);
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, "+e);
+        }
+    
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,9 +67,6 @@ public class Titulo_consulta extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        txtTitulo = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -45,16 +77,6 @@ public class Titulo_consulta extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jLabel2.setText("Titulo:");
-
-        btnBuscar.setText("buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -80,6 +102,11 @@ public class Titulo_consulta extends javax.swing.JInternalFrame {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
+        listaTitulo.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaTituloValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(listaTitulo);
 
         btnAgregar.setBackground(new java.awt.Color(38, 86, 186));
@@ -134,41 +161,30 @@ public class Titulo_consulta extends javax.swing.JInternalFrame {
                         .addComponent(jButton1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(btnBuscar)))))
+                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
                         .addComponent(btnAgregar)
                         .addGap(31, 31, 31)
                         .addComponent(btnModificar)
                         .addGap(31, 31, 31)
-                        .addComponent(btnEliminar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addComponent(btnEliminar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -191,7 +207,7 @@ public class Titulo_consulta extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         try {
-            Principal.crearBarrio();
+            Principal.crearTitulo();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Titulo_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -199,10 +215,13 @@ public class Titulo_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
+        Titulo tituloModificar = new Titulo();
+        tituloModificar = listaTitulo.getSelectedValue();
+        nombreTitulo = tituloModificar.getDetalle();
         this.setVisible(false);
 
         try {
-            Principal.modificarBarrio();
+            Principal.modificarTitulo();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Titulo_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -220,23 +239,23 @@ public class Titulo_consulta extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    private void listaTituloValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaTituloValueChanged
 
-    }//GEN-LAST:event_btnBuscarActionPerformed
+        btnModificar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        
+    }//GEN-LAST:event_listaTituloValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> listaTitulo;
-    private javax.swing.JTextField txtTitulo;
+    private javax.swing.JList<Titulo> listaTitulo;
     // End of variables declaration//GEN-END:variables
 }

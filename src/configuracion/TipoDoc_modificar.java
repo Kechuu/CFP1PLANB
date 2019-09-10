@@ -5,11 +5,16 @@
  */
 package configuracion;
 
+import Controlador.CtrlTipoDocumento;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Statement;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import menu.Principal;
+import modelo.Cargo;
+import modelo.TipoDocumento;
 
 
 /**
@@ -17,13 +22,43 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class TipoDoc_modificar extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form ModificarTrabajo
      */
     public TipoDoc_modificar() throws ClassNotFoundException {
         initComponents();
+        cargarComboCargo(cbTipo);
+        for (int i = 0; i < cbTipo.getItemCount(); i++) {
+            if (cbTipo.getItemAt(i).getDetalle().equalsIgnoreCase(TipoDoc_consulta.nombreTipoDoc)) {
+                cbTipo.setSelectedIndex(i);
+            }
+        }
     }
 
+    public void cargarComboCargo(JComboBox<TipoDocumento> cbTipo){
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM tipoDocumento ORDER BY detalle ASC");
+            TipoDocumento tipoDoc = new TipoDocumento();
+            tipoDoc.setIdTipoDocumento(0);
+            tipoDoc.setDetalle("Seleccione una opcion...");
+            cbTipo.addItem(tipoDoc);
+            
+            while (rs.next()) {                
+                tipoDoc = new TipoDocumento();
+                tipoDoc.setIdTipoDocumento(rs.getInt("idTipoDocumento"));
+                tipoDoc.setDetalle(rs.getString("detalle"));
+                cbTipo.addItem(tipoDoc);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -147,7 +182,17 @@ public class TipoDoc_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
+        CtrlTipoDocumento ctrlTipoDoc = new CtrlTipoDocumento();
+        TipoDocumento tipo = new TipoDocumento();
+        if (txtTipo.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
+        }else{
+            tipo = (TipoDocumento) cbTipo.getSelectedItem();
+            ctrlTipoDoc.editar(tipo.getIdTipoDocumento(), txtTipo.getText());
+            cbTipo.removeAllItems();
+            cargarComboCargo(cbTipo);
+            txtTipo.setText("");
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -160,7 +205,7 @@ public class TipoDoc_modificar extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cbTipo;
+    private javax.swing.JComboBox<TipoDocumento> cbTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

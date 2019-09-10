@@ -179,11 +179,13 @@ public class Cursado_modificar extends javax.swing.JInternalFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         CtrlLugarCurso ctrllugarCurso = new CtrlLugarCurso();
-        
+        LugarCurso lugarCurso = new LugarCurso();
         if (txtCursado.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
-            ctrllugarCurso.editar(Cursado_consulta.idLugarCursado, txtCursado.getText());
+            lugarCurso = (LugarCurso) cbCursado.getSelectedItem();
+            ctrllugarCurso.editar(lugarCurso.getIdLugarCurso(), txtCursado.getText());
+            cbCursado.removeAllItems();
             cargarComboCursado(cbCursado);
             txtCursado.setText("");
         }

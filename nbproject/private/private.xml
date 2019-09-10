@@ -2,9 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/home/araa/plan_b/CFP1PLANB/src/interfazAlumno/Inscripcion.java</file>
             <file>file:/home/araa/plan_b/CFP1PLANB/src/Controlador/CtrlLugar.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> 8b57e3a17eba805d6d6205d80ff92b49d0c3b912
     </open-files>
 </project-private>

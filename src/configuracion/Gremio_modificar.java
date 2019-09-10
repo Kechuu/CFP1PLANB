@@ -14,7 +14,6 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Gremio;
-import modelo.LugarCurso;
 
 
 /**
@@ -180,11 +179,13 @@ public class Gremio_modificar extends javax.swing.JInternalFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         CtrlGremio ctrlGremio = new CtrlGremio();
-        
+        Gremio gremio = new Gremio();
         if (txtGremios.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
-            ctrlGremio.editarGremio(Gremio_consulta.idGremio, txtGremios.getText());
+            gremio = (Gremio) cbGremiosActuales.getSelectedItem();
+            ctrlGremio.editarGremio(gremio.getIdGremio(), txtGremios.getText());
+            cbGremiosActuales.removeAllItems();
             cargarComboGremio(cbGremiosActuales);
             txtGremios.setText("");
         }

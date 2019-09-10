@@ -27,7 +27,7 @@ public class Cargo_modificar extends javax.swing.JInternalFrame {
      */
     public Cargo_modificar() throws ClassNotFoundException {
         initComponents();
-        cargarComboLocalidad(cbCargoActual);
+        cargarComboCargo(cbCargoActual);
         for (int i = 0; i < cbCargoActual.getItemCount(); i++) {
             if (cbCargoActual.getItemAt(i).getDetalle().equalsIgnoreCase(Cargo_consulta.nombreCargo)) {
                 cbCargoActual.setSelectedIndex(i);
@@ -35,7 +35,7 @@ public class Cargo_modificar extends javax.swing.JInternalFrame {
         }
     }
 
-    public void cargarComboLocalidad(JComboBox<Cargo> cbCargoActual){
+    public void cargarComboCargo(JComboBox<Cargo> cbCargoActual){
         
         try {
             Statement st = (Statement) con.createStatement();
@@ -179,12 +179,14 @@ public class Cargo_modificar extends javax.swing.JInternalFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         CtrlCargo ctrlCargo = new CtrlCargo();
-        
+        Cargo cargo = new Cargo();
         if (txtCambiarCargo.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
-            ctrlCargo.editar(Cargo_consulta.idCargo, txtCambiarCargo.getText());
-            cargarComboLocalidad(cbCargoActual);
+            cargo = (Cargo) cbCargoActual.getSelectedItem();
+            ctrlCargo.editar(cargo.getIdCargo(), txtCambiarCargo.getText());
+            cbCargoActual.removeAllItems();
+            cargarComboCargo(cbCargoActual);
             txtCambiarCargo.setText("");
         }
         

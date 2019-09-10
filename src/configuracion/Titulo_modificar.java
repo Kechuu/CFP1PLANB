@@ -5,11 +5,16 @@
  */
 package configuracion;
 
+import Controlador.CtrlTitulo;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Statement;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import menu.Principal;
+import modelo.Cargo;
+import modelo.Titulo;
 
 
 /**
@@ -17,13 +22,43 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Titulo_modificar extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form modificartitulo
      */
     public Titulo_modificar() throws ClassNotFoundException {
         initComponents();
+        cargarComboTitulo(cbTituloActual);
+        for (int i = 0; i < cbTituloActual.getItemCount(); i++) {
+            if (cbTituloActual.getItemAt(i).getDetalle().equalsIgnoreCase(Titulo_consulta.nombreTitulo)) {
+                cbTituloActual.setSelectedIndex(i);
+            }
+        }
     }
 
+    public void cargarComboTitulo(JComboBox<Titulo> cbTituloActual){
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM titulo ORDER BY detalle ASC");
+            Titulo titulo = new Titulo();
+            titulo.setIdTitulo(0);
+            titulo.setDetalle("Seleccione una opcion...");
+            cbTituloActual.addItem(titulo);
+            
+            while (rs.next()) {                
+                titulo = new Titulo();
+                titulo.setIdTitulo(rs.getInt("idTitulo"));
+                titulo.setDetalle(rs.getString("detalle"));
+                cbTituloActual.addItem(titulo);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -145,7 +180,18 @@ public class Titulo_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
+        CtrlTitulo ctrlTitulo = new CtrlTitulo();
+        Titulo titulo = new Titulo();
+        if (txtTitulo.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar registro vacios");
+        }else{
+            titulo = (Titulo) cbTituloActual.getSelectedItem();
+            ctrlTitulo.editar(titulo.getIdTitulo(), txtTitulo.getText());
+            cbTituloActual.removeAllItems();
+            cargarComboTitulo(cbTituloActual);
+            txtTitulo.setText("");
+        }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -158,7 +204,7 @@ public class Titulo_modificar extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cbTituloActual;
+    private javax.swing.JComboBox<Titulo> cbTituloActual;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

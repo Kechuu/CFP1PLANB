@@ -30,5 +30,7 @@ public class Periodo {
         this.detalle = detalle;
     }
     
-    
+    public String toString(){
+        return this.detalle;
+    }
 }

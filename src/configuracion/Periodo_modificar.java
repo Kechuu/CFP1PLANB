@@ -5,18 +5,58 @@
  */
 package configuracion;
 
+import Controlador.CtrlPeriodo;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import menu.Principal;
+import modelo.Periodo;
+
 /**
  *
  * @author RociojulietaVazquez
  */
 public class Periodo_modificar extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form ModificarGremio
      */
     public Periodo_modificar() throws ClassNotFoundException {
         initComponents();
+        cargarComboPeriodo(cbPeriodoActual);
+        for (int i = 0; i < cbPeriodoActual.getItemCount(); i++) {
+            if (cbPeriodoActual.getItemAt(i).getDetalle().equalsIgnoreCase(Periodo_consulta.nombrePeriodo)) {
+                cbPeriodoActual.setSelectedIndex(i);
+            }
+        }
     }
 
+    public void cargarComboPeriodo(JComboBox<Periodo> cbPeriodoActual){
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM periodo ORDER BY detalle ASC");
+            Periodo periodo = new Periodo();
+            periodo.setIdPeriodo(0);
+            periodo.setDetalle("Seleccione una opcion...");
+            cbPeriodoActual.addItem(periodo);
+            
+            while (rs.next()) {                
+                periodo = new Periodo();
+                periodo.setIdPeriodo(rs.getInt("idPeriodo"));
+                periodo.setDetalle(rs.getString("detalle"));
+                cbPeriodoActual.addItem(periodo);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,7 +74,7 @@ public class Periodo_modificar extends javax.swing.JInternalFrame {
         txtPeriodicidad = new javax.swing.JTextField();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        cbPeriodicidadActual = new javax.swing.JComboBox<>();
+        cbPeriodoActual = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -93,7 +133,7 @@ public class Periodo_modificar extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cbPeriodicidadActual, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbPeriodoActual, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
                     .addComponent(txtPeriodicidad, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
@@ -110,7 +150,7 @@ public class Periodo_modificar extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbPeriodicidadActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbPeriodoActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -137,12 +177,24 @@ public class Periodo_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
+        CtrlPeriodo ctrlPeriodo = new CtrlPeriodo();
+        Periodo periodo = new Periodo();
+        if (txtPeriodicidad.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
+        }else{
+            periodo = (Periodo) cbPeriodoActual.getSelectedItem();
+            ctrlPeriodo.editar(periodo.getIdPeriodo(), txtPeriodicidad.getText());
+            cbPeriodoActual.removeAllItems();
+            cargarComboPeriodo(cbPeriodoActual);
+            txtPeriodicidad.setText("");
+        }
+        
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        //Principal.activarPanel();
+        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -150,7 +202,7 @@ public class Periodo_modificar extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cbPeriodicidadActual;
+    private javax.swing.JComboBox<Periodo> cbPeriodoActual;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

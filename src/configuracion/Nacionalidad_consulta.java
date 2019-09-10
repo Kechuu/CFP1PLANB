@@ -5,9 +5,17 @@
  */
 package configuracion;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import menu.Principal;
+import modelo.Cargo;
+import modelo.Nacionalidad;
 
 
 /**
@@ -15,13 +23,42 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Nacionalidad_consulta extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
+    public static int idNacionalidad;
+    public static String nombreNacionalidad;
     /**
      * Creates new form nacionalidad
      */
     public Nacionalidad_consulta() throws ClassNotFoundException {
         initComponents();
+        cargarListaNacionalidad();
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
     }
-
+    
+      public void cargarListaNacionalidad(){
+        DefaultListModel<Nacionalidad> modelo = new DefaultListModel<>();
+        
+        try {
+            Statement st=(Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM nacionalidad ORDER BY detalle ASC");
+            
+            while (rs.next()) {
+                Nacionalidad nacionalidad = new Nacionalidad();
+                nacionalidad.setIdNacionalidad(rs.getInt("idNacionalidad"));
+                nacionalidad.setDetalle(rs.getString("detalle"));
+                
+                modelo.addElement(nacionalidad);
+            }
+            
+            listaNacionalidad.setModel(modelo);
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, "+e);
+        }
+    
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,9 +69,6 @@ public class Nacionalidad_consulta extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        txtNacionalidad = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -45,16 +79,6 @@ public class Nacionalidad_consulta extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jLabel2.setText("Nacionalidades:");
-
-        btnBuscar.setText("buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
 
@@ -79,6 +103,11 @@ public class Nacionalidad_consulta extends javax.swing.JInternalFrame {
                 .addGap(21, 21, 21))
         );
 
+        listaNacionalidad.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaNacionalidadValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(listaNacionalidad);
 
         btnAgregar.setBackground(new java.awt.Color(38, 86, 186));
@@ -127,24 +156,13 @@ public class Nacionalidad_consulta extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnBuscar))
-                            .addComponent(jLabel2))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -155,26 +173,21 @@ public class Nacionalidad_consulta extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscar)
-                    .addComponent(txtNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(99, 99, 99)
                         .addComponent(btnAgregar)
                         .addGap(31, 31, 31)
                         .addComponent(btnModificar)
                         .addGap(31, 31, 31)
                         .addComponent(btnEliminar)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(81, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -195,7 +208,7 @@ public class Nacionalidad_consulta extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         try {
-            Principal.crearBarrio();
+            Principal.crearNacionalidad();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Nacionalidad_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -203,10 +216,14 @@ public class Nacionalidad_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
+        Nacionalidad nacionalidad = new Nacionalidad();
+        nacionalidad = listaNacionalidad.getSelectedValue();
+        idNacionalidad = nacionalidad.getIdNacionalidad();
+        nombreNacionalidad = nacionalidad.getDetalle();
         this.setVisible(false);
 
         try {
-            Principal.modificarBarrio();
+            Principal.modificarNacionalidad();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Nacionalidad_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -224,23 +241,23 @@ public class Nacionalidad_consulta extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarActionPerformed
+    private void listaNacionalidadValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaNacionalidadValueChanged
+        
+        btnModificar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        
+    }//GEN-LAST:event_listaNacionalidadValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> listaNacionalidad;
-    private javax.swing.JTextField txtNacionalidad;
+    private javax.swing.JList<Nacionalidad> listaNacionalidad;
     // End of variables declaration//GEN-END:variables
 }
