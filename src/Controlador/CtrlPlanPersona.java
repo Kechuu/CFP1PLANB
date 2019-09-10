@@ -75,6 +75,7 @@ public class CtrlPlanPersona {
             rs = ps.executeQuery();
             
             if (rs.next()) {
+                
                 planPersona.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
                 planPersona.setIdPlanes(ctrlPlanes.leer(rs.getInt("idPlanes")));
             }else{

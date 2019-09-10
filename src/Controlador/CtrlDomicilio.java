@@ -97,7 +97,7 @@ public class CtrlDomicilio {
                 domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar")));
                 domicilio.setIdEdificio(rs.getInt("idEdificio"));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, " aqui No existe lo que está buscando");
             }
             
         } catch (Exception e) {
@@ -125,7 +125,7 @@ public class CtrlDomicilio {
                 domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar")));
                 domicilio.setIdEdificio(rs.getInt("idEdificio"));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "AQUI No existe lo que está buscando");
             }
             
         } catch (Exception e) {

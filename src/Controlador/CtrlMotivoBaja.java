@@ -70,7 +70,7 @@ public class CtrlMotivoBaja {
             if(rs.next()){
                 motivoBaja.setDetalle(rs.getString("detalle"));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "MB No existe lo que está buscando");
             }
             
             con.close();

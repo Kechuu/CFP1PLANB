@@ -5,45 +5,26 @@
  */
 package interfazAlumno;
 
-import Controlador.CtrlAlumno;
 import Controlador.CtrlCodigoPostal;
 import Controlador.CtrlCurso;
-import Controlador.CtrlCursoAlumno;
-import Controlador.CtrlDomicilio;
-import Controlador.CtrlEdificio;
-import Controlador.CtrlEstadoAlumno;
-import Controlador.CtrlPeriodo;
-import Controlador.CtrlPersona;
-import Controlador.CtrlPersonaTrabajo;
-import Controlador.CtrlPlanPersona;
+import Controlador.CtrlLugar;
+import Controlador.CtrlNacionalidad;
+import Controlador.CtrlPlanes;
 import Controlador.CtrlTipoDocumento;
+import Controlador.CtrlTrabajo;
 import java.awt.event.ItemEvent;
 import java.sql.Connection;
-import java.util.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.ListModel;
 import menu.Principal;
-import modelo.Alumno;
 import modelo.Curso;
-import modelo.Domicilio;
-import modelo.Edificio;
-import modelo.Lugar;
 import modelo.Nacionalidad;
-import modelo.Persona;
 import modelo.Planes;
 import modelo.TipoCurso;
 import modelo.TipoDocumento;
 import modelo.Trabajo;
-import modelo.Lugar;/**
+import modelo.Lugar;
+/**
  *
  * @author
  */
@@ -51,6 +32,11 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     
     Connection con = clases.Conectar.conexion();
     CtrlTipoDocumento tipo = new CtrlTipoDocumento();
+    CtrlLugar lugar=new CtrlLugar();
+    CtrlNacionalidad nacion= new CtrlNacionalidad();
+    CtrlTrabajo trabajo=new CtrlTrabajo();
+    CtrlPlanes planes=new CtrlPlanes();
+    
     /**
      * Creates new form InscripcionAlumno
      * @throws java.lang.ClassNotFoundException
@@ -58,204 +44,13 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     public Inscripcion() throws ClassNotFoundException {
        initComponents();
        
-       //cbTipo.addItem(tipo.leer());
-       cargarComboTipoDocumento(cbTipo);
-       cargarComboLocalidad(cbLocalidad);
-       cargarComboPlan(cbPlan);
-       cargarComboTrabajo(cbTrabajo);
-       cargarComboLocalidad(cbNacimiento);
-       cargarComboNacionalidad(cbNacionalidad);
-       cargarListaCurso();
-    }
-    
-    
-    public void cargarComboTipoDocumento(JComboBox<TipoDocumento> cbTipoDoc){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM tipoDocumento ORDER BY detalle ASC");
-            TipoDocumento tipoDocumento = new TipoDocumento();
-            tipoDocumento.setIdTipoDocumento(0);
-            tipoDocumento.setDetalle("Seleccione una opcion...");
-            cbTipoDoc.addItem(tipoDocumento);
-            
-            while (rs.next()) {                
-                tipoDocumento = new TipoDocumento();
-                
-                tipoDocumento.setIdTipoDocumento(rs.getInt("idTipoDocumento"));
-                tipoDocumento.setDetalle(rs.getString("detalle"));
-                cbTipoDoc.addItem(tipoDocumento);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
-        }
-        
-    }
-    
-    public void cargarComboLocalidad(JComboBox<Lugar> comboLocalidad){//Este metodo para llenar el combo con las localidades 
-        try {
-            
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM lugar WHERE nivel = 3 ORDER BY nombre ASC");
-            Lugar dat= new Lugar();
-            dat.setIdLugar(0);
-            dat.setNombre("Selecciona una opción...");
-            dat.setNivel(0);
-            dat.setDe(0);
-            comboLocalidad.addItem(dat);
-
-            while(rs.next()){
-                dat= new Lugar();
-                
-                dat.setIdLugar(rs.getInt("idLugar"));
-                dat.setNombre(rs.getString("nombre"));
-                dat.setNivel(rs.getInt("nivel"));
-                dat.setDe(rs.getInt("de"));
-                
-                comboLocalidad.addItem(dat); 
-            }
-                
-        } catch (SQLException ex) {
-         
-            JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Las localidades");
-        }
-    }
-    
-    public Vector<Lugar> cargarFiltrado(int idLugar, int nivel) {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Vector<Lugar> datos = new Vector<>();
-        Lugar dat = null;
-        try {
-            String sql = "SELECT * FROM lugar WHERE nivel=? and de =" + idLugar;
-            
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, nivel);
-            
-            rs = ps.executeQuery();
-            dat = new Lugar();
-            dat.setIdLugar(0);
-            dat.setNombre("Seleccionae una opción...");
-            datos.add(dat);
-                while (rs.next()) {
-                    dat = new Lugar();
-                    dat.setIdLugar(rs.getInt("idLugar"));
-                    dat.setNombre(rs.getString("nombre"));
-                    datos.add(dat);
-                }
-                rs.close();
-        } catch (SQLException ex) {
-            System.err.println("Error consulta :" + ex.getMessage());
-        }
-        return datos;
-    }
+       tipo.cargarComboTipoDocumento(cbTipo);
+       lugar.cargarComboLocalidad(cbLocalidad);
+       lugar.cargarComboLocalidad(cbNacimiento);
+       nacion.cargarComboNacionalidad(cbNacionalidad);
+       trabajo.cargarComboTrabajo(cbTrabajo);
+       planes.cargarComboPlan(cbPlan);
        
-    public void cargarComboPlan(JComboBox <Planes> cb){
-        
-        try{
-            Statement st= (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * from planes ORDER BY detalle ASC");
-            
-            Planes plan= new Planes();
-            plan.setIdPlanes(0);
-            plan.setDetalle("Seleccione un plan...");
-            cb.addItem(plan);
-            
-            while(rs.next()){
-                plan= new Planes();
-                
-                plan.setIdPlanes(rs.getInt("idPlanes"));
-                plan.setDetalle(rs.getString("detalle"));
-                
-                cb.addItem(plan);
-            }
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
-        }
-        
-    }
-    public void cargarComboTrabajo(JComboBox <Trabajo> cb){
-        
-        try{
-            Statement st= (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * from trabajo ORDER BY detalle ASC");
-            
-         
-            Trabajo trabajo = new Trabajo();
-            trabajo.setIdTrabajo(0);
-            trabajo.setDetalle("Selecciones una opción...");
-            
-            cb.addItem(trabajo);
-            
-            while(rs.next()){
-                trabajo= new Trabajo();
-                
-                trabajo.setIdTrabajo(rs.getInt("idTrabajo"));
-                trabajo.setDetalle(rs.getString("detalle"));
-                cb.addItem(trabajo);
-            }
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
-        }
-        
-    }
-    
-    public void cargarComboNacionalidad(JComboBox <Nacionalidad> cb){
-        
-        try{
-            Statement st= (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * from nacionalidad ORDER BY detalle ASC");
-            
-           
-            Nacionalidad nacion= new Nacionalidad();
-            nacion.setIdNacionalidad(0);
-            nacion.setDetalle("Seleccione una opción...");
-           
-            cb.addItem(nacion);
-            
-            while(rs.next()){
-                
-                nacion= new Nacionalidad();
-                
-                nacion.setIdNacionalidad(rs.getInt("idNacionalidad"));
-                nacion.setDetalle(rs.getString("detalle"));
-                cb.addItem(nacion);
-            }
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
-        }
-        
-    }
-    
-    public void cargarListaCurso(){
-        CtrlPeriodo ctrlPeriodo = new CtrlPeriodo();
-        
-        DefaultListModel<TipoCurso> modelo=new DefaultListModel<>();
-        
-        try {
-            Statement st=(Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * from tipoCurso");
-            
-            while (rs.next()) {
-                TipoCurso tipoCurso = new TipoCurso();
-        
-                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
-                tipoCurso.setDetalle(rs.getString("detalle"));
-                tipoCurso.setCosto(rs.getFloat("costo"));
-                tipoCurso.setIdPeriodo(ctrlPeriodo.leer(rs.getInt("idPeriodo")));
-                
-                modelo.addElement(tipoCurso);
-            }
-            
-            listDisponible.setModel(modelo);
-            
-        } catch (SQLException e) {
-        }
-    
     }
     
     /**
@@ -274,9 +69,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         txtNombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtApellido = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        femenino = new javax.swing.JRadioButton();
-        masculino = new javax.swing.JRadioButton();
         txtCuil = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtDni = new javax.swing.JTextField();
@@ -289,6 +81,8 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         fecha = new com.toedter.calendar.JDateChooser();
         cbTipo = new javax.swing.JComboBox<>();
+        cbSexo = new javax.swing.JComboBox<>();
+        jLabel29 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         cbLocalidad = new javax.swing.JComboBox<>();
@@ -359,23 +153,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
         txtApellido.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sexo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        femenino.setBackground(new java.awt.Color(255, 255, 255));
-        femenino.setText("Femenino");
-        jPanel3.add(femenino, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
-
-        masculino.setBackground(new java.awt.Color(255, 255, 255));
-        masculino.setText("Masculino");
-        masculino.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                masculinoActionPerformed(evt);
-            }
-        });
-        jPanel3.add(masculino, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
-
         txtCuil.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         jLabel8.setText("CUIL");
@@ -401,6 +178,11 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         cbTipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbTipo.setToolTipText("");
 
+        cbSexo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cbSexo.setToolTipText("");
+
+        jLabel29.setText("Sexo");
+
         javax.swing.GroupLayout panelInscripcionLayout = new javax.swing.GroupLayout(panelInscripcion);
         panelInscripcion.setLayout(panelInscripcionLayout);
         panelInscripcionLayout.setHorizontalGroup(
@@ -421,9 +203,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                         .addComponent(txtCuil, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(110, 110, 110))
                     .addGroup(panelInscripcionLayout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(panelInscripcionLayout.createSequentialGroup()
                         .addGroup(panelInscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel13)
@@ -432,7 +211,9 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                                 .addGap(12, 12, 12)
                                 .addGroup(panelInscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cbNacimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel29))
                         .addGroup(panelInscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelInscripcionLayout.createSequentialGroup()
                                 .addGap(148, 148, 148)
@@ -471,21 +252,23 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                     .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(panelInscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelInscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelInscripcionLayout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addGroup(panelInscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel14))
+                        .addComponent(jLabel29)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelInscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelInscripcionLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(42, 42, 42)
+                .addGroup(panelInscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelInscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(63, 63, 63))
         );
 
@@ -1003,8 +786,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
     private void btnPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoActionPerformed
         
     }//GEN-LAST:event_btnPagoActionPerformed
@@ -1015,11 +796,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_btncancelarActionPerformed
 
-    private void masculinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masculinoActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_masculinoActionPerformed
-
     private void cbPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPlanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbPlanActionPerformed
@@ -1028,15 +804,15 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
         if(evt.getStateChange()==ItemEvent.SELECTED){
             if(cbLocalidad.getSelectedIndex()!=0){
-                Lugar lugar;
-                lugar=(Lugar)cbLocalidad.getSelectedItem();           
-                DefaultComboBoxModel modelo=new DefaultComboBoxModel(cargarFiltrado(lugar.getIdLugar(), 2));
+                Lugar item;
+                item=(Lugar)cbLocalidad.getSelectedItem();           
+                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(), 2));
             
                 cbBarrio.setModel(modelo);
                 
                 CtrlCodigoPostal cod=new CtrlCodigoPostal();
                 
-                txtCodigo.setText(String.valueOf(cod.leer(lugar.getIdLugar())));
+                txtCodigo.setText(String.valueOf(cod.leer(item.getIdLugar())));
             }
         }
         
@@ -1046,9 +822,9 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
         if(evt.getStateChange()== ItemEvent.SELECTED){
             if(cbBarrio.getSelectedIndex()!=0){
-                Lugar lugar=new Lugar();
-                lugar=(Lugar)cbBarrio.getSelectedItem();
-                DefaultComboBoxModel modelo=new DefaultComboBoxModel(cargarFiltrado(lugar.getIdLugar(),1));
+                Lugar item=new Lugar();
+                item=(Lugar)cbBarrio.getSelectedItem();
+                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),1));
             
                 cbCalle.setModel(modelo);
                 
@@ -1057,65 +833,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbBarrioItemStateChanged
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Lugar lugar=(Lugar) cbCalle.getSelectedItem();
-        TipoDocumento doc=(TipoDocumento) cbTipo.getSelectedItem();
-        Nacionalidad nacion=(Nacionalidad) cbNacionalidad.getSelectedItem();
-        Lugar nacimiento=(Lugar)cbNacimiento.getSelectedItem();
-        
-        CtrlEdificio edificio=new CtrlEdificio();
-        CtrlDomicilio domicilio=new CtrlDomicilio();
-        CtrlPersona persona=new CtrlPersona();
-        CtrlPlanPersona planes=new CtrlPlanPersona();
-        CtrlPersonaTrabajo trabajo=new CtrlPersonaTrabajo();
-        CtrlAlumno alumno=new CtrlAlumno();
-        CtrlCursoAlumno cursoAlumno= new CtrlCursoAlumno();
-        CtrlEstadoAlumno estadoAlumno=new CtrlEstadoAlumno();
-        CtrlCurso curso=new CtrlCurso();
-        
-        Edificio leer=new Edificio();
-        Domicilio leerDomicilio=new Domicilio();
-        Persona leerPersona=new Persona();
-        Alumno leerAlumno=new Alumno();
-        
-        int idEdificio=0;
-       
-        if(txtBloque.equals("") && txtPiso.equals("") && txtDepto.equals("")){  
-            
-            edificio.crear(Integer.parseInt(txtBloque.getText().trim()), Integer.parseInt(txtPiso.getText().trim()), Integer.parseInt(txtDepto.getText().trim()));          
-            //edificio.crear(1, 1, 1);
-            leer=edificio.leer();
-            idEdificio=leer.getIdEdificio();
-        }
-        
-        domicilio.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), lugar.getIdLugar(), idEdificio);
-        leerDomicilio=domicilio.leer();
-        
-        persona.crear(txtNombre.getText(), txtApellido.getText(), (Date) fecha.getDate(), false, txtCuil.getText(), Integer.parseInt(txtHijos.getText()), txtCorreo.getText(), Integer.parseInt(txtCelular.getText()), leerDomicilio.getIdDomicilio(), doc.getIdTipoDocumento(), nacion.getIdNacionalidad(), 1, nacimiento.getIdLugar(), false);
-        
-        leerPersona=persona.leer();
-        
-        ListModel<Planes> listaPlan=listPlan.getModel();
-        ListModel<Trabajo>listaTrabajo=listTrabajo.getModel();
-        ListModel<TipoCurso>listaInscripto=listCurso.getModel();
-        
-        for(int i=0; i<listaPlan.getSize(); i++){
-            planes.crear(leerPersona.getIdPersona(), listaPlan.getElementAt(i).getIdPlanes());           
-        }       
-        for(int i=0; i<listaTrabajo.getSize();i++){
-            trabajo.crear(listaTrabajo.getElementAt(i).getIdTrabajo(), leerPersona.getIdPersona());
-        }
-        
-        alumno.crear(leerPersona.getIdPersona());
-        leerAlumno=alumno.leer();
-        
-        java.util.Date date= new java.util.Date();
-        java.text.SimpleDateFormat sdf= new java.text.SimpleDateFormat("yyyy-mm-dd");
-        String fechaHoy = sdf.format(date);
-        
-        /*VER LUEGO!!!!
-        for(int i=0; i<listaInscripto.getSize(); i++){
-            cursoAlumno.crear(1, (java.util.Date) date, leerAlumno.getIdAlumno(), estadoAlumno.leer(1).getIdEstadoAlumno(), curso.leer(listaInscripto.getElementAt(i).getIdTipoCurso()).getIdCurso(),1);
-        }*/
+
         
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -1202,13 +920,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             listTrabajo.setModel(model);
         }
     }//GEN-LAST:event_btnAsignarActionPerformed
-    
-    /*void validar(){
-        if(txtNombre.getText().equals("") || txtApellido.getText().equals("") || txtCuil.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Faltan datos qué ingresar");
-            return;
-        }
-    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignar;
@@ -1224,13 +935,10 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<Lugar> cbNacimiento;
     private javax.swing.JComboBox<Nacionalidad> cbNacionalidad;
     private javax.swing.JComboBox<Planes> cbPlan;
+    private javax.swing.JComboBox<String> cbSexo;
     private javax.swing.JComboBox<TipoDocumento> cbTipo;
     private javax.swing.JComboBox<Trabajo> cbTrabajo;
-    private javax.swing.JComboBox<TipoDocumento> cbTipoDoc;
-    private javax.swing.JComboBox<String> combopiso;
-    private javax.swing.JComboBox<String> combotorre;
     private com.toedter.calendar.JDateChooser fecha;
-    private javax.swing.JRadioButton femenino;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1251,6 +959,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1261,7 +970,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel7;
     private JPanelWebCam.JPanelWebCam jPanelWebCam1;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1274,7 +982,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JList<TipoCurso> listDisponible;
     private javax.swing.JList<Planes> listPlan;
     private javax.swing.JList<Trabajo> listTrabajo;
-    private javax.swing.JRadioButton masculino;
     private javax.swing.JPanel panel;
     private javax.swing.JTabbedPane panelContenedor;
     private javax.swing.JPanel panelInscripcion;

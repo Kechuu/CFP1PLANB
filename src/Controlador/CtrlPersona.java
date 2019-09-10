@@ -196,7 +196,7 @@ public class CtrlPersona {
                 persona.setIdFoto(ctrlFoto.leer(rs.getInt("idFoto")));
                 persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("lugarNacimiento")));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "-Persona No existe lo que está buscando");
             }
             
         } catch (Exception e) {
@@ -208,9 +208,8 @@ public class CtrlPersona {
     
     public void generarCUIL(int DNI) throws ClassNotFoundException{
         PanelDni dni = new PanelDni();
-        //int validarPersona = dni.validarPersona;
+        int validarPersona = dni.validarPersona;
     //HACER LA VARIABLE validarPersona STATIC!!!
-        int validarPersona= 1;
         /*
         Codigo de CUIL :v
         */

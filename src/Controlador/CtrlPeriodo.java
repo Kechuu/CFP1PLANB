@@ -70,7 +70,7 @@ public class CtrlPeriodo {
             if(rs.next()){
                 periodo.setDetalle(rs.getString("detalle"));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "-Periodo No existe lo que está buscando");
             }
             
             con.close();

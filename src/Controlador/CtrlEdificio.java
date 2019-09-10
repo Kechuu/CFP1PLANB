@@ -103,7 +103,7 @@ public class CtrlEdificio {
                 edificio.setPiso(rs.getInt("piso"));
                 edificio.setTorre(rs.getInt("torre"));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "Edificio No existe lo que está buscando");
             }
             
             con.close();

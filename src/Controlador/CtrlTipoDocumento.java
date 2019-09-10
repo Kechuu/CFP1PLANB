@@ -8,6 +8,8 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.TipoDocumento;
 /**
@@ -88,6 +90,7 @@ public class CtrlTipoDocumento {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                tipoDocumento.setIdTipoDocumento(rs.getInt("idTipoDocumento"));
                 tipoDocumento.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
@@ -98,5 +101,31 @@ public class CtrlTipoDocumento {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
         return tipoDocumento;
+    }
+    
+    public void cargarComboTipoDocumento(JComboBox<TipoDocumento> cbTipoDoc){
+        
+        try {
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM tipoDocumento ORDER BY detalle ASC");
+            rs=ps.executeQuery();
+            
+            TipoDocumento tipoDocumento = new TipoDocumento();
+            tipoDocumento.setIdTipoDocumento(0);
+            tipoDocumento.setDetalle("Seleccione una opcion...");
+            cbTipoDoc.addItem(tipoDocumento);
+            
+            while (rs.next()) {                
+                tipoDocumento = new TipoDocumento();
+                
+                tipoDocumento.setIdTipoDocumento(rs.getInt("idTipoDocumento"));
+                tipoDocumento.setDetalle(rs.getString("detalle"));
+                cbTipoDoc.addItem(tipoDocumento);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+        }
+        
     }
 }

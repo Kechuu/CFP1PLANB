@@ -133,7 +133,7 @@ public class CtrlCurso {
                 curso.setBorrado(rs.getBoolean("borrado"));
             }else{
                 
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "\nCURSO!! No existe lo que está buscando");
             }
             
         } catch (Exception e) {

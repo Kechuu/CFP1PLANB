@@ -31,7 +31,7 @@ public class CtrlCursoAlumno {
         
         //java.util.Date dateT=new java.util.Date();
       
-        java.sql.Date fecha1=new java.sql.Date(fechaIngreso.getTime());
+        java.sql.Date fecha1=new Date(fechaIngreso.getTime());
         //JOptionPane.showMessageDialog(null, fechaIngreso+" $$"+fecha1);
         /*
         java.util.Date date = new java.util.Date();
@@ -41,7 +41,7 @@ public class CtrlCursoAlumno {
           
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO cursoAlumno (saldo,fechaIngreso,"
-                    + "fechaBaja-Egreso, idAlumno,idEstadoAlumno,idCurso,idMotivoBaja) VALUES (?,?,?,?,?,?,?)");
+                    + "fechaBaja, idAlumno,idEstadoAlumno,idCurso,idMotivoBaja) VALUES (?,?,?,?,?,?,?)");
             
             ps.setFloat(1, saldo);
             ps.setDate(2, fecha1);

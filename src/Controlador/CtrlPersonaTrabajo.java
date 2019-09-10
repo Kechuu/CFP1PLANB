@@ -25,8 +25,8 @@ public class CtrlPersonaTrabajo {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO personaTrabajo (idTrabajo, idPersona) VALUES (?,?)");
         
-            ps.setInt(1, idPersona);
-            ps.setInt(2, idTrabajo);
+            ps.setInt(1, idTrabajo);
+            ps.setInt(2, idPersona);
             
             int res = ps.executeUpdate();
             con.close();

@@ -41,7 +41,7 @@ public class CtrlCodigoPostal {
             ps = (PreparedStatement) con.prepareStatement("UPDATE codigoPostal SET codigoPostal = ? WHERE localidad = ?");
             
             ps.setString(1, codigoPostal);
-            ps.setInt(3, idLocalidad);
+            ps.setInt(2, idLocalidad);
             
             int res = ps.executeUpdate();
             
