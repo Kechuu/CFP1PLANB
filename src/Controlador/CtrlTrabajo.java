@@ -8,6 +8,9 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.Trabajo;
 /**
@@ -68,6 +71,7 @@ public class CtrlTrabajo {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                trabajo.setIdTrabajo(rs.getInt("idTrabajo"));
                 trabajo.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
@@ -78,5 +82,32 @@ public class CtrlTrabajo {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
         return trabajo;
+    }
+    
+    public void cargarComboTrabajo(JComboBox <Trabajo> cb){
+        
+        try{
+            con = clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * from trabajo ORDER BY detalle ASC");
+            rs=ps.executeQuery();
+         
+            Trabajo trabajo = new Trabajo();
+            trabajo.setIdTrabajo(0);
+            trabajo.setDetalle("Selecciones una opción...");
+            
+            cb.addItem(trabajo);
+            
+            while(rs.next()){
+                trabajo= new Trabajo();
+                
+                trabajo.setIdTrabajo(rs.getInt("idTrabajo"));
+                trabajo.setDetalle(rs.getString("detalle"));
+                cb.addItem(trabajo);
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        
     }
 }

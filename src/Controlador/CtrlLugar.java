@@ -8,6 +8,9 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.Lugar;
 
@@ -63,13 +66,13 @@ public class CtrlLugar {
         }
     }
     
-    public Lugar leer(int nivel){
+    public Lugar leer(int idLugar){//cambie esto, estaba con nivel...<--
         Lugar lugar = new Lugar();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE nivel = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE idLugar = ?");
             
-            ps.setInt(1, nivel);
+            ps.setInt(1, idLugar);
             rs = ps.executeQuery();
             
             if(rs.next()){
@@ -175,9 +178,73 @@ public class CtrlLugar {
             rs.close();
             con.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         
         return lugar;
     }
+    
+    public void cargarComboLocalidad(JComboBox<Lugar> comboLocalidad){//Este metodo para llenar el combo con las localidades 
+        
+        try {
+            con= clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM lugar WHERE nivel = 3 ORDER BY nombre ASC");
+            rs=ps.executeQuery();
+            
+            Lugar dat= new Lugar();
+            dat.setIdLugar(0);
+            dat.setNombre("Selecciona una opción...");
+            dat.setNivel(0);
+            dat.setDe(0);
+            comboLocalidad.addItem(dat);
+
+            while(rs.next()){
+                dat= new Lugar();
+                
+                dat.setIdLugar(rs.getInt("idLugar"));
+                dat.setNombre(rs.getString("nombre"));
+                dat.setNivel(rs.getInt("nivel"));
+                dat.setDe(rs.getInt("de"));
+                
+                comboLocalidad.addItem(dat); 
+            }
+                
+        } catch (SQLException ex) {
+         
+            JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Las localidades");
+        }
+    }
+    
+    public Vector<Lugar> cargarFiltrado(int de, int nivel) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Vector<Lugar> datos = new Vector<>();
+        Lugar dat = null;
+        try {
+            String sql = "SELECT * FROM lugar WHERE nivel=? and de =" + de;
+            
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, nivel);
+            
+            rs = ps.executeQuery();
+            dat = new Lugar();
+            dat.setIdLugar(0);
+            dat.setNombre("Seleccionae una opción...");
+            datos.add(dat);
+                while (rs.next()) {
+                    dat = new Lugar();
+                    dat.setIdLugar(rs.getInt("idLugar"));
+                    dat.setNombre(rs.getString("nombre"));
+                    dat.setNivel(rs.getInt("nivel"));
+                    dat.setDe(rs.getInt("de"));
+                    
+                    datos.add(dat);
+                }
+                rs.close();
+        } catch (SQLException ex) {
+            System.err.println("Error consulta :" + ex.getMessage());
+        }
+        return datos;
+    }
+    
 }

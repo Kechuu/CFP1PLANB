@@ -5,12 +5,17 @@
  */
 package Controlador;
 
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import modelo.Curso;
+import modelo.CursoHora;
 
 /**
  *
@@ -26,7 +31,6 @@ public class CtrlCurso {
     int idTipoCurso,int idLugarCurso, boolean borrado){
         
         java.sql.Date fecha=new Date(fechaInicio.getTime());
-        java.sql.Date fin=new Date(fechaFinalizacion.getTime());
         
         try {
             con = clases.Conectar.conexion();
@@ -38,7 +42,7 @@ public class CtrlCurso {
             ps.setFloat(3, costo);
             ps.setInt(4, cupo);
             ps.setDate(5, fecha);
-            ps.setDate(6, fin);
+            ps.setDate(6, null);
             ps.setInt(7, idTipoCurso);
             ps.setInt(8, idLugarCurso);
             ps.setBoolean(9, borrado);
@@ -112,6 +116,7 @@ public class CtrlCurso {
         Curso curso = new Curso();
         CtrlTipoCurso ctrlTipoCurso = new CtrlTipoCurso();
         CtrlLugarCurso ctrlLugarCurso = new CtrlLugarCurso();
+        
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM curso WHERE idTipoCurso = ?");
@@ -133,12 +138,130 @@ public class CtrlCurso {
                 curso.setBorrado(rs.getBoolean("borrado"));
             }else{
                 
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "\nCURSO!! No existe lo que está buscando");
             }
             
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
         return curso;
+    }
+//<VER SI ESTO ES REALMENTE NECESARIO :v
+    public Curso leerCurso(int idCurso){
+        Curso curso = new Curso();
+        CtrlTipoCurso ctrlTipoCurso = new CtrlTipoCurso();
+        CtrlLugarCurso ctrlLugarCurso = new CtrlLugarCurso();
+        
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM curso WHERE idCurso = ?");
+            
+            ps.setInt(1, idCurso);
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                curso.setIdCurso(rs.getInt("idCurso"));
+                curso.setCicloLectivo(rs.getInt("cicloLectivo"));
+                curso.setTurno(rs.getInt("turno"));
+                curso.setCosto(rs.getFloat("costo"));
+                curso.setCupo(rs.getInt("cupo"));
+                curso.setFechaInicio(rs.getDate("fechaInicio"));
+                curso.setFechaFinalizacion(rs.getDate("fechaFinalizacion"));
+                curso.setIdTipoCurso(ctrlTipoCurso.leer(rs.getInt("idTipoCurso")));
+                curso.setIdLugarCurso(ctrlLugarCurso.leer(rs.getInt("idLugarCurso")));
+                curso.setBorrado(rs.getBoolean("borrado"));
+            }else{
+                
+                JOptionPane.showMessageDialog(null, "CURSO!! No existe lo que está buscando");
+            }
+            
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        return curso;
+    }
+    
+     public void llenarTabla(int idCurso, JTable tabla) throws SQLException{
+        String dia=null;
+         
+        CursoHora hora=new CursoHora();
+        CtrlHorario ctrlHorario=new CtrlHorario();
+        CtrlCurso ctrlCurso=new CtrlCurso();
+        
+        
+        con=clases.Conectar.conexion();
+        ps=(PreparedStatement)con.prepareStatement("SELECT * FROM cursoHora WHERE idCurso=?");
+        ps.setInt(1, idCurso);
+        
+        rs=ps.executeQuery();
+        
+        DefaultTableModel modelo =new DefaultTableModel();
+        modelo.addColumn("Día");
+        modelo.addColumn("Desde");
+        modelo.addColumn("Hasta");
+        
+        tabla.setModel(modelo);
+        
+        String[] datos= new String[3];
+        try{
+            
+            while(rs.next()){
+                ctrlHorario=new CtrlHorario();
+                
+                hora.setIdCursoHora(rs.getInt("idCursoHora"));
+                hora.setIdHorario(ctrlHorario.leer(rs.getInt("idHorario")));
+                hora.setIdCurso(ctrlCurso.leerCurso(rs.getInt("idCurso")));
+                
+                switch(hora.getIdHorario().getDia()){
+                    case 1:
+                        dia="Lunes";
+                        
+                        break;
+                        
+                    case 2:
+                        dia="Martes";
+                        
+                        break;
+                    
+                    case 3:
+                        dia="Miercoles";
+                        
+                        break;
+                        
+                    case 4:
+                        dia="Jueves";
+                        
+                        break;
+                        
+                    case 5:
+                        dia="Viernes";
+                        
+                        break;
+                        
+                    case 6:
+                        dia="Sábado";
+                        
+                        break;
+                        
+                    case 7:
+                        dia="Domingo";
+                        
+                        break;
+                }
+                
+                datos[0]=dia;
+                datos[1]=String.valueOf(hora.getIdHorario().getDesde());
+                datos[2]=String.valueOf(hora.getIdHorario().getHasta());
+                
+                modelo.addRow(datos);
+            }
+            
+            tabla.setModel(modelo);
+         }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LAS LOCALIDADES EN LA TABLA"); 
+        }
+        
     }
 }

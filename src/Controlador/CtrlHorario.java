@@ -73,6 +73,7 @@ public class CtrlHorario {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                horario.setIdHorario(rs.getInt("idHorario"));
                 horario.setDesde(rs.getDate("desde"));
                 horario.setHasta(rs.getDate("hasta"));
                 horario.setDia(rs.getInt("dia"));

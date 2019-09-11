@@ -21,14 +21,14 @@ public class CtrlEdificio {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(int torre, int piso, int depto){
+    public void crear(String bloque, String piso, String depto){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO edificio (torre,piso,depto) VALUES (?,?,?)");
         
-            ps.setInt(1, torre);
-            ps.setInt(2, piso);
-            ps.setInt(3, depto);
+            ps.setString(1, bloque);
+            ps.setString(2, piso);
+            ps.setString(3, depto);
             
             int res = ps.executeUpdate();
             con.close();
@@ -103,7 +103,7 @@ public class CtrlEdificio {
                 edificio.setPiso(rs.getInt("piso"));
                 edificio.setTorre(rs.getInt("torre"));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "Edificio No existe lo que está buscando");
             }
             
             con.close();

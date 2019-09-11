@@ -72,10 +72,12 @@ public class CtrlAlumno {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                alumno.setIdAlumno(rs.getInt("idAlumno"));
                 alumno.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
                 alumno.setBorrado(rs.getBoolean("borrado"));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                
+                JOptionPane.showMessageDialog(null, "\nCtrl ALumno No existe lo que está buscando");
             }
             
             con.close();
@@ -100,7 +102,7 @@ public class CtrlAlumno {
                 alumno.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
                 alumno.setBorrado(rs.getBoolean("borrado"));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "\n 2CtrlAlumn No existe lo que está buscando");
             }
             
             con.close();

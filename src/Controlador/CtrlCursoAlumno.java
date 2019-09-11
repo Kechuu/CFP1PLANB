@@ -41,11 +41,11 @@ public class CtrlCursoAlumno {
           
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO cursoAlumno (saldo,fechaIngreso,"
-                    + "fechaBaja-Egreso, idAlumno,idEstadoAlumno,idCurso,idMotivoBaja) VALUES (?,?,?,?,?,?,?)");
+                    + "fechaBaja, idAlumno,idEstadoAlumno,idCurso,idMotivoBaja) VALUES (?,?,?,?,?,?,?)");
             
             ps.setFloat(1, saldo);
             ps.setDate(2, fecha1);
-            ps.setDate(3, fecha1);
+            ps.setDate(3, null);
             ps.setInt(4, idAlumno);
             ps.setInt(5, idEstadoAlumno);
             ps.setInt(6, idCurso);
@@ -53,8 +53,7 @@ public class CtrlCursoAlumno {
             
             int res = ps.executeUpdate();
             con.close();
-            JOptionPane.showMessageDialog(null, "LLEGO HASTA EL FINAL. CURSO ALUMNO");
-            
+           
         } catch (HeadlessException | SQLException e ) {
             JOptionPane.showMessageDialog(null, "ES CURSO ALUMNO!!!");
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());

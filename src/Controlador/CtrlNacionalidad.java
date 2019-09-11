@@ -8,6 +8,9 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.Nacionalidad;
 /**
@@ -68,6 +71,7 @@ public class CtrlNacionalidad {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                nacionalidad.setIdNacionalidad(rs.getInt("idNacionalidad"));
                 nacionalidad.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
@@ -78,5 +82,33 @@ public class CtrlNacionalidad {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
         return nacionalidad;
+    }
+    
+    public void cargarComboNacionalidad(JComboBox <Nacionalidad> cb){
+        
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM nacionalidad ORDER BY detalle ASC");
+            
+            rs=ps.executeQuery();
+            Nacionalidad nacion= new Nacionalidad();
+            nacion.setIdNacionalidad(0);
+            nacion.setDetalle("Seleccione una opción...");
+           
+            cb.addItem(nacion);
+            
+            while(rs.next()){
+                
+                nacion= new Nacionalidad();
+                
+                nacion.setIdNacionalidad(rs.getInt("idNacionalidad"));
+                nacion.setDetalle(rs.getString("detalle"));
+                cb.addItem(nacion);
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        
     }
 }

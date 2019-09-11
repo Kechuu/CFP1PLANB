@@ -8,6 +8,8 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.Planes;
 /**
@@ -91,9 +93,10 @@ public class CtrlPlanes {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                planes.setIdPlanes(rs.getInt("idPlanes"));
                 planes.setDetalle(rs.getString("detalle"));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "-Planes No existe lo que está buscando");
             }
             
             con.close();
@@ -102,4 +105,32 @@ public class CtrlPlanes {
         }
         return planes;
     }
+    
+    public void cargarComboPlan(JComboBox <Planes> cb){
+        
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * from planes ORDER BY detalle ASC");
+            rs=ps.executeQuery();
+            
+            Planes plan= new Planes();
+            plan.setIdPlanes(0);
+            plan.setDetalle("Seleccione un plan...");
+            cb.addItem(plan);
+            
+            while(rs.next()){
+                plan= new Planes();
+                
+                plan.setIdPlanes(rs.getInt("idPlanes"));
+                plan.setDetalle(rs.getString("detalle"));
+                
+                cb.addItem(plan);
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        
+    }
+    
 }
