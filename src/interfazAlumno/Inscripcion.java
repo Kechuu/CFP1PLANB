@@ -1090,7 +1090,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         domicilio.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), lugar.getIdLugar(), idEdificio);
         leerDomicilio=domicilio.leer();
         
-        persona.crear(txtNombre.getText(), txtApellido.getText(), (Date) fecha.getDate(), false, txtCuil.getText(), Integer.parseInt(txtHijos.getText()), txtCorreo.getText(), Integer.parseInt(txtCelular.getText()), leerDomicilio.getIdDomicilio(), doc.getIdTipoDocumento(), nacion.getIdNacionalidad(), 1, nacimiento.getIdLugar(), false);
+        persona.crear(txtNombre.getText(), txtApellido.getText(), (Date) fecha.getDate(), false, txtCuil.getText(), Integer.parseInt(txtHijos.getText()), txtCorreo.getText(), Float.parseFloat(txtCelular.getText()), leerDomicilio.getIdDomicilio(), doc.getIdTipoDocumento(), nacion.getIdNacionalidad(), 1, nacimiento.getIdLugar(), false);
         
         leerPersona=persona.leer();
         

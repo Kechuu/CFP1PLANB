@@ -29,7 +29,7 @@ public class CtrlPersona {
     public int CUIL = 0;
     
     public void crear(String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, boolean sexo, String CUIL, int hijoPersona,
-            String correo, int celular, int idDomicilio, int idTipoDocumento, int idNacionalidad, int idFoto, int lugarNacimiento,
+            String correo, float celular, int idDomicilio, int idTipoDocumento, int idNacionalidad, int idFoto, int lugarNacimiento,
             boolean borrado){
         
         java.sql.Date fecha=new Date(fechaNacimiento.getTime());
@@ -47,7 +47,7 @@ public class CtrlPersona {
             ps.setString(5, CUIL);
             ps.setInt(6, hijoPersona);
             ps.setString(7, correo);
-            ps.setInt(8, celular);
+            ps.setFloat(8, celular);
             ps.setInt(9, idDomicilio);
             ps.setInt(10, idTipoDocumento);
             ps.setInt(11, idNacionalidad);

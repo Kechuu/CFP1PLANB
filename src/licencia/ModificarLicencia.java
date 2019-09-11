@@ -5,24 +5,56 @@
  */
 package licencia;
 
-import java.awt.event.ItemEvent;
+import Controlador.CtrlLicencia;
 import java.sql.Connection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import menu.Principal;
+import modelo.Licencia;
 
 /**
  *
  * @author RociojulietaVazquez
  */
 public class ModificarLicencia extends javax.swing.JInternalFrame {
+    Connection con = clases.Conectar.conexion();
+    int bandera=0;
     /**
      * Creates new form modificarLicencia
      */
     public ModificarLicencia() throws ClassNotFoundException {
         initComponents();
+        bandera=1;
+        cargarCombo(cbLicencia);
+        for (int i = 0; i < cbLicencia.getItemCount(); i++) {
+                if (cbLicencia.getItemAt(i) == null ? Licencia_consulta.numeroArticulo == null : cbLicencia.getItemAt(i).equals(Licencia_consulta.numeroArticulo)) {
+                    cbLicencia.setSelectedIndex(i);
+                }
+            }
+        CtrlLicencia ctrlLicencia = new CtrlLicencia();
+        Licencia licencia = new Licencia();
+        String hola = (String) cbLicencia.getSelectedItem();
+//        JOptionPane.showMessageDialog(null, hola);
+        licencia = ctrlLicencia.leer(Integer.parseInt(hola));
+        areaDetalle.setText(licencia.getDetalle());
+        bandera=0;
     }
 
+    public void cargarCombo(JComboBox combo){
+        try {
+            Statement set = con.createStatement();
+            ResultSet rs = set.executeQuery("SELECT articulo FROM licencia ORDER BY articulo ASC");
+            combo.addItem("Seleccione uno de los articulos...");
+            
+            while (rs.next()) {                
+                combo.addItem(String.valueOf(rs.getInt("articulo")));
+            }
+        } catch (Exception e) {
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -196,7 +228,21 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+        CtrlLicencia ctrlLicencia = new CtrlLicencia();
+        if (txtCambiarArt.getText().equalsIgnoreCase("") || txtDetalle.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar regitros vacios");
+        }else{
+            bandera=1;
+            String articulo = (String) cbLicencia.getSelectedItem();
+            ctrlLicencia.editar( Integer.parseInt(articulo), txtDetalle.getText());
+            cbLicencia.removeAllItems();
+            cargarCombo(cbLicencia);
+            bandera=0;
+            areaDetalle.setText("");
+            txtCambiarArt.setText("");
+            txtDetalle.setText("");
+        }
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void txtCambiarArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCambiarArtActionPerformed
@@ -210,7 +256,21 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void cbLicenciaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLicenciaItemStateChanged
-        // TODO add your handling code here:
+        CtrlLicencia ctrlLicencia = new CtrlLicencia();
+        Licencia licencia = new Licencia();
+        
+        if (bandera==0) {
+            if (cbLicencia.getSelectedIndex()==0) {
+                areaDetalle.setText("");
+            }else{
+                
+        String articulo = (String) cbLicencia.getSelectedItem();
+        
+        licencia = ctrlLicencia.leer(Integer.parseInt(articulo));
+        areaDetalle.setText(licencia.getDetalle());
+            }
+        }
+        
     }//GEN-LAST:event_cbLicenciaItemStateChanged
 
 

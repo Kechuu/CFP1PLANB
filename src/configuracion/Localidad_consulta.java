@@ -25,6 +25,7 @@ public class Localidad_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static int idLocalidad;
     public static String nombreLocalidad;
+    public Lugar lugar;
     /**
      * Creates new form localidad
      */
@@ -34,6 +35,7 @@ public class Localidad_consulta extends javax.swing.JInternalFrame {
        btnModificar.setEnabled(false);
        btnEliminar.setEnabled(false);
     }
+    
 
     public void cargarListaLocalidad(){
         DefaultListModel<Lugar> modelo = new DefaultListModel<>();
@@ -218,12 +220,12 @@ public class Localidad_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        Lugar lugarModificar = new Lugar();
         
-        lugarModificar = listaLocalidad.getSelectedValue();
         
-        idLocalidad = lugarModificar.getIdLugar();
-        nombreLocalidad = lugarModificar.getNombre();
+        lugar = listaLocalidad.getSelectedValue();
+        
+        idLocalidad = lugar.getIdLugar();
+        nombreLocalidad = lugar.getNombre();
         
         this.setVisible(false);
 

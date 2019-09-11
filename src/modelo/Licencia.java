@@ -39,6 +39,8 @@ public class Licencia {
         this.detalle = detalle;
     }
     
-    
+    public String toString(){
+        return this.detalle;
+    }
     
 }

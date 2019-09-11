@@ -36,14 +36,14 @@ public class CtrlLicencia {
         }
     }
     
-    public void editar(int idLicencia, int articulo, String detalle){
+    public void editar( int articulo, String detalle){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE licencia SET articulo = ?, detalle = ? WHERE idLicencia = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE licencia SET articulo = ?, detalle = ? WHERE articulo = ?");
             
             ps.setInt(1, articulo);
             ps.setString(2, detalle);
-            ps.setInt(3, idLicencia);
+            ps.setInt(3 , articulo);
             
             int res = ps.executeUpdate();
             
@@ -60,13 +60,13 @@ public class CtrlLicencia {
         }
     }
     
-    public Licencia leer(int idLicencia){
+    public Licencia leer(int articulo){
         Licencia licencia = new Licencia();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM licencia WHERE idLicencia = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM licencia WHERE articulo = ?");
             
-            ps.setInt(1, idLicencia);
+            ps.setInt(1, articulo);
             rs = ps.executeQuery();
             
             if(rs.next()){

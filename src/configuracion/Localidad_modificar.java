@@ -49,6 +49,7 @@ public class Localidad_modificar extends javax.swing.JInternalFrame {
         txtCodigoActual.setText(codigoPostal.getCodigoPostal());
     }
 
+    
     public void cargarComboLocalidad(JComboBox<Lugar> cbLocalidadActual){
         
         try {
