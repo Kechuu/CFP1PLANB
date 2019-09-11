@@ -16,6 +16,7 @@ import java.awt.Frame;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import modelo.Persona;
 /**
  *
  * @author araa
@@ -26,18 +27,30 @@ public class AlumnoMenu extends javax.swing.JPanel {
      * Creates new form AlumnoMenu
      */
     public static int pagoAlumno;
+    Persona objPersona=new Persona();
     public AlumnoMenu() throws ClassNotFoundException {
         initComponents();
         
         this.setBounds(0, 65, 240, 210);
         this.setVisible(true);
-        JOptionPane.showMessageDialog(null, "constructor ALUMNO MENU");
-        //menu.Principal.menuAlumno=1;
         
-        PanelDni dni = new PanelDni();
-        if (dni.validarPersona== 2) {
+        if (PanelDni.validarPersona== 2) {
             btnInscribir.setEnabled(false);
         }
+    }
+    
+    public AlumnoMenu(Persona persona){
+        initComponents();
+        
+        this.setBounds(0, 65, 240, 210);
+        this.setVisible(true);
+        
+        if (PanelDni.validarPersona== 2) {
+            btnInscribir.setEnabled(false);
+        }
+        
+        
+        objPersona=persona;
     }
 
     /**
@@ -126,8 +139,9 @@ public class AlumnoMenu extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(btnInscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnModificarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBajaAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -138,7 +152,8 @@ public class AlumnoMenu extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConsultarEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnConsultarPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -165,7 +180,7 @@ public class AlumnoMenu extends javax.swing.JPanel {
         this.setVisible(false);
         Principal.desactivarPanel();
         
-        Modificar modificar=new Modificar();
+        Modificar modificar=new Modificar(objPersona);
         Principal.panelPrincipal.add(modificar);
         modificar.setVisible(true);
     }//GEN-LAST:event_btnModificarDatosActionPerformed

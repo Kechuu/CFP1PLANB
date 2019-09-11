@@ -19,7 +19,7 @@ import menu.Principal;
  */
 public class PanelDni extends javax.swing.JPanel {
     
-    public int validarPersona = 0;
+    public static int validarPersona = 0;
     
     /**
      * Creates new form PanelDni
@@ -186,7 +186,7 @@ public class PanelDni extends javax.swing.JPanel {
         try {
             //  <DESCACTIVAR PANEL>
             this.setVisible(false);
-            Principal.desactivarPanel();
+            //Principal.desactivarPanel();
             //  </FIN DESACTIVAR PANEL>
             ctrlPersona.generarCUIL(Integer.parseInt(txtDni.getText()));
             //JOptionPane.showMessageDialog(null, "try... panel dni");

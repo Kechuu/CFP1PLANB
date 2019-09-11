@@ -203,15 +203,15 @@ public class CtrlPersona {
             }
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         
      return persona;
     }
     
     public void generarCUIL(int DNI) throws ClassNotFoundException{
-        PanelDni dni = new PanelDni();
-        int validarPersona = dni.validarPersona;
+        //PanelDni dni = new PanelDni();
+        int validarPersona = PanelDni.validarPersona;
     //HACER LA VARIABLE validarPersona STATIC!!!
         /*
         Codigo de CUIL :v
@@ -240,6 +240,8 @@ public class CtrlPersona {
             rs = ps.executeQuery();
             
             if (rs.next()) {
+                JOptionPane.showMessageDialog(null, validarPersona);
+                
                 persona.setIdPersona(rs.getInt("idPersona"));
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
@@ -258,18 +260,18 @@ public class CtrlPersona {
                 if (validarPersona == 1) {
                     JOptionPane.showMessageDialog(null, "La persona ya está cargada. Elija una de las opciones para continuar.");
                     validarPersona=2;
-                    dni.validarPersona = validarPersona;
+                    PanelDni.validarPersona = validarPersona;
                     
-                    CambiaPanel cambiaPanel = new CambiaPanel(menu.Principal.panelSubMenu, new AlumnoMenu());
+                    CambiaPanel cambiaPanel = new CambiaPanel(menu.Principal.panelSubMenu, new AlumnoMenu(persona));
                 }
                 
             }else{
                 JOptionPane.showMessageDialog(null, "P3 No existe lo que está buscando");
                 
+                Principal.desactivarPanel();
                 Inscripcion inscripcion =new Inscripcion();
                 Principal.panelPrincipal.add(inscripcion);
-                inscripcion.setVisible(true);
-                
+                inscripcion.setVisible(true);              
             }
             
         } catch (HeadlessException | ClassNotFoundException | SQLException e) {
