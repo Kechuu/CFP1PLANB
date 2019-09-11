@@ -74,8 +74,8 @@ public class CtrlHorario {
             
             if(rs.next()){
                 horario.setIdHorario(rs.getInt("idHorario"));
-                horario.setDesde(rs.getDate("desde"));
-                horario.setHasta(rs.getDate("hasta"));
+                horario.setDesde(rs.getTime("desde"));
+                horario.setHasta(rs.getTime("hasta"));
                 horario.setDia(rs.getInt("dia"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");

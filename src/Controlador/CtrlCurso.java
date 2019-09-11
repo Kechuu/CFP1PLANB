@@ -251,8 +251,8 @@ public class CtrlCurso {
                 }
                 
                 datos[0]=dia;
-                datos[1]=String.valueOf(hora.getIdHorario().getDesde());
-                datos[2]=String.valueOf(hora.getIdHorario().getHasta());
+                datos[1]=String.valueOf(hora.getIdHorario().getDesde().toLocalTime());
+                datos[2]=String.valueOf(hora.getIdHorario().getHasta().toLocalTime());
                 
                 modelo.addRow(datos);
             }

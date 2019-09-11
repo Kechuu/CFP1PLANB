@@ -6,6 +6,7 @@
 package modelo;
 
 import java.sql.Date;
+import java.sql.Time;
 
 /**
  *
@@ -14,8 +15,8 @@ import java.sql.Date;
 public class Horario {
     
     private int idHorario;
-    private Date desde;
-    private Date hasta;
+    private Time desde;
+    private Time hasta;
     private int dia;
 
     public int getIdHorario() {
@@ -26,19 +27,19 @@ public class Horario {
         this.idHorario = idHorario;
     }
 
-    public Date getDesde() {
+    public Time getDesde() {
         return desde;
     }
 
-    public void setDesde(Date desde) {
+    public void setDesde(Time desde) {
         this.desde = desde;
     }
 
-    public Date getHasta() {
+    public Time getHasta() {
         return hasta;
     }
 
-    public void setHasta(Date hasta) {
+    public void setHasta(Time hasta) {
         this.hasta = hasta;
     }
 
