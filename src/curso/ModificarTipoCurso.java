@@ -6,8 +6,8 @@
 package curso;
 
 
-import configuracion.Periodo_crear;
 import menu.Principal;
+import configuracion.Periodo_modificar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,14 +15,17 @@ import java.util.logging.Logger;
  *
  * @author araa
  */
-public class CrearTipoCurso extends javax.swing.JInternalFrame {   
+public class ModificarTipoCurso extends javax.swing.JInternalFrame {
+
+
+
+   
     /**
      * Creates new form NewJInternalFrame
      */
-    public CrearTipoCurso() {
+    public ModificarTipoCurso() {
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,17 +46,14 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtidPeriodo = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TablaTipoCurso = new javax.swing.JTable();
+        txtidTipoCurso = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
-
-        txtNombreCurso.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNombreCursoKeyTyped(evt);
-            }
-        });
 
         jLabel3.setText("Costo del curso");
 
@@ -63,11 +63,6 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
         txtcosto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtcostoActionPerformed(evt);
-            }
-        });
-        txtcosto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtcostoKeyTyped(evt);
             }
         });
 
@@ -123,6 +118,30 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
             }
         });
 
+        TablaTipoCurso.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ));
+        TablaTipoCurso.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaTipoCursoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TablaTipoCurso);
+
+        txtidTipoCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtidTipoCursoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -138,23 +157,26 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNombreCurso, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                            .addComponent(cbxPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtNombreCurso, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                                .addComponent(cbxPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(28, 28, 28)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtidPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(34, 34, 34)
                                 .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtidPeriodo, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-                        .addGap(101, 101, 101)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtidTipoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,18 +190,20 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addComponent(jLabel1)))
-                .addGap(41, 41, 41)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnPeriodo)
-                    .addComponent(jLabel10)
-                    .addComponent(cbxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(txtidPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(btnPeriodo)
+                    .addComponent(txtidPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
-                    .addComponent(btnGuardar))
-                .addContainerGap(43, Short.MAX_VALUE))
+                    .addComponent(btnGuardar)
+                    .addComponent(txtidTipoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(38, 86, 186));
@@ -188,7 +212,7 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
         jLabel6.setBackground(new java.awt.Color(102, 102, 255));
         jLabel6.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Nombre de Curso");
+        jLabel6.setText("Modificar Curso");
         jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 12, 320, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -215,13 +239,21 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
          this.setVisible(false);
         Principal.desactivarPanel();
         
-         CrearCurso curso=new CrearCurso();
+         ModificarCurso curso=new ModificarCurso();
         Principal.panelPrincipal.add(curso);
         curso.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here: 
+        // TODO add your handling code here:
+         this.setVisible(false);
+        Principal.desactivarPanel();
+        
+         CrearCurso curso=new CrearCurso();
+        Principal.panelPrincipal.add(curso);
+        curso.setVisible(true);
+         
+       
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeriodoActionPerformed
@@ -230,11 +262,11 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
             this.setVisible(false);
             Principal.desactivarPanel();
             
-            Periodo_crear curso=new Periodo_crear();
+            Periodo_modificar curso=new Periodo_modificar();
             Principal.panelPrincipal.add(curso);
             curso.setVisible(true);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CrearTipoCurso.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ModificarTipoCurso.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnPeriodoActionPerformed
 
@@ -258,16 +290,17 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxPeriodoItemStateChanged
 
-    private void txtcostoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcostoKeyTyped
+    private void TablaTipoCursoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaTipoCursoMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtcostoKeyTyped
+    }//GEN-LAST:event_TablaTipoCursoMouseClicked
 
-    private void txtNombreCursoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreCursoKeyTyped
+    private void txtidTipoCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidTipoCursoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreCursoKeyTyped
+    }//GEN-LAST:event_txtidTipoCursoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaTipoCurso;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnPeriodo;
@@ -278,9 +311,11 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtNombreCurso;
     private javax.swing.JTextField txtcosto;
     private javax.swing.JTextField txtidPeriodo;
+    private javax.swing.JTextField txtidTipoCurso;
     // End of variables declaration//GEN-END:variables
 //Conectar x = new Conectar();
   //   Connection con = x.conexion();

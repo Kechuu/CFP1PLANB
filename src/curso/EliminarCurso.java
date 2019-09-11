@@ -7,6 +7,7 @@ package curso;
 
 import menu.Principal;
 
+
 /**
  *
  * @author araa
@@ -18,8 +19,10 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
      * Creates new form NewJInternalFrame
      */
     public EliminarCurso() {
-        initComponents(); 
-    } 
+        initComponents();
+      }
+  
+         
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,12 +41,11 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
         txtBuscar = new javax.swing.JTextField();
         BtnBuscar = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        TablaCursos = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         txtidCurso = new javax.swing.JLabel();
         btnCancelar1 = new javax.swing.JButton();
         btnGuardar2 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -83,7 +85,7 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        TablaCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -94,12 +96,12 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
                 "Detalle", "Ciclolectivo", "Turno", "Costo", "Cupo", "Inicio", "Finalizacion", "Lugar"
             }
         ));
-        jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
+        TablaCursos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable3MouseClicked(evt);
+                TablaCursosMouseClicked(evt);
             }
         });
-        jScrollPane4.setViewportView(jTable3);
+        jScrollPane4.setViewportView(TablaCursos);
 
         jLabel8.setText("NOMBRE DEL CURSO");
 
@@ -120,8 +122,6 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
                 btnGuardar2ActionPerformed(evt);
             }
         });
-
-        jLabel1.setText("CODIGO");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -145,11 +145,9 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
                         .addGap(167, 167, 167)
                         .addComponent(btnGuardar2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(605, 605, 605)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
+                        .addGap(664, 664, 664)
                         .addComponent(txtidCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,9 +160,7 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtidCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addComponent(txtidCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar1)
@@ -211,21 +207,21 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelar1ActionPerformed
 
     private void btnGuardar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar2ActionPerformed
-        // TODO add your handling code here:       
+        // TODO add your handling code here:
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnGuardar2ActionPerformed
 
-    private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
+    private void TablaCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaCursosMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable3MouseClicked
+    }//GEN-LAST:event_TablaCursosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnBuscar;
+    private javax.swing.JTable TablaCursos;
     private javax.swing.JButton btnCancelar1;
     private javax.swing.JButton btnGuardar2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
@@ -235,7 +231,6 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JLabel txtidCurso;
     // End of variables declaration//GEN-END:variables

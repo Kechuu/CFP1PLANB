@@ -17,9 +17,24 @@ public class Horario extends javax.swing.JInternalFrame {
      * Creates new form Horario_
      */
     public Horario() {
-        initComponents();
+        initComponents();        
     }
-
+/*
+    if(cbDias.getSelectedItem().equals("Lunes")){
+               dia = 1;
+           }if(cbDias.getSelectedItem().equals("Martes")){
+               dia = 2;
+               
+           }if(cbDias.getSelectedItem().equals("Miercoles")){
+               dia = 3;
+           }if(cbDias.getSelectedItem().equals("Jueves")){
+               dia = 4;
+           }if(cbDias.getSelectedItem().equals("Viernes")){
+               dia = 5;
+           }if(cbDias.getSelectedItem().equals("Sabado")){
+               dia = 6;
+           }  
+    */
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,11 +77,21 @@ public class Horario extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setText("Días");
 
-        cbDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", " " }));
+        cbDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sàbado" }));
+        cbDias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbDiasActionPerformed(evt);
+            }
+        });
 
         txtDesde.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDesdeActionPerformed(evt);
+            }
+        });
+        txtDesde.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDesdeKeyTyped(evt);
             }
         });
 
@@ -81,6 +106,11 @@ public class Horario extends javax.swing.JInternalFrame {
                 txtHastaActionPerformed(evt);
             }
         });
+        txtHasta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtHastaKeyTyped(evt);
+            }
+        });
 
         tablaHorarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -93,6 +123,11 @@ public class Horario extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaHorarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaHorariosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaHorarios);
 
         btnAgregar.setBackground(new java.awt.Color(38, 86, 186));
@@ -107,6 +142,11 @@ public class Horario extends javax.swing.JInternalFrame {
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
         btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -136,7 +176,7 @@ public class Horario extends javax.swing.JInternalFrame {
                         .addGap(31, 31, 31)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(txtHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -163,7 +203,7 @@ public class Horario extends javax.swing.JInternalFrame {
                     .addComponent(btnAgregar))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
@@ -204,7 +244,28 @@ public class Horario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Principal.activarPanel();
         dispose();
+        
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        // TODO add your handling code here:       
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void tablaHorariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaHorariosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tablaHorariosMouseClicked
+
+    private void cbDiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDiasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbDiasActionPerformed
+
+    private void txtDesdeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDesdeKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDesdeKeyTyped
+
+    private void txtHastaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHastaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHastaKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -220,7 +281,7 @@ public class Horario extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaHorarios;
+    public static javax.swing.JTable tablaHorarios;
     private javax.swing.JTextField txtDesde;
     private javax.swing.JTextField txtHasta;
     // End of variables declaration//GEN-END:variables
