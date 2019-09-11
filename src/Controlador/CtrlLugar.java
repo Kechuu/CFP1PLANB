@@ -66,13 +66,13 @@ public class CtrlLugar {
         }
     }
     
-    public Lugar leer(int nivel){
+    public Lugar leer(int idLugar){//cambie esto, estaba con nivel...<--
         Lugar lugar = new Lugar();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE nivel = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE idLugar = ?");
             
-            ps.setInt(1, nivel);
+            ps.setInt(1, idLugar);
             rs = ps.executeQuery();
             
             if(rs.next()){

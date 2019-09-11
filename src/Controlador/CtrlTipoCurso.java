@@ -7,6 +7,9 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import modelo.TipoCurso;
 /**
@@ -112,4 +115,33 @@ public class CtrlTipoCurso {
         
         return tipoCurso;
     }
+    
+    public void cargarListaCurso(JList <TipoCurso> listDisponible){
+        CtrlPeriodo ctrlPeriodo = new CtrlPeriodo();
+        
+        DefaultListModel<TipoCurso> modelo=new DefaultListModel<>();
+        
+        try {
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM tipoCurso");
+            rs=ps.executeQuery();
+            
+            while (rs.next()) {
+                TipoCurso tipoCurso = new TipoCurso();
+        
+                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
+                tipoCurso.setDetalle(rs.getString("detalle"));
+                tipoCurso.setCosto(rs.getFloat("costo"));
+                tipoCurso.setIdPeriodo(ctrlPeriodo.leer(rs.getInt("idPeriodo")));
+                
+                modelo.addElement(tipoCurso);
+            }
+            
+            listDisponible.setModel(modelo);
+            
+        } catch (SQLException e) {
+        }
+    
+    }
+    
 }

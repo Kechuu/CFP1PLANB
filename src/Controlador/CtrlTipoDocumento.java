@@ -64,11 +64,12 @@ public class CtrlTipoDocumento {
         TipoDocumento tipoDocumento = new TipoDocumento();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM tipoDocumento");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM tipoDocumento ORDER BY idTipoDocumento LIMIT 1");
             
             rs = ps.executeQuery();
             
             if(rs.next()){
+                tipoDocumento.setIdTipoDocumento(rs.getInt("idTipoDocumento"));
                 tipoDocumento.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");

@@ -87,9 +87,9 @@ public class CtrlTrabajo {
     public void cargarComboTrabajo(JComboBox <Trabajo> cb){
         
         try{
-            Statement st= (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * from trabajo ORDER BY detalle ASC");
-            
+            con = clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * from trabajo ORDER BY detalle ASC");
+            rs=ps.executeQuery();
          
             Trabajo trabajo = new Trabajo();
             trabajo.setIdTrabajo(0);

@@ -28,11 +28,13 @@ public class CtrlPersona {
     ResultSet rs;
     public int CUIL = 0;
     
-    public void crear(String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, boolean sexo, String CUIL, int hijoPersona,
-            String correo, int celular, int idDomicilio, int idTipoDocumento, int idNacionalidad, int idFoto, int lugarNacimiento,
+    public void crear(String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, boolean sexo, String CUIL, String hijoPersona,
+            String correo, String celular, int idDomicilio, int idTipoDocumento, int idNacionalidad, int idFoto, int lugarNacimiento,
             boolean borrado){
         
         java.sql.Date fecha=new Date(fechaNacimiento.getTime());
+        int hijo=Integer.parseInt(hijoPersona);
+        //int celu=Integer.parseInt(celular);
         
         try {
             con = clases.Conectar.conexion();
@@ -45,9 +47,9 @@ public class CtrlPersona {
             ps.setDate(3, (java.sql.Date) fecha);
             ps.setBoolean(4, sexo);
             ps.setString(5, CUIL);
-            ps.setInt(6, hijoPersona);
+            ps.setInt(6, hijo);
             ps.setString(7, correo);
-            ps.setInt(8, celular);
+            ps.setString(8, celular);
             ps.setInt(9, idDomicilio);
             ps.setInt(10, idTipoDocumento);
             ps.setInt(11, idNacionalidad);
@@ -58,15 +60,16 @@ public class CtrlPersona {
             int res = ps.executeUpdate();
             con.close();
           
-        } catch (Exception e) {
+        } catch (NumberFormatException | SQLException e) {
             JOptionPane.showMessageDialog(null, "es el control de persona");
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
     }
     
     public void editar(int idPersona, String nombrePersona, String apellidoPersona, Date fechaNacimiento, boolean sexo, String CUIL, int hijoPersona,
             String correo, int celular, int idDomicilio, int idTipoDocumento, int idNacionalidad, int idFoto, int lugarNacimiento,
             boolean borrado){
+        
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE edificio SET nombrePersona = ?, apellidoPersona = ?,"
@@ -150,14 +153,14 @@ public class CtrlPersona {
                 persona.setCUIL(rs.getString("CUIL"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
-                persona.setCelular(rs.getInt("celular"));
+                persona.setCelular(rs.getString("celular"));
                 persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("idDomicilio")));
                 persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("idTipoDocumento")));
                 persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("idNacionalidad")));
                 persona.setIdFoto(ctrlFoto.leer(rs.getInt("idFoto")));
                 persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("lugarNacimiento")));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "-P No existe lo que está buscando");
             }
             
         } catch (Exception e) {
@@ -189,7 +192,7 @@ public class CtrlPersona {
                 persona.setCUIL(rs.getString("CUIL"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
-                persona.setCelular(rs.getInt("celular"));
+                persona.setCelular(rs.getString("celular"));
                 persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("idDomicilio")));
                 persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("idTipoDocumento")));
                 persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("idNacionalidad")));
@@ -245,7 +248,7 @@ public class CtrlPersona {
                 persona.setCUIL(rs.getString("CUIL"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
-                persona.setCelular(rs.getInt("celular"));
+                persona.setCelular(rs.getString("celular"));
                 persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("idDomicilio")));
                 persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("idTipoDocumento")));
                 persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("idNacionalidad")));
@@ -261,7 +264,7 @@ public class CtrlPersona {
                 }
                 
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "P3 No existe lo que está buscando");
                 
                 Inscripcion inscripcion =new Inscripcion();
                 Principal.panelPrincipal.add(inscripcion);

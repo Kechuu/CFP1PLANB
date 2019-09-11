@@ -8,7 +8,11 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import modelo.CursoHora;
 /**
  *
@@ -111,21 +115,23 @@ public class CtrlCursoHora {
         }
     }
     
-    public CursoHora leer(int idCursoHora){
+    public CursoHora leer(int idCurso){//ANTES RECIBIA UN ID DE CURSO HORA
         CursoHora cursoHora = new CursoHora();
         CtrlHorario ctrlHorario = new CtrlHorario();
         CtrlCurso ctrlCurso = new CtrlCurso();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoHora WHERE idCursoHora = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoHora WHERE idCurso = ?");
             
-            ps.setInt(1, idCursoHora);
+            ps.setInt(1, idCurso);
             
             rs = ps.executeQuery();
             
             if (rs.next()) {
+                cursoHora.setIdCursoHora(rs.getInt("idCursoHora"));
                 cursoHora.setIdHorario(ctrlHorario.leer(rs.getInt("idHorario")));
-                cursoHora.setIdCurso(ctrlCurso.leer(rs.getInt("idCurso")));
+                cursoHora.setIdCurso(ctrlCurso.leerCurso(rs.getInt("idCurso")));//VER BIEN
+        //leer de CtrlCurso te regresa un obj donde coincidan datos del campo TipoCurso, idTipoCurso no es igual a idCurso
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }

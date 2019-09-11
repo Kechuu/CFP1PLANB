@@ -22,7 +22,7 @@ public class Persona {
     private String CUIL;
     private int hijoPersona;
     private String correo;
-    private int celular;
+    private String celular;
     private Domicilio idDomicilio;
     private TipoDocumento idTipoDocumento;
     private Nacionalidad idNacionalidad;
@@ -94,11 +94,11 @@ public class Persona {
         this.correo = correo;
     }
 
-    public int getCelular() {
+    public String getCelular() {
         return celular;
     }
 
-    public void setCelular(int celular) {
+    public void setCelular(String celular) {
         this.celular = celular;
     }
 

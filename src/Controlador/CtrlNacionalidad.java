@@ -87,10 +87,10 @@ public class CtrlNacionalidad {
     public void cargarComboNacionalidad(JComboBox <Nacionalidad> cb){
         
         try{
-            Statement st= (Statement) con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * from nacionalidad ORDER BY detalle ASC");
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM nacionalidad ORDER BY detalle ASC");
             
-           
+            rs=ps.executeQuery();
             Nacionalidad nacion= new Nacionalidad();
             nacion.setIdNacionalidad(0);
             nacion.setDetalle("Seleccione una opción...");
