@@ -5,6 +5,14 @@
  */
 package curso;
 
+import Controlador.CtrlHorario;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import menu.Principal;
 
 /**
@@ -12,29 +20,174 @@ import menu.Principal;
  * @author araa
  */
 public class Horario extends javax.swing.JInternalFrame {
-
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form Horario_
      */
     public Horario() {
-        initComponents();        
+        initComponents();
+        cargarCombo(cbDias);
+        llenarTablaHorario(tablaHorarios);
+        tablaHorarios.setEnabled(false);
     }
-/*
-    if(cbDias.getSelectedItem().equals("Lunes")){
-               dia = 1;
-           }if(cbDias.getSelectedItem().equals("Martes")){
-               dia = 2;
-               
-           }if(cbDias.getSelectedItem().equals("Miercoles")){
-               dia = 3;
-           }if(cbDias.getSelectedItem().equals("Jueves")){
-               dia = 4;
-           }if(cbDias.getSelectedItem().equals("Viernes")){
-               dia = 5;
-           }if(cbDias.getSelectedItem().equals("Sabado")){
-               dia = 6;
-           }  
+    
+    public void cargarCombo(JComboBox combo){
+        
+        combo.addItem("Seleccione una de las opciones...");
+        combo.addItem("Lunes");
+        combo.addItem("Martes");
+        combo.addItem("Miercoles");
+        combo.addItem("Jueves");
+        combo.addItem("Viernes");
+        combo.addItem("Sabado");
+        combo.addItem("Domingo");
+        
+    }
+    
+    public void llenarTablaHorario(JTable tabla){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Dia");
+        modelo.addColumn("Desde");
+        modelo.addColumn("Hasta");
+        tabla.setModel(modelo);
+        String[] dato = new String[3];
+        String dia="";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT dia,desde,hasta FROM horario ORDER BY dia ASC");
+            
+            while (rs.next()) {                
+                
+                 switch(rs.getInt(1)){
+                    case 1:
+                        dia="Lunes";
+                        
+                        break;
+                        
+                    case 2:
+                        dia="Martes";
+                        
+                        break;
+                    
+                    case 3:
+                        dia="Miercoles";
+                        
+                        break;
+                        
+                    case 4:
+                        dia="Jueves";
+                        
+                        break;
+                        
+                    case 5:
+                        dia="Viernes";
+                        
+                        break;
+                        
+                    case 6:
+                        dia="Sábado";
+                        
+                        break;
+                        
+                    case 7:
+                        dia="Domingo";
+                        
+                        break;
+                }
+                
+                dato[0]=dia;
+                
+                dato[1]=rs.getString(2);
+                dato[2]=rs.getString(3);
+                modelo.addRow(dato);
+            }
+            
+            tabla.setModel(modelo);
+            
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS BARRIOS EN LA TABLA"); 
+        }
+    }
+    
+    /*
+    public void llenarTabla(JTable tabla) throws SQLException{
+        String dia=null;
+         
+        Horario horario = new Horario();
+        CtrlHorario ctrlHorario=new CtrlHorario();
+        
+        
+        con=clases.Conectar.conexion();
+        PreparedStatement ps=(PreparedStatement)con.prepareStatement("SELECT * FROM horario");
+        
+        ResultSet rs=ps.executeQuery();
+        
+        DefaultTableModel modelo =new DefaultTableModel();
+        modelo.addColumn("Día");
+        modelo.addColumn("Desde");
+        modelo.addColumn("Hasta");
+        
+        tabla.setModel(modelo);
+        
+        String[] datos= new String[3];
+        try{
+            
+            while(rs.next()){
+                ctrlHorario=new CtrlHorario();
+                
+                switch(){
+                    case 1:
+                        dia="Lunes";
+                        
+                        break;
+                        
+                    case 2:
+                        dia="Martes";
+                        
+                        break;
+                    
+                    case 3:
+                        dia="Miercoles";
+                        
+                        break;
+                        
+                    case 4:
+                        dia="Jueves";
+                        
+                        break;
+                        
+                    case 5:
+                        dia="Viernes";
+                        
+                        break;
+                        
+                    case 6:
+                        dia="Sábado";
+                        
+                        break;
+                        
+                    case 7:
+                        dia="Domingo";
+                        
+                        break;
+                }
+                
+                datos[0]=dia;
+                datos[1]=String.valueOf(hora.getIdHorario().getDesde().toLocalTime());
+                datos[2]=String.valueOf(hora.getIdHorario().getHasta().toLocalTime());
+                
+                modelo.addRow(datos);
+            }
+            
+            tabla.setModel(modelo);
+         }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LAS LOCALIDADES EN LA TABLA"); 
+        }
+        
+    }
     */
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,7 +230,6 @@ public class Horario extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setText("Días");
 
-        cbDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sàbado" }));
         cbDias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbDiasActionPerformed(evt);
@@ -168,18 +320,17 @@ public class Horario extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
-                            .addComponent(cbDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(59, 59, 59)
+                            .addComponent(cbDias, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(txtDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(31, 31, 31)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtHasta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -203,7 +354,7 @@ public class Horario extends javax.swing.JInternalFrame {
                     .addComponent(btnAgregar))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
@@ -228,16 +379,47 @@ public class Horario extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtDesdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDesdeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDesdeActionPerformed
-
-    private void txtHastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHastaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtHastaActionPerformed
-
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        CtrlHorario ctrlHorario = new CtrlHorario();
+        
+        if (cbDias.getSelectedIndex()==0 || txtDesde.getText().equalsIgnoreCase("") || 
+                txtHasta.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
+        }else{
+            switch(cbDias.getSelectedItem().toString()){
+                case "Lunes":
+                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 1);
+                    break;
+                case "Martes":
+                                JOptionPane.showMessageDialog(null, txtDesde.getText());
+
+                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 2);
+                    break;
+                case "Miercoles":
+                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 3);
+                    break;
+                case "Jueves":
+                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 4);
+                    break;
+                case "Viernes":
+                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 5);
+                    break;
+                case "Sabado":
+                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 6);
+                    break;
+                case "Domingo":
+                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 7);
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "No es un dia de semana");
+                    break;
+            }
+             txtDesde.setText("");
+             txtHasta.setText("");
+             cbDias.setSelectedIndex(0);
+             llenarTablaHorario(tablaHorarios);
+        }
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -259,13 +441,21 @@ public class Horario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbDiasActionPerformed
 
+    private void txtHastaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHastaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHastaKeyTyped
+
+    private void txtHastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHastaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHastaActionPerformed
+
     private void txtDesdeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDesdeKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDesdeKeyTyped
 
-    private void txtHastaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHastaKeyTyped
+    private void txtDesdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDesdeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtHastaKeyTyped
+    }//GEN-LAST:event_txtDesdeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
