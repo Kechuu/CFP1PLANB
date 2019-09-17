@@ -6,23 +6,56 @@
 package curso;
 
 
+import Controlador.CtrlTipoCurso;
 import configuracion.Periodo_crear;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import menu.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import modelo.Cargo;
+import modelo.Periodo;
 /**
  *
  * @author araa
  */
 public class CrearTipoCurso extends javax.swing.JInternalFrame {   
+    Connection con = clases.Conectar.conexion();
     /**
      * Creates new form NewJInternalFrame
      */
     public CrearTipoCurso() {
         initComponents();
+        cargarComboPeriodo(cbxPeriodo);
     }
 
+    public void cargarComboPeriodo(JComboBox<Periodo> cbPeriodo){
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM periodo ORDER BY detalle ASC");
+            Periodo periodo = new Periodo();
+            periodo.setIdPeriodo(0);
+            periodo.setDetalle("Seleccione una opcion...");
+            cbPeriodo.addItem(periodo);
+            
+            while (rs.next()) {                
+                periodo = new Periodo();
+                periodo.setIdPeriodo(rs.getInt("idPeriodo"));
+                periodo.setDetalle(rs.getString("detalle"));
+                cbPeriodo.addItem(periodo);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,7 +75,6 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
         btnPeriodo = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        txtidPeriodo = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -73,7 +105,6 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
 
         jLabel10.setText("Periodo");
 
-        cbxPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
         cbxPeriodo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxPeriodoItemStateChanged(evt);
@@ -117,12 +148,6 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
             }
         });
 
-        txtidPeriodo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtidPeriodoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -149,9 +174,7 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
                                 .addGap(34, 34, 34)
                                 .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtidPeriodo, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(101, 101, 101)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(31, Short.MAX_VALUE))
@@ -173,9 +196,7 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
                     .addComponent(btnPeriodo)
                     .addComponent(jLabel10)
                     .addComponent(cbxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(txtidPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addGap(68, 68, 68)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnGuardar))
@@ -221,7 +242,20 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here: 
+        Periodo periodo = new Periodo();
+        CtrlTipoCurso ctrlTipoCurso = new CtrlTipoCurso();
+        
+        if (txtNombreCurso.getText().equalsIgnoreCase("") || txtcosto.getText().equalsIgnoreCase("") || cbxPeriodo.getSelectedIndex()==0) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
+        }else{
+            periodo = (Periodo) cbxPeriodo.getSelectedItem();
+            ctrlTipoCurso.crear(txtNombreCurso.getText(), Float.parseFloat(txtcosto.getText()),periodo.getIdPeriodo() );
+            cbxPeriodo.removeAllItems();
+            cargarComboPeriodo(cbxPeriodo);
+            txtNombreCurso.setText("");
+            txtcosto.setText("");
+        }
+        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeriodoActionPerformed
@@ -246,10 +280,6 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxPeriodoMouseClicked
 
-    private void txtidPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidPeriodoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtidPeriodoActionPerformed
-
     private void cbxPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPeriodoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxPeriodoActionPerformed
@@ -271,7 +301,7 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnPeriodo;
-    private javax.swing.JComboBox<String> cbxPeriodo;
+    private javax.swing.JComboBox<Periodo> cbxPeriodo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
@@ -280,7 +310,6 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField txtNombreCurso;
     private javax.swing.JTextField txtcosto;
-    private javax.swing.JTextField txtidPeriodo;
     // End of variables declaration//GEN-END:variables
 //Conectar x = new Conectar();
   //   Connection con = x.conexion();
