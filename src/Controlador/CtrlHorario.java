@@ -6,6 +6,7 @@
 package Controlador;
 
 import clases.Conectar;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -29,8 +30,15 @@ public class CtrlHorario {
     
     public void crear(String desde, String hasta, int dia){
         try {
+            con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO horario (desde,hasta,dia) VALUES (?,?,?)");
         
+            //long desde1 = Date.parse(desde);
+            //long hasta1 = Date.parse(hasta);
+            
+            //java.sql.Date d = new java.sql.Date(desde1);
+            //java.sql.Date h = new java.sql.Date(hasta1);
+            
             ps.setString(1, desde);
             ps.setString(2, hasta);
             ps.setInt(3, dia);
@@ -101,10 +109,37 @@ public class CtrlHorario {
 
     }
     
+    public Horario leer(int dia, Time desde, Time hasta){
+        Horario horario = new Horario();
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM horario WHERE desde=? AND hasta=? AND dia=?");
+            
+            ps.setTime(1, desde);
+            ps.setTime(2, hasta);
+            ps.setInt(3, dia);
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                horario.setIdHorario(rs.getInt("idHorario"));
+                horario.setDesde(rs.getTime("desde"));
+                horario.setHasta(rs.getTime("hasta"));
+                horario.setDia(rs.getInt("dia"));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando....");
+            }
+            
+            con.close();
+        }catch(HeadlessException | SQLException e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        return horario;
+    }
+    
     public Horario leer(int idHorario){
         Horario horario = new Horario();
         try {
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM horario WHERE idHorario = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM horario WHERE idHorario=?");
             
             ps.setInt(1, idHorario);
             rs = ps.executeQuery();
@@ -115,12 +150,12 @@ public class CtrlHorario {
                 horario.setHasta(rs.getTime("hasta"));
                 horario.setDia(rs.getInt("dia"));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando....");
             }
             
             con.close();
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         return horario;
     }

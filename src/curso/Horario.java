@@ -391,8 +391,6 @@ public class Horario extends javax.swing.JInternalFrame {
                     ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 1);
                     break;
                 case "Martes":
-                                JOptionPane.showMessageDialog(null, txtDesde.getText());
-
                     ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 2);
                     break;
                 case "Miercoles":
