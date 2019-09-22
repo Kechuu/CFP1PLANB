@@ -5,6 +5,8 @@
  */
 package curso;
 
+import Controlador.CtrlHorario;
+import java.sql.Time;
 import menu.Principal;
 
 /**
@@ -203,7 +205,7 @@ public class Horario extends javax.swing.JInternalFrame {
                     .addComponent(btnAgregar))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
@@ -238,6 +240,9 @@ public class Horario extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        CtrlHorario ctrlHorario=new CtrlHorario();
+        
+        ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 2);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

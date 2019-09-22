@@ -56,7 +56,7 @@ public class CtrlPago {
                 pago.setFecha(rs.getDate("fecha"));
                 pago.setImporte(rs.getFloat("importe"));
                 pago.setIdCobrador(ctrlCobrador.leer(rs.getInt("idEmpleado")));
-                pago.setIdCursoAlumno(ctrlCursoAlumno.leer(rs.getInt("idCursoAlumno")));
+                //pago.setIdCursoAlumno(ctrlCursoAlumno.leer(rs.getInt("idCursoAlumno")));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }

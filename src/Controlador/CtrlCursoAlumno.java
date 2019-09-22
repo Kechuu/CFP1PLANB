@@ -11,11 +11,12 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import modelo.CursoAlumno;
+import modelo.TipoCurso;
 /**
  *
  * @author jesus
@@ -29,14 +30,8 @@ public class CtrlCursoAlumno {
     public void crear(float saldo, java.util.Date fechaIngreso, int idAlumno, int idEstadoAlumno, int idCurso,
             int idMotivoBaja){
         
-        //java.util.Date dateT=new java.util.Date();
-      
         java.sql.Date fecha1=new Date(fechaIngreso.getTime());
-        //JOptionPane.showMessageDialog(null, fechaIngreso+" $$"+fecha1);
-        /*
-        java.util.Date date = new java.util.Date();
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
-        */
+        
         try {
           
             con = clases.Conectar.conexion();
@@ -57,17 +52,34 @@ public class CtrlCursoAlumno {
         } catch (HeadlessException | SQLException e ) {
             JOptionPane.showMessageDialog(null, "ES CURSO ALUMNO!!!");
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
-        }
-        
+        }        
     }
     
-    public void alumnoBajaEgresado(int idAlumno,int idCurso, int idMotivoBaja,int idEstadoAlumno, Date fechaBajaEgreso){
+    public void editar(int idCursoAlumno, int idCurso){
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("UPDATE cursoAlumno SET idCurso =? WHERE idCursoAlumno = ?");
+            ps.setInt(1, idCurso);
+            ps.setInt(2, idCursoAlumno);
+            
+            ps.execute();
+            
+            con.close();
+        }catch(SQLException e){
+            
+        }
+    }
+    
+    public void alumnoBajaEgresado(int idAlumno,int idCurso, int idMotivoBaja,int idEstadoAlumno, java.util.Date fechaBajaEgreso){
+        
+        java.sql.Date fecha=new Date(fechaBajaEgreso.getTime());
+        
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoAlumno SET fechaBaja-Egreso = ?, idMotivoBaja = ?,"
+            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoAlumno SET fechaBaja = ?, idMotivoBaja = ?,"
                     + " idEstadoAlumno = ? WHERE idAlumno = ? AND idCurso = ?");
             
-            ps.setDate(1, fechaBajaEgreso);
+            ps.setDate(1, fecha);
             ps.setInt(2, idMotivoBaja);
             ps.setInt(3, idEstadoAlumno);
             ps.setInt(4, idAlumno);
@@ -98,7 +110,7 @@ public class CtrlCursoAlumno {
         }
     }
     
-    public CursoAlumno leer(int idCursoAlumno){
+    public CursoAlumno leer(int idAlumno, int idCurso){
         CursoAlumno cursoAlumno = new CursoAlumno();
         CtrlAlumno ctrlAlumno = new CtrlAlumno();
         CtrlEstadoAlumno ctrlEstadoAlumno = new CtrlEstadoAlumno();
@@ -107,16 +119,18 @@ public class CtrlCursoAlumno {
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoAlumno WHERE idCursoAlumno = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoAlumno WHERE idAlumno=? AND idCurso=?");
             
-            ps.setInt(1, idCursoAlumno);
+            ps.setInt(1, idAlumno);
+            ps.setInt(2, idCurso);
             
             rs = ps.executeQuery();
             
             if (rs.next()) {
+                cursoAlumno.setIdCursoAlumno(rs.getInt("idCursoAlumno"));
                 cursoAlumno.setSaldo(rs.getFloat("saldo"));
                 cursoAlumno.setFechaIngreso(rs.getDate("fechaIngreso"));
-                cursoAlumno.setFechaBajaEgreso(rs.getDate("fechaBaja-Egreso"));
+                cursoAlumno.setFechaBajaEgreso(rs.getDate("fechaBaja"));
                 cursoAlumno.setIdAlumno(ctrlAlumno.leer(rs.getInt("idAlumno")));
                 cursoAlumno.setIdEstadoAlumno(ctrlEstadoAlumno.leer(rs.getInt("idEstadoAlumno")));
                 cursoAlumno.setIdCurso(ctrlCurso.leer(rs.getInt("idCurso")));
@@ -130,5 +144,70 @@ public class CtrlCursoAlumno {
         }
         
         return cursoAlumno;
+    }
+    
+    public void llenarLista(int idAlumno, JList<TipoCurso>lista){
+    //Este metodo llena lista de los cursos que esta cursando actualmente un determinado alumno
+        DefaultListModel <TipoCurso> modelo=new DefaultListModel<>();
+        
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.idTipoCurso, tipoCurso.detalle FROM cursoAlumno"
+                    + " INNER JOIN curso ON cursoAlumno.idCurso = curso.idCurso"
+                    + " INNER JOIN tipoCurso ON curso.idTipoCurso = tipoCurso.idTipoCurso"
+                    + " WHERE cursoAlumno.idAlumno = ? AND cursoAlumno.idEstadoAlumno = 1");
+            ps.setInt(1, idAlumno);
+            
+            rs=ps.executeQuery();
+            
+            while(rs.next()){
+                TipoCurso tipoCurso=new TipoCurso();
+                
+                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
+                tipoCurso.setDetalle(rs.getString("detalle"));
+                
+                modelo.addElement(tipoCurso);
+            }
+            lista.setModel(modelo);
+            
+            con.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        
+    }
+    
+    public void cargarCombo(int idAlumno, JComboBox<TipoCurso> cbCurso){
+        
+        try {
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.idTipoCurso, tipoCurso.detalle, cursoAlumno.costo FROM cursoAlumno"
+                    + " INNER JOIN curso ON cursoAlumno.idCurso = curso.idCurso"
+                    + " INNER JOIN tipoCurso ON curso.idTipoCurso = tipoCurso.idTipoCurso"
+                    + " WHERE cursoAlumno.idAlumno = ?");
+            
+            ps.setInt(1, idAlumno);
+            rs=ps.executeQuery();
+            
+            TipoCurso tipoCurso=new TipoCurso();
+            tipoCurso.setIdTipoCurso(0);
+            tipoCurso.setDetalle("Seleccione una opción...");
+            cbCurso.addItem(tipoCurso);
+            
+            while (rs.next()) {      
+                
+                tipoCurso=new TipoCurso();
+                
+                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
+                tipoCurso.setDetalle(rs.getString("detalle"));
+                tipoCurso.setCosto(rs.getFloat("cursoAlumno.costo"));
+                
+                cbCurso.addItem(tipoCurso);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+        }
+        
     }
 }

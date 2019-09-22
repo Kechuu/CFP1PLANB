@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Time;
 import javax.swing.JOptionPane;
 import modelo.Horario;
 /**
@@ -21,13 +22,13 @@ public class CtrlHorario {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(Date desde, Date hasta, int dia){
+    public void crear(String desde, String hasta, int dia){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO horario (desde,hasta,dia) VALUES (?,?,?)");
         
-            ps.setDate(1, desde);
-            ps.setDate(2, hasta);
+            ps.setString(1, desde);
+            ps.setString(2, hasta);
             ps.setInt(3, dia);
             
             int res = ps.executeUpdate();

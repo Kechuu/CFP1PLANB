@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import modelo.PagoVarios;
 /**
@@ -21,13 +22,16 @@ public class CtrlPagosVarios {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(Date fecha, String detalle, float importe, int idEmpleado, int idAlumno){
+    public void crear(java.util.Date fecha, String detalle, float importe, int idEmpleado, int idAlumno){
+
+        java.sql.Date fechaSql=new Date(fecha.getTime());
+        
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO pagosVarios (fecha,detalle,importe,idEmpleado,idAlumno) "
                     + "VALUES (?,?,?,?,?)");
         
-            ps.setDate(1, fecha);
+            ps.setDate(1, fechaSql);
             ps.setString(2, detalle);
             ps.setFloat(3, importe);
             ps.setInt(4, idEmpleado);
@@ -36,8 +40,8 @@ public class CtrlPagosVarios {
             int res = ps.executeUpdate();
             con.close();
             
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
     }
     

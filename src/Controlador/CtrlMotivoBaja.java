@@ -8,6 +8,8 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.MotivoBaja;
 /**
@@ -78,5 +80,52 @@ public class CtrlMotivoBaja {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
         return motivoBaja;
+    }
+    public MotivoBaja leer(){
+        MotivoBaja motivoBaja = new MotivoBaja();
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM motivoBaja ORDER BY idMotivoBaja DESC LIMIT 1");
+            
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                motivoBaja.setDetalle(rs.getString("detalle"));
+            }else{
+                JOptionPane.showMessageDialog(null, "MB No existe lo que está buscando");
+            }
+            
+            con.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        return motivoBaja;
+    }
+    public void cargarCombo(JComboBox<MotivoBaja> cbMotivo){
+        
+        try {
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM cargo ORDER BY detalle ASC");
+            rs=ps.executeQuery();
+            
+            MotivoBaja motivo=new MotivoBaja();
+            motivo.setIdMotivoBaja(0);
+            motivo.setDetalle("Seleccione una opción...");
+            cbMotivo.addItem(motivo);
+            
+            while (rs.next()) {                
+            
+                motivo=new MotivoBaja();
+                
+                motivo.setIdMotivoBaja(rs.getInt("idMotivoBaja"));
+                motivo.setDetalle(rs.getString("detalle"));
+                
+                cbMotivo.addItem(motivo);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+        }
+        
     }
 }

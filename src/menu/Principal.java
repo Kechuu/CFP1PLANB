@@ -156,11 +156,9 @@ public class Principal extends javax.swing.JFrame {
         panelPrincipal.setMaximumSize(new java.awt.Dimension(1000, 500));
 
         panelMenu.setBackground(new java.awt.Color(239, 238, 240));
-        panelMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel2.setText("Menu");
-        panelMenu.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 23, -1, -1));
 
         btnAlumnos.setBackground(new java.awt.Color(239, 238, 240));
         btnAlumnos.setText("Alumnos");
@@ -170,7 +168,6 @@ public class Principal extends javax.swing.JFrame {
                 btnAlumnosActionPerformed(evt);
             }
         });
-        panelMenu.add(btnAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 240, 30));
 
         btnEmpleados.setBackground(new java.awt.Color(239, 238, 240));
         btnEmpleados.setText("Empleados");
@@ -180,7 +177,6 @@ public class Principal extends javax.swing.JFrame {
                 btnEmpleadosActionPerformed(evt);
             }
         });
-        panelMenu.add(btnEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 240, -1));
 
         btnListados.setBackground(new java.awt.Color(239, 238, 240));
         btnListados.setText("Listados");
@@ -193,7 +189,6 @@ public class Principal extends javax.swing.JFrame {
                 btnListadosActionPerformed(evt);
             }
         });
-        panelMenu.add(btnListados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 240, 30));
 
         btnLicencias.setBackground(new java.awt.Color(239, 238, 240));
         btnLicencias.setText("Licencias");
@@ -206,7 +201,6 @@ public class Principal extends javax.swing.JFrame {
                 btnLicenciasActionPerformed(evt);
             }
         });
-        panelMenu.add(btnLicencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 240, 30));
 
         btnCursos.setBackground(new java.awt.Color(239, 238, 240));
         btnCursos.setText("Cursos");
@@ -216,19 +210,46 @@ public class Principal extends javax.swing.JFrame {
                 btnCursosActionPerformed(evt);
             }
         });
-        panelMenu.add(btnCursos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 240, -1));
+
+        javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
+        panelMenu.setLayout(panelMenuLayout);
+        panelMenuLayout.setHorizontalGroup(
+            panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMenuLayout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addComponent(jLabel2))
+            .addComponent(btnAlumnos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnEmpleados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnListados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnLicencias, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnCursos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        panelMenuLayout.setVerticalGroup(
+            panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(btnAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnListados, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnLicencias, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
 
         panelUsuarios.setBackground(new java.awt.Color(239, 238, 240));
-        panelUsuarios.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel3.setText("Usuarios");
-        panelUsuarios.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(74, 29, -1, -1));
 
         jButton5.setBackground(new java.awt.Color(239, 238, 240));
         jButton5.setText("Ver usuarios conectados");
         jButton5.setBorderPainted(false);
-        panelUsuarios.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 240, 30));
 
         jButton6.setBackground(new java.awt.Color(239, 238, 240));
         jButton6.setText("Crear Usuarios");
@@ -238,7 +259,6 @@ public class Principal extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        panelUsuarios.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 240, 30));
 
         jButton7.setBackground(new java.awt.Color(239, 238, 240));
         jButton7.setText("Modificar Usuario");
@@ -248,7 +268,6 @@ public class Principal extends javax.swing.JFrame {
                 jButton7ActionPerformed(evt);
             }
         });
-        panelUsuarios.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 240, 30));
 
         jButton8.setBackground(new java.awt.Color(239, 238, 240));
         jButton8.setText("Eliminar Usuario");
@@ -258,7 +277,34 @@ public class Principal extends javax.swing.JFrame {
                 jButton8ActionPerformed(evt);
             }
         });
-        panelUsuarios.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 240, 30));
+
+        javax.swing.GroupLayout panelUsuariosLayout = new javax.swing.GroupLayout(panelUsuarios);
+        panelUsuarios.setLayout(panelUsuariosLayout);
+        panelUsuariosLayout.setHorizontalGroup(
+            panelUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelUsuariosLayout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addComponent(jLabel3)
+                .addGap(75, 75, 75))
+            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jButton8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        panelUsuariosLayout.setVerticalGroup(
+            panelUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelUsuariosLayout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
 
         panelSubMenu.setBackground(new java.awt.Color(239, 238, 240));
 
@@ -287,13 +333,13 @@ public class Principal extends javax.swing.JFrame {
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addComponent(panelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, Short.MAX_VALUE)
-                        .addComponent(panelUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelSubMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelSubMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                .addComponent(panelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(panelUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         escritorio.add(panelPrincipal);

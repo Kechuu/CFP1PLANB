@@ -8,6 +8,8 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.Titulo;
 /**
@@ -78,5 +80,32 @@ public class CtrlTitulo {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
         return titulo;
+    }
+    
+    public void cargarCombo(JComboBox<Titulo> cbTitulo){
+        
+        try {
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM titulo ORDER BY detalle ASC");
+            rs=ps.executeQuery();
+            
+            Titulo titulo=new Titulo();
+            titulo.setIdTitulo(0);
+            titulo.setDetalle("Seleccione una opción");
+            cbTitulo.addItem(titulo);
+            
+            while (rs.next()) {                
+                
+                titulo=new Titulo();
+                
+                titulo.setIdTitulo(rs.getInt("idTitulo"));
+                titulo.setDetalle(rs.getString("detalle"));
+                cbTitulo.addItem(titulo);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+        }
+        
     }
 }

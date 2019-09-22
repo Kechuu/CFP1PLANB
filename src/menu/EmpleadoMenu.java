@@ -20,7 +20,7 @@ public class EmpleadoMenu extends javax.swing.JPanel {
     public EmpleadoMenu() {
         initComponents();
         
-        this.setBounds(0, 95, 240, 174);
+        this.setBounds(0, 85, 240, 174);
     }
 
     /**

@@ -89,18 +89,19 @@ public class CtrlUsuario {
         }
     }
     
-    public Usuario leer(int idUsuario){
+    public Usuario leer(int idPersona){
         Usuario usuario = new Usuario();
         CtrlPersona ctrlPersona = new CtrlPersona();
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM usuario WHERE idUsuario = ? AND borrado = FALSE");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM usuario WHERE idPersona = ? AND borrado = FALSE");
             
-            ps.setInt(1, idUsuario);
+            ps.setInt(1, idPersona);
             rs = ps.executeQuery();
             
             if(rs.next()){
+                usuario.setIdUsuario(rs.getInt("idUsuario"));
                 usuario.setUser(rs.getString("user"));
                 usuario.setPass(rs.getString("pass"));
                 usuario.setJerarquia(rs.getInt("jerarquia"));
@@ -113,6 +114,35 @@ public class CtrlUsuario {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
+        return usuario;
+    }
+    
+    public Usuario confirmar(String user, String pass){
+        Usuario usuario=new Usuario();
+        CtrlPersona ctrlPersona=new CtrlPersona();
+        
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM usuario WHERE user = ? AND pass = ?");
+            
+            ps.setString(1, user);
+            ps.setString(2, pass);
+            
+            rs=ps.executeQuery();
+            
+            if(rs.next()){
+                usuario.setIdUsuario(rs.getInt("idUsuario"));
+                usuario.setUser(rs.getString("user"));
+                usuario.setPass(rs.getString("pass"));
+                usuario.setJerarquia(rs.getInt("jerarquia"));
+                usuario.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
+            }else{
+                JOptionPane.showMessageDialog(null, "No está registrado");
+            }
+        }catch(Exception e){
+            
+        }
+        
         return usuario;
     }
 }

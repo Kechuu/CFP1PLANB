@@ -138,9 +138,11 @@ public class CtrlTipoCurso {
             }
             
             listDisponible.setModel(modelo);
-            
-        } catch (SQLException e) {
+            con.close();
+        }catch (SQLException e) {
+        
         }
+        
     
     }
     
