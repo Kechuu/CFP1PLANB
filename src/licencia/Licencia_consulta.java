@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import menu.Principal;
-import modelo.Licencia;
 
 /**
  *
@@ -54,6 +53,7 @@ public class Licencia_consulta extends javax.swing.JInternalFrame {
              JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS BARRIOS EN LA TABLA"); 
         }
     }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.

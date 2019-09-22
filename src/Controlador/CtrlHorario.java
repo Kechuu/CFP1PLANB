@@ -5,11 +5,19 @@
  */
 package Controlador;
 
+import clases.Conectar;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+<<<<<<< HEAD
 import java.sql.Time;
+=======
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.util.ArrayList;
+>>>>>>> 70c9c4c470e226a492b9003e8adea65c03b4e5d2
 import javax.swing.JOptionPane;
 import modelo.Horario;
 /**
@@ -18,13 +26,13 @@ import modelo.Horario;
  */
 public class CtrlHorario {
     
-    Connection con = null;
+    Connection con = clases.Conectar.conexion();
     PreparedStatement ps;
     ResultSet rs;
+    ResultSetMetaData rsd;
     
     public void crear(String desde, String hasta, int dia){
         try {
-            con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO horario (desde,hasta,dia) VALUES (?,?,?)");
         
             ps.setString(1, desde);
@@ -34,14 +42,13 @@ public class CtrlHorario {
             int res = ps.executeUpdate();
             con.close();
             
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
     }
     
     public void editar(int idHorario, Date desde, Date hasta, int dia){
         try {
-            con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE horario SET desde = ?, hasta = ?, dia = ? WHERE idHorario = ?");
             
             ps.setDate(1, desde);
@@ -64,10 +71,43 @@ public class CtrlHorario {
         }
     }
     
+    public ArrayList<Object[]> LlenarTabla(){
+   
+        ArrayList<Object[]> datos = new ArrayList<>();
+             
+                    try{
+                          PreparedStatement st= (PreparedStatement) con.createStatement();
+
+                       rs = st.executeQuery("SELECT idHorario,dia,desde,hasta FROM horario");
+                       rsd = rs.getMetaData();
+                                
+                    } catch (SQLException e){
+                        JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+                     }
+                    
+                    try{
+                        
+                       while(rs.next()){
+                Object[] filas = new Object[rsd.getColumnCount()];
+                
+                for(int i = 0;i<rsd.getColumnCount();i++){
+                    filas[i]= rs.getObject(i+1);
+                   
+                }
+                datos.add(filas);
+            }
+                       
+        } catch (SQLException e) {
+           JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+                    
+       return datos;
+
+    }
+    
     public Horario leer(int idHorario){
         Horario horario = new Horario();
         try {
-            con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM horario WHERE idHorario = ?");
             
             ps.setInt(1, idHorario);

@@ -31,22 +31,21 @@ public class CtrlCurso {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(int cicloLectivo, int turno, float costo, int cupo, Date fechaInicio, Date fechaFinalizacion,
+    public void crear(int cicloLectivo, int turno, float costo, int cupo, java.sql.Date fechaInicio, java.sql.Date fechaFinalizacion,
     int idTipoCurso,int idLugarCurso, boolean borrado){
         
-        java.sql.Date fecha=new Date(fechaInicio.getTime());
         
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO curso (cicloLectivo,turno,costo,cupo,fechaInicio,"
-                    + "fechaFinalizacion,idTipoCurso,idLugarCurso,borrado) VALUES (?,?,?,?,?,?,?,?,?,?)");
+                    + "fechaFinalizacion,idTipoCurso,idLugarCurso,borrado) VALUES (?,?,?,?,?,?,?,?,?)");
             
             ps.setInt(1, cicloLectivo);
             ps.setInt(2, turno);
             ps.setFloat(3, costo);
             ps.setInt(4, cupo);
-            ps.setDate(5, fecha);
-            ps.setDate(6, null);
+            ps.setDate(5, fechaInicio);
+            ps.setDate(6, fechaFinalizacion);
             ps.setInt(7, idTipoCurso);
             ps.setInt(8, idLugarCurso);
             ps.setBoolean(9, borrado);
