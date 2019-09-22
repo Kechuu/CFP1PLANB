@@ -11,23 +11,24 @@ package modelo;
  */
 public class MotivoBaja {
     
-    private int idEstadoAlumno;
+    private int idMotivoBaja;
     private String detalle;
 
-    public int getIdEstadoAlumno() {
-        return idEstadoAlumno;
-    }
-
-    public void setIdEstadoAlumno(int idEstadoAlumno) {
-        this.idEstadoAlumno = idEstadoAlumno;
-    }
-
+ 
     public String getDetalle() {
         return detalle;
     }
 
     public void setDetalle(String detalle) {
         this.detalle = detalle;
+    }
+
+    public int getIdMotivoBaja() {
+        return idMotivoBaja;
+    }
+
+    public void setIdMotivoBaja(int idMotivoBaja) {
+        this.idMotivoBaja = idMotivoBaja;
     }
     
     

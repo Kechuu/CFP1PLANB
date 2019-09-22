@@ -5,10 +5,11 @@
  */
 package menu;
 
-import interfazAlumno.MotivoBaja;
+import interfazAlumno.AsignarCurso;
+import interfazAlumno.MotivoBajaAlumno;
 import interfazAlumno.Modificar;
 import interfazAlumno.Eliminar;
-import interfazAlumno.Pago;
+//import interfazAlumno.Pago;
 import interfazAlumno.ConsultaPagos;
 import interfazAlumno.Inscripcion;
 import interfazAlumno.PanelDni;
@@ -35,18 +36,18 @@ public class AlumnoMenu extends javax.swing.JPanel {
         this.setVisible(true);
         
         if (PanelDni.validarPersona== 2) {
-            btnInscribir.setEnabled(false);
+            //btnInscribir.setEnabled(false);
         }
     }
     
     public AlumnoMenu(Persona persona){
         initComponents();
         
-        this.setBounds(0, 65, 240, 210);
+        this.setBounds(0, 45, 260, 260);
         this.setVisible(true);
         
         if (PanelDni.validarPersona== 2) {
-            btnInscribir.setEnabled(false);
+           // btnInscribir.setEnabled(false);
         }
         
         
@@ -62,27 +63,16 @@ public class AlumnoMenu extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnInscribir = new javax.swing.JButton();
         btnModificarDatos = new javax.swing.JButton();
         btnBajaAlumno = new javax.swing.JButton();
-        btnMotivoBaja = new javax.swing.JButton();
         btnPagos = new javax.swing.JButton();
         btnConsultarEstado = new javax.swing.JButton();
         btnConsultarPagos = new javax.swing.JButton();
+        btnAsignarCurso = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(239, 238, 240));
 
-        btnInscribir.setText("Inscribir ");
-        btnInscribir.setMaximumSize(new java.awt.Dimension(72, 29));
-        btnInscribir.setMinimumSize(new java.awt.Dimension(72, 29));
-        btnInscribir.setPreferredSize(new java.awt.Dimension(72, 29));
-        btnInscribir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInscribirActionPerformed(evt);
-            }
-        });
-
-        btnModificarDatos.setText("Modificar");
+        btnModificarDatos.setText("Modificar datos");
         btnModificarDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarDatosActionPerformed(evt);
@@ -93,13 +83,6 @@ public class AlumnoMenu extends javax.swing.JPanel {
         btnBajaAlumno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBajaAlumnoActionPerformed(evt);
-            }
-        });
-
-        btnMotivoBaja.setText("Motivos de baja");
-        btnMotivoBaja.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMotivoBajaActionPerformed(evt);
             }
         });
 
@@ -124,55 +107,42 @@ public class AlumnoMenu extends javax.swing.JPanel {
             }
         });
 
+        btnAsignarCurso.setText("Asignar curso");
+        btnAsignarCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarCursoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnInscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnModificarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnBajaAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnMotivoBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnConsultarEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnConsultarPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnModificarDatos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnBajaAlumno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnPagos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnConsultarEstado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnConsultarPagos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnAsignarCurso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnInscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnModificarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBajaAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMotivoBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConsultarPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBajaAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultarEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-        Principal.desactivarPanel();
-        pagoAlumno=0;
-        
-        Inscripcion insc = null;
-        try {
-            insc = new Inscripcion();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AlumnoMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Principal.panelPrincipal.add(insc);
-        insc.setVisible(true);
-    }//GEN-LAST:event_btnInscribirActionPerformed
 
     private void btnModificarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarDatosActionPerformed
         // TODO add your handling code here:
@@ -191,36 +161,14 @@ public class AlumnoMenu extends javax.swing.JPanel {
         Principal.desactivarPanel();
         menu.Principal.menuAlumno=1;
         
-        Eliminar baja= new Eliminar();
+        Eliminar baja= new Eliminar(objPersona);
         Principal.panelPrincipal.add(baja);
         baja.setVisible(true);
     }//GEN-LAST:event_btnBajaAlumnoActionPerformed
 
-    private void btnMotivoBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotivoBajaActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        Principal.desactivarPanel();
-        menu.Principal.menuAlumno=0;
-        
-        MotivoBaja mb=new MotivoBaja();
-        Principal.panelPrincipal.add(mb);
-        mb.setVisible(true);
-    }//GEN-LAST:event_btnMotivoBajaActionPerformed
-
     private void btnPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosActionPerformed
         // TODO add your handling code here:
-
-        this.setVisible(false);
-        Principal.desactivarPanel();
-        pagoAlumno=1;
         
-        Frame f= JOptionPane.getFrameForComponent(Principal.panelPrincipal);
-        
-        Frame e= JOptionPane.getRootFrame();
-        
-        Pago dial=new Pago(f, true);
-        
-        dial.setVisible(true);
     }//GEN-LAST:event_btnPagosActionPerformed
 
     private void btnConsultarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarEstadoActionPerformed
@@ -237,14 +185,23 @@ public class AlumnoMenu extends javax.swing.JPanel {
         consul.setVisible(true);
     }//GEN-LAST:event_btnConsultarPagosActionPerformed
 
+    private void btnAsignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarCursoActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Principal.desactivarPanel();
+        
+        AsignarCurso asignar=new AsignarCurso(objPersona);
+        Principal.panelPrincipal.add(asignar);
+        asignar.setVisible(true);
+    }//GEN-LAST:event_btnAsignarCursoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAsignarCurso;
     private javax.swing.JButton btnBajaAlumno;
     private javax.swing.JButton btnConsultarEstado;
     private javax.swing.JButton btnConsultarPagos;
-    private javax.swing.JButton btnInscribir;
     private javax.swing.JButton btnModificarDatos;
-    private javax.swing.JButton btnMotivoBaja;
     private javax.swing.JButton btnPagos;
     // End of variables declaration//GEN-END:variables
 }

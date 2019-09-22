@@ -5,24 +5,30 @@
  */
 package interfazAlumno;
 
+import Controlador.CtrlAlumno;
 import Controlador.CtrlCodigoPostal;
 import Controlador.CtrlCurso;
-import Controlador.CtrlCursoHora;
+import Controlador.CtrlCursoAlumno;
+import Controlador.CtrlDomicilio;
+import Controlador.CtrlEdificio;
 import Controlador.CtrlLugar;
 import Controlador.CtrlNacionalidad;
+import Controlador.CtrlPersona;
+import Controlador.CtrlPersonaTrabajo;
+import Controlador.CtrlPlanPersona;
 import Controlador.CtrlPlanes;
 import Controlador.CtrlTipoCurso;
 import Controlador.CtrlTipoDocumento;
 import Controlador.CtrlTrabajo;
 import java.awt.event.ItemEvent;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 import menu.Principal;
-import modelo.Curso;
+import modelo.Edificio;
 import modelo.Lugar;
 import modelo.Nacionalidad;
 import modelo.Persona;
@@ -35,7 +41,7 @@ import modelo.Trabajo;
  *
  * @author Nero
  */
-public class Modificar extends javax.swing.JInternalFrame {
+public final class Modificar extends javax.swing.JInternalFrame {
     
     Connection con = clases.Conectar.conexion();
     CtrlTipoDocumento tipo = new CtrlTipoDocumento();
@@ -46,7 +52,24 @@ public class Modificar extends javax.swing.JInternalFrame {
     CtrlTipoCurso tipoCurso=new CtrlTipoCurso();
     Persona personaDatos=new Persona();
     
+    Lugar calle=new Lugar();
+    Lugar barrio=new Lugar();
+    Lugar localidad=new Lugar();
+    Edificio edificio=new Edificio();
+    ArrayList<Planes> arrayPlan = new ArrayList<>();
+    ArrayList<Trabajo> arrayTrabajo = new ArrayList<>();
+    ArrayList<TipoCurso> arrayCurso=new ArrayList<>();
+    
+    DefaultListModel<TipoCurso> modeloCurso; 
+    DefaultListModel<TipoCurso> modeloDisponible;
+    DefaultListModel<Planes> modeloPlanes;
+    DefaultListModel<Trabajo> modeloTrabajo;
+    
     int idEdificio=0;
+    String detalleLocal=null;
+    String detalleBarrio=null;
+    String detalleCalle=null;
+    
     public Modificar(Persona persona) {
        initComponents();
        
@@ -56,12 +79,62 @@ public class Modificar extends javax.swing.JInternalFrame {
         nacion.cargarComboNacionalidad(cbNacionalidad);
         trabajo.cargarComboTrabajo(cbTrabajo);
         planes.cargarComboPlan(cbPlan);
-        tipoCurso.cargarListaCurso(listDisponible);
-       
+      
         personaDatos=persona;
         
-        txtNombre.setText(personaDatos.getNombrePersona());
+        cargar(personaDatos);//METODO PARA EL LLENADO DE LOS DATOS TRAIDOS
+        
+        //TRAS HABER SIDO CARGADOS CON DATOS DE LA BD, SE LE DA ESE VALOR A LOS MODELOS RECIEN CREADOS
+        //PARA PODER TANTO SACAR COMO AGREGAR ITEMS SI ES NECESARIO
+        modeloPlanes= (DefaultListModel<Planes>) listPlan.getModel();
+        modeloTrabajo=(DefaultListModel<Trabajo>) listTrabajo.getModel();
+        
+        desactivar();
+        llenarArrayList();
+        //filtrarComboBox();
+        //comboLista();
        }
+    
+    void desactivar(){
+        btnDeshacerPlanes.setEnabled(false);
+        btnDeshacerTrabajo.setEnabled(false);
+        
+        btnAtras.setEnabled(false);
+        panelContenedor.setEnabledAt(1, false);
+        panelContenedor.setEnabledAt(2, false);
+    }
+    void llenarArrayList(){
+        
+        for(int i=0; i<modeloPlanes.getSize();i++){
+            arrayPlan.add(i, modeloPlanes.getElementAt(i));
+        }
+        
+        for(int i=0; i<modeloTrabajo.getSize();i++){
+            arrayTrabajo.add(i, modeloTrabajo.getElementAt(i));
+        }
+        
+      /*  for(int i=0; i<modeloCurso.getSize();i++){
+            arrayCurso.add(i, modeloCurso.getElementAt(i));
+        }*/
+    }
+    
+   /* void filtrarComboBox(){
+        for(int i=0; i<cbPlan.getItemCount();i++){
+            for(int j=0; j<modeloPlanes.getSize();j++){
+                if(cbPlan.getItemAt(i).getIdPlanes()==modeloPlanes.getElementAt(j).getIdPlanes()){
+                    cbPlan.removeItemAt(i);
+                }
+            }
+        }
+        
+        for(int i=0; i<cbTrabajo.getItemCount();i++){
+            for(int j=0; j<arrayTrabajo.size();j++){
+                if(cbTrabajo.getItemAt(i).getIdTrabajo()==arrayTrabajo.get(j).getIdTrabajo()){
+                    cbTrabajo.removeItemAt(i);
+                }
+            }
+        }
+    }*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,30 +203,20 @@ public class Modificar extends javax.swing.JInternalFrame {
         jLabel25 = new javax.swing.JLabel();
         txtHijos = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        listPlan = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
+        listTrabajo = new javax.swing.JList<>();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        btnCursoAsignar = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
-        btnCursoDeshacer = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        listDetalle = new javax.swing.JList<>();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        listCurso = new javax.swing.JList<>();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        listDisponible = new javax.swing.JList<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaHorario = new javax.swing.JTable();
+        btnAsignarPlan = new javax.swing.JButton();
+        btnAsignarTrabajo = new javax.swing.JButton();
+        btnDeshacerPlanes = new javax.swing.JButton();
+        btnDeshacerTrabajo = new javax.swing.JButton();
         jTextField6 = new javax.swing.JTextField();
-        btntomarfoto = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         btncancelar = new javax.swing.JButton();
+        btnAtras = new javax.swing.JButton();
+        btnSiguiente = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -229,16 +292,14 @@ public class Modificar extends javax.swing.JInternalFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel13)
                             .addComponent(jLabel15)
+                            .addComponent(jLabel29)
                             .addGroup(panelInscripcionLayout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addGroup(panelInscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbNacimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(panelInscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(panelInscripcionLayout.createSequentialGroup()
-                                    .addGap(12, 12, 12)
-                                    .addComponent(cbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jLabel29)))
+                                    .addGroup(panelInscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cbNacimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(panelInscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelInscripcionLayout.createSequentialGroup()
                                 .addGap(148, 148, 148)
@@ -580,17 +641,45 @@ public class Modificar extends javax.swing.JInternalFrame {
 
         txtHijos.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
-        jScrollPane3.setViewportView(jList2);
+        jScrollPane3.setViewportView(listPlan);
 
-        jScrollPane4.setViewportView(jList3);
+        jScrollPane4.setViewportView(listTrabajo);
 
         jLabel27.setText("Planes que posee");
 
         jLabel28.setText("Trabajos actuales");
 
-        jButton1.setText("Asignar");
+        btnAsignarPlan.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        btnAsignarPlan.setText(">");
+        btnAsignarPlan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarPlanActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Asignar");
+        btnAsignarTrabajo.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        btnAsignarTrabajo.setText(">");
+        btnAsignarTrabajo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarTrabajoActionPerformed(evt);
+            }
+        });
+
+        btnDeshacerPlanes.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        btnDeshacerPlanes.setText("<");
+        btnDeshacerPlanes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeshacerPlanesActionPerformed(evt);
+            }
+        });
+
+        btnDeshacerTrabajo.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        btnDeshacerTrabajo.setText("<");
+        btnDeshacerTrabajo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeshacerTrabajoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelOtrosLayout = new javax.swing.GroupLayout(panelOtros);
         panelOtros.setLayout(panelOtrosLayout);
@@ -607,11 +696,14 @@ public class Modificar extends javax.swing.JInternalFrame {
                             .addGroup(panelOtrosLayout.createSequentialGroup()
                                 .addComponent(jLabel26)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2)))
+                                .addComponent(btnAsignarTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(119, 119, 119)
                         .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel28)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelOtrosLayout.createSequentialGroup()
+                                .addComponent(btnDeshacerTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel28))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelOtrosLayout.createSequentialGroup()
                         .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelOtrosLayout.createSequentialGroup()
@@ -620,11 +712,14 @@ public class Modificar extends javax.swing.JInternalFrame {
                             .addGroup(panelOtrosLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1)))
+                                .addComponent(btnAsignarPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(119, 119, 119)
                         .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel27)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelOtrosLayout.createSequentialGroup()
+                                .addComponent(btnDeshacerPlanes, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel27))))
                     .addGroup(panelOtrosLayout.createSequentialGroup()
                         .addComponent(jLabel25)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -643,21 +738,24 @@ public class Modificar extends javax.swing.JInternalFrame {
                 .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27)
                     .addComponent(jLabel7)
-                    .addComponent(jButton1))
+                    .addComponent(btnAsignarPlan)
+                    .addComponent(btnDeshacerPlanes))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelOtrosLayout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                        .addComponent(jLabel28)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel28)
+                            .addComponent(btnDeshacerTrabajo))
+                        .addGap(10, 10, 10)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))
                     .addGroup(panelOtrosLayout.createSequentialGroup()
                         .addComponent(cbPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
+                            .addComponent(btnAsignarTrabajo)
                             .addComponent(jLabel26))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -666,126 +764,16 @@ public class Modificar extends javax.swing.JInternalFrame {
 
         panelContenedor.addTab("Otros datos", panelOtros);
 
-        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel9.setText("Curso disponibles");
-
-        btnCursoAsignar.setBackground(new java.awt.Color(38, 86, 186));
-        btnCursoAsignar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnCursoAsignar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCursoAsignar.setText(">");
-        btnCursoAsignar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCursoAsignarActionPerformed(evt);
-            }
-        });
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel12.setText("Cursos inscriptos");
-
-        btnCursoDeshacer.setBackground(new java.awt.Color(38, 86, 186));
-        btnCursoDeshacer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnCursoDeshacer.setForeground(new java.awt.Color(255, 255, 255));
-        btnCursoDeshacer.setText("<");
-        btnCursoDeshacer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCursoDeshacerActionPerformed(evt);
-            }
-        });
-
-        jScrollPane5.setViewportView(listDetalle);
-
-        jScrollPane6.setViewportView(listCurso);
-
-        listDisponible.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                listDisponibleValueChanged(evt);
-            }
-        });
-        jScrollPane7.setViewportView(listDisponible);
-
-        tablaHorario.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Día", "Desde", "Hasta"
-            }
-        ));
-        jScrollPane1.setViewportView(tablaHorario);
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnCursoAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                                .addComponent(btnCursoDeshacer, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(btnCursoAsignar)
-                    .addComponent(btnCursoDeshacer)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                    .addComponent(jScrollPane6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        panelContenedor.addTab("Asignación a cursos", jPanel10);
-
         jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField6.setText("FOTO");
 
-        btntomarfoto.setBackground(new java.awt.Color(38, 86, 186));
-        btntomarfoto.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btntomarfoto.setForeground(new java.awt.Color(255, 255, 255));
-        btntomarfoto.setText("Realizar pago");
-        btntomarfoto.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setBackground(new java.awt.Color(38, 86, 186));
+        btnModificar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnModificar.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificar.setText("Modificar datos");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btntomarfotoActionPerformed(evt);
-            }
-        });
-
-        btnGuardar.setBackground(new java.awt.Color(38, 86, 186));
-        btnGuardar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuardar.setText("Guardar e inscribir");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
 
@@ -799,6 +787,26 @@ public class Modificar extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAtras.setBackground(new java.awt.Color(38, 86, 186));
+        btnAtras.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnAtras.setForeground(new java.awt.Color(255, 255, 255));
+        btnAtras.setText("Atrás");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
+
+        btnSiguiente.setBackground(new java.awt.Color(38, 86, 186));
+        btnSiguiente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnSiguiente.setForeground(new java.awt.Color(255, 255, 255));
+        btnSiguiente.setText("Siguiente");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -806,18 +814,18 @@ public class Modificar extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
-                            .addComponent(btntomarfoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField6))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56))))
+                        .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(btnSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btncancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -827,20 +835,22 @@ public class Modificar extends javax.swing.JInternalFrame {
                     .addComponent(panelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btntomarfoto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
                         .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Carga De Datos");
+        jLabel1.setText("Modificación de datos");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -868,37 +878,340 @@ public class Modificar extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     
-    
-    
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    void cargar(Persona persona){
+        CtrlLugar ctrlLugar=new CtrlLugar();
+        CtrlPlanPersona ctrlPlanP=new CtrlPlanPersona();
+        CtrlPersonaTrabajo ctrlTrabajoP=new CtrlPersonaTrabajo();
+        CtrlAlumno ctrlAlumno=new CtrlAlumno();
+        CtrlCursoAlumno ctrlCursoA=new CtrlCursoAlumno();
+        CtrlEdificio ctrlEdificio=new CtrlEdificio();
         
-    }//GEN-LAST:event_btnGuardarActionPerformed
+        //PANEL INSCRIPCION
+        
+        //SE SELECCIONA EL TIPO DE DOCUMENTO QUE ESTÁ GUARDADO EN LA BD
+        for(int i=0; i<cbTipo.getItemCount();i++){
+            if(cbTipo.getItemAt(i).getDetalle().equals(persona.getIdTipoDocumento().getDetalle())){
+                cbTipo.setSelectedIndex(i);
+                
+                i=cbTipo.getItemCount()+1;
+            }
+        }
+        
+        txtCuil.setText(persona.getCUIL());
+        txtNombre.setText(persona.getNombrePersona());
+        txtApellido.setText(persona.getApellidoPersona());
+        fecha.setDate(persona.getFechaNacimiento());
+        
+        //ES IGUAL QUE TIPO DOCUMENTO, SOLO QUE CON LUGAR DE NACIMIENTO
+        for(int i=0; i<cbNacimiento.getItemCount();i++){
+            if(cbNacimiento.getItemAt(i).getNombre().equals(persona.getLugarNacimiento().getNombre())){
+                cbNacimiento.setSelectedIndex(i);
+                i=cbNacimiento.getItemCount()+1;
+            }
+        }
+        
+        //ESTA VEZ, CON NACIONALIDAD..
+        for(int i=0; i<cbNacionalidad.getItemCount();i++){
+            if(cbNacionalidad.getItemAt(i).getDetalle().equals(persona.getIdNacionalidad().getDetalle())){
+                cbNacionalidad.setSelectedIndex(i);
+                i=cbNacionalidad.getItemCount()+1;
+            }
+        }
+        
+        //PANEL DOMICILIO
+        
+        if(persona.getIdDomicilio().getIdEdificio()!=0){
+            JOptionPane.showMessageDialog(null, persona.getIdDomicilio().getIdDomicilio());
+            edificio=ctrlEdificio.leer(persona.getIdDomicilio().getIdEdificio());
+            
+            txtBloque.setText(edificio.getTorre());
+            txtPiso.setText(edificio.getPiso());
+            txtDepto.setText(edificio.getDepto());
+        }
+        
+        calle=ctrlLugar.leer(persona.getIdDomicilio().getIdLugar().getIdLugar());//obtenemos el registro de la calle guardad
+        barrio=ctrlLugar.leer(calle.getDe());//usando la variable anterior, accedemos de quién depende para poder buscar el barrio
+        localidad=ctrlLugar.leer(barrio.getDe());//y siendo lo mismo de arriba, usamos barrio para acceder de quién depende, es decir su localidad
+        
+        //ESTOS FOR SERVIRAN PARA SELECCIONAR LOS ITEMS CORRESPONDIENTES..
+        //Y COMO LOS COMBOS DE BARRIO Y CALLE NO SE LLENAN DESDE UN PRINCIPIO, SE COMENZARÁ SELECCIONANDO LA LOCALIDAD PARA PODER ACCEDER AL BARRIO Y ETC
+        
+        for(int i=0; i<cbLocalidad.getItemCount();i++){
+            if(cbLocalidad.getItemAt(i).getNombre().equals(localidad.getNombre())){//AQUI COMPARAMOS LO QUE HAYA EN EL COMBO, CON LO QUE HAYAMOS GUARDADO EN LAS VARIABLES ANTERIORES
+                cbLocalidad.setSelectedIndex(i);
+                detalleLocal=localidad.getNombre();
+        //UNA VEZ QUE LA LOCALIDAD HAYA SIDO SELECCIONADA, QUIERE DECIR QUE EL COMBO DE BARRIO YA ESTÁ 'DISPONIBLE' POR LO TAL COMENZAMOS A PREGUNTAR IGUAL QUE HICIMOS EN LOCALIDAD    
+                for(int j=0;j<cbBarrio.getItemCount();j++){
+                    if(cbBarrio.getItemAt(j).getNombre().equals(barrio.getNombre())){
+                        cbBarrio.setSelectedIndex(j);
+                        detalleBarrio=barrio.getNombre();
+                        for(int k=0; k<cbCalle.getItemCount();k++){
+                            if(cbCalle.getItemAt(k).getNombre().equals(calle.getNombre())){
+                                cbCalle.setSelectedIndex(k);
+                                detalleCalle=calle.getNombre();
+                        //UNA VEZ SELECCIONADO TANTO LOCALIDAD, BARRIO COMO CALLE, SE DARÁ A LOS INDICES UN VALOR MAYOR AL SOPORTADO PARA QUE SALGAN DE LOS FOR AUN SI FALTAN ITEMS QUÉ RECORRER         
+                                k=cbCalle.getItemCount()+1;
+                                j=cbBarrio.getItemCount()+1;
+                                i=cbLocalidad.getItemCount()+1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        txtCasa.setText(String.valueOf(persona.getIdDomicilio().getNro()));
+        txtCelular.setText(persona.getCelular());
+        txtCorreo.setText(persona.getCorreo());
+        txtFijo.setText(persona.getIdDomicilio().getTelefono());
+        
+        //PANEL OTROS DATOS
+        
+        txtHijos.setText(String.valueOf(persona.getHijoPersona()));
+        
+        //SE MANDA POR PARAMETRO A OTRO METODO PARA LLENAR LA LISTA DE PLANES CORRESPONDINETES..
+        ctrlPlanP.llenarLista(persona.getIdPersona(), listPlan);
+        ctrlTrabajoP.llenarLista(persona.getIdPersona(), listTrabajo);
+        //ctrlCursoA.llenarLista(ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno(), listCurso);
+        
+    }
+    
+    
+    
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        CtrlDomicilio domicilioId=new CtrlDomicilio();
+        CtrlEdificio edificioId=new CtrlEdificio();
+        CtrlPersona personaModificar=new CtrlPersona();
+        CtrlPersonaTrabajo trabajoPersona=new CtrlPersonaTrabajo();
+        CtrlCursoAlumno cursoAlumno=new CtrlCursoAlumno();
+        CtrlAlumno alumno=new CtrlAlumno();
+        CtrlCurso cursoId=new CtrlCurso();
+        
+        TipoDocumento documento=(TipoDocumento) cbTipo.getSelectedItem();
+        Lugar nacimiento=(Lugar) cbNacimiento.getSelectedItem();
+        Nacionalidad nacionalidad=(Nacionalidad) cbNacionalidad.getSelectedItem();
+        Lugar calleId=(Lugar)cbCalle.getSelectedItem();
+    
+    //EDIFICIO
+        if(!txtBloque.getText().equals("") && !txtPiso.getText().equals("") && !txtDepto.getText().equals("")){
+            if(!edificio.getTorre().equals(txtBloque.getText()) || !edificio.getPiso().equals(txtPiso.getText()) || !edificio.getDepto().equals(txtDepto.getText())){                
+                edificioId.editar(txtBloque.getText(), txtPiso.getText(), txtDepto.getText(), personaDatos.getIdDomicilio().getIdEdificio());
+                idEdificio=personaDatos.getIdDomicilio().getIdEdificio();
+            }
+        }
+             
+    //DOMICILIO    
+        if(personaDatos.getIdDomicilio().getNro()!=Integer.parseInt(txtCasa.getText()) || !personaDatos.getIdDomicilio().getTelefono().equals(txtFijo.getText())
+                || calle.getIdLugar()!=calleId.getIdLugar()){
+            
+            domicilioId.cambiarDomicilio(personaDatos.getIdDomicilio().getIdDomicilio(), Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calleId.getIdLugar(), idEdificio);        
+        }
+    
+    //PERSONA
+        if(!personaDatos.getNombrePersona().equals(txtNombre.getText()) || !personaDatos.getApellidoPersona().equals(txtApellido.getText()) || !personaDatos.getFechaNacimiento().equals(fecha.getDate())
+                || !personaDatos.getCUIL().equals(txtCuil.getText()) || personaDatos.getHijoPersona()!= Integer.parseInt(txtHijos.getText()) || !personaDatos.getCorreo().equals(txtCorreo.getText())
+                || !personaDatos.getCelular().equals(txtCelular.getText()) || personaDatos.getIdTipoDocumento().getIdTipoDocumento()!=documento.getIdTipoDocumento()
+                || personaDatos.getIdNacionalidad().getIdNacionalidad()!=nacionalidad.getIdNacionalidad() || personaDatos.getLugarNacimiento().getIdLugar()!=nacimiento.getIdLugar()){    
+            
+            personaModificar.editar(personaDatos.getIdPersona(), txtNombre.getText(), txtApellido.getText(), fecha.getDate(), false, txtCuil.getText(), txtHijos.getText(), txtCorreo.getText(), txtCelular.getText(), personaDatos.getIdDomicilio().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), 1, nacimiento.getIdLugar(), false);        
+        }
+        
+        listaPlan();
+        listaTrabajo();     
+        
+        if(JOptionPane.showConfirmDialog(null, "¿Desea seguir modificando datos de libros?","", + 
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                
+            }else{
+                dispose();
+            }
+    }//GEN-LAST:event_btnModificarActionPerformed
 
+    void listaPlan(){
+        ListModel<Planes> listaPlanes=listPlan.getModel();
+        CtrlPlanPersona plan=new CtrlPlanPersona();
+        
+        //modeloPlanes POSEE LOS VALORES 'POR DEFECTO' CON LOS QUE SE LLENÓ LA INTERFAZ APENAS AL ABRIR LA INTERFAZ, Y listaPlanes ES LA ACTUAL LISTA 
+        //LUEGO DE LA POSIBLE MODIFICACION.. ENTONCES, EN CASO DE QUE EL MODELO SEA MAYOR (TENGA MÁS ITEMS QUE LA OTRA LISTA) QUIERE DECIR QUE SE ELIMINARON ITEMS
+        if(arrayPlan.size()>listaPlanes.getSize()){
+            
+        //Y PARA RECORRER AMBAS LISTAS, SE UTILIZARÁ EL MENOR PARA LUEGO, LO QUE SOBRE SE DECIDA SI SE DEBEN ELIMINAR O AGREGAR..    
+            for(int i=0;i<listaPlanes.getSize();i++){
+          //SI AMBOS ITEMS NO COINCIDEN RECIEN SE LLAMARÁ EL METODO PARA EDITAR EL REGISTRO.. EN CASO DE QUE COINCIDA, NO SE HARÁ NADA                             
+                if(arrayPlan.get(i).getIdPlanes()!=listaPlanes.getElementAt(i).getIdPlanes()){
+                    int idPlanPersona=plan.leer(personaDatos.getIdPersona(), arrayPlan.get(i).getIdPlanes()).getIdPlanPersona();                        
+                    plan.editar(idPlanPersona, personaDatos.getIdPersona(), listaPlanes.getElementAt(i).getIdPlanes());
+                }
+            }
+        
+        //UNA VEZ QUE SE HAYA RECORRIDO LAS LISTAS, TENIENDO COMO LIMITE LA MENOR DE LAS LISTAS, ESTE OTRO FOR SE HARÁ CARGO, EN ESTE CASO DE 
+        // 'ELIMINAR' LOS REGISTROS QUE YA NO SON NECESARIOS...
+            for(int i=listaPlanes.getSize(); i<arrayPlan.size(); i++){
+                int idPlanPersona=plan.leer(personaDatos.getIdPersona(), arrayPlan.get(i).getIdPlanes()).getIdPlanPersona();
+                plan.borrar(idPlanPersona, arrayPlan.get(i).getIdPlanes(), personaDatos.getIdPersona());                
+            }
+            
+        //SI listaPlanes ES MAYOR SIGNIFICA QUE SE AGREGARON MÁS ITEMS DEL QUE EN UN PRINCIO HARÍAN.. SE HARÁ LO MISMO QUE ARRIBA SOLO QUE CON EL RESTO
+        //SE CREARAN NUEVOS REGISTROS EN VEZ DE 'ELIMINARLOS'..
+        }else if(arrayPlan.size()<listaPlanes.getSize()){
+            for(int i=0;i<arrayPlan.size();i++){
+                if(arrayPlan.get(i).getIdPlanes()!=listaPlanes.getElementAt(i).getIdPlanes()){
+                    int idPlanPersona=plan.leer(personaDatos.getIdPersona(), arrayPlan.get(i).getIdPlanes()).getIdPlanPersona();   
+                    plan.editar(idPlanPersona, personaDatos.getIdPersona(), listaPlanes.getElementAt(i).getIdPlanes());
+                }
+            }
+            
+            for(int i=arrayPlan.size(); i<listaPlanes.getSize();i++){
+                plan.crear(personaDatos.getIdPersona(), listaPlanes.getElementAt(i).getIdPlanes());
+            }
+            
+        }else{
+        //EN CASO DE QUE EL TAMAÑO DE AMBAS LISTAS COINCIDAN, LO UNICO QUE SE HARÁ ES COMPARAR CADA ITEM PARA VERIFICAR QUE SON IGUALES
+            for(int i=0;i<arrayPlan.size();i++){
+                    JOptionPane.showMessageDialog(null, "aqui");
+                if(arrayPlan.get(i).getIdPlanes()!=listaPlanes.getElementAt(i).getIdPlanes()){
+                    int idPlanPersona=plan.leer(personaDatos.getIdPersona(), arrayPlan.get(i).getIdPlanes()).getIdPlanPersona();  
+                    plan.editar(idPlanPersona, personaDatos.getIdPersona(), listaPlanes.getElementAt(i).getIdPlanes());                        
+                }
+            }
+        }
+       
+    }
+    
+    
+    void listaTrabajo(){
+        ListModel<Trabajo> listaTrabajo=listTrabajo.getModel();
+        CtrlPersonaTrabajo ctrlTrabajo=new CtrlPersonaTrabajo();
+    
+        //modeloPlanes POSEE LOS VALORES 'POR DEFECTO' CON LOS QUE SE LLENÓ LA INTERFAZ APENAS AL ABRIR LA INTERFAZ, Y listaPlanes ES LA ACTUAL LISTA 
+        //LUEGO DE LA POSIBLE MODIFICACION.. ENTONCES, EN CASO DE QUE EL MODELO SEA MAYOR (TENGA MÁS ITEMS QUE LA OTRA LISTA) QUIERE DECIR QUE SE ELIMINARON ITEMS
+        if(arrayTrabajo.size()>listaTrabajo.getSize()){
+            
+        //Y PARA RECORRER AMBAS LISTAS, SE UTILIZARÁ EL MENOR PARA LUEGO, LO QUE SOBRE SE DECIDA SI SE DEBEN ELIMINAR O AGREGAR..    
+            for(int i=0;i<listaTrabajo.getSize();i++){
+            //SI AMBOS ITEMS NO COINCIDEN RECIEN SE LLAMARÁ EL METODO PARA EDITAR EL REGISTRO.. EN CASO DE QUE COINCIDA, NO SE HARÁ NADA
+                if(arrayTrabajo.get(i).getIdTrabajo()!=listaTrabajo.getElementAt(i).getIdTrabajo()){
+                    int idPersonaTrabajo=ctrlTrabajo.leer(personaDatos.getIdPersona(), arrayTrabajo.get(i).getIdTrabajo()).getIdPersonaTrabajo();                        
+                    ctrlTrabajo.editar(idPersonaTrabajo, personaDatos.getIdPersona(), listaTrabajo.getElementAt(i).getIdTrabajo());
+                }
+            }
+        
+        //UNA VEZ QUE SE HAYA RECORRIDO LAS LISTAS, TENIENDO COMO LIMITE LA MENOR DE LAS LISTAS, ESTE OTRO FOR SE HARÁ CARGO, EN ESTE CASO DE 
+        // 'ELIMINAR' LOS REGISTROS QUE YA NO SON NECESARIOS...
+            for(int i=listaTrabajo.getSize(); i<arrayTrabajo.size(); i++){
+                int idPersonaTrabajo=ctrlTrabajo.leer(personaDatos.getIdPersona(), arrayTrabajo.get(i).getIdTrabajo()).getIdPersonaTrabajo();
+                ctrlTrabajo.borrar(idPersonaTrabajo, arrayTrabajo.get(i).getIdTrabajo(), personaDatos.getIdPersona());                
+            }
+            
+        //SI listaPlanes ES MAYOR SIGNIFICA QUE SE AGREGARON MÁS ITEMS DEL QUE EN UN PRINCIO HARÍAN.. SE HARÁ LO MISMO QUE ARRIBA SOLO QUE CON EL RESTO
+        //SE CREARAN NUEVOS REGISTROS EN VEZ DE 'ELIMINARLOS'..
+        }else if(arrayTrabajo.size()<listaTrabajo.getSize()){           
+            for(int i=0;i<arrayTrabajo.size();i++){
+                if(arrayTrabajo.get(i).getIdTrabajo()!=listaTrabajo.getElementAt(i).getIdTrabajo()){                       
+                    int idPersonaTrabajo=ctrlTrabajo.leer(personaDatos.getIdPersona(), arrayTrabajo.get(i).getIdTrabajo()).getIdPersonaTrabajo();            
+                    ctrlTrabajo.editar(idPersonaTrabajo, personaDatos.getIdPersona(), listaTrabajo.getElementAt(i).getIdTrabajo());
+                }
+            }
+            
+            for(int i=arrayTrabajo.size(); i<listaTrabajo.getSize();i++){
+                ctrlTrabajo.crear(personaDatos.getIdPersona(), listaTrabajo.getElementAt(i).getIdTrabajo());
+            }
+            
+        }else{
+        //EN CASO DE QUE EL TAMAÑO DE AMBAS LISTAS COINCIDAN, LO UNICO QUE SE HARÁ ES COMPARAR CADA ITEM PARA VERIFICAR QUE SON IGUALES
+            for(int i=0;i<arrayTrabajo.size();i++){
+                if(arrayTrabajo.get(i).getIdTrabajo()!=listaTrabajo.getElementAt(i).getIdTrabajo()){                        
+                    int idPersonaTrabajo=ctrlTrabajo.leer(personaDatos.getIdPersona(), arrayTrabajo.get(i).getIdTrabajo()).getIdPersonaTrabajo();                        
+                    ctrlTrabajo.editar(idPersonaTrabajo, personaDatos.getIdPersona(), listaTrabajo.getElementAt(i).getIdTrabajo());                        
+                }
+            }
+        }
+        
+    }
+    
     private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
         // TODO add your handling code here:
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btncancelarActionPerformed
 
+    private void btnDeshacerTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacerTrabajoActionPerformed
+        // TODO add your handling code here:
+        if(listTrabajo.getSelectedIndex()!= -1){
+            cbTrabajo.addItem(listTrabajo.getSelectedValue());
+            modeloTrabajo.remove(listTrabajo.getSelectedIndex());
+        }
+
+        if(modeloTrabajo.isEmpty()){
+            btnDeshacerTrabajo.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnDeshacerTrabajoActionPerformed
+
+    private void btnDeshacerPlanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacerPlanesActionPerformed
+        // TODO add your handling code here:
+        if(listPlan.getSelectedIndex()!= -1){
+            cbPlan.addItem(listPlan.getSelectedValue());
+            modeloPlanes.remove(listPlan.getSelectedIndex());
+        }
+
+        if(modeloPlanes.isEmpty()){
+            btnDeshacerPlanes.setEnabled(false);
+        }
+        //        filtrarComboBox();
+    }//GEN-LAST:event_btnDeshacerPlanesActionPerformed
+
+    private void btnAsignarTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarTrabajoActionPerformed
+        // TODO add your handling code here:
+
+        if(cbTrabajo.getSelectedIndex()!=0){
+
+            modeloTrabajo.addElement((Trabajo)cbTrabajo.getSelectedItem());
+            cbTrabajo.removeItem(cbTrabajo.getSelectedItem());
+            cbTrabajo.setSelectedIndex(0);
+
+            btnDeshacerTrabajo.setEnabled(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Necesita seleccionar una opción");
+        }
+    }//GEN-LAST:event_btnAsignarTrabajoActionPerformed
+
+    private void btnAsignarPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarPlanActionPerformed
+        // TODO add your handling code here:
+        if(cbPlan.getSelectedIndex()!=0){
+
+            modeloPlanes.addElement((Planes) cbPlan.getSelectedItem());
+            cbPlan.removeItem(cbPlan.getSelectedItem());
+            cbPlan.setSelectedIndex(0);
+
+            btnDeshacerPlanes.setEnabled(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Necesita seleccionar un plan");
+        }
+    }//GEN-LAST:event_btnAsignarPlanActionPerformed
+
     private void cbPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPlanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbPlanActionPerformed
 
-    private void cbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbTipoActionPerformed
+    private void cbBarrioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbBarrioItemStateChanged
 
-    private void btntomarfotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntomarfotoActionPerformed
-       
-    }//GEN-LAST:event_btntomarfotoActionPerformed
+        if(evt.getStateChange()== ItemEvent.SELECTED){
+            if(cbBarrio.getSelectedIndex()!=0){
+                Lugar item=new Lugar();
+                item=(Lugar)cbBarrio.getSelectedItem();
+                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),1));
+
+                cbCalle.setModel(modelo);
+
+            }
+        }
+    }//GEN-LAST:event_cbBarrioItemStateChanged
 
     private void cbLocalidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLocalidadItemStateChanged
 
@@ -915,96 +1228,69 @@ public class Modificar extends javax.swing.JInternalFrame {
                 txtCodigo.setText(String.valueOf(cod.leer(item.getIdLugar())));
             }
         }
-
     }//GEN-LAST:event_cbLocalidadItemStateChanged
 
-    private void cbBarrioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbBarrioItemStateChanged
+    private void cbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTipoActionPerformed
 
-        if(evt.getStateChange()== ItemEvent.SELECTED){
-            if(cbBarrio.getSelectedIndex()!=0){
-                Lugar item=new Lugar();
-                item=(Lugar)cbBarrio.getSelectedItem();
-                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),1));
-
-                cbCalle.setModel(modelo);
-
-            }
-        }
-    }//GEN-LAST:event_cbBarrioItemStateChanged
-
-    private void btnCursoAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoAsignarActionPerformed
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
         // TODO add your handling code here:
 
-        DefaultListModel<TipoCurso> modelo=new DefaultListModel<>();
-        modelo.addElement((TipoCurso)listDisponible.getSelectedValue());
-        //listDisponible.remove(listDisponible.getSelectedIndex());
-        listCurso.setModel(modelo);
-    }//GEN-LAST:event_btnCursoAsignarActionPerformed
+        switch(panelContenedor.getSelectedIndex()){
 
-    private void btnCursoDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoDeshacerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCursoDeshacerActionPerformed
+            case 1:
+            panelContenedor.setEnabledAt(0, true);
+            panelContenedor.setSelectedIndex(0);
+            panelContenedor.setEnabledAt(1, false);
+            
+            btnAtras.setEnabled(false);
+            break;
 
-    private void listDisponibleValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listDisponibleValueChanged
-
-        try {
-            CtrlCurso curso= new CtrlCurso();
-            CtrlCursoHora cursoHora=new CtrlCursoHora();
-            Curso obj=new Curso();
-            DefaultListModel model=new DefaultListModel();
-
-            obj=curso.leer(listDisponible.getSelectedValue().getIdTipoCurso());
-
-            //JOptionPane.showMessageDialog(null, obj);
-
-            model.addElement("Ciclo Lectivo: "+String.valueOf(obj.getCicloLectivo()));
-
-            switch(obj.getTurno()){
-
-                case 1:
-                model.addElement("Turno: Matutino");
-                break;
-
-                case 2:
-                model.addElement("Turno: Tarde");
-                break;
-
-                case 3:
-                model.addElement("Turno: Vespertino");
-                break;
-
-                case 4:
-                model.addElement("Turno: Nocturno");
-                break;
-            }
-
-            model.addElement("Costo: "+String.valueOf(obj.getCosto()));
-            model.addElement("Cupo actual: "+String.valueOf(obj.getCupo()));
-            model.addElement("Fecha de inicio: "+ String.valueOf(obj.getFechaInicio()));
-            model.addElement("Finalización: "+ String.valueOf(obj.getFechaFinalizacion()));
-            model.addElement("Lugar de cursado: "+String.valueOf(obj.getIdLugarCurso().getDetalle()));
-
-            listDetalle.setModel(model);
-
-            //<llamar al leer de CURSO HORA...
-
-            //cursoId.leer(listaCursos.getElementAt(i).getIdTipoCurso()).getIdCurso()
-            curso.llenarTabla(curso.leer(listDisponible.getSelectedValue().getIdTipoCurso()).getIdCurso(), tablaHorario);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
+            case 2:
+            panelContenedor.setEnabledAt(1, true);
+            panelContenedor.setSelectedIndex(1);
+            panelContenedor.setEnabledAt(2, false);
+            
+            btnSiguiente.setEnabled(true);
+            break;
         }
-    }//GEN-LAST:event_listDisponibleValueChanged
+
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        switch(panelContenedor.getSelectedIndex()){
+            
+            case 0:
+                panelContenedor.setEnabledAt(1, true);
+                panelContenedor.setSelectedIndex(1);
+                panelContenedor.setEnabledAt(0, false);
+                
+                btnAtras.setEnabled(true);
+            break;
+            
+            case 1:
+                panelContenedor.setEnabledAt(2, true);
+                panelContenedor.setSelectedIndex(2);
+                panelContenedor.setEnabledAt(1, false);
+                
+                btnSiguiente.setEnabled(false);
+            break;
+        }
+    }//GEN-LAST:event_btnSiguienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCursoAsignar;
-    private javax.swing.JButton btnCursoDeshacer;
-    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnAsignarPlan;
+    private javax.swing.JButton btnAsignarTrabajo;
+    private javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnDeshacerPlanes;
+    private javax.swing.JButton btnDeshacerTrabajo;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnSiguiente;
     private javax.swing.JButton btncancelar;
-    private javax.swing.JButton btntomarfoto;
-    private javax.swing.JComboBox<String> cbBarrio;
-    private javax.swing.JComboBox<String> cbCalle;
+    private javax.swing.JComboBox<Lugar> cbBarrio;
+    private javax.swing.JComboBox<Lugar> cbCalle;
     private javax.swing.JComboBox<Lugar> cbLocalidad;
     private javax.swing.JComboBox<Lugar> cbNacimiento;
     private javax.swing.JComboBox<Nacionalidad> cbNacionalidad;
@@ -1013,12 +1299,9 @@ public class Modificar extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<TipoDocumento> cbTipo;
     private javax.swing.JComboBox<Trabajo> cbTrabajo;
     private com.toedter.calendar.JDateChooser fecha;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -1044,30 +1327,20 @@ public class Modificar extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList2;
-    private javax.swing.JList<String> jList3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTextField jTextField6;
-    private javax.swing.JList<TipoCurso> listCurso;
-    private javax.swing.JList<String> listDetalle;
-    private javax.swing.JList<TipoCurso> listDisponible;
+    private javax.swing.JList<Planes> listPlan;
+    private javax.swing.JList<Trabajo> listTrabajo;
     private javax.swing.JPanel panel;
     private javax.swing.JTabbedPane panelContenedor;
     private javax.swing.JPanel panelInscripcion;
     private javax.swing.JPanel panelOtros;
-    private javax.swing.JTable tablaHorario;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtBloque;
     private javax.swing.JTextField txtCasa;

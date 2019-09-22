@@ -5,16 +5,21 @@
  */
 package usuario;
 
+import Controlador.CtrlUsuario;
 import javax.swing.JOptionPane;
 import menu.Principal;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import modelo.Usuario;
 /**
  *
  * @author araa
  */
 public class Login extends javax.swing.JInternalFrame {
 
+    CtrlUsuario ctrlUsuario=new CtrlUsuario();
+    Usuario usuario=new Usuario();
+    
     int contador;
     /**
      * Creates new form Login
@@ -46,7 +51,7 @@ public class Login extends javax.swing.JInternalFrame {
         btnEntrar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        password = new javax.swing.JPasswordField();
+        pass = new javax.swing.JPasswordField();
 
         jPanel1.setBackground(new java.awt.Color(57, 69, 140));
 
@@ -89,10 +94,10 @@ public class Login extends javax.swing.JInternalFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Centro De Formación Profesional");
 
-        password.setText("jPasswordField1");
-        password.addKeyListener(new java.awt.event.KeyAdapter() {
+        pass.setText("jPasswordField1");
+        pass.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                passwordKeyPressed(evt);
+                passKeyPressed(evt);
             }
         });
 
@@ -112,7 +117,7 @@ public class Login extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -140,7 +145,7 @@ public class Login extends javax.swing.JInternalFrame {
                                 .addGap(12, 12, 12)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(21, 21, 21))))
         );
 
@@ -171,17 +176,17 @@ public class Login extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
         if(evt.getKeyCode()== KeyEvent.VK_ENTER){
-            password.requestFocus();
-            password.setText("");
+            pass.requestFocus();
+            pass.setText("");
         }
     }//GEN-LAST:event_txtUserKeyPressed
 
-    private void passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordKeyPressed
+    private void passKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passKeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode()== KeyEvent.VK_ENTER){
             btnEntrar.requestFocus();
         }
-    }//GEN-LAST:event_passwordKeyPressed
+    }//GEN-LAST:event_passKeyPressed
 
     private void btnEntrarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnEntrarFocusGained
       
@@ -190,7 +195,9 @@ public class Login extends javax.swing.JInternalFrame {
 
     void confirmacion(){
         
-        if(txtUser.getText().equals("admin") && password.getText().equals("admin")){
+        ctrlUsuario.confirmar(txtUser.getText(), String.valueOf(pass.getPassword()));
+        
+        if(txtUser.getText().equals("admin") && pass.getText().equals("admin")){
             Principal.activarPanel();
             //JOptionPane.showMessageDialog(null, "Paso por aqui");
             this.setVisible(false);
@@ -202,7 +209,7 @@ public class Login extends javax.swing.JInternalFrame {
             if(contador<3){
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta." + contador);
                 txtUser.setText("");
-                password.setText("Incorrecto");
+                pass.setText("Incorrecto");
             }else{
                 if(contador==3){
                     JOptionPane.showMessageDialog(null, "Oportunidades agotadas. \n El sistema se cerrará.");
@@ -220,7 +227,7 @@ public class Login extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField password;
+    private javax.swing.JPasswordField pass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

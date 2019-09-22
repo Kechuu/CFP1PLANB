@@ -7,9 +7,6 @@ package interfazAlumno;
 
 import Controlador.CtrlAlumno;
 import Controlador.CtrlCodigoPostal;
-import Controlador.CtrlCurso;
-import Controlador.CtrlCursoAlumno;
-import Controlador.CtrlCursoHora;
 import Controlador.CtrlDomicilio;
 import Controlador.CtrlEdificio;
 import Controlador.CtrlLugar;
@@ -23,23 +20,18 @@ import Controlador.CtrlTipoDocumento;
 import Controlador.CtrlTrabajo;
 import java.awt.event.ItemEvent;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
-import javax.swing.table.DefaultTableModel;
 import menu.Principal;
-import modelo.Curso;
 import modelo.Nacionalidad;
 import modelo.Planes;
 import modelo.TipoCurso;
 import modelo.TipoDocumento;
 import modelo.Trabajo;
 import modelo.Lugar;
+import modelo.Persona;
 /**
  *
  * @author
@@ -54,12 +46,21 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     CtrlPlanes planes=new CtrlPlanes();
     CtrlTipoCurso tipoCurso=new CtrlTipoCurso();
     
+    Persona personaDatos=new Persona();
+    
     int idEdificio=0;
+    
+    DefaultListModel<Planes> modeloPlan;
+    DefaultListModel<Trabajo> modeloTrabajo;
+    DefaultListModel<TipoCurso> modeloCursos;
+    DefaultListModel<TipoCurso>modeloDisponible;
+    
     /**
      * Creates new form InscripcionAlumno
+     * @param cuil
      * @throws java.lang.ClassNotFoundException
      */
-    public Inscripcion() throws ClassNotFoundException {
+    public Inscripcion(String cuil) throws ClassNotFoundException {
        initComponents();
        
        tipo.cargarComboTipoDocumento(cbTipo);
@@ -68,7 +69,19 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
        nacion.cargarComboNacionalidad(cbNacionalidad);
        trabajo.cargarComboTrabajo(cbTrabajo);
        planes.cargarComboPlan(cbPlan);
-       tipoCurso.cargarListaCurso(listDisponible);
+       
+       modeloPlan=new DefaultListModel();
+       modeloTrabajo=new DefaultListModel();
+       modeloCursos=new DefaultListModel();
+       
+       listPlan.setModel(modeloPlan);
+       listTrabajo.setModel(modeloTrabajo);
+      
+       desactivar();
+      
+       btnSiguiente.setText("Siguiente");
+       txtCuil.setText(cuil);
+       obtenerDni(cuil);
     }
     
     /**
@@ -144,25 +157,16 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         listTrabajo = new javax.swing.JList<>();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        btnAsignar1 = new javax.swing.JButton();
-        btnAsignar2 = new javax.swing.JButton();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        btnCursoAsignar = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
-        btnCursoDeshacer = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        listDetalle = new javax.swing.JList<>();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        listCurso = new javax.swing.JList<>();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        listDisponible = new javax.swing.JList<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaHorario = new javax.swing.JTable();
+        btnAsignarPlan = new javax.swing.JButton();
+        btnAsignarTrabajo = new javax.swing.JButton();
+        btnDeshacerTrabajo = new javax.swing.JButton();
+        btnDeshacerPlanes = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        btnPago = new javax.swing.JButton();
+        btnSiguiente = new javax.swing.JButton();
         btncancelar = new javax.swing.JButton();
         jPanelWebCam1 = new JPanelWebCam.JPanelWebCam();
+        btnAtras = new javax.swing.JButton();
+        btnAsignarCurso = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -179,6 +183,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
         txtApellido.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
+        txtCuil.setToolTipText("SEPARAR CON - (guiones) Y SIN ESPACIOS\nPor ejemplo: XX-12345678-XX");
         txtCuil.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         jLabel8.setText("CUIL");
@@ -589,17 +594,35 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
         jLabel28.setText("Trabajos actuales");
 
-        btnAsignar1.setText("Asignar");
-        btnAsignar1.addActionListener(new java.awt.event.ActionListener() {
+        btnAsignarPlan.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        btnAsignarPlan.setText(">");
+        btnAsignarPlan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAsignar1ActionPerformed(evt);
+                btnAsignarPlanActionPerformed(evt);
             }
         });
 
-        btnAsignar2.setText("Asignar");
-        btnAsignar2.addActionListener(new java.awt.event.ActionListener() {
+        btnAsignarTrabajo.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        btnAsignarTrabajo.setText(">");
+        btnAsignarTrabajo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAsignar2ActionPerformed(evt);
+                btnAsignarTrabajoActionPerformed(evt);
+            }
+        });
+
+        btnDeshacerTrabajo.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        btnDeshacerTrabajo.setText("<");
+        btnDeshacerTrabajo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeshacerTrabajoActionPerformed(evt);
+            }
+        });
+
+        btnDeshacerPlanes.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        btnDeshacerPlanes.setText("<");
+        btnDeshacerPlanes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeshacerPlanesActionPerformed(evt);
             }
         });
 
@@ -618,11 +641,14 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                             .addGroup(panelOtrosLayout.createSequentialGroup()
                                 .addComponent(jLabel26)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAsignar2)))
+                                .addComponent(btnAsignarTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(119, 119, 119)
                         .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel28)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelOtrosLayout.createSequentialGroup()
+                                .addComponent(btnDeshacerTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(1, 1, 1)
+                                .addComponent(jLabel28))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelOtrosLayout.createSequentialGroup()
                         .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelOtrosLayout.createSequentialGroup()
@@ -631,11 +657,14 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                             .addGroup(panelOtrosLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAsignar1)))
+                                .addComponent(btnAsignarPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(119, 119, 119)
                         .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel27)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelOtrosLayout.createSequentialGroup()
+                                .addComponent(btnDeshacerPlanes, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel27))))
                     .addGroup(panelOtrosLayout.createSequentialGroup()
                         .addComponent(jLabel25)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -654,13 +683,16 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                 .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27)
                     .addComponent(jLabel7)
-                    .addComponent(btnAsignar1))
+                    .addComponent(btnAsignarPlan)
+                    .addComponent(btnDeshacerPlanes))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelOtrosLayout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                        .addComponent(jLabel28)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDeshacerTrabajo)
+                            .addComponent(jLabel28))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))
@@ -668,7 +700,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                         .addComponent(cbPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(panelOtrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAsignar2)
+                            .addComponent(btnAsignarTrabajo)
                             .addComponent(jLabel26))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -677,123 +709,23 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
         panelContenedor.addTab("Otros datos", panelOtros);
 
-        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel9.setText("Curso disponibles");
-
-        btnCursoAsignar.setBackground(new java.awt.Color(38, 86, 186));
-        btnCursoAsignar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnCursoAsignar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCursoAsignar.setText(">");
-        btnCursoAsignar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCursoAsignarActionPerformed(evt);
-            }
-        });
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel12.setText("Cursos inscriptos");
-
-        btnCursoDeshacer.setBackground(new java.awt.Color(38, 86, 186));
-        btnCursoDeshacer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnCursoDeshacer.setForeground(new java.awt.Color(255, 255, 255));
-        btnCursoDeshacer.setText("<");
-        btnCursoDeshacer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCursoDeshacerActionPerformed(evt);
-            }
-        });
-
-        jScrollPane5.setViewportView(listDetalle);
-
-        jScrollPane6.setViewportView(listCurso);
-
-        listDisponible.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                listDisponibleValueChanged(evt);
-            }
-        });
-        jScrollPane7.setViewportView(listDisponible);
-
-        tablaHorario.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Día", "Desde", "Hasta"
-            }
-        ));
-        jScrollPane1.setViewportView(tablaHorario);
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnCursoAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                                .addComponent(btnCursoDeshacer, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(btnCursoAsignar)
-                    .addComponent(btnCursoDeshacer)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                    .addComponent(jScrollPane6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        panelContenedor.addTab("Asignación a cursos", jPanel10);
-
         btnGuardar.setBackground(new java.awt.Color(38, 86, 186));
         btnGuardar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuardar.setText("Guardar e inscribir");
+        btnGuardar.setText("Guardar datos");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
 
-        btnPago.setBackground(new java.awt.Color(38, 86, 186));
-        btnPago.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnPago.setForeground(new java.awt.Color(255, 255, 255));
-        btnPago.setText("Pago");
-        btnPago.addActionListener(new java.awt.event.ActionListener() {
+        btnSiguiente.setBackground(new java.awt.Color(38, 86, 186));
+        btnSiguiente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnSiguiente.setForeground(new java.awt.Color(255, 255, 255));
+        btnSiguiente.setText("Siguiente");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPagoActionPerformed(evt);
+                btnSiguienteActionPerformed(evt);
             }
         });
 
@@ -818,6 +750,26 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             .addGap(0, 201, Short.MAX_VALUE)
         );
 
+        btnAtras.setBackground(new java.awt.Color(38, 86, 186));
+        btnAtras.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnAtras.setForeground(new java.awt.Color(255, 255, 255));
+        btnAtras.setText("Atrás");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
+
+        btnAsignarCurso.setBackground(new java.awt.Color(38, 86, 186));
+        btnAsignarCurso.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnAsignarCurso.setForeground(new java.awt.Color(255, 255, 255));
+        btnAsignarCurso.setText("Asignar cursos");
+        btnAsignarCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarCursoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -825,34 +777,36 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelWebCam1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanelWebCam1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnPago, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                        .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAsignarCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btncancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelContenedor)
+                    .addComponent(panelContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanelWebCam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnPago, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -881,26 +835,125 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoActionPerformed
+    void obtenerDni(String cuil){
+        String dni=cuil.substring(3, 11);
+        txtDni.setText(dni);
+    }
+    void desactivar(){
         
-    }//GEN-LAST:event_btnPagoActionPerformed
+        btnDeshacerPlanes.setEnabled(false);
+        btnDeshacerTrabajo.setEnabled(false);
+        
+        btnAtras.setEnabled(false);
+        panelContenedor.setEnabledAt(1, false);
+        panelContenedor.setEnabledAt(2, false);
+        btnGuardar.setEnabled(false);
+        btnAsignarCurso.setEnabled(false);
+    }
+    
+    void limpiar(){
+        //PANEL INSCRIPCION
+        
+        cbTipo.setSelectedIndex(0);
+        txtDni.setText("");
+        txtCuil.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        
+        fecha.setDate(null);
+        cbNacimiento.setSelectedIndex(0);
+        cbNacionalidad.setSelectedIndex(0);
+        
+        //PANEL DOMICILIO
+        
+        cbLocalidad.setSelectedIndex(0);
+        txtCasa.setText("");
+        txtBloque.setText("");
+        txtPiso.setText("");
+        txtDepto.setText("");
+        txtCelular.setText("");
+        txtFijo.setText("");
+        txtCorreo.setText("");
+        
+        //PANEL OTROS DATOS
+        
+        txtHijos.setText("");
+        cbPlan.setSelectedIndex(0);
+        cbTrabajo.setSelectedIndex(0);
+        listPlan.removeAll();
+        listTrabajo.removeAll();
+        
+    }
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        switch(panelContenedor.getSelectedIndex()){
+            case 0:
+                
+                if(cbTipo.getSelectedIndex()==0 || txtDni.getText().equals("") || txtCuil.getText().equals("") || txtNombre.getText().equals("")
+                    || txtApellido.getText().equals("") || cbNacimiento.getSelectedIndex()==0 || cbNacionalidad.getSelectedIndex()==0){
+            
+                    JOptionPane.showMessageDialog(null, "Faltan datos qué ingresar");
+                }else{
+                    panelContenedor.setEnabledAt(1, true);
+                    panelContenedor.setSelectedIndex(1);
+                    panelContenedor.setEnabledAt(0, false);
+                    
+                    btnAtras.setEnabled(true);
+                }
+                
+            break;
+            
+            case 1:
+                //VER BIEN ESTO DE INDEX Y ETC ETC
+                if(cbLocalidad.getSelectedItem().equals("Selecciona una opción...")){
+                    JOptionPane.showMessageDialog(null, "Le falta completar domicilio: seleccionar localidad, barrio y/o calle");
+                    return;
+                    
+                }else{
+                    
+                    if(JOptionPane.showConfirmDialog(null, "Está dejando vacíos campos de celular, teléfono fijo y correo ¿Quiere continuar sin agregarlos?","", + 
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                        
+                        panelContenedor.setEnabledAt(2, true);
+                        panelContenedor.setSelectedIndex(2);
+                        panelContenedor.setEnabledAt(1, false);
+                    }else{
+                        return;
+                    }
+                    
+                }
+                btnSiguiente.setText("Terminar");
+            break;
+            
+            case 2:
+                if(modeloPlan.isEmpty() || modeloTrabajo.isEmpty()){
+                    if(JOptionPane.showConfirmDialog(null, "No ha seleccionado planes y/o trabajos que posee el alumno ¿Quiere continuar sin agregarlos?","", + 
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                        
+                        btnGuardar.setEnabled(true);
+                        btnSiguiente.setEnabled(false);
+                    }else{
+                        return;
+                    }
+                }
+            break;
+            
+                
+        }
+    }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
         // TODO add your handling code here:
@@ -945,36 +998,44 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbBarrioItemStateChanged
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-    CtrlDomicilio domicilioId=new CtrlDomicilio();
+        CtrlDomicilio domicilioId=new CtrlDomicilio();
         CtrlEdificio edificio=new CtrlEdificio();
         CtrlPersona personaCrear=new CtrlPersona();
         CtrlPlanPersona plan=new CtrlPlanPersona();
         CtrlPersonaTrabajo trabajoPersona=new CtrlPersonaTrabajo();
-        CtrlCursoAlumno cursoAlumno=new CtrlCursoAlumno();
         CtrlAlumno alumno=new CtrlAlumno();
-        CtrlCurso cursoId=new CtrlCurso();
         
         TipoDocumento documento=(TipoDocumento) cbTipo.getSelectedItem();
         Lugar nacimiento=(Lugar) cbNacimiento.getSelectedItem();
         Nacionalidad nacionalidad=(Nacionalidad) cbNacionalidad.getSelectedItem();
         Lugar calle=(Lugar)cbCalle.getSelectedItem();
     
+        int hijos=0;
     //SE VERIFICA SI SE INGRESÓ ALGO CORRESPONDIENTE DE EDIFICIO..
         if(!txtBloque.getText().equals("") && !txtPiso.getText().equals("") && !txtDepto.getText().equals("")){
             edificio.crear(txtBloque.getText(), txtPiso.getText(), txtDepto.getText());
             idEdificio=edificio.leer().getIdEdificio();
         }
-    //<SE CREA UN DOMICILIO...
-        domicilioId.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calle.getIdLugar(), idEdificio);
-        
-    //<AQUI SE DA DE ALTA UNA PERSONA..    
-        personaCrear.crear(txtNombre.getText(), txtApellido.getText(), fecha.getDate(), false, txtCuil.getText(), txtHijos.getText(), txtCorreo.getText(), txtCelular.getText(), domicilioId.leer().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), 1, nacimiento.getIdLugar(), false);
+    
 
+    //<SE CREA UN DOMICILIO...            
+        domicilioId.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calle.getIdLugar(), idEdificio);            
+            
+    //<AQUI SE DA DE ALTA UNA PERSONA..       
+        if(txtHijos.getText().equals("")){
+            hijos=0;
+        }else{
+            hijos=Integer.parseInt(txtHijos.getText());
+        }
+            
+        personaCrear.crear(txtNombre.getText(), txtApellido.getText(), fecha.getDate(), false, txtCuil.getText(), hijos, txtCorreo.getText(), txtCelular.getText(), domicilioId.leer().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), 1, nacimiento.getIdLugar(), false);
+        
+        personaDatos=personaCrear.leer();
+        
     //LOS ListModel SON PARA PODER SACAR EL TAMAÑO DE LAS LISTAS, PODER RECORRERLAS Y PODER ACCEDER AL ID DE CADA OBJETO GUARDADO
         ListModel<Planes> listaPlanes=listPlan.getModel();
         ListModel<Trabajo> listaTrabajo=listTrabajo.getModel();
-        ListModel<TipoCurso> listaCursos=listCurso.getModel();
-    
+        
         for(int i=0; i<listaPlanes.getSize(); i++){
             plan.crear(personaCrear.leer().getIdPersona(), listaPlanes.getElementAt(i).getIdPlanes());
         }
@@ -985,118 +1046,120 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     //<SE CREA UN REGISTRO EN LA TABLA ALUMNO..
         alumno.crear(personaCrear.leer().getIdPersona());
         
-        java.util.Date date=new Date();
-    //<POR ULTIMO SE DA DE ALTA UN REGISTRO EN LA TABLA cursoAlumno
-        for(int i=0; i<listaCursos.getSize();i++){
-            JOptionPane.showMessageDialog(null, "entro al for");
-            cursoAlumno.crear(listaCursos.getElementAt(i).getCosto(), date, alumno.leer(personaCrear.leer().getIdPersona()).getIdAlumno(), 1, cursoId.leer(listaCursos.getElementAt(i).getIdTipoCurso()).getIdCurso(), 1);
+        if(personaDatos.getIdPersona()!=0){
+            JOptionPane.showMessageDialog(null, "Los datos se guardaron"); 
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
+            return;
         }
+        btnAsignarCurso.setEnabled(true);
+        btnGuardar.setEnabled(false);
+        //limpiar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void btnCursoAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoAsignarActionPerformed
+    
+    
+    private void btnAsignarPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarPlanActionPerformed
         // TODO add your handling code here:
         
-        DefaultListModel<TipoCurso> modelo=new DefaultListModel<>();  
-        modelo.addElement((TipoCurso)listDisponible.getSelectedValue());        
-        //listDisponible.remove(listDisponible.getSelectedIndex());
-        listCurso.setModel(modelo);
-    }//GEN-LAST:event_btnCursoAsignarActionPerformed
-
-    
-    private void btnCursoDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoDeshacerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCursoDeshacerActionPerformed
-
-    private void listDisponibleValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listDisponibleValueChanged
-
-        try {
-            CtrlCurso curso= new CtrlCurso();
-            CtrlCursoHora cursoHora=new CtrlCursoHora();
-            Curso obj=new Curso();
-            DefaultListModel model=new DefaultListModel();
-            
-            obj=curso.leer(listDisponible.getSelectedValue().getIdTipoCurso());
-            
-            //JOptionPane.showMessageDialog(null, obj);
-            
-            model.addElement("Ciclo Lectivo: "+String.valueOf(obj.getCicloLectivo()));
-            
-            switch(obj.getTurno()){
-                
-                case 1:
-                    model.addElement("Turno: Matutino");
-                    break;
-                    
-                case 2:
-                    model.addElement("Turno: Tarde");
-                    break;
-                    
-                case 3:
-                    model.addElement("Turno: Vespertino");
-                    break;
-                    
-                case 4:
-                    model.addElement("Turno: Nocturno");
-                    break;
-            }
-            
-            model.addElement("Costo: "+String.valueOf(obj.getCosto()));
-            model.addElement("Cupo actual: "+String.valueOf(obj.getCupo()));
-            model.addElement("Fecha de inicio: "+ String.valueOf(obj.getFechaInicio()));
-            model.addElement("Finalización: "+ String.valueOf(obj.getFechaFinalizacion()));
-            model.addElement("Lugar de cursado: "+String.valueOf(obj.getIdLugarCurso().getDetalle()));
-            
-            listDetalle.setModel(model);
-            
-//<llamar al leer de CURSO HORA...
-
-//cursoId.leer(listaCursos.getElementAt(i).getIdTipoCurso()).getIdCurso()
-            curso.llenarTabla(curso.leer(listDisponible.getSelectedValue().getIdTipoCurso()).getIdCurso(), tablaHorario);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_listDisponibleValueChanged
-
-    private void btnAsignar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignar1ActionPerformed
-        // TODO add your handling code here:
         if(cbPlan.getSelectedIndex()!=0){
             
-            DefaultListModel <Planes> model= new DefaultListModel<>();
-            
-            model.addElement((Planes) cbPlan.getSelectedItem());
+            modeloPlan.addElement((Planes) cbPlan.getSelectedItem());
             cbPlan.removeItem(cbPlan.getSelectedItem());
             cbPlan.setSelectedIndex(0);
-            listPlan.setModel(model);
             
+            btnDeshacerPlanes.setEnabled(true);
         }else{
             JOptionPane.showMessageDialog(null, "Necesita seleccionar un plan");
         }
         
-    }//GEN-LAST:event_btnAsignar1ActionPerformed
+    }//GEN-LAST:event_btnAsignarPlanActionPerformed
 
-    private void btnAsignar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignar2ActionPerformed
+    private void btnAsignarTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarTrabajoActionPerformed
         // TODO add your handling code here:
         
         if(cbTrabajo.getSelectedIndex()!=0){
-            DefaultListModel <Trabajo> model=new DefaultListModel<>();
             
-            model.addElement((Trabajo)cbTrabajo.getSelectedItem());
+            modeloTrabajo.addElement((Trabajo)cbTrabajo.getSelectedItem());
             cbTrabajo.removeItem(cbTrabajo.getSelectedItem());
             cbTrabajo.setSelectedIndex(0);
-            listTrabajo.setModel(model);
+            
+            btnDeshacerTrabajo.setEnabled(true);
         }else{
             JOptionPane.showMessageDialog(null, "Necesita seleccionar una opción");
         }
-    }//GEN-LAST:event_btnAsignar2ActionPerformed
+    }//GEN-LAST:event_btnAsignarTrabajoActionPerformed
 
+    private void btnDeshacerTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacerTrabajoActionPerformed
+        // TODO add your handling code here:
+        if(listTrabajo.getSelectedIndex()!= -1){
+            cbTrabajo.addItem(listTrabajo.getSelectedValue());
+            modeloTrabajo.remove(listTrabajo.getSelectedIndex());
+        }
+        
+        if(modeloTrabajo.isEmpty()){
+            btnDeshacerTrabajo.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnDeshacerTrabajoActionPerformed
+
+    private void btnDeshacerPlanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacerPlanesActionPerformed
+        // TODO add your handling code here:
+        if(listPlan.getSelectedIndex()!= -1){
+            cbPlan.addItem(listPlan.getSelectedValue());
+            modeloPlan.remove(listPlan.getSelectedIndex());
+        }
+        
+        if(modeloPlan.isEmpty()){
+            btnDeshacerPlanes.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnDeshacerPlanesActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        // TODO add your handling code here:
+        
+        switch(panelContenedor.getSelectedIndex()){
+            
+            case 1:
+                panelContenedor.setEnabledAt(0, true);
+                panelContenedor.setSelectedIndex(0);
+                panelContenedor.setEnabledAt(1, false);
+                
+                btnAtras.setEnabled(false);
+            break;
+                
+            case 2:
+                panelContenedor.setEnabledAt(1, true);
+                panelContenedor.setSelectedIndex(1);
+                panelContenedor.setEnabledAt(2, false);
+            break;
+        }
+        
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void btnAsignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarCursoActionPerformed
+        // TODO add your handling code here:
+        
+        AsignarCurso asignar=new AsignarCurso(personaDatos);
+        
+        Principal.panelPrincipal.add(asignar);
+        this.setComponentZOrder(asignar, 0);
+        this.isOptimizedDrawingEnabled();//esto permite que si se pasa el foco a la anterior interfaz, sus componentes, no se sobre ponga al superior
+        asignar.setVisible(true);
+    }//GEN-LAST:event_btnAsignarCursoActionPerformed
+
+    @Override
+    public boolean isOptimizedDrawingEnabled(){
+        return false;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAsignar1;
-    private javax.swing.JButton btnAsignar2;
-    private javax.swing.JButton btnCursoAsignar;
-    private javax.swing.JButton btnCursoDeshacer;
+    private javax.swing.JButton btnAsignarCurso;
+    private javax.swing.JButton btnAsignarPlan;
+    private javax.swing.JButton btnAsignarTrabajo;
+    private javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnDeshacerPlanes;
+    private javax.swing.JButton btnDeshacerTrabajo;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnPago;
+    private javax.swing.JButton btnSiguiente;
     private javax.swing.JButton btncancelar;
     private javax.swing.JComboBox<String> cbBarrio;
     private javax.swing.JComboBox<String> cbCalle;
@@ -1111,7 +1174,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -1137,30 +1199,20 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel7;
     private JPanelWebCam.JPanelWebCam jPanelWebCam1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JList<TipoCurso> listCurso;
-    private javax.swing.JList<String> listDetalle;
-    private javax.swing.JList<TipoCurso> listDisponible;
     private javax.swing.JList<Planes> listPlan;
     private javax.swing.JList<Trabajo> listTrabajo;
     private javax.swing.JPanel panel;
     private javax.swing.JTabbedPane panelContenedor;
     private javax.swing.JPanel panelInscripcion;
     private javax.swing.JPanel panelOtros;
-    private javax.swing.JTable tablaHorario;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtBloque;
     private javax.swing.JTextField txtCasa;

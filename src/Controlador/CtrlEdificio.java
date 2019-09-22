@@ -38,14 +38,14 @@ public class CtrlEdificio {
         }
     }
     
-    public void editar(int torre, int piso, int depto, int idEdificio){
+    public void editar(String bloque, String piso, String depto, int idEdificio){
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE edificio SET torre = ?,piso = ? ,depto = ? WHERE idEdificio = ?");
             
-            ps.setInt(1, torre);
-            ps.setInt(2, piso);
-            ps.setInt(3, depto);
+            ps.setString(1, bloque);
+            ps.setString(2, piso);
+            ps.setString(3, depto);
             ps.setInt(4, idEdificio);
             
             int res = ps.executeUpdate();
@@ -74,9 +74,9 @@ public class CtrlEdificio {
             
             if(rs.next()){
                 edificio.setIdEdificio(rs.getInt("idEdificio"));
-                edificio.setDepto(rs.getInt("depto"));
-                edificio.setPiso(rs.getInt("piso"));
-                edificio.setTorre(rs.getInt("torre"));
+                edificio.setDepto(rs.getString("depto"));
+                edificio.setPiso(rs.getString("piso"));
+                edificio.setTorre(rs.getString("torre"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -99,9 +99,9 @@ public class CtrlEdificio {
             
             if(rs.next()){
                 edificio.setIdEdificio(rs.getInt("idEdificio"));
-                edificio.setDepto(rs.getInt("depto"));
-                edificio.setPiso(rs.getInt("piso"));
-                edificio.setTorre(rs.getInt("torre"));
+                edificio.setDepto(rs.getString("depto"));
+                edificio.setPiso(rs.getString("piso"));
+                edificio.setTorre(rs.getString("torre"));
             }else{
                 JOptionPane.showMessageDialog(null, "Edificio No existe lo que está buscando");
             }

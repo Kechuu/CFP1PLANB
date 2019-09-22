@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import menu.AlumnoMenu;
 import menu.Principal;
-import static menu.Principal.panelSubMenu;
 import modelo.Persona;
 /**
  *
@@ -26,14 +25,14 @@ public class CtrlPersona {
     Connection con = null;
     PreparedStatement ps;
     ResultSet rs;
-    public int CUIL = 0;
+    //public int CUIL = 0;
     
-    public void crear(String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, boolean sexo, String CUIL, String hijoPersona,
+    public void crear(String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, boolean sexo, String CUIL, int hijoPersona,
             String correo, String celular, int idDomicilio, int idTipoDocumento, int idNacionalidad, int idFoto, int lugarNacimiento,
             boolean borrado){
         
         java.sql.Date fecha=new Date(fechaNacimiento.getTime());
-        int hijo=Integer.parseInt(hijoPersona);
+        //int hijo=Integer.parseInt(hijoPersona);
         //int celu=Integer.parseInt(celular);
         
         try {
@@ -47,7 +46,7 @@ public class CtrlPersona {
             ps.setDate(3, (java.sql.Date) fecha);
             ps.setBoolean(4, sexo);
             ps.setString(5, CUIL);
-            ps.setInt(6, hijo);
+            ps.setInt(6, hijoPersona);
             ps.setString(7, correo);
             ps.setString(8, celular);
             ps.setInt(9, idDomicilio);
@@ -66,24 +65,25 @@ public class CtrlPersona {
         }
     }
     
-    public void editar(int idPersona, String nombrePersona, String apellidoPersona, Date fechaNacimiento, boolean sexo, String CUIL, int hijoPersona,
-            String correo, int celular, int idDomicilio, int idTipoDocumento, int idNacionalidad, int idFoto, int lugarNacimiento,
+    public void editar(int idPersona, String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, boolean sexo, String CUIL, String hijoPersona,
+            String correo, String celular, int idDomicilio, int idTipoDocumento, int idNacionalidad, int idFoto, int lugarNacimiento,
             boolean borrado){
-        
+        java.sql.Date fecha =new Date(fechaNacimiento.getTime());
+        int hijo=Integer.parseInt(hijoPersona);
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE edificio SET nombrePersona = ?, apellidoPersona = ?,"
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE persona SET nombrePersona = ?, apellidoPersona = ?,"
                     + "fechaNacimiento = ?, sexo = ?, CUIL = ?, hijoPersona = ?, correo = ?, celular = ?, idDomicilio = ?,"
                     + "idTipoDocumento = ?, idNacionalidad = ?, idFoto = ?, lugarNacimiento = ?, borrado = ? WHERE idPersona = ?");
             
             ps.setString(1, nombrePersona);
             ps.setString(2, apellidoPersona);
-            ps.setDate(3, fechaNacimiento);
+            ps.setDate(3, fecha);
             ps.setBoolean(4, sexo);
             ps.setString(5, CUIL);
-            ps.setInt(6, hijoPersona);
+            ps.setInt(6, hijo);
             ps.setString(7, correo);
-            ps.setInt(8, celular);
+            ps.setString(8, celular);
             ps.setInt(9, idDomicilio);
             ps.setInt(10, idTipoDocumento);
             ps.setInt(11, idNacionalidad);
@@ -110,7 +110,7 @@ public class CtrlPersona {
     public void borrar(int idPersona){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE curso SET borrado = TRUE WHERE idPersona = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE persona SET borrado = TRUE WHERE idPersona = ?");
             
             ps.setInt(1, idPersona);
             
@@ -209,20 +209,58 @@ public class CtrlPersona {
      return persona;
     }
     
-    public void generarCUIL(int DNI) throws ClassNotFoundException{
+    public Persona leer(String dni){
+     Persona persona = new Persona();
+     CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
+     CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
+     CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
+     CtrlFoto ctrlFoto = new CtrlFoto();
+     CtrlLugar ctrlLugarNacimiento = new CtrlLugar();
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM persona WHERE CUIL like '%"+dni+"%'");
+        
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                persona.setIdPersona(rs.getInt("idPersona"));
+                persona.setNombrePersona(rs.getString("nombrePersona"));
+                persona.setApellidoPersona(rs.getString("apellidoPersona"));
+                persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
+                persona.setSexo(rs.getBoolean("sexo"));
+                persona.setCUIL(rs.getString("CUIL"));
+                persona.setHijoPersona(rs.getInt("hijoPersona"));
+                persona.setCorreo(rs.getString("correo"));
+                persona.setCelular(rs.getString("celular"));
+                persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("idDomicilio")));
+                persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("idTipoDocumento")));
+                persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("idNacionalidad")));
+                persona.setIdFoto(ctrlFoto.leer(rs.getInt("idFoto")));
+                persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("lugarNacimiento")));
+            }else{
+                JOptionPane.showMessageDialog(null, "-Persona No existe lo que está buscando");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        
+     return persona;
+    }
+    public void generarCUIL(int DNI, char sx) throws ClassNotFoundException{
         //PanelDni dni = new PanelDni();
         int validarPersona = PanelDni.validarPersona;
     //HACER LA VARIABLE validarPersona STATIC!!!
         /*
         Codigo de CUIL :v
         */
-        CUIL = DNI;
-        
-        buscarAlumno(CUIL, validarPersona);
+        //CUIL = DNI;
+       // String CUIL = clases.Cuil.generar(DNI, sx);
+        //buscarAlumno(CUIL, validarPersona);
         
     }
     
-    public Persona buscarAlumno(int CUIL, int validarPersona) throws ClassNotFoundException{
+    public Persona buscarAlumno(String CUIL, int validarPersona) throws ClassNotFoundException{
         PanelDni dni = new PanelDni();
         Persona persona = new Persona();
         CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
@@ -235,7 +273,7 @@ public class CtrlPersona {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM persona WHERE CUIL = ?");
             
-            ps.setInt(1, CUIL);
+            ps.setString(1, CUIL);
             
             rs = ps.executeQuery();
             
@@ -266,15 +304,16 @@ public class CtrlPersona {
                 }
                 
             }else{
-                JOptionPane.showMessageDialog(null, "P3 No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
                 
+               
                 Principal.desactivarPanel();
-                Inscripcion inscripcion =new Inscripcion();
+                Inscripcion inscripcion =new Inscripcion(CUIL);
                 Principal.panelPrincipal.add(inscripcion);
                 inscripcion.setVisible(true);              
             }
             
-        } catch (HeadlessException | ClassNotFoundException | SQLException e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         

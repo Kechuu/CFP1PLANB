@@ -380,7 +380,11 @@ public class Horario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        CtrlHorario ctrlHorario = new CtrlHorario();
+        // TODO add your handling code here:
+        CtrlHorario ctrlHorario=new CtrlHorario();
+        
+        ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 2);
+
         
         if (cbDias.getSelectedIndex()==0 || txtDesde.getText().equalsIgnoreCase("") || 
                 txtHasta.getText().equalsIgnoreCase("")) {

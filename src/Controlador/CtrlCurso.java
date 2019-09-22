@@ -11,11 +11,15 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Curso;
 import modelo.CursoHora;
+import modelo.TipoCurso;
 
 /**
  *
@@ -203,6 +207,8 @@ public class CtrlCurso {
     }
     
     public void llenarTabla(int idCurso, JTable tabla) throws SQLException{
+    //Este metodo llena los horarios que tiene un determinado curso..
+        
         String dia=null;
          
         CursoHora hora=new CursoHora();
@@ -280,7 +286,38 @@ public class CtrlCurso {
             tabla.setModel(modelo);
          }
         catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LAS LOCALIDADES EN LA TABLA"); 
+            JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LA TABLA"); 
+        }
+        
+    }
+     
+    public void llenarLista(JList<TipoCurso>lista){
+    //Este metodo llena lista de los cursos que esta cursando actualmente un determinado alumno
+        DefaultListModel <TipoCurso> modelo=new DefaultListModel<>();
+        
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.idTipoCurso, tipoCurso.detalle, curso.costo FROM curso"
+                    + " INNER JOIN tipoCurso ON curso.idTipoCurso = tipoCurso.idTipoCurso"
+                    + " WHERE curso.cicloLectivo= 2019 AND curso.borrado=false");
+            
+            rs=ps.executeQuery();
+            
+            while(rs.next()){
+                TipoCurso tipoCurso=new TipoCurso();
+                
+                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
+                tipoCurso.setDetalle(rs.getString("detalle"));
+                tipoCurso.setCosto(rs.getFloat("curso.costo"));
+                
+                modelo.addElement(tipoCurso);
+            }
+            
+            lista.setModel(modelo);
+            
+            con.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         
     }

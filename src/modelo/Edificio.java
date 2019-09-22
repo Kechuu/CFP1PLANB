@@ -12,9 +12,9 @@ package modelo;
 public class Edificio {
     
     private int idEdificio;
-    private int torre;
-    private int piso;
-    private int depto;
+    private String torre;
+    private String piso;
+    private String depto;
 
     public int getIdEdificio() {
         return idEdificio;
@@ -24,29 +24,30 @@ public class Edificio {
         this.idEdificio = idEdificio;
     }
 
-    public int getTorre() {
+    public String getTorre() {
         return torre;
     }
 
-    public void setTorre(int torre) {
+    public void setTorre(String torre) {
         this.torre = torre;
     }
 
-    public int getPiso() {
+    public String getPiso() {
         return piso;
     }
 
-    public void setPiso(int piso) {
+    public void setPiso(String piso) {
         this.piso = piso;
     }
 
-    public int getDepto() {
+    public String getDepto() {
         return depto;
     }
 
-    public void setDepto(int depto) {
+    public void setDepto(String depto) {
         this.depto = depto;
     }
+
     
     
 }

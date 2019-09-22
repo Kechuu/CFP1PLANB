@@ -8,6 +8,8 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.Cargo;
 /**
@@ -68,6 +70,7 @@ public class CtrlCargo {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                cargo.setIdCargo(rs.getInt("idCargo"));
                 cargo.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
@@ -78,5 +81,32 @@ public class CtrlCargo {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
         return cargo;
+    }
+    
+    public void cargarCombo(JComboBox<Cargo> cbCargo){
+        
+        try {
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM cargo ORDER BY detalle ASC");
+            rs=ps.executeQuery();
+            
+            Cargo cargo=new Cargo();
+            cargo.setIdCargo(0);
+            cargo.setDetalle("Seleccione una opción...");
+            cbCargo.addItem(cargo);
+            
+            while (rs.next()) {                
+            
+                cargo=new Cargo();
+                
+                cargo.setIdCargo(rs.getInt("idCargo"));
+                cargo.setDetalle(rs.getString("detalle"));
+                cbCargo.addItem(cargo);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+        }
+        
     }
 }
