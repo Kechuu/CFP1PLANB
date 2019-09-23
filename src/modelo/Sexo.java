@@ -34,10 +34,7 @@ public class Sexo {
         this.detalle = detalle;
     }
     
-<<<<<<< HEAD
     @Override
-=======
->>>>>>> 5de7e7c6d3c4148b0a79d91ac41cc662b2b69473
     public String toString(){
         return this.detalle;
     }

@@ -6,10 +6,7 @@
 package curso;
 
 import Controlador.CtrlHorario;
-<<<<<<< HEAD
 import java.sql.Time;
-=======
->>>>>>> 5de7e7c6d3c4148b0a79d91ac41cc662b2b69473
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -388,11 +385,8 @@ public class Horario extends javax.swing.JInternalFrame {
         CtrlHorario ctrlHorario=new CtrlHorario();
         
         ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 2);
-<<<<<<< HEAD
         //CtrlHorario ctrlHorario = new CtrlHorario();
-=======
 
->>>>>>> 5de7e7c6d3c4148b0a79d91ac41cc662b2b69473
         
         if (cbDias.getSelectedIndex()==0 || txtDesde.getText().equalsIgnoreCase("") || 
                 txtHasta.getText().equalsIgnoreCase("")) {

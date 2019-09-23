@@ -11,10 +11,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-<<<<<<< HEAD
 import java.sql.Time;
-=======
->>>>>>> 5de7e7c6d3c4148b0a79d91ac41cc662b2b69473
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Time;
