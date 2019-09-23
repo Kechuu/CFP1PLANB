@@ -22,6 +22,73 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
         initComponents();
       }
   
+    /*
+    public void llenarTablaHorario(JTable tabla){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Dia");
+        modelo.addColumn("Desde");
+        modelo.addColumn("Hasta");
+        tabla.setModel(modelo);
+                
+        String[] dato = new String[3];
+        String dia="";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT dia,desde,hasta FROM horario ORDER BY dia ASC");
+            
+            while (rs.next()) {                
+                
+                 switch(rs.getInt(1)){
+                    case 1:
+                        dia="Lunes";
+                        
+                        break;
+                        
+                    case 2:
+                        dia="Martes";
+                        
+                        break;
+                    
+                    case 3:
+                        dia="Miercoles";
+                        
+                        break;
+                        
+                    case 4:
+                        dia="Jueves";
+                        
+                        break;
+                        
+                    case 5:
+                        dia="Viernes";
+                        
+                        break;
+                        
+                    case 6:
+                        dia="Sábado";
+                        
+                        break;
+                        
+                    case 7:
+                        dia="Domingo";
+                        
+                        break;
+                }
+                
+                dato[0]=dia;
+                
+                dato[1]=rs.getString(2);
+                dato[2]=rs.getString(3);
+                modelo.addRow(dato);
+            }
+            
+            tabla.setModel(modelo);
+            
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS BARRIOS EN LA TABLA"); 
+        }
+    }
+    */
          
     
     /**
@@ -39,13 +106,12 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
         jTable2 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         txtBuscar = new javax.swing.JTextField();
-        BtnBuscar = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         TablaCursos = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         txtidCurso = new javax.swing.JLabel();
         btnCancelar1 = new javax.swing.JButton();
-        btnGuardar2 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -78,13 +144,6 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
-        BtnBuscar.setText("BUSCAR");
-        BtnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnBuscarActionPerformed(evt);
-            }
-        });
-
         TablaCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -114,12 +173,12 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
             }
         });
 
-        btnGuardar2.setBackground(new java.awt.Color(38, 86, 186));
-        btnGuardar2.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuardar2.setText("Elimnar");
-        btnGuardar2.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setBackground(new java.awt.Color(38, 86, 186));
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setText("Elimnar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardar2ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -136,14 +195,13 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(81, 81, 81)
-                                .addComponent(BtnBuscar))
+                                .addGap(148, 148, 148))
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(212, 212, 212)
                         .addComponent(btnCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(167, 167, 167)
-                        .addComponent(btnGuardar2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(664, 664, 664)
                         .addComponent(txtidCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -152,10 +210,9 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnBuscar)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -164,7 +221,7 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar1)
-                    .addComponent(btnGuardar2))
+                    .addComponent(btnEliminar))
                 .addGap(148, 148, 148))
         );
 
@@ -196,21 +253,17 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnBuscarActionPerformed
-
     private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
         // TODO add your handling code here:
           Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelar1ActionPerformed
 
-    private void btnGuardar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar2ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         Principal.activarPanel();
         dispose();
-    }//GEN-LAST:event_btnGuardar2ActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void TablaCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaCursosMouseClicked
         // TODO add your handling code here:
@@ -218,10 +271,9 @@ public class EliminarCurso extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnBuscar;
     private javax.swing.JTable TablaCursos;
     private javax.swing.JButton btnCancelar1;
-    private javax.swing.JButton btnGuardar2;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;

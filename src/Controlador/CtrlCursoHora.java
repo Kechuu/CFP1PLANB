@@ -5,6 +5,7 @@
  */
 package Controlador;
 
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,7 +37,7 @@ public class CtrlCursoHora {
             con.close();
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString()+"HAAASta");
         }
     }
     
@@ -115,6 +116,27 @@ public class CtrlCursoHora {
         }
     }
     
+    public void eliminarCursoHora(int idCurso){
+        
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("DELETE * FROM cursoHora WHERE idCurso = ?");
+            
+            ps.setInt(1, idCurso);
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Se eliminaron los horarios viejos");
+            }else{
+                JOptionPane.showMessageDialog(null, "Holaaaaa");
+            }
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        
+    }
+    
     public CursoHora leer(int idCurso){//ANTES RECIBIA UN ID DE CURSO HORA
         CursoHora cursoHora = new CursoHora();
         CtrlHorario ctrlHorario = new CtrlHorario();
@@ -129,7 +151,7 @@ public class CtrlCursoHora {
             
             if (rs.next()) {
                 cursoHora.setIdCursoHora(rs.getInt("idCursoHora"));
-                cursoHora.setIdHorario(ctrlHorario.leer(rs.getInt("idHorario")));
+                //cursoHora.setIdHorario(ctrlHorario.leer(rs.getInt("idHorario")));
                 cursoHora.setIdCurso(ctrlCurso.leerCurso(rs.getInt("idCurso")));//VER BIEN
         //leer de CtrlCurso te regresa un obj donde coincidan datos del campo TipoCurso, idTipoCurso no es igual a idCurso
             }else{

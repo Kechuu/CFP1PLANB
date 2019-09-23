@@ -3,7 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/home/araa/plan_b/CFP1PLANB/src/interfazAlumno/PagoAlumno.java</file>
+=======
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/curso/ModificarCurso.java</file>
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/curso/CrearCurso.java</file>
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/Controlador/CtrlCursoHora.java</file>
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/configuracion/Barrio_consulta.java</file>
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/Controlador/CtrlCurso.java</file>
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/curso/EliminarCurso.java</file>
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/curso/Horario.java</file>
+>>>>>>> 5de7e7c6d3c4148b0a79d91ac41cc662b2b69473
         </group>
     </open-files>
 </project-private>

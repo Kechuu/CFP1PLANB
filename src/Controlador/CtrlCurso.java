@@ -60,7 +60,7 @@ public class CtrlCurso {
         
     }
     
-    public void editar(int idCurso, int cicloLectivo, int turno, float costo, int cupo, Date fechaInicio, Date fechaFinalizacion,
+    public void editar(int idCurso, int cicloLectivo, int turno, float costo, int cupo, java.sql.Date fechaInicio, java.sql.Date fechaFinalizacion,
     int idTipoCurso,int idLugarCurso, boolean borrado){
         try {
             con = clases.Conectar.conexion();
@@ -145,7 +145,7 @@ public class CtrlCurso {
             }
             
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         return curso;
     }
@@ -183,6 +183,27 @@ public class CtrlCurso {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         return curso;
+    }
+    
+    public int traerUltimoId(){
+        int idCurso=0;
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM curso ORDER BY idCurso DESC LIMIT 1");
+            
+            ResultSet rs1 = null;
+            
+            rs1 = ps.executeQuery();
+            
+            if (rs1.next()) {
+                
+            idCurso = rs1.getInt("idCurso");
+            
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        return idCurso;
     }
     
     public void llenarTabla(int idCurso, JTable tabla) throws SQLException{
