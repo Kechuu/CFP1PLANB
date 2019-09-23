@@ -68,6 +68,7 @@ public class CtrlPeriodo {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                periodo.setIdPeriodo(rs.getInt("idPeriodo"));
                 periodo.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "-Periodo No existe lo que está buscando");

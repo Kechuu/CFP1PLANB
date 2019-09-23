@@ -65,7 +65,7 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
             tipoCurso.setDetalle("Seleccione una opcion...");
             cbTipoCurso.addItem(tipoCurso);
             
-            while (rs.next()) {                
+            while (rs.next()) {
                 tipoCurso = new TipoCurso();
                 tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
                 tipoCurso.setDetalle(rs.getString("detalle"));

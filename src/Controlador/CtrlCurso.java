@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -19,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Curso;
 import modelo.CursoHora;
+import modelo.LugarCurso;
 import modelo.TipoCurso;
 
 /**
@@ -93,12 +95,16 @@ public class CtrlCurso {
         }
     }
     
-    public void borrar(int idCurso){
+    public void borrar(int idTipoCurso, int turno, int cicloLectivo){
+        //por idtipocurso, turno y ciclo lectivo
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE curso SET borrado = TRUE WHERE idCurso = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE curso SET borrado = TRUE WHERE idTipoCurso = ? AND turno = ?"
+                    + " AND cicloLectivo = ?");
             
-            ps.setInt(1, idCurso);
+            ps.setInt(1, idTipoCurso);
+            ps.setInt(2, turno);
+            ps.setInt(3, cicloLectivo);
             
             int res = ps.executeUpdate();
             
@@ -110,8 +116,8 @@ public class CtrlCurso {
             
             con.close();
             
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
     }
     
@@ -183,6 +189,79 @@ public class CtrlCurso {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         return curso;
+    }
+    
+    
+    public void llenarTablaCurso(JTable tabla){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Ciclo Lectivo");
+        modelo.addColumn("Turno");
+        modelo.addColumn("Costo");
+        modelo.addColumn("Cupo");
+        modelo.addColumn("Fecha Inicio");
+        modelo.addColumn("FechaFinalizacion");
+        modelo.addColumn("Lugar");
+        tabla.setModel(modelo);
+                
+        String[] dato = new String[8];
+        String turno="";
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT idTipoCurso,cicloLectivo,turno,"
+                    + "costo,cupo,fechaInicio,fechaFinalizacion,idLugarCurso FROM curso");
+            
+            while (rs.next()) {                
+                CtrlTipoCurso ctrlTipoCurso = new CtrlTipoCurso();
+                TipoCurso tipoCurso = new TipoCurso();
+                
+                int idTipoCurso = rs.getInt(1);
+                //JOptionPane.showMessageDialog(null, idTipoCurso);
+                tipoCurso = ctrlTipoCurso.leer(idTipoCurso);
+                //JOptionPane.showMessageDialog(null, tipoCurso.getDetalle());
+                dato[0]=tipoCurso.getDetalle();
+                
+                dato[1]=rs.getString(2);
+    
+                 switch(rs.getInt(3)){
+                    case 1:
+                        turno="Mañana";
+                        
+                        break;
+                        
+                    case 2:
+                        turno="Tarde";
+                        
+                        break;
+                    
+                    case 3:
+                        turno="Noche";
+                        
+                        break;
+                        
+                }
+                
+                dato[2]=turno;
+                
+                dato[3]=rs.getString(4);
+                dato[4]=rs.getString(5);
+                dato[5]=rs.getString(6);
+                dato[6]=rs.getString(7);
+                
+                CtrlLugarCurso ctrlLugarCurso = new CtrlLugarCurso();
+                LugarCurso lugarCurso = new LugarCurso();
+                int idLugarCurso = rs.getInt(8);
+                
+                lugarCurso = ctrlLugarCurso.leer(idLugarCurso);
+                dato[7]= lugarCurso.getDetalle();
+                modelo.addRow(dato);
+            }
+            
+            tabla.setModel(modelo);
+            
+        } catch (SQLException e) {
+             JOptionPane.showMessageDialog(null, e.getLocalizedMessage()); 
+        }
     }
     
     public int traerUltimoId(){

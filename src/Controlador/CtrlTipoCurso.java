@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Controlador;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -87,6 +88,35 @@ public class CtrlTipoCurso {
         }
     }
     
+    
+    public TipoCurso leer(String detalle){
+        TipoCurso tipoCurso = new TipoCurso();
+        CtrlPeriodo ctrlPeriodo = new CtrlPeriodo();
+        
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM tipoCurso WHERE detalle = ?");
+            
+            ps.setString(1, detalle);
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
+                tipoCurso.setDetalle(rs.getString("detalle"));
+                tipoCurso.setCosto(rs.getFloat("costo"));
+                tipoCurso.setIdPeriodo(ctrlPeriodo.leer(rs.getInt("idPeriodo")));
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        
+        return tipoCurso;
+    }
+    
+    
     public TipoCurso leer(int idTipoCurso){
         TipoCurso tipoCurso = new TipoCurso();
         CtrlPeriodo ctrlPeriodo = new CtrlPeriodo();
@@ -98,18 +128,16 @@ public class CtrlTipoCurso {
             rs = ps.executeQuery();
             
             if (rs.next()) {
-                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCuso"));
+                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
                 tipoCurso.setDetalle(rs.getString("detalle"));
                 tipoCurso.setCosto(rs.getFloat("costo"));
                 tipoCurso.setIdPeriodo(ctrlPeriodo.leer(rs.getInt("idPeriodo")));
                 
-                JOptionPane.showMessageDialog(null, "El curso ya está cargado..");
-                
-                
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         
         
