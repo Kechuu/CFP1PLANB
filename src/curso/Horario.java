@@ -6,9 +6,7 @@
 package curso;
 
 import Controlador.CtrlHorario;
-<<<<<<< HEAD
 import java.sql.Time;
-=======
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -16,7 +14,6 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
->>>>>>> 70c9c4c470e226a492b9003e8adea65c03b4e5d2
 import menu.Principal;
 
 /**
@@ -384,13 +381,11 @@ public class Horario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-<<<<<<< HEAD
         // TODO add your handling code here:
         CtrlHorario ctrlHorario=new CtrlHorario();
         
         ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 2);
-=======
-        CtrlHorario ctrlHorario = new CtrlHorario();
+        //CtrlHorario ctrlHorario = new CtrlHorario();
         
         if (cbDias.getSelectedIndex()==0 || txtDesde.getText().equalsIgnoreCase("") || 
                 txtHasta.getText().equalsIgnoreCase("")) {
@@ -430,7 +425,6 @@ public class Horario extends javax.swing.JInternalFrame {
              llenarTablaHorario(tablaHorarios);
         }
         
->>>>>>> 70c9c4c470e226a492b9003e8adea65c03b4e5d2
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

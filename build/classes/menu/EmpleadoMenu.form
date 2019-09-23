@@ -22,10 +22,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="btnConsultarEstado" min="-2" pref="240" max="-2" attributes="0"/>
-          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-              <Component id="btnRegistrarEmpleado" min="-2" pref="240" max="-2" attributes="0"/>
-              <Component id="btnModificarDatos" min="-2" pref="240" max="-2" attributes="0"/>
-          </Group>
+          <Component id="btnModificarDatos" alignment="0" min="-2" pref="240" max="-2" attributes="0"/>
           <Component id="btnAsignarCurso" alignment="0" min="-2" pref="240" max="-2" attributes="0"/>
           <Component id="btnBorrarEmpleado" alignment="0" min="-2" pref="240" max="-2" attributes="0"/>
       </Group>
@@ -33,7 +30,6 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="btnRegistrarEmpleado" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnModificarDatos" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -42,19 +38,12 @@
               <Component id="btnConsultarEstado" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnBorrarEmpleado" min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="btnRegistrarEmpleado">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Registrar Empleado"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarEmpleadoActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btnAsignarCurso">
       <Properties>
         <Property name="text" type="java.lang.String" value="Asignar Curso"/>
@@ -73,7 +62,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnModificarDatos">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Modificar Empleado"/>
+        <Property name="text" type="java.lang.String" value="Modificar datos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarDatosActionPerformed"/>
@@ -81,7 +70,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnBorrarEmpleado">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Borrar Empleado"/>
+        <Property name="text" type="java.lang.String" value="Dar de baja"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarEmpleadoActionPerformed"/>

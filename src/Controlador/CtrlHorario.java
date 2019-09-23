@@ -10,14 +10,11 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-<<<<<<< HEAD
 import java.sql.Time;
-=======
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
->>>>>>> 70c9c4c470e226a492b9003e8adea65c03b4e5d2
 import javax.swing.JOptionPane;
 import modelo.Horario;
 /**

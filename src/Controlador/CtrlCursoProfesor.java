@@ -8,8 +8,11 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import modelo.CursoProfesor;
+import modelo.TipoCurso;
 /**
  *
  * @author jesus
@@ -85,5 +88,37 @@ public class CtrlCursoProfesor {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
         return cursoProfesor;
+    }
+    
+    public void llenarLista(int idEmpleado, JList<TipoCurso>lista){
+    //Este metodo llena lista de los cursos que esta cursando actualmente un determinado alumno
+        DefaultListModel <TipoCurso> modelo=new DefaultListModel<>();
+        
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.idTipoCurso, tipoCurso.detalle FROM cursoProfesor"
+                    + " INNER JOIN curso ON cursoProfesor.idCurso = curso.idCurso"
+                    + " INNER JOIN tipoCurso ON curso.idTipoCurso = tipoCurso.idTipoCurso"
+                    + " WHERE cursoProfesor.idEmpleado = ?");
+           
+            ps.setInt(1, idEmpleado);
+            
+            rs=ps.executeQuery();
+            
+            while(rs.next()){
+                TipoCurso tipoCurso=new TipoCurso();
+                
+                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
+                tipoCurso.setDetalle(rs.getString("detalle"));
+                
+                modelo.addElement(tipoCurso);
+            }
+            lista.setModel(modelo);
+            
+            con.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        
     }
 }

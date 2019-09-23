@@ -20,13 +20,16 @@ public class CtrlEmpleado {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(Date fechaIngreso, int idPersona, int idEstadoEmpleado, int idGremio){
+    public void crear(java.util.Date fechaIngreso, int idPersona, int idEstadoEmpleado, int idGremio){
+        
+        java.sql.Date fecha=new Date(fechaIngreso.getTime());
+        
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO empleado (fechaIngreso,idPersona,idEstadoEmpleado,"
                     + "idGremio,borrado) VALUES (?,?,?,?,?)");
         
-            ps.setDate(1, fechaIngreso);
+            ps.setDate(1, fecha);
             ps.setInt(2, idPersona);
             ps.setInt(3, idEstadoEmpleado);
             ps.setInt(4, idGremio);
@@ -93,7 +96,36 @@ public class CtrlEmpleado {
         }
     }
     
-    public Empleado leer(int idEmpleado){
+    public Empleado leer(int idPersona){
+        Empleado empleado = new Empleado();
+        CtrlPersona ctrlPersona = new CtrlPersona();
+        CtrlEstadoEmpleado ctrlEstadoEmpleado = new CtrlEstadoEmpleado();
+        CtrlGremio ctrlGremio = new CtrlGremio();
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM empleado WHERE idPersona = ? AND borrado = FALSE");
+            
+            ps.setInt(1, idPersona);
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                empleado.setIdEmpleado(rs.getInt("idEmpleado"));
+                empleado.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
+                empleado.setIdEstadoEmpleado(ctrlEstadoEmpleado.leer(rs.getInt("idEstadoEmpleado")));
+                empleado.setIdGremio(ctrlGremio.leer(rs.getInt("idGremio")));
+                }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        
+        return empleado;
+    }
+    
+    public Empleado leerIdEmpleado(int idEmpleado){
         Empleado empleado = new Empleado();
         CtrlPersona ctrlPersona = new CtrlPersona();
         CtrlEstadoEmpleado ctrlEstadoEmpleado = new CtrlEstadoEmpleado();
@@ -107,6 +139,33 @@ public class CtrlEmpleado {
             rs = ps.executeQuery();
             
             if (rs.next()) {
+                empleado.setIdEmpleado(rs.getInt("idEmpleado"));
+                empleado.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
+                empleado.setIdEstadoEmpleado(ctrlEstadoEmpleado.leer(rs.getInt("idEstadoEmpleado")));
+                empleado.setIdGremio(ctrlGremio.leer(rs.getInt("idGremio")));
+                }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        
+        return empleado;
+    }
+    public Empleado leer(){
+        Empleado empleado = new Empleado();
+        CtrlPersona ctrlPersona = new CtrlPersona();
+        CtrlEstadoEmpleado ctrlEstadoEmpleado = new CtrlEstadoEmpleado();
+        CtrlGremio ctrlGremio = new CtrlGremio();
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM empleado ORDER BY idEmpleado DESC LIMIT 1");
+           
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                empleado.setIdEmpleado(rs.getInt("idEmpleado"));
                 empleado.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
                 empleado.setIdEstadoEmpleado(ctrlEstadoEmpleado.leer(rs.getInt("idEstadoEmpleado")));
                 empleado.setIdGremio(ctrlGremio.leer(rs.getInt("idGremio")));

@@ -18,7 +18,7 @@ public class Persona {
     private String nombrePersona;
     private String apellidoPersona;
     private Date fechaNacimiento;
-    private boolean sexo;
+    private int sexo;
     private String CUIL;
     private int hijoPersona;
     private String correo;
@@ -62,11 +62,11 @@ public class Persona {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public boolean isSexo() {
+    public int getSexo() {
         return sexo;
     }
 
-    public void setSexo(boolean sexo) {
+    public void setSexo(int sexo) {
         this.sexo = sexo;
     }
 

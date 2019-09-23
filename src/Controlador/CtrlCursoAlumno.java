@@ -15,6 +15,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import modelo.CursoAlumno;
 import modelo.TipoCurso;
 /**
@@ -35,16 +37,17 @@ public class CtrlCursoAlumno {
         try {
           
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO cursoAlumno (saldo,fechaIngreso,"
-                    + "fechaBaja, idAlumno,idEstadoAlumno,idCurso,idMotivoBaja) VALUES (?,?,?,?,?,?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO cursoAlumno (costo,saldo,fechaIngreso,"
+                    + "fechaBaja, idAlumno,idEstadoAlumno,idCurso,idMotivoBaja) VALUES (?,?,?,?,?,?,?,?)");
             
-            ps.setFloat(1, saldo);
-            ps.setDate(2, fecha1);
-            ps.setDate(3, null);
-            ps.setInt(4, idAlumno);
-            ps.setInt(5, idEstadoAlumno);
-            ps.setInt(6, idCurso);
-            ps.setInt(7, idMotivoBaja);
+            ps.setFloat(1, 0);
+            ps.setFloat(2, saldo);
+            ps.setDate(3, fecha1);
+            ps.setDate(4, null);
+            ps.setInt(5, idAlumno);
+            ps.setInt(6, idEstadoAlumno);
+            ps.setInt(7, idCurso);
+            ps.setInt(8, idMotivoBaja);
             
             int res = ps.executeUpdate();
             con.close();
@@ -88,19 +91,21 @@ public class CtrlCursoAlumno {
             int res = ps.executeUpdate();
             con.close();
             
+            if(res>0) JOptionPane.showMessageDialog(null, "se realizo el cambio");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
     }
     
-    public void pagarSaldo(int idAlumno,int idCurso, float saldo){
+    public void pagarSaldo(int idAlumno,int idCurso, float saldo, float costo){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoAlumno SET saldo = ? WHERE idAlumno = ? AND idCurso = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoAlumno SET costo=?, saldo = ? WHERE idAlumno = ? AND idCurso = ?");
             
-            ps.setFloat(1, saldo);
-            ps.setInt(2, idAlumno);
-            ps.setInt(3, idCurso);
+            ps.setFloat(1, costo);
+            ps.setFloat(2, saldo);
+            ps.setInt(3, idAlumno);
+            ps.setInt(4, idCurso);
             
             int res = ps.executeUpdate();
             con.close();
@@ -184,7 +189,7 @@ public class CtrlCursoAlumno {
             ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.idTipoCurso, tipoCurso.detalle, cursoAlumno.costo FROM cursoAlumno"
                     + " INNER JOIN curso ON cursoAlumno.idCurso = curso.idCurso"
                     + " INNER JOIN tipoCurso ON curso.idTipoCurso = tipoCurso.idTipoCurso"
-                    + " WHERE cursoAlumno.idAlumno = ?");
+                    + " WHERE cursoAlumno.idAlumno = ? AND cursoAlumno.idEstadoAlumno=1");
             
             ps.setInt(1, idAlumno);
             rs=ps.executeQuery();
@@ -207,6 +212,45 @@ public class CtrlCursoAlumno {
             
         } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+        }
+        
+    }
+    
+    public void llenarTabla(int idAlumno, JTable tabla) throws SQLException{
+        
+        con=clases.Conectar.conexion();
+    
+        ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.detalle, estadoAlumno.detalle FROM tipoCurso "
+                + " INNER JOIN curso ON tipoCurso.idTipoCurso = curso.idTipoCurso "
+                + " INNER JOIN cursoAlumno ON curso.idCurso= cursoAlumno.idCurso "
+                + " INNER JOIN estadoAlumno ON cursoAlumno.idEstadoAlumno=estadoAlumno.idEstadoAlumno "
+                + " WHERE cursoAlumno.idAlumno=?");
+        
+        ps.setInt(1, idAlumno);
+        
+        rs=ps.executeQuery();
+        
+        DefaultTableModel modelo =new DefaultTableModel();
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Estado Alumno");
+        
+        tabla.setModel(modelo);
+        
+        String[] datos= new String[2];
+        try{
+            
+            while(rs.next()){
+
+	            datos[0]=rs.getString(1);
+	            datos[1]=rs.getString(2);
+	            
+            	    modelo.addRow(datos);
+            }
+
+             tabla.setModel(modelo);
+         }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LAS LOCALIDADES EN LA TABLA"); 
         }
         
     }

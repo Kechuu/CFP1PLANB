@@ -9,12 +9,19 @@ package modelo;
  *
  * @author araa
  */
-public class MotivoBaja {
+public class Sexo {
     
-    private int idMotivoBaja;
+    private int idSexo;
     private String detalle;
 
- 
+    public int getIdSexo() {
+        return idSexo;
+    }
+
+    public void setIdSexo(int idSexo) {
+        this.idSexo = idSexo;
+    }
+
     public String getDetalle() {
         return detalle;
     }
@@ -22,17 +29,10 @@ public class MotivoBaja {
     public void setDetalle(String detalle) {
         this.detalle = detalle;
     }
-
-    public int getIdMotivoBaja() {
-        return idMotivoBaja;
-    }
-
-    public void setIdMotivoBaja(int idMotivoBaja) {
-        this.idMotivoBaja = idMotivoBaja;
-    }
     
     @Override
     public String toString(){
         return this.detalle;
     }
+    
 }

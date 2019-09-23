@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import modelo.PersonaTrabajo;
 import modelo.Trabajo;
 /**
@@ -175,6 +177,40 @@ public class CtrlPersonaTrabajo {
             con.close();
         }catch(SQLException e){
             
+        }
+    }
+    
+    public void llenarTabla(int idPersona, JTable tabla) throws SQLException{
+        
+        con=clases.Conectar.conexion();
+    
+        ps=(PreparedStatement)con.prepareStatement("SELECT trabajo.detalle FROM trabajo"
+                + " INNER JOIN personaTrabajo ON trabajo.idTrabajo=personaTrabajo.idTrabajo"
+                + " WHERE personaTrabajo.idPersona=?");
+        
+        ps.setInt(1, idPersona);
+        
+        rs=ps.executeQuery();
+        
+        DefaultTableModel modelo =new DefaultTableModel();
+        modelo.addColumn("Trabajo");
+        
+        tabla.setModel(modelo);
+        
+        String[] datos= new String[1];
+        try{
+            
+            while(rs.next()){
+                
+	            datos[0]=rs.getString(1);
+	            
+            	    modelo.addRow(datos);
+            }
+
+             tabla.setModel(modelo);
+         }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LAS LOCALIDADES EN LA TABLA"); 
         }
         
     }

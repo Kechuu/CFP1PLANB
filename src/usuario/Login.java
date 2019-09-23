@@ -18,7 +18,8 @@ import modelo.Usuario;
 public class Login extends javax.swing.JInternalFrame {
 
     CtrlUsuario ctrlUsuario=new CtrlUsuario();
-    Usuario usuario=new Usuario();
+    
+    public static Usuario usuario=new Usuario();
     
     int contador;
     /**
@@ -195,14 +196,17 @@ public class Login extends javax.swing.JInternalFrame {
 
     void confirmacion(){
         
-        ctrlUsuario.confirmar(txtUser.getText(), String.valueOf(pass.getPassword()));
+        usuario=ctrlUsuario.confirmar(txtUser.getText(), String.valueOf(pass.getPassword()));
         
-        if(txtUser.getText().equals("admin") && pass.getText().equals("admin")){
+        if(usuario.getIdUsuario()!=0){
             Principal.activarPanel();
             //JOptionPane.showMessageDialog(null, "Paso por aqui");
             this.setVisible(false);
             dispose();
-            
+            /* 
+            if(usuario.getJerarquia()==1){
+                Principal.menuBar.setVisible(false);
+            }*/
         }else{
             contador++;
             txtUser.requestFocus();

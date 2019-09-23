@@ -109,4 +109,37 @@ public class CtrlCargo {
         }
         
     }
+    
+    public void cargoEmpleado(int idEmpleado, JComboBox<Cargo> cbCargo){
+        
+        try {
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT cargo.idCargo, cargo.detalle FROM empleado"
+                    + " INNER JOIN empleadoCargo ON empleado.idEmpleado = empleadoCargo.idEmpleado"
+                    + " INNER JOIN cargo ON empleadoCargo.idCargo = cargo.idCargo"
+                    + " WHERE empleado.idEmpleado=?");
+            
+            ps.setInt(1, idEmpleado);
+            
+            rs=ps.executeQuery();
+            
+            Cargo cargo=new Cargo();
+            cargo.setIdCargo(0);
+            cargo.setDetalle("Seleccione una opción...");
+            cbCargo.addItem(cargo);
+            
+            while (rs.next()) {                
+            
+                cargo=new Cargo();
+                
+                cargo.setIdCargo(rs.getInt("idCargo"));
+                cargo.setDetalle(rs.getString("detalle"));
+                cbCargo.addItem(cargo);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+        }
+        
+    }
 }
