@@ -30,6 +30,8 @@ import modelo.TipoCurso;
  * @author AGUSTINA
  */
 public class AsignarCurso extends javax.swing.JInternalFrame {
+    public static int banderaAsignar=0;
+    
     CtrlCurso ctrlCurso=new CtrlCurso();
     CtrlAlumno ctrlAlumno=new CtrlAlumno();
     CtrlCursoAlumno ctrlCursoAlum=new CtrlCursoAlumno();
@@ -347,6 +349,7 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
 
     private void btnPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoActionPerformed
         // TODO add your handling code here:
+        banderaAsignar=1;
         
         PagoAlumno pago=new PagoAlumno(persona);
         

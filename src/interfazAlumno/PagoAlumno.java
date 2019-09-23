@@ -11,6 +11,7 @@ import Controlador.CtrlCursoAlumno;
 import Controlador.CtrlPagosVarios;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import menu.Principal;
 import modelo.Persona;
 import modelo.TipoCurso;
 
@@ -416,7 +417,16 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        dispose();
+        switch(AsignarCurso.banderaAsignar){
+            case 1:
+                dispose();
+                break;
+                
+            case 2:
+                Principal.activarPanel();
+                dispose();
+                break;
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void cbCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoItemStateChanged

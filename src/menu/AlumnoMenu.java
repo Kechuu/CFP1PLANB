@@ -156,6 +156,8 @@ public class AlumnoMenu extends javax.swing.JPanel {
 
     private void btnPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosActionPerformed
         // TODO add your handling code here:
+        AsignarCurso.banderaAsignar=2;
+        
         this.setVisible(false);
         Principal.desactivarPanel();
         
