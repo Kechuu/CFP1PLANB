@@ -6,9 +6,12 @@
 package interfazAlumno;
 
 import Controlador.CtrlAlumno;
+import Controlador.CtrlCurso;
 import Controlador.CtrlCursoAlumno;
 import Controlador.CtrlPagosVarios;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import menu.Principal;
 import modelo.Persona;
 import modelo.TipoCurso;
 
@@ -19,6 +22,7 @@ import modelo.TipoCurso;
 public class PagoAlumno extends javax.swing.JInternalFrame {
     
     CtrlPagosVarios ctrlPagosVarios=new CtrlPagosVarios();
+    CtrlCurso ctrlCurso=new CtrlCurso();
     CtrlCursoAlumno ctrlCursoAlum=new CtrlCursoAlumno();
     CtrlAlumno ctrlAlumno=new CtrlAlumno();
     
@@ -35,20 +39,20 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
     public PagoAlumno(Persona persona){
         initComponents();
         personaDatos=persona;
-        txtImporte.setEnabled(false);
-        txtSaldo.setEnabled(false);
+        //txtImporte.setEnabled(false);
+        //txtSaldo.setEnabled(false);
         
         ctrlCursoAlum.cargarCombo(ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno(), cbCurso);
         
-        txtDni.setText(persona.getCUIL());//cambiar luego
+        obtenerDni(persona.getCUIL());
         txtNombre.setText(persona.getApellidoPersona()+" "+persona.getNombrePersona());
         fecha.setDate(date);
         
     }
 
-    void cargar(Persona persona){
-        
-        
+    void obtenerDni(String cuil){
+        String dni=cuil.substring(3, 11);
+        txtDni.setText(dni);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,7 +71,6 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         txtDni = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
         cbCurso = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         cbConceptoPago = new javax.swing.JComboBox<>();
@@ -126,6 +129,8 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Fecha de Pago");
 
+        txtDni.setEditable(false);
+
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel10.setText("Curso");
 
@@ -143,7 +148,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel13.setText("Concepto");
 
-        cbConceptoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción...", "Pago cooperativa", "Certificado", " " }));
+        cbConceptoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción...", "Pago cooperativa", "Certificado", "" }));
         cbConceptoPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbConceptoPagoActionPerformed(evt);
@@ -155,6 +160,8 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
 
         jButton9.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton9.setBorderPainted(false);
+
+        txtNombre.setEditable(false);
 
         jLabel6.setText("Apeliido y Nombre");
 
@@ -215,6 +222,13 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel11.setText("Saldo");
 
+        txtSaldo.setEditable(false);
+        txtSaldo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSaldoKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -261,62 +275,56 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 949, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbConceptoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelLayout.createSequentialGroup()
-                                .addGap(350, 350, 350)
-                                .addComponent(jButton9))
-                            .addGroup(panelLayout.createSequentialGroup()
-                                .addGap(230, 230, 230)
-                                .addComponent(jButton6))
-                            .addGroup(panelLayout.createSequentialGroup()
-                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(panelLayout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel3))
-                                .addGap(19, 19, 19)
-                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(panelLayout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel6))))
-                        .addGap(16, 16, 16)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnRegistrarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cbConceptoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(350, 350, 350)
+                        .addComponent(jButton9))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(230, 230, 230)
+                        .addComponent(jButton6))
+                    .addGroup(panelLayout.createSequentialGroup()
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelLayout.createSequentialGroup()
-                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10)
-                                    .addGroup(panelLayout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(panelLayout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(12, 12, 12)
+                                .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3))
+                        .addGap(19, 19, 19)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel6))))
+                .addGap(16, 16, 16)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRegistrarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(cbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(63, 63, 63))
         );
         panelLayout.setVerticalGroup(
@@ -347,18 +355,20 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(jButton6)
-                        .addGap(34, 34, 34)
-                        .addComponent(btnRegistrarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jButton9))
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addGap(163, 163, 163)
+                                .addComponent(jButton9))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRegistrarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -372,6 +382,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(Pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -392,13 +403,30 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         if(cbConceptoPago.getSelectedIndex()!=0 && !txtImporte.getText().equals("")){
             
             ctrlPagosVarios.crear(fecha.getDate(), (String) cbConceptoPago.getSelectedItem(), Float.parseFloat(txtImporte.getText()), 1, ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno());
+        
+            if(cbConceptoPago.getSelectedIndex()==1){
+                TipoCurso itemCurso=(TipoCurso) cbCurso.getSelectedItem();
+                //alumno curso saldo
+                ctrlCursoAlum.pagarSaldo(ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno(), ctrlCurso.leer(itemCurso.getIdTipoCurso()).getIdCurso(), Float.parseFloat(txtSaldo.getText()), Float.parseFloat(txtCooperativa.getText()));
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Falta seleccionar el concepto de pago y/o ingresar el importe abonado");
         }
         
     }//GEN-LAST:event_btnRegistrarPagoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        dispose();
+        switch(AsignarCurso.banderaAsignar){
+            case 1:
+                dispose();
+                break;
+                
+            case 2:
+                Principal.activarPanel();
+                dispose();
+                break;
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void cbCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoItemStateChanged
@@ -419,6 +447,15 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
     private void txtImporteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtImporteKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtImporteKeyPressed
+
+    private void txtSaldoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSaldoKeyPressed
+        // TODO add your handling code here:
+        float coop=Float.parseFloat(txtCooperativa.getText());
+        float importe=Float.parseFloat(txtImporte.getText());
+        float sald=(coop-importe);
+        
+        txtSaldo.setText(String.valueOf(sald));
+    }//GEN-LAST:event_txtSaldoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -442,7 +479,6 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jtabla;
     public javax.swing.JPanel panel;
     private javax.swing.JTextField txtCooperativa;

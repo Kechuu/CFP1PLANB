@@ -5,7 +5,26 @@
  */
 package interfazEmpleado;
 
+import Controlador.CtrlCargo;
+import Controlador.CtrlCurso;
+import Controlador.CtrlCursoHora;
+import Controlador.CtrlCursoProfesor;
+import Controlador.CtrlEmpleado;
+import Controlador.CtrlPersona;
+import interfazAlumno.Inscripcion;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 import menu.Principal;
+import modelo.Cargo;
+import modelo.Curso;
+import modelo.Empleado;
+import modelo.Persona;
+import modelo.TipoCurso;
 
 /**
  *
@@ -13,15 +32,42 @@ import menu.Principal;
  */
 public class AsignarCurso extends javax.swing.JInternalFrame {
 
+    CtrlCursoProfesor ctrlCursoP=new CtrlCursoProfesor();
+    CtrlCurso ctrlCurso=new CtrlCurso();
+    CtrlPersona ctrlPersona=new CtrlPersona();
+    CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
+    CtrlCargo ctrlCargo=new CtrlCargo();
     
+    DefaultListModel<TipoCurso> modeloCursos;
+    DefaultListModel<TipoCurso> modeloDisponible;
+    
+    Cargo cargo=new Cargo();
+    Persona persona=new Persona();
+    Empleado empleadoObj=new Empleado();
     /**
      * Creates new form AsignarCurso
      */
-    public AsignarCurso() throws ClassNotFoundException {
+    public AsignarCurso(){
     }
 
-    public AsignarCurso(String nombre, boolean bandera){
+    public AsignarCurso(Persona persona){
         initComponents();
+        
+        this.persona=persona;
+        cargar();
+    }
+    
+    void cargar(){
+        empleadoObj=ctrlEmpleado.leer(persona.getIdPersona());
+        
+        txtNombreCompleto.setText(persona.getApellidoPersona()+" "+persona.getNombrePersona());
+        ctrlCargo.cargoEmpleado(empleadoObj.getIdEmpleado(), cbCargo);
+        ctrlCurso.llenarLista(listDisponible);//se carga la lista con los cursos disponibles
+        ctrlCursoP.llenarLista(empleadoObj.getIdEmpleado(), listCurso);
+        
+        modeloDisponible=(DefaultListModel<TipoCurso>) listDisponible.getModel();
+        modeloCursos=(DefaultListModel<TipoCurso>)listCurso.getModel();
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,20 +83,28 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
-        jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        cboxCurso = new javax.swing.JComboBox<>();
+        panelCompleto = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        btnCursoAsignar = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        btnCursoDeshacer = new javax.swing.JButton();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        listCurso = new javax.swing.JList<>();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        listDisponible = new javax.swing.JList<>();
+        jLabel10 = new javax.swing.JLabel();
+        txtNombreCompleto = new javax.swing.JTextField();
+        btnInscribirCursos = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        btnAsignar = new javax.swing.JButton();
-        cbCargo = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        listDetalle = new javax.swing.JList<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtTablaAsignarCurso = new javax.swing.JTable();
-        cbEmpleado = new javax.swing.JComboBox<>();
+        tablaHorario = new javax.swing.JTable();
+        jLabel11 = new javax.swing.JLabel();
+        cbCargo = new javax.swing.JComboBox<>();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -64,38 +118,90 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
         jCheckBoxMenuItem2.setSelected(true);
         jCheckBoxMenuItem2.setText("jCheckBoxMenuItem2");
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Tw Cen MT", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Asignacion de Curso");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 29, -1, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 2, 711, 70));
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(95, 95, 95))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Empleado");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+        panelCompleto.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setText("Curso");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel9.setText("Cursos actuales");
 
-        cboxCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
-        cboxCurso.addActionListener(new java.awt.event.ActionListener() {
+        btnCursoAsignar.setBackground(new java.awt.Color(38, 86, 186));
+        btnCursoAsignar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCursoAsignar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCursoAsignar.setText(">");
+        btnCursoAsignar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboxCursoActionPerformed(evt);
+                btnCursoAsignarActionPerformed(evt);
             }
         });
-        jPanel1.add(cboxCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 256, -1));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel12.setText("Cursos a cargo");
+
+        btnCursoDeshacer.setBackground(new java.awt.Color(38, 86, 186));
+        btnCursoDeshacer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCursoDeshacer.setForeground(new java.awt.Color(255, 255, 255));
+        btnCursoDeshacer.setText("<");
+        btnCursoDeshacer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCursoDeshacerActionPerformed(evt);
+            }
+        });
+
+        jScrollPane6.setViewportView(listCurso);
+
+        listDisponible.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listDisponibleKeyPressed(evt);
+            }
+        });
+        listDisponible.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listDisponibleValueChanged(evt);
+            }
+        });
+        jScrollPane7.setViewportView(listDisponible);
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel10.setText("Nombre:");
+
+        txtNombreCompleto.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtNombreCompleto.setEnabled(false);
+
+        btnInscribirCursos.setBackground(new java.awt.Color(38, 86, 186));
+        btnInscribirCursos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnInscribirCursos.setForeground(new java.awt.Color(255, 255, 255));
+        btnInscribirCursos.setText("Inscribir a curso/s");
+        btnInscribirCursos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInscribirCursosActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
-        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -103,103 +209,303 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 380, 100, -1));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel7.setText("Cargo");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Datos del curso")));
 
-        btnAsignar.setBackground(new java.awt.Color(38, 86, 186));
-        btnAsignar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnAsignar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAsignar.setText("Asignar");
-        btnAsignar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAsignarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnAsignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 100, -1));
+        listDetalle.setEnabled(false);
+        listDetalle.setFocusable(false);
+        jScrollPane5.setViewportView(listDetalle);
 
-        cbCargo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbCargoItemStateChanged(evt);
-            }
-        });
-        jPanel1.add(cbCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 260, -1));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setText("Cursos");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 106, 81, -1));
-
-        txtTablaAsignarCurso.setModel(new javax.swing.table.DefaultTableModel(
+        tablaHorario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Día", "Desde", "Hasta"
             }
         ));
-        jScrollPane1.setViewportView(txtTablaAsignarCurso);
+        tablaHorario.setEnabled(false);
+        tablaHorario.setFocusable(false);
+        jScrollPane1.setViewportView(tablaHorario);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, 371, 210));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        jPanel1.add(cbEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 260, 30));
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel11.setText("Cargo");
+
+        cbCargo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        javax.swing.GroupLayout panelCompletoLayout = new javax.swing.GroupLayout(panelCompleto);
+        panelCompleto.setLayout(panelCompletoLayout);
+        panelCompletoLayout.setHorizontalGroup(
+            panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCompletoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelCompletoLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(212, 212, 212)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelCompletoLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(38, 38, 38)
+                        .addGroup(panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnInscribirCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(56, 56, 56))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCompletoLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addGroup(panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCompletoLayout.createSequentialGroup()
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                        .addGroup(panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnCursoAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCursoDeshacer, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(67, 67, 67))
+                    .addGroup(panelCompletoLayout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(76, 76, 76))
+        );
+        panelCompletoLayout.setVerticalGroup(
+            panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCompletoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelCompletoLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelCompletoLayout.createSequentialGroup()
+                                .addComponent(btnCursoAsignar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCursoDeshacer)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                            .addComponent(jScrollPane6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelCompletoLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnInscribirCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(panelCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cboxCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCursoActionPerformed
+    private void btnCursoAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoAsignarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboxCursoActionPerformed
 
+        if(listDisponible.getSelectedIndex()!= -1){
+            modeloCursos.addElement((TipoCurso)listDisponible.getSelectedValue());
+
+            modeloDisponible.remove(listDisponible.getSelectedIndex());
+
+            btnCursoDeshacer.setEnabled(true);
+
+        }
+
+        if(modeloDisponible.isEmpty()){
+            btnCursoAsignar.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnCursoAsignarActionPerformed
+
+    private void btnCursoDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoDeshacerActionPerformed
+        // TODO add your handling code here:
+        if(listCurso.getSelectedIndex()!= -1){
+            modeloDisponible.addElement((TipoCurso)listCurso.getSelectedValue());
+            modeloCursos.remove(listCurso.getSelectedIndex());
+
+            btnCursoAsignar.setEnabled(true);
+        }
+
+        if(modeloCursos.isEmpty()){
+            btnCursoDeshacer.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnCursoDeshacerActionPerformed
+
+    private void listDisponibleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listDisponibleKeyPressed
+
+    }//GEN-LAST:event_listDisponibleKeyPressed
+
+    private void listDisponibleValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listDisponibleValueChanged
+
+        if(listDisponible.getSelectedIndex()!= -1){
+            btnCursoAsignar.setEnabled(true);
+
+            listDetalle.setModel(detalleCurso(listDisponible));
+
+        }
+    }//GEN-LAST:event_listDisponibleValueChanged
+
+    private void btnInscribirCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirCursosActionPerformed
+        // TODO add your handling code here:
+        
+        ListModel<TipoCurso> listaCurso=listCurso.getModel();
+        
+        if(modeloCursos.isEmpty()){
+            JOptionPane.showMessageDialog(null, "No a elegido ningún curso para asignar");
+        }else{
+            
+            for(int i=0; i<listaCurso.getSize();i++){
+                ctrlCursoP.crear(ctrlCurso.leer(listaCurso.getElementAt(i).getIdTipoCurso()).getIdCurso(), empleadoObj.getIdEmpleado());
+            }
+        }
+    }//GEN-LAST:event_btnInscribirCursosActionPerformed
+
+    DefaultListModel detalleCurso(JList<TipoCurso> lista ){
+        DefaultListModel model=new DefaultListModel();
+        
+        try {
+            CtrlCurso curso= new CtrlCurso();
+            CtrlCursoHora cursoHora=new CtrlCursoHora();
+            Curso obj=new Curso();
+            
+            obj=curso.leer(lista.getSelectedValue().getIdTipoCurso());
+            
+                //JOptionPane.showMessageDialog(null, obj);
+            
+            model.addElement("Ciclo Lectivo: "+String.valueOf(obj.getCicloLectivo()));
+           
+            switch(obj.getTurno()){
+                
+                case 1:
+                    model.addElement("Turno: Matutino");
+                break;
+                    
+                case 2:
+                    model.addElement("Turno: Tarde");
+                break;
+                   
+                case 3:
+                    model.addElement("Turno: Vespertino");
+                break;
+                    
+                case 4:
+                    model.addElement("Turno: Nocturno");
+                break;
+            }
+            
+            model.addElement("Costo: "+String.valueOf(obj.getCosto()));
+            model.addElement("Cupo actual: "+String.valueOf(obj.getCupo()));
+            model.addElement("Fecha de inicio: "+ String.valueOf(obj.getFechaInicio()));
+            model.addElement("Finalización: "+ String.valueOf(obj.getFechaFinalizacion()));
+            model.addElement("Lugar de cursado: "+String.valueOf(obj.getIdLugarCurso().getDetalle()));
+  
+            
+            curso.llenarTabla(curso.leer(listDisponible.getSelectedValue().getIdTipoCurso()).getIdCurso(), tablaHorario);
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return model;
+    }
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
-        dispose();
+        switch(Registro.banderaEmpleado){
+            case 1:
+                dispose();
+            break;
+            
+            case 2:
+                Principal.activarPanel();
+                dispose();
+            break;
+        }
+        
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void btnAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAsignarActionPerformed
-
-    private void cbCargoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCargoItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbCargoItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAsignar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> cbCargo;
-    private javax.swing.JComboBox<String> cbEmpleado;
-    private javax.swing.JComboBox<String> cboxCurso;
+    private javax.swing.JButton btnCursoAsignar;
+    private javax.swing.JButton btnCursoDeshacer;
+    private javax.swing.JButton btnInscribirCursos;
+    private javax.swing.JComboBox<Cargo> cbCargo;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable txtTablaAsignarCurso;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JList<TipoCurso> listCurso;
+    private javax.swing.JList<String> listDetalle;
+    private javax.swing.JList<TipoCurso> listDisponible;
+    private javax.swing.JPanel panelCompleto;
+    private javax.swing.JTable tablaHorario;
+    private javax.swing.JTextField txtNombreCompleto;
     // End of variables declaration//GEN-END:variables
 }

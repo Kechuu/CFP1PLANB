@@ -31,5 +31,8 @@ public class MotivoBaja {
         this.idMotivoBaja = idMotivoBaja;
     }
     
-    
+    @Override
+    public String toString(){
+        return this.detalle;
+    }
 }

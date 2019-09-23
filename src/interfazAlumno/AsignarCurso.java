@@ -30,6 +30,8 @@ import modelo.TipoCurso;
  * @author AGUSTINA
  */
 public class AsignarCurso extends javax.swing.JInternalFrame {
+    public static int banderaAsignar=0;
+    
     CtrlCurso ctrlCurso=new CtrlCurso();
     CtrlAlumno ctrlAlumno=new CtrlAlumno();
     CtrlCursoAlumno ctrlCursoAlum=new CtrlCursoAlumno();
@@ -159,6 +161,11 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
 
         txtNombreCompleto.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         txtNombreCompleto.setEnabled(false);
+        txtNombreCompleto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreCompletoActionPerformed(evt);
+            }
+        });
 
         btnInscribirCursos.setBackground(new java.awt.Color(38, 86, 186));
         btnInscribirCursos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -285,7 +292,7 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
                         .addComponent(jLabel10)
                         .addGroup(panelCompletoLayout.createSequentialGroup()
                             .addGroup(panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtNombreCompleto)
+                                .addComponent(txtNombreCompleto, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                                 .addComponent(jLabel11))
                             .addGap(1, 1, 1)))
                     .addGroup(panelCompletoLayout.createSequentialGroup()
@@ -304,7 +311,7 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnCursoDeshacer)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
                             .addComponent(jScrollPane6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -342,6 +349,7 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
 
     private void btnPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoActionPerformed
         // TODO add your handling code here:
+        banderaAsignar=1;
         
         PagoAlumno pago=new PagoAlumno(persona);
         
@@ -359,8 +367,17 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
     }
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
-        dispose();
+        switch(Inscripcion.bandera){
+            case 1:
+                dispose();
+            break;
+            
+            case 2:
+                Principal.activarPanel();
+                dispose();
+            break;
+        }
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnInscribirCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirCursosActionPerformed
@@ -371,7 +388,6 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
 
         if(modeloCursos.isEmpty()){
             JOptionPane.showMessageDialog(null, "No a elegido algún curso para inscribir");
-            return;
         }else{
             int idAlumno=ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno();
 
@@ -427,6 +443,10 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
             btnCursoAsignar.setEnabled(false);
         }
     }//GEN-LAST:event_btnCursoAsignarActionPerformed
+
+    private void txtNombreCompletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreCompletoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreCompletoActionPerformed
 
     
     DefaultListModel detalleCurso(JList<TipoCurso> lista ){

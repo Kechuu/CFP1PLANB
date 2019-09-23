@@ -6,21 +6,23 @@
 package menu;
 
 import interfazEmpleado.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import modelo.Persona;
 /**
  *
  * @author araa
  */
 public class EmpleadoMenu extends javax.swing.JPanel {
 
+    Persona personaObj=new Persona();
     /**
      * Creates new form EmpleadoMenu
+     * @param persona
      */
-    public EmpleadoMenu() {
+    public EmpleadoMenu(Persona persona) {
         initComponents();
         
         this.setBounds(0, 85, 240, 174);
+        this.personaObj=persona;
     }
 
     /**
@@ -32,20 +34,12 @@ public class EmpleadoMenu extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnRegistrarEmpleado = new javax.swing.JButton();
         btnAsignarCurso = new javax.swing.JButton();
         btnConsultarEstado = new javax.swing.JButton();
         btnModificarDatos = new javax.swing.JButton();
         btnBorrarEmpleado = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(239, 238, 240));
-
-        btnRegistrarEmpleado.setText("Registrar Empleado");
-        btnRegistrarEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarEmpleadoActionPerformed(evt);
-            }
-        });
 
         btnAsignarCurso.setText("Asignar Curso");
         btnAsignarCurso.addActionListener(new java.awt.event.ActionListener() {
@@ -61,14 +55,14 @@ public class EmpleadoMenu extends javax.swing.JPanel {
             }
         });
 
-        btnModificarDatos.setText("Modificar Empleado");
+        btnModificarDatos.setText("Modificar datos");
         btnModificarDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarDatosActionPerformed(evt);
             }
         });
 
-        btnBorrarEmpleado.setText("Borrar Empleado");
+        btnBorrarEmpleado.setText("Dar de baja");
         btnBorrarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBorrarEmpleadoActionPerformed(evt);
@@ -80,52 +74,34 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnConsultarEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(btnRegistrarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnModificarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(btnModificarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnBorrarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(btnRegistrarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addComponent(btnModificarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnConsultarEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBorrarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnBorrarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegistrarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarEmpleadoActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        Principal.desactivarPanel();
-        
-        Registro empleado = null;
-        empleado = new Registro();
-        Principal.panelPrincipal.add(empleado);
-        empleado.setVisible(true);
-
-    }//GEN-LAST:event_btnRegistrarEmpleadoActionPerformed
-
     private void btnAsignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarCursoActionPerformed
 
+        Registro.banderaEmpleado=2;
         this.setVisible(false);
         Principal.desactivarPanel();
+        AsignarCurso asignar=new AsignarCurso(personaObj);
+        Principal.panelPrincipal.add(asignar);
+        asignar.setVisible(true);
         
-        AsignarCurso curso = null;
-        try {
-            curso = new AsignarCurso();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EmpleadoMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Principal.panelPrincipal.add(curso);
-        curso.setVisible(true);
     }//GEN-LAST:event_btnAsignarCursoActionPerformed
 
     private void btnConsultarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarEstadoActionPerformed
@@ -144,7 +120,7 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         this.setVisible(false);
         Principal.desactivarPanel();
         
-        Modificar empleado= new Modificar();
+        Modificar empleado= new Modificar(personaObj);
         Principal.panelPrincipal.add(empleado);
         empleado.setVisible(true);
     }//GEN-LAST:event_btnModificarDatosActionPerformed
@@ -165,6 +141,5 @@ public class EmpleadoMenu extends javax.swing.JPanel {
     private javax.swing.JButton btnBorrarEmpleado;
     private javax.swing.JButton btnConsultarEstado;
     private javax.swing.JButton btnModificarDatos;
-    private javax.swing.JButton btnRegistrarEmpleado;
     // End of variables declaration//GEN-END:variables
 }

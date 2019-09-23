@@ -7,6 +7,7 @@ package Controlador;
 import clases.CambiaPanel;
 import interfazAlumno.Inscripcion;
 import interfazAlumno.PanelDni;
+import interfazEmpleado.Registro;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -15,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import menu.AlumnoMenu;
+import menu.EmpleadoMenu;
 import menu.Principal;
 import modelo.Persona;
 /**
@@ -27,7 +29,7 @@ public class CtrlPersona {
     ResultSet rs;
     //public int CUIL = 0;
     
-    public void crear(String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, boolean sexo, String CUIL, int hijoPersona,
+    public void crear(String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, int sexo, String CUIL, int hijoPersona,
             String correo, String celular, int idDomicilio, int idTipoDocumento, int idNacionalidad, int idFoto, int lugarNacimiento,
             boolean borrado){
         
@@ -44,7 +46,7 @@ public class CtrlPersona {
             ps.setString(1, nombrePersona);
             ps.setString(2, apellidoPersona);
             ps.setDate(3, (java.sql.Date) fecha);
-            ps.setBoolean(4, sexo);
+            ps.setInt(4, sexo);
             ps.setString(5, CUIL);
             ps.setInt(6, hijoPersona);
             ps.setString(7, correo);
@@ -149,7 +151,7 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setSexo(rs.getBoolean("sexo"));
+                persona.setSexo(rs.getInt("sexo"));
                 persona.setCUIL(rs.getString("CUIL"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
@@ -188,7 +190,7 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setSexo(rs.getBoolean("sexo"));
+                persona.setSexo(rs.getInt("sexo"));
                 persona.setCUIL(rs.getString("CUIL"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
@@ -227,7 +229,7 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setSexo(rs.getBoolean("sexo"));
+                persona.setSexo(rs.getInt("sexo"));
                 persona.setCUIL(rs.getString("CUIL"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
@@ -284,7 +286,7 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setSexo(rs.getBoolean("sexo"));
+                persona.setSexo(rs.getInt("sexo"));
                 persona.setCUIL(rs.getString("CUIL"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
@@ -300,17 +302,41 @@ public class CtrlPersona {
                     validarPersona=2;
                     PanelDni.validarPersona = validarPersona;
                     
-                    CambiaPanel cambiaPanel = new CambiaPanel(menu.Principal.panelSubMenu, new AlumnoMenu(persona));
+                    switch (PanelDni.alumnoEmpleado) {
+                        case 1:
+                            {
+                                CambiaPanel cambiaPanel = new CambiaPanel(menu.Principal.panelSubMenu, new AlumnoMenu(persona));
+                                break;
+                            }
+                        case 2:
+                            {
+                                CambiaPanel cambiaPanel=new CambiaPanel(menu.Principal.panelSubMenu, new EmpleadoMenu(persona));
+                                break;
+                            }
+                    }
+                }else{
+                    //SALDRA POR AQUI EN CASO DE QUE SE BUSQUE POR EL BUSCADOR :v 
                 }
                 
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
                 
-               
-                Principal.desactivarPanel();
-                Inscripcion inscripcion =new Inscripcion(CUIL);
-                Principal.panelPrincipal.add(inscripcion);
-                inscripcion.setVisible(true);              
+                switch(PanelDni.alumnoEmpleado){
+                    case 1:
+                        Principal.desactivarPanel();
+                        Inscripcion inscripcion =new Inscripcion(CUIL);
+                        Principal.panelPrincipal.add(inscripcion);
+                        inscripcion.setVisible(true);      
+                    break;
+                    
+                    case 2:
+                        Principal.desactivarPanel();
+                        Registro registro=new Registro(CUIL);
+                        Principal.panelPrincipal.add(registro);
+                        registro.setVisible(true);
+                    break;
+                }
+                        
             }
             
         } catch (HeadlessException | SQLException e) {

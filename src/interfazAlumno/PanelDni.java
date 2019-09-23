@@ -21,6 +21,7 @@ import modelo.Persona;
 public class PanelDni extends javax.swing.JPanel {
     Persona personaObj=new Persona();
     public static int validarPersona = 0;
+    public static int alumnoEmpleado=0;
     char sx;
     
     /**
@@ -29,7 +30,7 @@ public class PanelDni extends javax.swing.JPanel {
      */
     public PanelDni() throws ClassNotFoundException {
         initComponents();
-        this.setBounds(0, 65, 400, 210);
+        this.setBounds(0, 55, 400, 210);
         btnCargar.setEnabled(false);
     }
 

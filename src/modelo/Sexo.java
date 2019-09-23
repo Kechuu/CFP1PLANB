@@ -7,7 +7,11 @@ package modelo;
 
 /**
  *
+<<<<<<< HEAD
+ * @author araa
+=======
  * @author jesus
+>>>>>>> 5de7e7c6d3c4148b0a79d91ac41cc662b2b69473
  */
 public class Sexo {
     
@@ -30,6 +34,7 @@ public class Sexo {
         this.detalle = detalle;
     }
     
+    @Override
     public String toString(){
         return this.detalle;
     }

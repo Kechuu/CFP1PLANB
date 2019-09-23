@@ -15,7 +15,6 @@ import modelo.Trabajo;
  */
 public class Sexo_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
-    public static String nombreTrabajo;
     /**
      * Creates new form Trabajo
      */

@@ -105,7 +105,7 @@ public class CtrlMotivoBaja {
         
         try {
             con=clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM cargo ORDER BY detalle ASC");
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM motivoBaja ORDER BY detalle ASC");
             rs=ps.executeQuery();
             
             MotivoBaja motivo=new MotivoBaja();
@@ -124,7 +124,7 @@ public class CtrlMotivoBaja {
             }
             
         } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR motivos de baja");       
         }
         
     }

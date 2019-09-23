@@ -11,21 +11,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import modelo.Titulo;
+import modelo.Planes;
+import modelo.Sexo;
+
 /**
  *
- * @author jesus
+ * @author araa
  */
-public class CtrlTitulo {
+public class CtrlSexo {
     
-    Connection con = null;
+    Connection con=null;
     PreparedStatement ps;
     ResultSet rs;
     
     public void crear(String detalle){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO titulo (detalle) VALUES (?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO sexo (detalle) VALUES (?)");
         
             ps.setString(1, detalle);
             
@@ -37,13 +39,13 @@ public class CtrlTitulo {
         }
     }
     
-    public void editar(int idTitulo, String detalle){
+    public void editar(int idSexo, String detalle){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE titulo SET detalle = ? WHERE idTitulo = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE sexo SET detalle = ? WHERE idSexo = ?");
             
             ps.setString(1, detalle);
-            ps.setInt(2, idTitulo);
+            ps.setInt(2, idSexo);
             
             int res = ps.executeUpdate();
             
@@ -59,19 +61,19 @@ public class CtrlTitulo {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
     }
-    
-    public Titulo leer(int idTitulo){
-        Titulo titulo = new Titulo();
+    public Sexo leer(String detalle){
+        Sexo sx=new Sexo();
+        
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM titulo WHERE idTitulo = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM sexo WHERE detalle = ?");
             
-            ps.setInt(1, idTitulo);
+            ps.setString(1, detalle);
             rs = ps.executeQuery();
             
             if(rs.next()){
-                titulo.setIdTitulo(rs.getInt("idTitulo"));
-                titulo.setDetalle(rs.getString("detalle"));
+                sx.setIdSexo(rs.getInt("idSexo"));
+                sx.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -80,33 +82,34 @@ public class CtrlTitulo {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
-        return titulo;
+        return sx;
     }
     
-    public void cargarCombo(JComboBox<Titulo> cbTitulo){
+    public void cargarCombo(JComboBox <Sexo> cb){
         
-        try {
+        try{
             con=clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM titulo ORDER BY detalle ASC");
+            ps=(PreparedStatement)con.prepareStatement("SELECT * from sexo ORDER BY detalle ASC");
             rs=ps.executeQuery();
             
-            Titulo titulo=new Titulo();
-            titulo.setIdTitulo(0);
-            titulo.setDetalle("Seleccione una opción");
-            cbTitulo.addItem(titulo);
+            Sexo sx=new Sexo();
+            sx.setIdSexo(0);
+            sx.setDetalle("Seleccione una opción...");
+            cb.addItem(sx);
             
-            while (rs.next()) {                
+            while(rs.next()){
+                sx=new Sexo();
                 
-                titulo=new Titulo();
+                sx.setIdSexo(rs.getInt("idSexo"));
+                sx.setDetalle(rs.getString("detalle"));
                 
-                titulo.setIdTitulo(rs.getInt("idTitulo"));
-                titulo.setDetalle(rs.getString("detalle"));
-                cbTitulo.addItem(titulo);
+                cb.addItem(sx);
             }
             
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         
     }
+    
 }

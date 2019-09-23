@@ -6,17 +6,16 @@
 package menu;
 
 import interfazAlumno.AsignarCurso;
-import interfazAlumno.MotivoBajaAlumno;
 import interfazAlumno.Modificar;
 import interfazAlumno.Eliminar;
 //import interfazAlumno.Pago;
-import interfazAlumno.ConsultaPagos;
-import interfazAlumno.Inscripcion;
+import interfazAlumno.PagoAlumno;
 import interfazAlumno.PanelDni;
-import java.awt.Frame;
+import interfazAlumno.EstadoAlumno;
+import interfazAlumno.Inscripcion;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import modelo.Persona;
 /**
  *
@@ -66,8 +65,7 @@ public class AlumnoMenu extends javax.swing.JPanel {
         btnModificarDatos = new javax.swing.JButton();
         btnBajaAlumno = new javax.swing.JButton();
         btnPagos = new javax.swing.JButton();
-        btnConsultarEstado = new javax.swing.JButton();
-        btnConsultarPagos = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
         btnAsignarCurso = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(239, 238, 240));
@@ -79,7 +77,7 @@ public class AlumnoMenu extends javax.swing.JPanel {
             }
         });
 
-        btnBajaAlumno.setText("Dar de baja");
+        btnBajaAlumno.setText("Dar de baja a curso");
         btnBajaAlumno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBajaAlumnoActionPerformed(evt);
@@ -93,21 +91,14 @@ public class AlumnoMenu extends javax.swing.JPanel {
             }
         });
 
-        btnConsultarEstado.setText("Consultar estado");
-        btnConsultarEstado.addActionListener(new java.awt.event.ActionListener() {
+        btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarEstadoActionPerformed(evt);
+                btnConsultarActionPerformed(evt);
             }
         });
 
-        btnConsultarPagos.setText("Consultar pago");
-        btnConsultarPagos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarPagosActionPerformed(evt);
-            }
-        });
-
-        btnAsignarCurso.setText("Asignar curso");
+        btnAsignarCurso.setText("Asignar a curso");
         btnAsignarCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAsignarCursoActionPerformed(evt);
@@ -121,8 +112,7 @@ public class AlumnoMenu extends javax.swing.JPanel {
             .addComponent(btnModificarDatos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnBajaAlumno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnPagos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnConsultarEstado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnConsultarPagos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnConsultar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnAsignarCurso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
@@ -133,13 +123,11 @@ public class AlumnoMenu extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBajaAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -168,28 +156,38 @@ public class AlumnoMenu extends javax.swing.JPanel {
 
     private void btnPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosActionPerformed
         // TODO add your handling code here:
+        AsignarCurso.banderaAsignar=2;
         
+        this.setVisible(false);
+        Principal.desactivarPanel();
+        
+        PagoAlumno pagos=new PagoAlumno(objPersona);
+        Principal.panelPrincipal.add(pagos);
+        pagos.setVisible(true);
     }//GEN-LAST:event_btnPagosActionPerformed
 
-    private void btnConsultarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnConsultarEstadoActionPerformed
-
-    private void btnConsultarPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPagosActionPerformed
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         Principal.desactivarPanel();
         
-        ConsultaPagos consul=new ConsultaPagos();
-        Principal.panelPrincipal.add(consul);
-        consul.setVisible(true);
-    }//GEN-LAST:event_btnConsultarPagosActionPerformed
+        EstadoAlumno estado;
+        try {
+            estado = new EstadoAlumno(objPersona);
+            Principal.panelPrincipal.add(estado);
+            estado.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnAsignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarCursoActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         Principal.desactivarPanel();
-        
+        Inscripcion.bandera=2;
         AsignarCurso asignar=new AsignarCurso(objPersona);
         Principal.panelPrincipal.add(asignar);
         asignar.setVisible(true);
@@ -199,8 +197,7 @@ public class AlumnoMenu extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignarCurso;
     private javax.swing.JButton btnBajaAlumno;
-    private javax.swing.JButton btnConsultarEstado;
-    private javax.swing.JButton btnConsultarPagos;
+    private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnModificarDatos;
     private javax.swing.JButton btnPagos;
     // End of variables declaration//GEN-END:variables
