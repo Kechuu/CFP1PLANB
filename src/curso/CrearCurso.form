@@ -73,7 +73,7 @@
               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -95,15 +95,15 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="btnCancelar" min="-2" pref="100" max="-2" attributes="0"/>
                       <Component id="jScrollPane3" min="-2" pref="273" max="-2" attributes="0"/>
+                      <Component id="btnGuardar" min="-2" pref="88" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="BotonAgregar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jScrollPane4" min="-2" pref="273" max="-2" attributes="0"/>
-                      <Component id="btnGuardar" min="-2" pref="88" max="-2" attributes="0"/>
+                      <Component id="btnCancelar" min="-2" pref="100" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -137,7 +137,7 @@
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="btnNuevoTurno1" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
+                      <Component id="btnCursado" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
                       <Component id="txtCupo" alignment="0" max="32767" attributes="0"/>
                       <Component id="cbxLugarCurso" alignment="0" max="32767" attributes="0"/>
                       <Component id="fechaInicio" alignment="1" min="-2" pref="179" max="-2" attributes="0"/>
@@ -157,7 +157,7 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="cbxNombreCurso" min="-2" pref="436" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnNuevoTurno" min="-2" pref="130" max="-2" attributes="0"/>
+                          <Component id="btnCrearTipoCurso" min="-2" pref="130" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -186,7 +186,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cbxNombreCurso" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnNuevoTurno" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnCrearTipoCurso" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
@@ -235,8 +235,7 @@
                               <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnNuevoTurno1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnCursado" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
@@ -244,7 +243,6 @@
                               <Component id="btnAgregarHorario" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnAsigHora" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -349,7 +347,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;TipoCurso&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="btnNuevoTurno">
+        <Component class="javax.swing.JButton" name="btnCrearTipoCurso">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ba" green="56" red="26" type="rgb"/>
@@ -360,7 +358,7 @@
             <Property name="text" type="java.lang.String" value="Nuevo Curso"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNuevoTurnoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCrearTipoCursoActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnAsigHora">
@@ -415,7 +413,7 @@
             <Property name="text" type="java.lang.String" value="Lugar del curso"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="btnNuevoTurno1">
+        <Component class="javax.swing.JButton" name="btnCursado">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ba" green="56" red="26" type="rgb"/>
@@ -426,7 +424,7 @@
             <Property name="text" type="java.lang.String" value="Agregar Lugar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNuevoTurno1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCursadoActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane3">

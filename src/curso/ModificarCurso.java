@@ -247,22 +247,15 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setText("Costo del curso");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, -1, -1));
 
         jLabel4.setText("Fecha de Inicio");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, -1, -1));
-        jPanel2.add(fechaFinalizacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 180, -1));
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 51));
         jLabel1.setText("Nombre del curso");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 14, -1, -1));
-        jPanel2.add(fechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 80, 179, -1));
 
         jLabel5.setText("Fecha de Finalizacion");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, -1, 14));
 
         txtcosto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -274,20 +267,16 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
                 txtcostoKeyTyped(evt);
             }
         });
-        jPanel2.add(txtcosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 160, 180, -1));
 
         jLabel2.setText("Ciclo Lectivo");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 48, -1, -1));
 
         txtCicloLectivo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCicloLectivoKeyTyped(evt);
             }
         });
-        jPanel2.add(txtCicloLectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 179, -1));
 
         jLabel7.setText("Cupo");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 88, -1, 24));
 
         txtCupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -299,10 +288,8 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
                 txtCupoKeyTyped(evt);
             }
         });
-        jPanel2.add(txtCupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, 179, -1));
 
         jLabel10.setText("Turno");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, -1, -1));
 
         cbxNombreCurso.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -319,7 +306,6 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
                 cbxNombreCursoActionPerformed(evt);
             }
         });
-        jPanel2.add(cbxNombreCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 9, 436, -1));
 
         btnNuevoTurno.setBackground(new java.awt.Color(38, 86, 186));
         btnNuevoTurno.setForeground(new java.awt.Color(255, 255, 255));
@@ -329,7 +315,6 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
                 btnNuevoTurnoActionPerformed(evt);
             }
         });
-        jPanel2.add(btnNuevoTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(616, 8, 130, -1));
 
         btnGuardar.setBackground(new java.awt.Color(38, 86, 186));
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
@@ -339,7 +324,6 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 360, 100, -1));
 
         cbxTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Mañana", "Tarde", "Noche" }));
         cbxTurno.addActionListener(new java.awt.event.ActionListener() {
@@ -347,7 +331,6 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
                 cbxTurnoActionPerformed(evt);
             }
         });
-        jPanel2.add(cbxTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(599, 43, 180, -1));
 
         cbxLugarCurso.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -364,10 +347,8 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
                 cbxLugarCursoActionPerformed(evt);
             }
         });
-        jPanel2.add(cbxLugarCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 179, -1));
 
         jLabel15.setText("Lugar del curso");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
         btnNuevoTurno1.setBackground(new java.awt.Color(38, 86, 186));
         btnNuevoTurno1.setForeground(new java.awt.Color(255, 255, 255));
@@ -377,7 +358,6 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
                 btnNuevoTurno1ActionPerformed(evt);
             }
         });
-        jPanel2.add(btnNuevoTurno1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 130, -1));
 
         btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -387,7 +367,6 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, 100, -1));
 
         TablaHorario2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -406,10 +385,6 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
         });
         jScrollPane4.setViewportView(TablaHorario2);
 
-        jPanel2.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 250, 292, 91));
-        jPanel2.add(txtidCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(398, 365, 49, 26));
-        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 288, 173, 0));
-
         TablaHorario1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -427,15 +402,12 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
         });
         jScrollPane6.setViewportView(TablaHorario1);
 
-        jPanel2.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 292, 91));
-
         cboxNuevoHorario.setText("Nuevo Horario");
         cboxNuevoHorario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboxNuevoHorarioActionPerformed(evt);
             }
         });
-        jPanel2.add(cboxNuevoHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, -1, -1));
 
         btnAgregarHorario.setText(">>");
         btnAgregarHorario.addActionListener(new java.awt.event.ActionListener() {
@@ -443,7 +415,153 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
                 btnAgregarHorarioActionPerformed(evt);
             }
         });
-        jPanel2.add(btnAgregarHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 280, -1, -1));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(btnNuevoTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabel2)
+                .addGap(41, 41, 41)
+                .addComponent(txtCicloLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
+                .addComponent(jLabel10)
+                .addGap(147, 147, 147)
+                .addComponent(cbxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(jLabel7)
+                .addGap(71, 71, 71)
+                .addComponent(txtCupo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
+                .addComponent(jLabel4)
+                .addGap(89, 89, 89)
+                .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel15)
+                .addGap(43, 43, 43)
+                .addComponent(cbxLugarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
+                .addComponent(jLabel5)
+                .addGap(45, 45, 45)
+                .addComponent(fechaFinalizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(190, 190, 190)
+                .addComponent(btnNuevoTurno1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90)
+                .addComponent(jLabel3)
+                .addGap(82, 82, 82)
+                .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(410, 410, 410)
+                .addComponent(cboxNuevoHorario))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(78, 78, 78)
+                .addComponent(btnAgregarHorario)
+                .addGap(92, 92, 92)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(198, 198, 198)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(190, 190, 190)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68)
+                .addComponent(txtidCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(271, 271, 271)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbxNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)))
+                    .addComponent(btnNuevoTurno))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtidCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(jLabel2))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(txtCicloLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(jLabel10))
+                            .addComponent(cbxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(txtCupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel4))
+                            .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabel15))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(cbxLugarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(fechaFinalizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnNuevoTurno1)
+                                    .addComponent(jLabel3))))
+                        .addGap(11, 11, 11)
+                        .addComponent(cboxNuevoHorario)
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(btnAgregarHorario))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(btnGuardar))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(btnCancelar)))
+                        .addContainerGap(24, Short.MAX_VALUE))))
+        );
 
         jPanel3.setBackground(new java.awt.Color(38, 86, 186));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -465,8 +583,8 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -638,11 +756,10 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
 
     private void btnNuevoTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoTurnoActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        Principal.desactivarPanel();
         
         ModificarTipoCurso curso=new ModificarTipoCurso();
         Principal.panelPrincipal.add(curso);
+        this.setComponentZOrder(curso, 0);
         curso.setVisible(true);
         
     }//GEN-LAST:event_btnNuevoTurnoActionPerformed
@@ -653,19 +770,24 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
 
     private void btnNuevoTurno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoTurno1ActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        Principal.desactivarPanel();
         
         Cursado_modificar configuracion=null;
         try {
             configuracion = new Cursado_modificar();
+            Principal.panelPrincipal.add(configuracion);
+            this.setComponentZOrder(configuracion, 0);
+            configuracion.setVisible(true);
+        
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ModificarCurso.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Principal.panelPrincipal.add(configuracion);
-        configuracion.setVisible(true);
+        
     }//GEN-LAST:event_btnNuevoTurno1ActionPerformed
-
+    
+    @Override
+    public boolean isOptimizedDrawingEnabled(){
+        return false;
+    }
     private void cbxLugarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxLugarCursoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxLugarCursoActionPerformed

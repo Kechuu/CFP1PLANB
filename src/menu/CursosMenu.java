@@ -18,7 +18,7 @@ public class CursosMenu extends javax.swing.JPanel {
     public CursosMenu() {
         initComponents();
         
-        this.setBounds(0, 190, 240, 138);
+        this.setBounds(0, 170, 240, 138);
     }
 
     /**
@@ -95,7 +95,7 @@ public class CursosMenu extends javax.swing.JPanel {
 
         this.setVisible(false);
         Principal.desactivarPanel();
-        
+        CrearCurso.origenBandera=2;
         Horario hora=new Horario();
         Principal.panelPrincipal.add(hora);
         hora.setVisible(true);
