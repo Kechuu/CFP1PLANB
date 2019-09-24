@@ -70,6 +70,7 @@ public class CtrlLicencia {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                licencia.setIdLicencia(rs.getInt("idLicencia"));
                 licencia.setArticulo(rs.getInt("articulo"));
                 licencia.setDetalle(rs.getString("detalle"));
             }else{

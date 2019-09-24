@@ -5,22 +5,80 @@
  */
 package licencia;
 
+import Controlador.CtrlEmpleado;
+import Controlador.CtrlEmpleadoLicencia;
+import Controlador.CtrlLicencia;
+import Controlador.CtrlPersona;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Empleado;
+import modelo.Licencia;
+import modelo.Persona;
 
 /**
  *
  * @author RociojulietaVazquez
  */
 public class AsignarLicencia extends javax.swing.JInternalFrame {
-
+    Connection con = clases.Conectar.conexion();
+    public int bandera=0;
     /**
      * Creates new form asignarLicencia
      */
     public AsignarLicencia() {
         initComponents();
+        bandera=1;
+        cargarCombo(cbxLicencia);
+        cargarComboEmpleado(cbxEmpleado);
+        bandera=0;
+        txtCursos.setVisible(false);
+        cursos.setVisible(false);
     }
 
+    public void cargarCombo(JComboBox combo){
+        try {
+            Statement set = con.createStatement();
+            ResultSet rs = set.executeQuery("SELECT articulo FROM licencia ORDER BY articulo ASC");
+            combo.addItem("Seleccione uno de los articulos...");
+            
+            while (rs.next()) {                
+                combo.addItem(String.valueOf(rs.getInt("articulo")));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+    }
+    
+    public void cargarComboEmpleado(JComboBox combo){
+        try {
+            Statement set = con.createStatement();
+            ResultSet rs = set.executeQuery("SELECT empleado.idEmpleado, persona.idPersona,"
+                    + "persona.nombrePersona, persona.apellidoPersona FROM empleado INNER JOIN "
+                    + "persona WHERE empleado.idPersona = persona.idPersona");
+            
+            combo.addItem("Seleccione un empleado");
+            
+            while (rs.next()) {
+                Empleado empleado = new Empleado();
+                Persona persona = new Persona();
+                empleado.setIdEmpleado(rs.getInt("idEmpleado"));
+                persona.setIdPersona(rs.getInt("idPersona"));
+                persona.setApellidoPersona(rs.getString("nombrePersona"));
+                persona.setNombrePersona(rs.getString("nombrePersona"));
+                JOptionPane.showMessageDialog(null, "hola?");
+                combo.addItem(persona);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,19 +94,19 @@ public class AsignarLicencia extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
+        cbxEmpleado = new javax.swing.JComboBox<>();
+        cursos = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtCursos = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jDateChooser3 = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
+        fechaInicio = new com.toedter.calendar.JDateChooser();
+        fechaFinalizacion = new com.toedter.calendar.JDateChooser();
+        btnAceptar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        areaDetalle = new javax.swing.JTextArea();
+        cbxLicencia = new javax.swing.JComboBox<>();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -70,11 +128,16 @@ public class AsignarLicencia extends javax.swing.JInternalFrame {
         jLabel5.setText("Profesor:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 118, -1, -1));
 
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 116, 211, -1));
+        cbxEmpleado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxEmpleadoItemStateChanged(evt);
+            }
+        });
+        jPanel2.add(cbxEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 116, 211, -1));
 
-        jLabel6.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jLabel6.setText("Curso:");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 168, -1, -1));
+        cursos.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        cursos.setText("Curso/s:");
+        jPanel2.add(cursos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 168, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(38, 86, 186));
 
@@ -101,28 +164,28 @@ public class AsignarLicencia extends javax.swing.JInternalFrame {
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 726, -1));
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txtCursos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txtCursosActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 166, 211, -1));
+        jPanel2.add(txtCursos, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 166, 211, -1));
 
         jLabel7.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel7.setText("Detalle:");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 168, -1, -1));
-        jPanel2.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 244, -1, -1));
-        jPanel2.add(jDateChooser3, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 292, -1, -1));
+        jPanel2.add(fechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 244, -1, -1));
+        jPanel2.add(fechaFinalizacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 292, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(38, 86, 186));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
+        btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAceptarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(469, 292, 100, -1));
+        jPanel2.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(469, 292, 100, -1));
 
         jButton2.setBackground(new java.awt.Color(38, 86, 186));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -134,13 +197,18 @@ public class AsignarLicencia extends javax.swing.JInternalFrame {
         });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(593, 292, 100, -1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        areaDetalle.setColumns(20);
+        areaDetalle.setRows(5);
+        jScrollPane1.setViewportView(areaDetalle);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(469, 166, 224, 79));
 
-        jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(469, 116, 99, -1));
+        cbxLicencia.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxLicenciaItemStateChanged(evt);
+            }
+        });
+        jPanel2.add(cbxLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(469, 116, 99, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -156,13 +224,43 @@ public class AsignarLicencia extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txtCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCursosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txtCursosActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        Date fechaInicio1 = new Date();
+        Date fechaFinalizacion1 = new Date();
+        Persona persona = new Persona();
+        Empleado empleado = new Empleado();
+        CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
+        CtrlEmpleadoLicencia ctrlEmpleadoLicencia = new CtrlEmpleadoLicencia();
+        Licencia licencia = new Licencia();
+        CtrlLicencia ctrlLicencia = new CtrlLicencia();
+        
+        persona = (Persona) cbxEmpleado.getSelectedItem();
+        empleado = ctrlEmpleado.leer(persona.getIdPersona());
+        String articulo = (String) cbxLicencia.getSelectedItem();
+        licencia = (Licencia) ctrlLicencia.leer(Integer.parseInt(articulo));
+        
+        if (cbxLicencia.getSelectedIndex()==0 || cbxEmpleado.getSelectedIndex()==0 ||
+                fechaInicio.getDate().toString().equalsIgnoreCase("") || 
+                fechaFinalizacion.getDate().toString().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "Haga la carga correspondiente para poder guardar registros");
+        }else{
+            
+            fechaInicio1 = fechaInicio.getDate();
+            fechaFinalizacion1 = fechaFinalizacion.getDate();
+            long i = fechaInicio1.getTime();
+            long f = fechaFinalizacion1.getTime();
+            java.sql.Date fecha1 = new java.sql.Date(i);
+            java.sql.Date fecha2 = new java.sql.Date(f);
+
+            
+            ctrlEmpleadoLicencia.crear(fecha1, fecha2, empleado.getIdEmpleado(), licencia.getIdLicencia());
+        }
+        
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -170,26 +268,73 @@ public class AsignarLicencia extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void cbxLicenciaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxLicenciaItemStateChanged
+        
+         CtrlLicencia ctrlLicencia = new CtrlLicencia();
+        Licencia licencia = new Licencia();
+        
+        if (bandera==0) {
+            if (cbxLicencia.getSelectedIndex()==0) {
+                areaDetalle.setText("");
+            }else{
+                
+        String articulo = (String) cbxLicencia.getSelectedItem();
+        
+        licencia = ctrlLicencia.leer(Integer.parseInt(articulo));
+        areaDetalle.setText(licencia.getDetalle());
+            }
+        }
+        
+    }//GEN-LAST:event_cbxLicenciaItemStateChanged
+
+    private void cbxEmpleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxEmpleadoItemStateChanged
+        /*
+        
+        if (bandera==0) {
+            if (cbxEmpleado.getSelectedIndex()==0) {
+                cbxLicencia.setSelectedIndex(0);
+                areaDetalle.setText("");
+                txtCursos.setText("");
+                fechaInicio.setDate(null);
+                fechaFinalizacion.setDate(null);
+            }else{
+                Persona persona =new Persona();
+                CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
+                Empleado empleado = new Empleado();
+                
+                persona = (Persona) cbxEmpleado.getSelectedItem();
+                
+                empleado = ctrlEmpleado.leer(persona.getIdPersona());
+                
+                //Contar cuantas veces se repite el idEmpleado en cursoEmpleado
+                //Hacer un for con eso e ir guardando (Concatenando) los cursos para mostrarlos en el cuadro de texto
+                
+            }
+        }
+        */
+        
+    }//GEN-LAST:event_cbxEmpleadoItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextArea areaDetalle;
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JComboBox<Persona> cbxEmpleado;
+    private javax.swing.JComboBox<String> cbxLicencia;
+    private javax.swing.JLabel cursos;
+    private com.toedter.calendar.JDateChooser fechaFinalizacion;
+    private com.toedter.calendar.JDateChooser fechaInicio;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<Empleado> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
-    private com.toedter.calendar.JDateChooser jDateChooser3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField txtCursos;
     // End of variables declaration//GEN-END:variables
 }

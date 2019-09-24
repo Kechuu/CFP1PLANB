@@ -21,7 +21,7 @@ public class CtrlEmpleadoLicencia {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(Date inicio, Date fin, int idEmpleado, int idLicencia){
+    public void crear(java.sql.Date inicio, java.sql.Date fin, int idEmpleado, int idLicencia){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO empleadoLicencia (inicio,fin, idEmpleado, idLicencia) VALUES (?,?,?,?)");
