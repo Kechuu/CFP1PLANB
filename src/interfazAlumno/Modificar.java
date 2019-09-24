@@ -11,6 +11,7 @@ import Controlador.CtrlCurso;
 import Controlador.CtrlCursoAlumno;
 import Controlador.CtrlDomicilio;
 import Controlador.CtrlEdificio;
+import Controlador.CtrlFoto;
 import Controlador.CtrlLugar;
 import Controlador.CtrlNacionalidad;
 import Controlador.CtrlPersona;
@@ -30,6 +31,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import menu.Principal;
 import modelo.Edificio;
+import modelo.Foto;
 import modelo.Lugar;
 import modelo.Nacionalidad;
 import modelo.Persona;
@@ -53,6 +55,7 @@ public final class Modificar extends javax.swing.JInternalFrame {
     CtrlPlanes planes=new CtrlPlanes();
     CtrlTipoCurso tipoCurso=new CtrlTipoCurso();
     CtrlSexo sx=new CtrlSexo();
+    Foto foto = new Foto();
     
     Persona personaDatos=new Persona();
     
@@ -202,7 +205,7 @@ public final class Modificar extends javax.swing.JInternalFrame {
         btncancelar = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
-        jPanelWebCam2 = new JPanelWebCam.JPanelWebCam();
+        fotoPanel = new JPanelWebCam.JPanelWebCam();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -822,14 +825,14 @@ public final class Modificar extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanelWebCam2Layout = new javax.swing.GroupLayout(jPanelWebCam2);
-        jPanelWebCam2.setLayout(jPanelWebCam2Layout);
-        jPanelWebCam2Layout.setHorizontalGroup(
-            jPanelWebCam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout fotoPanelLayout = new javax.swing.GroupLayout(fotoPanel);
+        fotoPanel.setLayout(fotoPanelLayout);
+        fotoPanelLayout.setHorizontalGroup(
+            fotoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 258, Short.MAX_VALUE)
         );
-        jPanelWebCam2Layout.setVerticalGroup(
-            jPanelWebCam2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        fotoPanelLayout.setVerticalGroup(
+            fotoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 194, Short.MAX_VALUE)
         );
 
@@ -850,7 +853,7 @@ public final class Modificar extends javax.swing.JInternalFrame {
                     .addComponent(btncancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanelWebCam2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(fotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -860,7 +863,7 @@ public final class Modificar extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(panelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanelWebCam2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -935,6 +938,14 @@ public final class Modificar extends javax.swing.JInternalFrame {
         txtNombre.setText(persona.getNombrePersona());
         txtApellido.setText(persona.getApellidoPersona());
         fecha.setDate(persona.getFechaNacimiento());
+        
+        //CARGAR FOTO EN EL PANEL
+        CtrlFoto ctrlFoto = new CtrlFoto();
+        
+        
+        foto = ctrlFoto.leer(persona.getIdFoto().getIdFoto());
+        
+        fotoPanel.setImagen(foto.getImagen());
         
         //ES IGUAL QUE TIPO DOCUMENTO, SOLO QUE CON LUGAR DE NACIMIENTO
         for(int i=0; i<cbNacimiento.getItemCount();i++){
@@ -1038,6 +1049,11 @@ public final class Modificar extends javax.swing.JInternalFrame {
                 idEdificio=personaDatos.getIdDomicilio().getIdEdificio();
             }
         }
+    //FOTO
+    
+    byte[] imagen = fotoPanel.getBytes();
+    CtrlFoto ctrlFoto = new CtrlFoto();
+    ctrlFoto.editar(foto.getIdFoto(), imagen);
              
     //DOMICILIO    
         if(personaDatos.getIdDomicilio().getNro()!=Integer.parseInt(txtCasa.getText()) || !personaDatos.getIdDomicilio().getTelefono().equals(txtFijo.getText())
@@ -1052,7 +1068,7 @@ public final class Modificar extends javax.swing.JInternalFrame {
                 || !personaDatos.getCelular().equals(txtCelular.getText()) || personaDatos.getIdTipoDocumento().getIdTipoDocumento()!=documento.getIdTipoDocumento()
                 || personaDatos.getIdNacionalidad().getIdNacionalidad()!=nacionalidad.getIdNacionalidad() || personaDatos.getLugarNacimiento().getIdLugar()!=nacimiento.getIdLugar()){    
             
-            personaModificar.editar(personaDatos.getIdPersona(), txtNombre.getText(), txtApellido.getText(), fecha.getDate(), false, txtCuil.getText(), txtHijos.getText(), txtCorreo.getText(), txtCelular.getText(), personaDatos.getIdDomicilio().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), 1, nacimiento.getIdLugar(), false);        
+            personaModificar.editar(personaDatos.getIdPersona(), txtNombre.getText(), txtApellido.getText(), fecha.getDate(), false, txtCuil.getText(), txtHijos.getText(), txtCorreo.getText(), txtCelular.getText(), personaDatos.getIdDomicilio().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), foto.getIdFoto(), nacimiento.getIdLugar(), false);        
         }
         
         listaPlan();
@@ -1345,6 +1361,7 @@ public final class Modificar extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<TipoDocumento> cbTipo;
     private javax.swing.JComboBox<Trabajo> cbTrabajo;
     private com.toedter.calendar.JDateChooser fecha;
+    private JPanelWebCam.JPanelWebCam fotoPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1378,7 +1395,6 @@ public final class Modificar extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel7;
-    private JPanelWebCam.JPanelWebCam jPanelWebCam2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JList<Planes> listPlan;

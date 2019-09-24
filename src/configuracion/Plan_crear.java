@@ -23,6 +23,7 @@ public class Plan_crear extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     /**
      * Creates new form CrearPlanes
+     * @throws java.lang.ClassNotFoundException
      */
     public Plan_crear() throws ClassNotFoundException {
         initComponents();

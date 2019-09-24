@@ -37,7 +37,6 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
     public Calles_consulta() throws ClassNotFoundException {
         initComponents();
         btnModificar.setEnabled(true);
-        btnEliminar.setEnabled(true);
         cargarComboLocalidad(cbLocalidad);
     }
 
@@ -146,7 +145,6 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
 
         jList2.setModel(new javax.swing.AbstractListModel<String>() {
@@ -226,17 +224,6 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
         });
         jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 100, -1));
 
-        btnEliminar.setBackground(new java.awt.Color(38, 86, 186));
-        btnEliminar.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 310, 100, -1));
-
         btnAtras.setBackground(new java.awt.Color(38, 86, 186));
         btnAtras.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         btnAtras.setForeground(new java.awt.Color(255, 255, 255));
@@ -266,10 +253,8 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         try {
-            Principal.crearBarrio();
+            Principal.crearCalle();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Calles_consulta.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
             Logger.getLogger(Calles_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -294,12 +279,6 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
             Logger.getLogger(Calles_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-
-    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
         // TODO add your handling code here:
@@ -335,7 +314,6 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
     private void listaCalleValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaCalleValueChanged
         
         btnModificar.setEnabled(true);
-        btnEliminar.setEnabled(true);
         
     }//GEN-LAST:event_listaCalleValueChanged
 
@@ -343,7 +321,6 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAtras;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<Lugar> cbBarrio;
     private javax.swing.JComboBox<Lugar> cbLocalidad;

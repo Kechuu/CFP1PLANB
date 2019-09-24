@@ -34,7 +34,6 @@ public class Barrio_consulta extends javax.swing.JInternalFrame {
     public Barrio_consulta() throws SQLException, ClassNotFoundException {
         initComponents();
         btnModificar.setEnabled(false);
-        btnEliminar.setEnabled(false);
         cargarComboLocalidad(cbLocalidad);
     }
 
@@ -103,7 +102,6 @@ public class Barrio_consulta extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
-        btnEliminar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnModificar = new javax.swing.JButton();
@@ -124,17 +122,6 @@ public class Barrio_consulta extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnEliminar.setBackground(new java.awt.Color(38, 86, 186));
-        btnEliminar.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 300, 100, -1));
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -234,9 +221,7 @@ public class Barrio_consulta extends javax.swing.JInternalFrame {
         this.setVisible(false);
         try {
             Principal.crearBarrio();//Llama al frame de Crear barrio
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Barrio_consulta.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Barrio_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -256,19 +241,10 @@ public class Barrio_consulta extends javax.swing.JInternalFrame {
         
         try {
             Principal.modificarBarrio();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Barrio_consulta.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Barrio_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        
-        
-    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void cbLocalidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLocalidadItemStateChanged
         Lugar lugar = new Lugar();
@@ -287,7 +263,6 @@ public class Barrio_consulta extends javax.swing.JInternalFrame {
     private void listaBarriosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaBarriosValueChanged
         
         btnModificar.setEnabled(true);
-        btnEliminar.setEnabled(true);
         
     }//GEN-LAST:event_listaBarriosValueChanged
 
@@ -295,7 +270,6 @@ public class Barrio_consulta extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAtras;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<Lugar> cbLocalidad;
     private javax.swing.JLabel jLabel1;

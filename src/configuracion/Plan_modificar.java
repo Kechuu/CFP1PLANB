@@ -48,13 +48,13 @@ public class Plan_modificar extends javax.swing.JInternalFrame {
             
             while (rs.next()) {                
                 planes = new Planes();
-                planes.setIdPlanes(rs.getInt("idCargo"));
+                planes.setIdPlanes(rs.getInt("idPlan"));
                 planes.setDetalle(rs.getString("detalle"));
                 cbPlanActual.addItem(planes);
             }
             
         } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS PLANES");       
         }
         
     }

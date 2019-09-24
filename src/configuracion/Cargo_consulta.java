@@ -32,7 +32,6 @@ public class Cargo_consulta extends javax.swing.JInternalFrame {
         initComponents();
         cargarListaCargo();
         btnModificar.setEnabled(false);
-        btnEliminar.setEnabled(false);
     }
 
        public void cargarListaCargo(){
@@ -74,7 +73,6 @@ public class Cargo_consulta extends javax.swing.JInternalFrame {
         listaCargo = new javax.swing.JList<>();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -120,17 +118,6 @@ public class Cargo_consulta extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 200, 100, -1));
-
-        btnEliminar.setBackground(new java.awt.Color(38, 86, 186));
-        btnEliminar.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 260, 100, -1));
 
         jButton1.setBackground(new java.awt.Color(38, 86, 186));
         jButton1.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
@@ -182,12 +169,6 @@ public class Cargo_consulta extends javax.swing.JInternalFrame {
             }
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Principal.activarPanel();
@@ -197,14 +178,12 @@ public class Cargo_consulta extends javax.swing.JInternalFrame {
     private void listaCargoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaCargoValueChanged
 
         btnModificar.setEnabled(true);
-        btnEliminar.setEnabled(true);
         
     }//GEN-LAST:event_listaCargoValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
