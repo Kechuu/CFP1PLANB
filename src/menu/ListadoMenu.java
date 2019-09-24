@@ -17,7 +17,7 @@ public class ListadoMenu extends javax.swing.JPanel {
     public ListadoMenu() {
         initComponents();
         
-        this.setBounds(0, 130, 240, 210);
+        this.setBounds(0, 120, 240, 210);
     }
 
     /**
