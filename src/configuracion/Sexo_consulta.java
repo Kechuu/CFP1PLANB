@@ -6,26 +6,55 @@
 package configuracion;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import menu.Principal;
-import modelo.Trabajo;
+import modelo.Sexo;
 
 /**
  *
  * @author RociojulietaVazquez
  */
-public class Sexo_consulta extends javax.swing.JInternalFrame {
+public final class Sexo_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
+    public static String nombreSexo;
     /**
      * Creates new form Trabajo
+     * @throws java.lang.ClassNotFoundException
      */
     public Sexo_consulta() throws ClassNotFoundException {
         initComponents();
-       
+       cargarListaSexo();
         btnModificar.setEnabled(false);
-        btnEliminar.setEnabled(false);
     }
 
-   
+     public void cargarListaSexo(){
+        DefaultListModel<Sexo> modelo = new DefaultListModel<>();
+        
+        try {
+            Statement st=(Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM sexo ORDER BY detalle ASC");
+            
+            while (rs.next()) {
+                Sexo sexo = new Sexo();
+                sexo.setIdSexo(rs.getInt("idSexo"));
+                sexo.setDetalle(rs.getString("detalle"));
+                
+                modelo.addElement(sexo);
+            }
+            
+            listaSexo.setModel(modelo);
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, "+e);
+        }
+    
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,19 +68,24 @@ public class Sexo_consulta extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaTrabajo = new javax.swing.JList<>();
+        listaSexo = new javax.swing.JList<>();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
 
         jLabel1.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("SEXO");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -60,22 +94,32 @@ public class Sexo_consulta extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addContainerGap(399, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addContainerGap())
         );
 
-        listaTrabajo.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 497, 50));
+
+        listaSexo.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                listaTrabajoValueChanged(evt);
+                listaSexoValueChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(listaTrabajo);
+        jScrollPane1.setViewportView(listaSexo);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 88, 330, 220));
 
         btnAgregar.setBackground(new java.awt.Color(38, 86, 186));
         btnAgregar.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
@@ -86,6 +130,7 @@ public class Sexo_consulta extends javax.swing.JInternalFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 100, -1));
 
         btnModificar.setBackground(new java.awt.Color(38, 86, 186));
         btnModificar.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
@@ -96,16 +141,7 @@ public class Sexo_consulta extends javax.swing.JInternalFrame {
                 btnModificarActionPerformed(evt);
             }
         });
-
-        btnEliminar.setBackground(new java.awt.Color(38, 86, 186));
-        btnEliminar.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
+        jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, 100, -1));
 
         jButton1.setBackground(new java.awt.Color(38, 86, 186));
         jButton1.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
@@ -116,45 +152,7 @@ public class Sexo_consulta extends javax.swing.JInternalFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 98, Short.MAX_VALUE)
-                        .addComponent(btnAgregar)
-                        .addGap(31, 31, 31)
-                        .addComponent(btnModificar)
-                        .addGap(31, 31, 31)
-                        .addComponent(btnEliminar))
-                    .addComponent(jScrollPane1))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(30, 30, 30))
-        );
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 326, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,20 +171,29 @@ public class Sexo_consulta extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-     
+        try {
+            Principal.crearSexo();
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(Sexo_consulta.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-     
+        Sexo sexoModificar = new Sexo();
+        sexoModificar = listaSexo.getSelectedValue();
+        nombreSexo = sexoModificar.getDetalle();
+        
+        this.setVisible(false);
+        try {
+            Principal.modificarSexo();
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(Sexo_consulta.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
         
     }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-
-    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -194,23 +201,22 @@ public class Sexo_consulta extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void listaTrabajoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaTrabajoValueChanged
+    private void listaSexoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaSexoValueChanged
 
         btnModificar.setEnabled(true);
-        btnEliminar.setEnabled(true);
         
-    }//GEN-LAST:event_listaTrabajoValueChanged
+    }//GEN-LAST:event_listaSexoValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<Trabajo> listaTrabajo;
+    private javax.swing.JList<Sexo> listaSexo;
     // End of variables declaration//GEN-END:variables
 }

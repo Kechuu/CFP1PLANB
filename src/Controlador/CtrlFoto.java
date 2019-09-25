@@ -9,6 +9,7 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import modelo.Foto;
 
@@ -22,27 +23,32 @@ public class CtrlFoto {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(Blob imagen){
+    public void crear(byte[] imagen){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO foto (imagen) VALUES (?)");
         
-            ps.setBlob(1, imagen);
+            ps.setBytes(1, imagen);
             
             int res = ps.executeUpdate();
+            
+            if (res>=0) {
+                
+            }
+            
             con.close();
             
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
     }
     
-    public void editar(int idFoto, Blob imagen){
+    public void editar(int idFoto, byte[] imagen){
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE foto SET imagen = ? WHERE idFoto = ?");
             
-            ps.setBlob(1, imagen);
+            ps.setBytes(1, imagen);
             ps.setInt(2, idFoto);
             
             int res = ps.executeUpdate();
@@ -70,7 +76,8 @@ public class CtrlFoto {
             rs = ps.executeQuery();
             
             if(rs.next()){
-                foto.setImagen(rs.getBlob("imagen"));
+                foto.setIdFoto(rs.getInt("idFoto"));
+                foto.setImagen(rs.getBytes("imagen"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -81,4 +88,27 @@ public class CtrlFoto {
         }
         return foto;
     }
+    
+    public Foto leerUltimaFoto(){
+        Foto foto = new Foto();
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM foto ORDER BY idFoto DESC LIMIT 1");
+            
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                foto.setIdFoto(rs.getInt("idFoto"));
+                foto.setImagen(rs.getBytes("imagen"));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            
+            con.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        return foto;
+    }
+    
 }

@@ -31,7 +31,6 @@ public class Trabajo_consulta extends javax.swing.JInternalFrame {
         initComponents();
         cargarListaTrabajo();
         btnModificar.setEnabled(false);
-        btnEliminar.setEnabled(false);
     }
 
       public void cargarListaTrabajo(){
@@ -73,7 +72,6 @@ public class Trabajo_consulta extends javax.swing.JInternalFrame {
         listaTrabajo = new javax.swing.JList<>();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -128,16 +126,6 @@ public class Trabajo_consulta extends javax.swing.JInternalFrame {
             }
         });
 
-        btnEliminar.setBackground(new java.awt.Color(38, 86, 186));
-        btnEliminar.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-
         jButton1.setBackground(new java.awt.Color(38, 86, 186));
         jButton1.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -161,8 +149,7 @@ public class Trabajo_consulta extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1)
@@ -175,12 +162,11 @@ public class Trabajo_consulta extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 66, Short.MAX_VALUE)
+                        .addGap(0, 69, Short.MAX_VALUE)
                         .addComponent(btnAgregar)
                         .addGap(31, 31, 31)
                         .addComponent(btnModificar)
-                        .addGap(31, 31, 31)
-                        .addComponent(btnEliminar))
+                        .addGap(60, 60, 60))
                     .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
@@ -225,12 +211,6 @@ public class Trabajo_consulta extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Principal.activarPanel();
@@ -240,14 +220,12 @@ public class Trabajo_consulta extends javax.swing.JInternalFrame {
     private void listaTrabajoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaTrabajoValueChanged
 
         btnModificar.setEnabled(true);
-        btnEliminar.setEnabled(true);
         
     }//GEN-LAST:event_listaTrabajoValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

@@ -9,6 +9,7 @@ import Controlador.CtrlAlumno;
 import Controlador.CtrlCodigoPostal;
 import Controlador.CtrlDomicilio;
 import Controlador.CtrlEdificio;
+import Controlador.CtrlFoto;
 import Controlador.CtrlLugar;
 import Controlador.CtrlNacionalidad;
 import Controlador.CtrlPersona;
@@ -27,6 +28,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import menu.Principal;
+import modelo.Foto;
 import modelo.Nacionalidad;
 import modelo.Planes;
 import modelo.TipoCurso;
@@ -172,7 +174,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         btnGuardar = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
         btncancelar = new javax.swing.JButton();
-        jPanelWebCam1 = new JPanelWebCam.JPanelWebCam();
+        fotoPanel = new JPanelWebCam.JPanelWebCam();
         btnAtras = new javax.swing.JButton();
         btnAsignarCurso = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -813,14 +815,14 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanelWebCam1Layout = new javax.swing.GroupLayout(jPanelWebCam1);
-        jPanelWebCam1.setLayout(jPanelWebCam1Layout);
-        jPanelWebCam1Layout.setHorizontalGroup(
-            jPanelWebCam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout fotoPanelLayout = new javax.swing.GroupLayout(fotoPanel);
+        fotoPanel.setLayout(fotoPanelLayout);
+        fotoPanelLayout.setHorizontalGroup(
+            fotoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 252, Short.MAX_VALUE)
         );
-        jPanelWebCam1Layout.setVerticalGroup(
-            jPanelWebCam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        fotoPanelLayout.setVerticalGroup(
+            fotoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 201, Short.MAX_VALUE)
         );
 
@@ -853,7 +855,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                 .addComponent(panelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelWebCam1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -870,7 +872,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelContenedor)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanelWebCam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1078,11 +1080,13 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         CtrlPlanPersona plan=new CtrlPlanPersona();
         CtrlPersonaTrabajo trabajoPersona=new CtrlPersonaTrabajo();
         CtrlAlumno alumno=new CtrlAlumno();
+        CtrlFoto ctrlFoto = new CtrlFoto();
         
         TipoDocumento documento=(TipoDocumento) cbTipo.getSelectedItem();
         Lugar nacimiento=(Lugar) cbNacimiento.getSelectedItem();
         Nacionalidad nacionalidad=(Nacionalidad) cbNacionalidad.getSelectedItem();
         Lugar calle=(Lugar)cbCalle.getSelectedItem();
+        byte[] imagen = fotoPanel.getBytes();
     
         int hijos=0;
     //SE VERIFICA SI SE INGRESÓ ALGO CORRESPONDIENTE DE EDIFICIO..
@@ -1095,6 +1099,12 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     //<SE CREA UN DOMICILIO...            
         domicilioId.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calle.getIdLugar(), idEdificio);            
             
+    //<SE CREA REGISTRO DE FOTO Y TRAE EL ULTIMO id
+    Foto foto = new Foto();
+    
+    ctrlFoto.crear(imagen);
+    foto = (Foto) ctrlFoto.leerUltimaFoto();
+        
     //<AQUI SE DA DE ALTA UNA PERSONA..       
         if(txtHijos.getText().equals("")){
             hijos=0;
@@ -1102,7 +1112,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             hijos=Integer.parseInt(txtHijos.getText());
         }
         Sexo item=(Sexo) cbSexo.getSelectedItem();
-        personaCrear.crear(txtNombre.getText(), txtApellido.getText(), fecha.getDate(), item.getIdSexo(), txtCuil.getText(), hijos, txtCorreo.getText(), txtCelular.getText(), domicilioId.leer().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), 1, nacimiento.getIdLugar(), false);
+        personaCrear.crear(txtNombre.getText(), txtApellido.getText(), fecha.getDate(), item.getIdSexo(), txtCuil.getText(), hijos, txtCorreo.getText(), txtCelular.getText(), domicilioId.leer().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), foto.getIdFoto(), nacimiento.getIdLugar(), false);
         
         personaDatos=personaCrear.leer();
         
@@ -1307,6 +1317,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<TipoDocumento> cbTipo;
     private javax.swing.JComboBox<Trabajo> cbTrabajo;
     private com.toedter.calendar.JDateChooser fecha;
+    private JPanelWebCam.JPanelWebCam fotoPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1340,7 +1351,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel7;
-    private JPanelWebCam.JPanelWebCam jPanelWebCam1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JList<Planes> listPlan;

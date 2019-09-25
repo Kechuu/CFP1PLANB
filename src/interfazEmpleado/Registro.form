@@ -94,7 +94,7 @@
                           <EmptySpace pref="12" max="32767" attributes="0"/>
                           <Component id="btnSiguiente" pref="126" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jPanelWebCam1" max="32767" attributes="0"/>
+                      <Component id="fotoPanel" max="32767" attributes="0"/>
                       <Component id="btnGuardar" alignment="1" max="32767" attributes="0"/>
                       <Component id="btnAsignarCurso" alignment="0" max="32767" attributes="0"/>
                       <Component id="btncancelar" alignment="0" max="32767" attributes="0"/>
@@ -110,7 +110,7 @@
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="panelContenedor" pref="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="jPanelWebCam1" min="-2" max="-2" attributes="0"/>
+                          <Component id="fotoPanel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnAtras" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
@@ -1373,7 +1373,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btncancelarActionPerformed"/>
           </Events>
         </Component>
-        <Container class="JPanelWebCam.JPanelWebCam" name="jPanelWebCam1">
+        <Container class="JPanelWebCam.JPanelWebCam" name="fotoPanel">
 
           <Layout>
             <DimensionLayout dim="0">

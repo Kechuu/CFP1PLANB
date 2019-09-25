@@ -5,9 +5,15 @@
  */
 package configuracion;
 
+import Controlador.CtrlSexo;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import menu.Principal;
-import modelo.Trabajo;
+import modelo.Sexo;
 
 
 /**
@@ -21,7 +27,35 @@ public class Sexo_modificar extends javax.swing.JInternalFrame {
      */
     public Sexo_modificar() throws ClassNotFoundException {
         initComponents();
-      
+        cargarComboSexo(cbSexoActual);
+        for (int i = 0; i < cbSexoActual.getItemCount(); i++) {
+            if (cbSexoActual.getItemAt(i).getDetalle().equalsIgnoreCase(Sexo_consulta.nombreSexo)) {
+                cbSexoActual.setSelectedIndex(i);
+            }
+        }
+    }
+    
+       public void cargarComboSexo(JComboBox<Sexo> cbSexoActual){
+        
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs= st.executeQuery("SELECT * FROM sexo ORDER BY detalle ASC");
+            Sexo sexo = new Sexo();
+            sexo.setIdSexo(0);
+            sexo.setDetalle("Seleccione una opcion...");
+            cbSexoActual.addItem(sexo);
+            
+            while (rs.next()) {                
+                sexo = new Sexo();
+                sexo.setIdSexo(rs.getInt("idSexo"));
+                sexo.setDetalle(rs.getString("detalle"));
+                cbSexoActual.addItem(sexo);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR");       
+        }
+        
     }
     
     /**
@@ -38,10 +72,10 @@ public class Sexo_modificar extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtTrabajo = new javax.swing.JTextField();
+        txtSexo = new javax.swing.JTextField();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        cbTrabajoActual = new javax.swing.JComboBox<>();
+        cbSexoActual = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -49,7 +83,7 @@ public class Sexo_modificar extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("MODIFICAR TRABAJO");
+        jLabel1.setText("MODIFICAR SEXO");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -58,7 +92,7 @@ public class Sexo_modificar extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -69,10 +103,10 @@ public class Sexo_modificar extends javax.swing.JInternalFrame {
         );
 
         jLabel3.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jLabel3.setText("Trabajos actuales:");
+        jLabel3.setText("Sexos actuales:");
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jLabel4.setText("Cambiar trabajo:");
+        jLabel4.setText("Cambiar sexo:");
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -104,10 +138,10 @@ public class Sexo_modificar extends javax.swing.JInternalFrame {
                         .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cbTrabajoActual, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbSexoActual, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
-                    .addComponent(txtTrabajo, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
+                    .addComponent(txtSexo, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -117,11 +151,11 @@ public class Sexo_modificar extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbTrabajoActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbSexoActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
@@ -144,7 +178,17 @@ public class Sexo_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-      
+      CtrlSexo ctrlSexo = new CtrlSexo();
+      Sexo sexo = new Sexo();
+        if (txtSexo.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
+        }else{
+            sexo = (Sexo) cbSexoActual.getSelectedItem();
+            ctrlSexo.editar(sexo.getIdSexo(), txtSexo.getText());
+            cbSexoActual.removeAllItems();
+            cargarComboSexo(cbSexoActual);
+            txtSexo.setText("");
+        }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -158,12 +202,12 @@ public class Sexo_modificar extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<Trabajo> cbTrabajoActual;
+    private javax.swing.JComboBox<Sexo> cbSexoActual;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtTrabajo;
+    private javax.swing.JTextField txtSexo;
     // End of variables declaration//GEN-END:variables
 }

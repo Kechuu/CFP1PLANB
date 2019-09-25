@@ -14,7 +14,7 @@ import java.sql.Blob;
 public class Foto {
   
     private int idFoto;
-    private Blob imagen;
+    private byte[] imagen;
 
     public int getIdFoto() {
         return idFoto;
@@ -24,11 +24,11 @@ public class Foto {
         this.idFoto = idFoto;
     }
 
-    public Blob getImagen() {
+    public byte[] getImagen() {
         return imagen;
     }
 
-    public void setImagen(Blob imagen) {
+    public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
     

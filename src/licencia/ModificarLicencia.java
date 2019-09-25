@@ -8,6 +8,7 @@ package licencia;
 import Controlador.CtrlLicencia;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -51,7 +52,8 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
             while (rs.next()) {                
                 combo.addItem(String.valueOf(rs.getInt("articulo")));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
     }
     
