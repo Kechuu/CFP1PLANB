@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import menu.AlumnoMenu;
 import menu.EmpleadoMenu;
-import menu.Principal;
+import menu.*;
 import modelo.Persona;
 /**
  *
