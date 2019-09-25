@@ -28,7 +28,7 @@ public class CtrlGremio {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO gremio (detalle) VALUES (?)");
         
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             
             int res = ps.executeUpdate();
             con.close();

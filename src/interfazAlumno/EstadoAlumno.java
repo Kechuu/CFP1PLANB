@@ -147,18 +147,22 @@ public class EstadoAlumno extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Nombre completo:");
 
+        txtNombre.setEditable(false);
         txtNombre.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         jLabel13.setText("Domicilio:");
 
+        txtDomicilio.setEditable(false);
         txtDomicilio.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         jLabel14.setText("Teléfono:");
 
+        txtTelefono.setEditable(false);
         txtTelefono.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         jLabel15.setText("Correo:");
 
+        txtCorreo.setEditable(false);
         txtCorreo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         txtCorreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,6 +172,7 @@ public class EstadoAlumno extends javax.swing.JInternalFrame {
 
         jLabel16.setText("Localidad:");
 
+        txtLocalidad.setEditable(false);
         txtLocalidad.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         txtLocalidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,6 +182,7 @@ public class EstadoAlumno extends javax.swing.JInternalFrame {
 
         jLabel17.setText("N° documento:");
 
+        txtDni.setEditable(false);
         txtDni.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
@@ -254,6 +260,8 @@ public class EstadoAlumno extends javax.swing.JInternalFrame {
             }
         ));
         jScrollPane1.setViewportView(tablaPago);
+
+        jTabbedPane1.setBackground(new java.awt.Color(242, 241, 240));
 
         tablaCurso.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

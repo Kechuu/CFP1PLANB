@@ -8,6 +8,7 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
 /**
@@ -40,17 +41,37 @@ public class CtrlUsuario {
         }
     }
     
-    public void editar(int idUsuario, String user, String pass, int jerarquia, int idPersona){
+    public void editarNombre(int idUsuario, String user, String pass){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE usuario SET user = ?,pass = ? ,jerarquia = ?, idPersona = ?,"
-                    + " WHERE idUsuario = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE usuario SET user = ? WHERE idUsuario = ? AND pass = ?");
             
             ps.setString(1, user);
-            ps.setString(2, pass);
-            ps.setInt(3, jerarquia);
-            ps.setInt(4, idPersona);
-            ps.setInt(5, idUsuario);
+            ps.setInt(2, idUsuario);
+            ps.setString(3, pass);
+            
+            int res = ps.executeUpdate();
+            
+            if(res > 0){
+                //Nada de Nada :v
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
+            }
+            
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+    }
+    
+    public void editarPass(int idUsuario, String pass){
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE usuario SET pass = ? WHERE idUsuario = ?");
+            
+            ps.setString(1, pass);
+            ps.setInt(2, idUsuario);
             
             int res = ps.executeUpdate();
             
@@ -123,7 +144,7 @@ public class CtrlUsuario {
         
         try{
             con=clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM usuario WHERE user = ? AND pass = ?");
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM usuario WHERE user = ? AND pass = ? AND borrado=false");
             
             ps.setString(1, user);
             ps.setString(2, pass);
@@ -139,10 +160,48 @@ public class CtrlUsuario {
             }else{
                 JOptionPane.showMessageDialog(null, "No está registrado");
             }
+            
+            con.close();
         }catch(Exception e){
             
         }
         
         return usuario;
+    }
+    
+    public boolean confirmar(String user){
+        boolean bandera = false;
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM usuario WHERE user = ?");
+            ps.setString(1,user);
+            
+            rs=ps.executeQuery();
+            
+            bandera=rs.next();
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        
+        return bandera;
+    }
+    
+    public boolean verificar(String user, String pass){
+        boolean bandera = false;
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM usuario WHERE user = ? AND pass=?");
+            ps.setString(1,user);
+            ps.setString(2, pass);
+            rs=ps.executeQuery();
+            
+            bandera=rs.next();
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        
+        return bandera;
     }
 }

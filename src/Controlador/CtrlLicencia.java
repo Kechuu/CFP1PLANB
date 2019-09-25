@@ -26,7 +26,7 @@ public class CtrlLicencia {
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO licencia (articulo,detalle) VALUES (?,?)");
         
             ps.setInt(1, articulo);
-            ps.setString(2, detalle);
+            ps.setString(2, detalle.toUpperCase());
             
             int res = ps.executeUpdate();
             con.close();

@@ -29,7 +29,7 @@ public class CtrlLugar {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO lugar (nombre, nivel, de) VALUES (?,?,?)");
         
-            ps.setString(1, nombre);
+            ps.setString(1, nombre.toUpperCase());
             ps.setInt(2, nivel);
             ps.setInt(3, de);
             
@@ -46,7 +46,7 @@ public class CtrlLugar {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE lugar SET nombre = ?, nivel = ?, de = ? WHERE idLugar = ?");
             
-            ps.setString(1, nombre);
+            ps.setString(1, nombre.toUpperCase());
             ps.setInt(2, nivel);
             ps.setInt(3, de);
             ps.setInt(4, idLugar);
@@ -99,7 +99,7 @@ public class CtrlLugar {
             
             ps = (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE nombre = ? AND nivel = ? AND de = ?");
             
-            ps.setString(1, nombre);
+            ps.setString(1, nombre.toUpperCase());
             ps.setInt(2, nivel);
             ps.setInt(3, de);
             
@@ -130,7 +130,7 @@ public class CtrlLugar {
             
             ps = (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE nombre = ? AND nivel = ?");
             
-            ps.setString(1, nombre);
+            ps.setString(1, nombre.toUpperCase());
             ps.setInt(2, nivel);
             
             rs = ps.executeQuery();

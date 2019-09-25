@@ -27,7 +27,7 @@ public class CtrlPlanes {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO planes (detalle,borrado) VALUES (?,?)");
         
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             ps.setBoolean(2, false);
             
             int res = ps.executeUpdate();
@@ -43,7 +43,7 @@ public class CtrlPlanes {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE planes SET detalle = ? WHERE idPlanes = ?");
             
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             ps.setInt(2, idPlanes);
             
             int res = ps.executeUpdate();

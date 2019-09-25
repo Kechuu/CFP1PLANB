@@ -20,6 +20,7 @@ import Controlador.CtrlSexo;
 import Controlador.CtrlTipoDocumento;
 import Controlador.CtrlTitulo;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
@@ -225,6 +226,11 @@ public class Registro extends javax.swing.JInternalFrame {
                 txtNombreActionPerformed(evt);
             }
         });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNombreKeyPressed(evt);
+            }
+        });
 
         jLabel4.setText("Apellido");
 
@@ -234,12 +240,18 @@ public class Registro extends javax.swing.JInternalFrame {
 
         jLabel8.setText("CUIL");
 
+        txtDni.setEditable(false);
         txtDni.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         jLabel17.setText("N° de documento");
 
         cbTipoDoc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbTipoDoc.setToolTipText("");
+        cbTipoDoc.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbTipoDocItemStateChanged(evt);
+            }
+        });
         cbTipoDoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTipoDocActionPerformed(evt);
@@ -428,10 +440,20 @@ public class Registro extends javax.swing.JInternalFrame {
         jLabel11.setText("Celular");
 
         txtCelular.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtCelular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCelularKeyPressed(evt);
+            }
+        });
 
         jLabel18.setText("Telefono Fijo");
 
         txtFijo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtFijo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFijoKeyPressed(evt);
+            }
+        });
 
         jLabel10.setText("Correo");
 
@@ -487,6 +509,11 @@ public class Registro extends javax.swing.JInternalFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Sin nombre"));
 
         txtManzana.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtManzana.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtManzanaKeyPressed(evt);
+            }
+        });
 
         jLabel30.setText("Manzana");
 
@@ -531,12 +558,22 @@ public class Registro extends javax.swing.JInternalFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Edificio"));
 
         txtBloque.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtBloque.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBloqueKeyPressed(evt);
+            }
+        });
 
         jLabel22.setText("Bloque");
 
         jLabel23.setText("Piso");
 
         txtPiso.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtPiso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPisoKeyPressed(evt);
+            }
+        });
 
         txtDepto.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
@@ -1179,6 +1216,53 @@ public class Registro extends javax.swing.JInternalFrame {
     private void btnAgregarSxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarSxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarSxActionPerformed
+
+    private void cbTipoDocItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTipoDocItemStateChanged
+        // TODO add your handling code here:
+        txtNombre.requestFocus();
+    }//GEN-LAST:event_cbTipoDocItemStateChanged
+
+    private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            txtApellido.requestFocus();
+        }
+    }//GEN-LAST:event_txtNombreKeyPressed
+
+    private void txtManzanaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtManzanaKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            txtLote.requestFocus();
+        }
+    }//GEN-LAST:event_txtManzanaKeyPressed
+
+    private void txtBloqueKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBloqueKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            txtPiso.requestFocus();
+        }
+    }//GEN-LAST:event_txtBloqueKeyPressed
+
+    private void txtPisoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPisoKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            txtDepto.requestFocus();
+        }
+    }//GEN-LAST:event_txtPisoKeyPressed
+
+    private void txtCelularKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            txtFijo.requestFocus();
+        }
+    }//GEN-LAST:event_txtCelularKeyPressed
+
+    private void txtFijoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFijoKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            txtCorreo.requestFocus();
+        }
+    }//GEN-LAST:event_txtFijoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

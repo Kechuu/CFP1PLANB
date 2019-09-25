@@ -14,6 +14,7 @@ import interfazAlumno.PanelDni;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.Escuela;
 import modelo.Lugar;
 /**
  *
@@ -42,7 +43,6 @@ public class Principal extends javax.swing.JFrame {
         log.setVisible(true);
         
         menuAlumno=0;
-      
         
     }
     
@@ -55,7 +55,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
         escritorio = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        labelInstitucion = new javax.swing.JLabel();
         panelPrincipal = new javax.swing.JPanel();
         panelMenu = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -71,7 +71,7 @@ public class Principal extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         panelSubMenu = new javax.swing.JPanel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        menuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         btnCalleNuevo = new javax.swing.JMenuItem();
@@ -128,9 +128,9 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.setMaximumSize(new java.awt.Dimension(1000, 100));
         jPanel1.setMinimumSize(new java.awt.Dimension(1000, 100));
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(254, 238, 238));
-        jLabel1.setText("Centro de Formacion Profesional 1");
+        labelInstitucion.setFont(new java.awt.Font("Ubuntu", 0, 36)); // NOI18N
+        labelInstitucion.setForeground(new java.awt.Color(254, 238, 238));
+        labelInstitucion.setText("Centro de Formacion Profesional 1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -138,14 +138,14 @@ public class Principal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(labelInstitucion)
                 .addContainerGap(424, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(33, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(labelInstitucion)
                 .addGap(24, 24, 24))
         );
 
@@ -297,13 +297,13 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         panelSubMenu.setBackground(new java.awt.Color(239, 238, 240));
@@ -599,7 +599,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu1.add(jMenu11);
 
-        jMenuBar1.add(jMenu1);
+        menuBar.add(jMenu1);
 
         jMenu2.setText("Salir");
 
@@ -611,9 +611,9 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem5);
 
-        jMenuBar1.add(jMenu2);
+        menuBar.add(jMenu2);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1235,11 +1235,12 @@ public class Principal extends javax.swing.JFrame {
         CrearUsuario user = null;
         try {
             user = new CrearUsuario();
+            panelPrincipal.add(user);
+            user.setVisible(true);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        panelPrincipal.add(user);
-        user.setVisible(true);
+        
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -1314,7 +1315,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
@@ -1328,7 +1328,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenu jMenu9;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
@@ -1358,6 +1357,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
+    public static javax.swing.JLabel labelInstitucion;
+    public static javax.swing.JMenuBar menuBar;
     public static javax.swing.JPanel panelMenu;
     public static javax.swing.JPanel panelPrincipal;
     public static javax.swing.JPanel panelSubMenu;

@@ -25,7 +25,7 @@ public class CtrlPeriodo {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO periodo (detalle) VALUES (?)");
         
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             
             int res = ps.executeUpdate();
             con.close();
@@ -40,7 +40,7 @@ public class CtrlPeriodo {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE periodo SET detalle = ? WHERE idPeriodo = ?");
             
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             ps.setInt(2, idPeriodo);
             
             int res = ps.executeUpdate();

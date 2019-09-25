@@ -27,7 +27,7 @@ public class CtrlTipoCurso {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO tipoCurso (detalle,costo,idPeriodo) VALUES (?,?,?)");
         
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             ps.setFloat(2, costo);
             ps.setInt(3, idPeriodo);
             
@@ -45,7 +45,7 @@ public class CtrlTipoCurso {
             ps =  (PreparedStatement) con.prepareStatement("UPDATE tipoCurso SET detalle = ?, costo = ? , idPeriodo = ? "
                     + "WHERE idtipoCurso = ?");
             
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             ps.setFloat(2, costo);
             ps.setInt(3, idPeriodo);
             ps.setInt(4, idTipoCurso);
@@ -97,7 +97,7 @@ public class CtrlTipoCurso {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("SELECT * FROM tipoCurso WHERE detalle = ?");
             
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             rs = ps.executeQuery();
             
             if (rs.next()) {

@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Persona;
+import usuario.Login;
 /**
  *
  * @author araa
@@ -33,10 +34,8 @@ public class AlumnoMenu extends javax.swing.JPanel {
         
         this.setBounds(0, 65, 240, 210);
         this.setVisible(true);
+      
         
-        if (PanelDni.validarPersona== 2) {
-            //btnInscribir.setEnabled(false);
-        }
     }
     
     public AlumnoMenu(Persona persona){
@@ -45,11 +44,13 @@ public class AlumnoMenu extends javax.swing.JPanel {
         this.setBounds(0, 45, 260, 260);
         this.setVisible(true);
         
-        if (PanelDni.validarPersona== 2) {
-           // btnInscribir.setEnabled(false);
+        if(Login.usuario.getJerarquia()==3){
+            btnModificarDatos.setVisible(false);
+            btnAsignarCurso.setVisible(false);
+            btnPagos.setVisible(false);
+            btnBajaAlumno.setVisible(false);
+            
         }
-        
-        
         objPersona=persona;
     }
 

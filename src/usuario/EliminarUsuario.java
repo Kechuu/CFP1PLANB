@@ -1,6 +1,19 @@
 package usuario;
 
+import Controlador.CtrlCargo;
+import Controlador.CtrlPersona;
+import Controlador.CtrlUsuario;
+import java.awt.event.ItemEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import menu.Principal;
+import modelo.Cargo;
+import modelo.Persona;
+import modelo.Usuario;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -10,17 +23,63 @@ import menu.Principal;
 
 /**
  *
+ * 
  * @author araa
  */
 public class EliminarUsuario extends javax.swing.JInternalFrame {
 
+    CtrlUsuario ctrlUsuario=new CtrlUsuario();
+    CtrlPersona ctrlPersona=new CtrlPersona();
+    CtrlCargo ctrlCargo=new CtrlCargo();
+    
+    Connection con=clases.Conectar.conexion();
+    ResultSet rs=null;
+    PreparedStatement ps=null;
     /**
      * Creates new form EliminarUsuario
      */
     public EliminarUsuario() {
         initComponents();
+        
+        ctrlCargo.cargarCombo(cbCargo);
     }
 
+    public Vector<Usuario> cargarFiltrado(int cargo) {
+        //CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
+        
+        Vector<Usuario> datos = new Vector<>();
+        Usuario dat=null;
+        try {
+            String sql = "SELECT usuario.idUsuario, persona.nombrePersona, persona.apellidoPersona, usuario.user FROM persona"
+                    + " INNER JOIN empleado ON persona.idPersona = empleado.idPersona"
+                    + " INNER JOIN empleadoCargo ON empleado.idEmpleado = empleadoCargo.idEmpleado"
+                    + " INNER JOIN usuario ON usuario.idPersona = persona.idPersona"
+                    + " WHERE empleadoCargo.idCargo=? AND empleado.borrado=false";
+            
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, cargo);
+            
+            rs = ps.executeQuery();
+            
+            dat=new Usuario();
+            dat.setIdUsuario(0);
+            dat.setUser("Seleccione un usuario");
+            datos.add(dat);
+            
+                while (rs.next()) {
+                    dat=new Usuario();
+                    
+                    dat.setIdUsuario(rs.getInt("idUsuario"));
+                    dat.setUser(rs.getString("user")+" |"+rs.getString("apellidoPersona")+" "+rs.getString("nombrePersona"));
+                    datos.add(dat);
+                }
+                
+                rs.close();
+        } catch (SQLException ex) {
+            System.err.println("Error consulta :" + ex.getMessage());
+        }
+        return datos;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,12 +92,15 @@ public class EliminarUsuario extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbUsuario = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbCargo = new javax.swing.JComboBox<>();
+        jPanel3 = new javax.swing.JPanel();
+        btnCancelar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        txtPass = new javax.swing.JPasswordField();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -55,7 +117,7 @@ public class EliminarUsuario extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(301, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -65,72 +127,121 @@ public class EliminarUsuario extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton1.setBackground(new java.awt.Color(38, 86, 186));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Eliminar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setBackground(new java.awt.Color(38, 86, 186));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jLabel2.setText("Jerarquía:");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel2.setText("Cargo:");
 
         jLabel3.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel3.setText("Usuario:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCargo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbCargoItemStateChanged(evt);
+            }
+        });
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setBackground(new java.awt.Color(38, 86, 186));
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(btnEliminar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCancelar)
+                .addContainerGap())
+        );
+
+        jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        jLabel4.setText("Contraseña:");
+
+        txtPass.setText("jPasswordField1");
+        txtPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPassKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(80, 80, 80)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(cbUsuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel3)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(35, 35, 35))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(40, 40, 40))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtPass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -147,30 +258,57 @@ public class EliminarUsuario extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        Confirmacion user=new Confirmacion();
-        Principal.panelPrincipal.add(user);
-        user.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        Usuario item=null;
+        item=(Usuario) cbUsuario.getSelectedItem();
+        ctrlUsuario.borrar(item.getIdUsuario());
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         Principal.activarPanel();
         dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void cbCargoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCargoItemStateChanged
+        // TODO add your handling code here:
+        if(evt.getStateChange()==ItemEvent.SELECTED){
+            if(cbCargo.getSelectedIndex()!=0){
+                
+                Cargo item=null;
+                item=(Cargo)cbCargo.getSelectedItem();
+                DefaultComboBoxModel modelo=new DefaultComboBoxModel(cargarFiltrado(item.getIdCargo()));
+                cbUsuario.setModel(modelo);
+            }
+        }
+    }//GEN-LAST:event_cbCargoItemStateChanged
+
+    private void txtPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassKeyPressed
+        // TODO add your handling code here:
+       if(Login.usuario.getJerarquia()==1){
+           
+           if(ctrlUsuario.verificar(Login.usuario.getUser(), String.valueOf(txtPass.getPassword()))){
+                btnEliminar.setEnabled(true);
+                btnEliminar.requestFocus();
+           }
+       }
+    }//GEN-LAST:event_txtPassKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JComboBox<Cargo> cbCargo;
+    private javax.swing.JComboBox<Usuario> cbUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPasswordField txtPass;
     // End of variables declaration//GEN-END:variables
 }

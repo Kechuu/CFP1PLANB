@@ -24,14 +24,14 @@ public class CtrlEscuela {
             Blob logo, Blob fondo){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO escuela (nombreEscuela, direccion, telefono, correo,"
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO escuela (nombre, direccion, telefono, correo,"
                     + " director, logo, fondo) VALUES (?,?,?,?,?,?,?)");
         
-            ps.setString(1, nombreEscuela);
-            ps.setString(2, direccion);
+            ps.setString(1, nombreEscuela.toUpperCase());
+            ps.setString(2, direccion.toUpperCase());
             ps.setString(3, telefono);
             ps.setString(4, correo);
-            ps.setString(5, director);
+            ps.setString(5, director.toUpperCase());
             ps.setBlob(6, logo);
             ps.setBlob(7, fondo);
             
@@ -116,6 +116,7 @@ public class CtrlEscuela {
     
     public Escuela leer(){
         Escuela escuela = new Escuela();
+        escuela.setIdEscuela(0);
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM escuela");
@@ -123,15 +124,16 @@ public class CtrlEscuela {
             rs = ps.executeQuery();
             
             if(rs.next()){
-                escuela.setNombreEscuela(rs.getString("nombreEscuela"));
+                JOptionPane.showMessageDialog(null, "si entro aqui");
+                escuela.setIdEscuela(rs.getInt("idEscuela"));
+                escuela.setNombreEscuela(rs.getString("nombre"));
                 escuela.setDireccion(rs.getString("direccion"));
                 escuela.setTelefono(rs.getString("telefono"));
                 escuela.setCorreo(rs.getString("correo"));
                 escuela.setDirector(rs.getString("director"));
                 escuela.setLogo(rs.getBlob("logo"));
                 escuela.setFondo(rs.getBlob("fondo"));
-            }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            
             }
             
             con.close();
