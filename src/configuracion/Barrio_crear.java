@@ -223,7 +223,7 @@ public class Barrio_crear extends javax.swing.JInternalFrame {
     private void btnAgregarCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCalleActionPerformed
         try {
             // TODO add your handling code here:
-            //this.setVisible(false);
+            this.setVisible(false);
             
             Principal.crearCalle();//metodo que esta en la clase Principal
         } catch (ClassNotFoundException ex) {
