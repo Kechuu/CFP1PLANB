@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import menu.AlumnoMenu;
 import menu.EmpleadoMenu;
-import menu.Principal;
+import menu.*;
 import modelo.Persona;
 /**
  *
@@ -43,8 +43,8 @@ public class CtrlPersona {
                     + "CUIL,hijoPersona,correo,celular,idDomicilio,idTipoDocumento,idNacionalidad,idFoto, lugarNacimiento,borrado"
                     + ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         
-            ps.setString(1, nombrePersona);
-            ps.setString(2, apellidoPersona);
+            ps.setString(1, nombrePersona.toUpperCase());
+            ps.setString(2, apellidoPersona.toUpperCase());
             ps.setDate(3, (java.sql.Date) fecha);
             ps.setInt(4, sexo);
             ps.setString(5, CUIL);
@@ -78,8 +78,8 @@ public class CtrlPersona {
                     + "fechaNacimiento = ?, sexo = ?, CUIL = ?, hijoPersona = ?, correo = ?, celular = ?, idDomicilio = ?,"
                     + "idTipoDocumento = ?, idNacionalidad = ?, idFoto = ?, lugarNacimiento = ?, borrado = ? WHERE idPersona = ?");
             
-            ps.setString(1, nombrePersona);
-            ps.setString(2, apellidoPersona);
+            ps.setString(1, nombrePersona.toUpperCase());
+            ps.setString(2, apellidoPersona.toUpperCase());
             ps.setDate(3, fecha);
             ps.setBoolean(4, sexo);
             ps.setString(5, CUIL);

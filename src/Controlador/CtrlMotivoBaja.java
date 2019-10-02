@@ -27,7 +27,7 @@ public class CtrlMotivoBaja {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO motivoBaja (detalle) VALUES (?)");
         
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             
             int res = ps.executeUpdate();
             con.close();
@@ -42,7 +42,7 @@ public class CtrlMotivoBaja {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE motivoBaja SET detalle = ? WHERE idMotivoBaja = ?");
             
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             ps.setInt(2, idMotivoBaja);
             
             int res = ps.executeUpdate();

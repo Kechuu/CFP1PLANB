@@ -148,7 +148,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel13.setText("Concepto");
 
-        cbConceptoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción...", "Pago cooperativa", "Certificado", "" }));
+        cbConceptoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción...", "Pago cooperativa", "Certificado" }));
         cbConceptoPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbConceptoPagoActionPerformed(evt);

@@ -20,6 +20,7 @@ import Controlador.CtrlSexo;
 import Controlador.CtrlTipoCurso;
 import Controlador.CtrlTipoDocumento;
 import Controlador.CtrlTrabajo;
+import com.sun.glass.events.KeyEvent;
 import java.awt.event.ItemEvent;
 import java.sql.Connection;
 import javax.swing.DefaultComboBoxModel;
@@ -88,6 +89,8 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
        btnSiguiente.setText("Siguiente");
        txtCuil.setText(cuil);
        obtenerDni(cuil);
+       
+       cbTipo.requestFocus();
     }
     
     /**
@@ -185,16 +188,27 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         jLabel3.setText("Nombre");
 
         txtNombre.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNombreKeyPressed(evt);
+            }
+        });
 
         jLabel4.setText("Apellido");
 
         txtApellido.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtApellidoKeyPressed(evt);
+            }
+        });
 
         txtCuil.setToolTipText("SEPARAR CON - (guiones) Y SIN ESPACIOS\nPor ejemplo: XX-12345678-XX");
         txtCuil.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         jLabel8.setText("CUIL");
 
+        txtDni.setEditable(false);
         txtDni.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         jLabel17.setText("N° de documento");
@@ -215,6 +229,11 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
         cbTipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbTipo.setToolTipText("");
+        cbTipo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbTipoItemStateChanged(evt);
+            }
+        });
 
         cbSexo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbSexo.setToolTipText("");
@@ -381,10 +400,20 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         jLabel11.setText("Celular");
 
         txtCelular.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtCelular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCelularKeyPressed(evt);
+            }
+        });
 
         jLabel18.setText("Telefono Fijo");
 
         txtFijo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtFijo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFijoKeyPressed(evt);
+            }
+        });
 
         jLabel10.setText("Correo");
 
@@ -437,12 +466,22 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Edificio"));
 
         txtBloque.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtBloque.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBloqueKeyPressed(evt);
+            }
+        });
 
         jLabel22.setText("Bloque");
 
         jLabel23.setText("Piso");
 
         txtPiso.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtPiso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPisoKeyPressed(evt);
+            }
+        });
 
         txtDepto.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
@@ -492,6 +531,11 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Sin nombre"));
 
         txtManzana.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtManzana.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtManzanaKeyPressed(evt);
+            }
+        });
 
         jLabel30.setText("Manzana");
 
@@ -1191,6 +1235,62 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private void btnAgregarSxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarSxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarSxActionPerformed
+
+    private void cbTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTipoItemStateChanged
+        // TODO add your handling code here:
+        txtNombre.requestFocus();
+    }//GEN-LAST:event_cbTipoItemStateChanged
+
+    private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            txtApellido.requestFocus();            
+        }
+
+    }//GEN-LAST:event_txtNombreKeyPressed
+
+    private void txtApellidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            fecha.getFocusListeners();
+        }
+
+    }//GEN-LAST:event_txtApellidoKeyPressed
+
+    private void txtManzanaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtManzanaKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            txtLote.requestFocus();
+        }
+    }//GEN-LAST:event_txtManzanaKeyPressed
+
+    private void txtBloqueKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBloqueKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            txtPiso.requestFocus();
+        }
+    }//GEN-LAST:event_txtBloqueKeyPressed
+
+    private void txtPisoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPisoKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            txtDepto.requestFocus();
+        }
+    }//GEN-LAST:event_txtPisoKeyPressed
+
+    private void txtCelularKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            txtFijo.requestFocus();
+        }
+    }//GEN-LAST:event_txtCelularKeyPressed
+
+    private void txtFijoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFijoKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            txtCorreo.requestFocus();
+        }
+    }//GEN-LAST:event_txtFijoKeyPressed
 
     @Override
     public boolean isOptimizedDrawingEnabled(){

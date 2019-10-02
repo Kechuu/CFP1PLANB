@@ -29,7 +29,7 @@ public class CtrlSexo {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO sexo (detalle) VALUES (?)");
         
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             
             int res = ps.executeUpdate();
             con.close();
@@ -44,7 +44,7 @@ public class CtrlSexo {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE sexo SET detalle = ? WHERE idSexo = ?");
             
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             ps.setInt(2, idSexo);
             
             int res = ps.executeUpdate();
@@ -68,7 +68,7 @@ public class CtrlSexo {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM sexo WHERE detalle = ?");
             
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             rs = ps.executeQuery();
             
             if(rs.next()){

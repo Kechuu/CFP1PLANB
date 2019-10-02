@@ -25,7 +25,7 @@ public class CtrlLugarCurso {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO lugarCurso (detalle) VALUES (?)");
         
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             
             int res = ps.executeUpdate();
             con.close();
@@ -40,7 +40,7 @@ public class CtrlLugarCurso {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE lugarCurso SET detalle = ? WHERE idLugarCurso = ?");
             
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             ps.setInt(2, idLugarCurso);
             
             int res = ps.executeUpdate();

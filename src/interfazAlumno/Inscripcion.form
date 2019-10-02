@@ -278,6 +278,9 @@
                       </Border>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNombreKeyPressed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel4">
                   <Properties>
@@ -292,6 +295,9 @@
                       </Border>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtApellidoKeyPressed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtCuil">
                   <Properties>
@@ -310,6 +316,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtDni">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
                         <MatteColorBorder bottom="1" left="0" right="0" top="0"/>
@@ -382,6 +389,9 @@
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbTipoItemStateChanged"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;TipoDocumento&gt;"/>
                   </AuxValues>
@@ -680,6 +690,9 @@
                           </Border>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCelularKeyPressed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel18">
                       <Properties>
@@ -694,6 +707,9 @@
                           </Border>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtFijoKeyPressed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel10">
                       <Properties>
@@ -801,6 +817,9 @@
                           </Border>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBloqueKeyPressed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel22">
                       <Properties>
@@ -820,6 +839,9 @@
                           </Border>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPisoKeyPressed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtDepto">
                       <Properties>
@@ -899,6 +921,9 @@
                           </Border>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtManzanaKeyPressed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel30">
                       <Properties>

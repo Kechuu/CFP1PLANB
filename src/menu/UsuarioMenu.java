@@ -13,11 +13,12 @@ import usuario.ModificarPass;
  */
 public class UsuarioMenu extends javax.swing.JPanel {
 
+    public static int origenUsuario=0;
     /** Creates new form UsuarioMenu */
     public UsuarioMenu() {
         initComponents();
         
-        this.setBounds(0, 395, 240, 66);
+        this.setBounds(0, 355, 240, 66);
     }
 
     /** This method is called from within the constructor to

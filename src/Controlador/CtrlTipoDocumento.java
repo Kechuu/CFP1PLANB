@@ -27,7 +27,7 @@ public class CtrlTipoDocumento {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO tipoDocumento (detalle) VALUES (?)");
         
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             
             int res = ps.executeUpdate();
             con.close();
@@ -42,7 +42,7 @@ public class CtrlTipoDocumento {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE tipoDocumento SET detalle = ? WHERE idTipoDocumento = ?");
             
-            ps.setString(1, detalle);
+            ps.setString(1, detalle.toUpperCase());
             ps.setInt(2, idTipoDocumento);
             
             int res = ps.executeUpdate();

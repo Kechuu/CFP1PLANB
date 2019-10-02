@@ -159,8 +159,8 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel10.setText("Alumno:");
 
+        txtNombreCompleto.setEditable(false);
         txtNombreCompleto.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        txtNombreCompleto.setEnabled(false);
         txtNombreCompleto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreCompletoActionPerformed(evt);

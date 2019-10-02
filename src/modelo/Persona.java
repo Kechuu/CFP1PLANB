@@ -150,5 +150,8 @@ public class Persona {
         this.borrado = borrado;
     }
     
-    
+    @Override
+    public String toString(){
+        return this.apellidoPersona;
+    }
 }

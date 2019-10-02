@@ -79,6 +79,7 @@ public class Eliminar extends javax.swing.JInternalFrame {
         cbMotivoBaja = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDetalle = new javax.swing.JTextArea();
+        jLabel13 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txtDni = new javax.swing.JTextField();
@@ -147,33 +148,48 @@ public class Eliminar extends javax.swing.JInternalFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalles de baja"));
 
         cbMotivoBaja.setToolTipText("");
+        cbMotivoBaja.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbMotivoBajaItemStateChanged(evt);
+            }
+        });
 
-        txtDetalle.setEditable(false);
         txtDetalle.setColumns(20);
         txtDetalle.setRows(5);
         jScrollPane1.setViewportView(txtDetalle);
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setText("Otro motivo:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(cbMotivoBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel13)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(cbMotivoBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap()
                 .addComponent(cbMotivoBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(25, 25, 25))
         );
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -288,16 +304,30 @@ public class Eliminar extends javax.swing.JInternalFrame {
     }
     private void btnDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarBajaActionPerformed
         // TODO add your handling code here:
-        ListModel<TipoCurso>modelo=listCursos.getModel();
+        ListModel<TipoCurso>modelo=listCursos.getModel();        
+        int idCurso=ctrlCurso.leer(listCursos.getSelectedValue().getIdTipoCurso()).getIdCurso();
         
-        //if(modelo.getSize()>1){
+        if(cbMotivoBaja.getSelectedIndex()!=0 && txtDetalle.getText().equals("")){
             MotivoBaja itemMotivo=(MotivoBaja) cbMotivoBaja.getSelectedItem();
-            int idCurso=ctrlCurso.leer(listCursos.getSelectedValue().getIdTipoCurso()).getIdCurso();
-            JOptionPane.showMessageDialog(null, idCurso);
             ctrlCursoAlum.alumnoBajaEgresado(ctrlAlumno.leer(personaModelo.getIdPersona()).getIdAlumno(), idCurso, itemMotivo.getIdMotivoBaja(), 2, fecha.getDate());
+        }else if (cbMotivoBaja.getSelectedIndex()==0 && !txtDetalle.getText().equals("")){
+            ctrlMotivo.crear(txtDetalle.getText());
+            
+            ctrlCursoAlum.alumnoBajaEgresado(ctrlAlumno.leer(personaModelo.getIdPersona()).getIdAlumno(), idCurso, ctrlMotivo.leer().getIdMotivoBaja(), 2, fecha.getDate());
+        }else{
+            JOptionPane.showMessageDialog(null, "Necesita seleccionar un motivo de baja. /nSi no lo encuentra entre las opciones a elegir puede ingresarlo");
+        }
         
-        //}
     }//GEN-LAST:event_btnDarBajaActionPerformed
+
+    private void cbMotivoBajaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbMotivoBajaItemStateChanged
+        // TODO add your handling code here:
+        if(cbMotivoBaja.getSelectedIndex()!=0){
+            txtDetalle.setEnabled(false);
+        }else{
+            txtDetalle.setEnabled(true);
+        }
+    }//GEN-LAST:event_cbMotivoBajaItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -309,6 +339,7 @@ public class Eliminar extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

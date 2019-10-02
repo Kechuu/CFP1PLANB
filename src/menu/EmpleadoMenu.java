@@ -7,6 +7,7 @@ package menu;
 
 import interfazEmpleado.*;
 import modelo.Persona;
+import usuario.Login;
 /**
  *
  * @author araa
@@ -23,6 +24,12 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         
         this.setBounds(0, 85, 240, 174);
         this.personaObj=persona;
+        
+        if(Login.usuario.getJerarquia()==3){
+            btnModificarDatos.setVisible(false);
+            btnAsignarCurso.setVisible(false);
+            btnDarBaja.setVisible(false);
+        }
     }
 
     /**
@@ -37,7 +44,7 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         btnAsignarCurso = new javax.swing.JButton();
         btnConsultarEstado = new javax.swing.JButton();
         btnModificarDatos = new javax.swing.JButton();
-        btnBorrarEmpleado = new javax.swing.JButton();
+        btnDarBaja = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(239, 238, 240));
 
@@ -62,10 +69,10 @@ public class EmpleadoMenu extends javax.swing.JPanel {
             }
         });
 
-        btnBorrarEmpleado.setText("Dar de baja");
-        btnBorrarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+        btnDarBaja.setText("Dar de baja");
+        btnDarBaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBorrarEmpleadoActionPerformed(evt);
+                btnDarBajaActionPerformed(evt);
             }
         });
 
@@ -76,7 +83,7 @@ public class EmpleadoMenu extends javax.swing.JPanel {
             .addComponent(btnConsultarEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnModificarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnBorrarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnDarBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,10 +93,10 @@ public class EmpleadoMenu extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConsultarEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDarBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBorrarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(btnConsultarEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -101,6 +108,7 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         AsignarCurso asignar=new AsignarCurso(personaObj);
         Principal.panelPrincipal.add(asignar);
         asignar.setVisible(true);
+        
         
     }//GEN-LAST:event_btnAsignarCursoActionPerformed
 
@@ -125,7 +133,7 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         empleado.setVisible(true);
     }//GEN-LAST:event_btnModificarDatosActionPerformed
 
-    private void btnBorrarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarEmpleadoActionPerformed
+    private void btnDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarBajaActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         Principal.desactivarPanel();
@@ -133,13 +141,13 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         Eliminar empleado=new Eliminar();
         Principal.panelPrincipal.add(empleado);
         empleado.setVisible(true);
-    }//GEN-LAST:event_btnBorrarEmpleadoActionPerformed
+    }//GEN-LAST:event_btnDarBajaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignarCurso;
-    private javax.swing.JButton btnBorrarEmpleado;
     private javax.swing.JButton btnConsultarEstado;
+    private javax.swing.JButton btnDarBaja;
     private javax.swing.JButton btnModificarDatos;
     // End of variables declaration//GEN-END:variables
 }

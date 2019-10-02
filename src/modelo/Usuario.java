@@ -66,5 +66,8 @@ public class Usuario {
         this.borrado = borrado;
     }
     
-    
+    @Override
+    public String toString(){
+        return this.user;
+    }
 }
