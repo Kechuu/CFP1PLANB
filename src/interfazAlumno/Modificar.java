@@ -1074,10 +1074,11 @@ public final class Modificar extends javax.swing.JInternalFrame {
         listaPlan();
         listaTrabajo();     
         
-        if(JOptionPane.showConfirmDialog(null, "¿Desea seguir modificando datos de libros?","", + 
+        if(JOptionPane.showConfirmDialog(null, "¿Desea seguir modificando?","", + 
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                 
             }else{
+                Principal.activarPanel();
                 dispose();
             }
     }//GEN-LAST:event_btnModificarActionPerformed

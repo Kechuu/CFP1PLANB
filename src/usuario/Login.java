@@ -7,11 +7,17 @@ package usuario;
 
 import Controlador.CtrlEscuela;
 import Controlador.CtrlUsuario;
+import clases.CambiaPanel;
+import interfazAlumno.PanelDni;
+import interfazEmpleado.Registro;
 import javax.swing.JOptionPane;
 import menu.Principal;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import menu.ConfiguracionGeneral;
+import static menu.Principal.panelSubMenu;
 import modelo.Escuela;
 import modelo.Usuario;
 /**
@@ -112,6 +118,11 @@ public class Login extends javax.swing.JInternalFrame {
         btnNuevoUser.setBackground(new java.awt.Color(255, 255, 255));
         btnNuevoUser.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnNuevoUser.setText("¿No tienes un usuario?");
+        btnNuevoUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoUserActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -204,6 +215,26 @@ public class Login extends javax.swing.JInternalFrame {
       
         confirmacion();
     }//GEN-LAST:event_btnEntrarFocusGained
+
+    private void btnNuevoUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoUserActionPerformed
+        // TODO add your handling code here:
+        String clave=null;
+        clave=JOptionPane.showInputDialog("Ingrese la clave dada");
+        
+        if(clave.equals("claveDirector")){
+           this.setVisible(false);
+            try {
+                PanelDni.alumnoEmpleado=3;
+                CambiaPanel cambiaPanel = new CambiaPanel(Principal.panelPrincipal, new PanelDniUs());
+
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
+        }else{
+            JOptionPane.showMessageDialog(null, "no");
+        }
+    }//GEN-LAST:event_btnNuevoUserActionPerformed
 
     void confirmacion(){
         

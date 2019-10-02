@@ -19,6 +19,7 @@ import menu.AlumnoMenu;
 import menu.EmpleadoMenu;
 import menu.*;
 import modelo.Persona;
+import usuario.CrearUsuario;
 /**
  *
  * @author jesus
@@ -313,6 +314,14 @@ public class CtrlPersona {
                                 CambiaPanel cambiaPanel=new CambiaPanel(menu.Principal.panelSubMenu, new EmpleadoMenu(persona));
                                 break;
                             }
+                            
+                        case 3:
+                        {
+                            Principal.desactivarPanel();
+                            CrearUsuario crearUs=new CrearUsuario();
+                            Principal.panelPrincipal.add(crearUs);
+                            crearUs.setVisible(true);
+                        }
                     }
                 }else{
                     //SALDRA POR AQUI EN CASO DE QUE SE BUSQUE POR EL BUSCADOR :v 
@@ -334,6 +343,12 @@ public class CtrlPersona {
                         Registro registro=new Registro(CUIL);
                         Principal.panelPrincipal.add(registro);
                         registro.setVisible(true);
+                    break;
+                    
+                    case 3:
+                        Registro registroE=new Registro(CUIL);
+                        Principal.panelPrincipal.add(registroE);
+                        registroE.setVisible(true);
                     break;
                 }
                         

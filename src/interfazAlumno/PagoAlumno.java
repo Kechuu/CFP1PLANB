@@ -431,12 +431,12 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
 
     private void cbCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCursoItemStateChanged
         // TODO add your handling code here:
-        if(cbCurso.getSelectedIndex()!=0){
+        /*if(cbCurso.getSelectedIndex()!=0){
             TipoCurso itemTipoCurso=(TipoCurso) cbCurso.getSelectedItem();
             
             txtCooperativa.setText(String.valueOf(itemTipoCurso.getCosto()));
             txtImporte.setEnabled(true);
-        }
+        }*/
         
     }//GEN-LAST:event_cbCursoItemStateChanged
 

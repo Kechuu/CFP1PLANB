@@ -1011,11 +1011,11 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                     }
                     
                 }
-                btnSiguiente.setText("Terminar");
+                //btnSiguiente.setText("Terminar");
             break;
             
             case 2:
-                if(modeloPlan.isEmpty() || modeloTrabajo.isEmpty()){
+                /*if(modeloPlan.isEmpty() || modeloTrabajo.isEmpty()){
                     if(JOptionPane.showConfirmDialog(null, "No ha seleccionado planes y/o trabajos que posee el alumno ¿Quiere continuar sin agregarlos?","", + 
                         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                         
@@ -1024,7 +1024,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                     }else{
                         return;
                     }
-                }
+                }*/
             break;
             
                 
@@ -1074,6 +1074,8 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbBarrioItemStateChanged
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        boolean bandera=false;
+        
         CtrlDomicilio domicilioId=new CtrlDomicilio();
         CtrlEdificio edificio=new CtrlEdificio();
         CtrlPersona personaCrear=new CtrlPersona();
@@ -1089,59 +1091,120 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         byte[] imagen = fotoPanel.getBytes();
     
         int hijos=0;
-    //SE VERIFICA SI SE INGRESÓ ALGO CORRESPONDIENTE DE EDIFICIO..
-        if(!txtBloque.getText().equals("") && !txtPiso.getText().equals("") && !txtDepto.getText().equals("")){
-            edificio.crear(txtBloque.getText(), txtPiso.getText(), txtDepto.getText());
-            idEdificio=edificio.leer().getIdEdificio();
-        }
-    
-
+        
+        if(modeloPlan.isEmpty() || modeloTrabajo.isEmpty()){
+            if(JOptionPane.showConfirmDialog(null, "No ha seleccionado planes y/o trabajos que posee el alumno ¿Quiere continuar sin agregarlos?","", + 
+             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                bandera=true;
+            }else{
+                return;
+            }
+        }else{
+            //SE VERIFICA SI SE INGRESÓ ALGO CORRESPONDIENTE DE EDIFICIO..
+            if(!txtBloque.getText().equals("") && !txtPiso.getText().equals("") && !txtDepto.getText().equals("")){
+                edificio.crear(txtBloque.getText(), txtPiso.getText(), txtDepto.getText());
+                idEdificio=edificio.leer().getIdEdificio();
+            }
     //<SE CREA UN DOMICILIO...            
-        domicilioId.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calle.getIdLugar(), idEdificio);            
+            domicilioId.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calle.getIdLugar(), idEdificio);            
             
     //<SE CREA REGISTRO DE FOTO Y TRAE EL ULTIMO id
-    Foto foto = new Foto();
+            Foto foto = new Foto();
     
-    ctrlFoto.crear(imagen);
-    foto = (Foto) ctrlFoto.leerUltimaFoto();
+            ctrlFoto.crear(imagen);
+            foto = (Foto) ctrlFoto.leerUltimaFoto();
         
     //<AQUI SE DA DE ALTA UNA PERSONA..       
-        if(txtHijos.getText().equals("")){
-            hijos=0;
-        }else{
-            hijos=Integer.parseInt(txtHijos.getText());
-        }
-        Sexo item=(Sexo) cbSexo.getSelectedItem();
-        personaCrear.crear(txtNombre.getText(), txtApellido.getText(), fecha.getDate(), item.getIdSexo(), txtCuil.getText(), hijos, txtCorreo.getText(), txtCelular.getText(), domicilioId.leer().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), foto.getIdFoto(), nacimiento.getIdLugar(), false);
+            if(txtHijos.getText().equals("")){
+                hijos=0;
+            }else{
+                hijos=Integer.parseInt(txtHijos.getText());
+            }
+            Sexo item=(Sexo) cbSexo.getSelectedItem();
+            personaCrear.crear(txtNombre.getText(), txtApellido.getText(), fecha.getDate(), item.getIdSexo(), txtCuil.getText(), hijos, txtCorreo.getText(), txtCelular.getText(), domicilioId.leer().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), foto.getIdFoto(), nacimiento.getIdLugar(), false);
         
-        personaDatos=personaCrear.leer();
+            personaDatos=personaCrear.leer(txtCuil.getText());
         
     //LOS ListModel SON PARA PODER SACAR EL TAMAÑO DE LAS LISTAS, PODER RECORRERLAS Y PODER ACCEDER AL ID DE CADA OBJETO GUARDADO
-        ListModel<Planes> listaPlanes=listPlan.getModel();
-        ListModel<Trabajo> listaTrabajo=listTrabajo.getModel();
+            if(bandera){
+                
+                ListModel<Planes> listaPlanes=listPlan.getModel();
+                ListModel<Trabajo> listaTrabajo=listTrabajo.getModel();
         
-        for(int i=0; i<listaPlanes.getSize(); i++){
-            plan.crear(personaCrear.leer().getIdPersona(), listaPlanes.getElementAt(i).getIdPlanes());
-        }
-        for(int i=0; i<listaTrabajo.getSize();i++){
-            trabajoPersona.crear(personaCrear.leer().getIdPersona(), listaTrabajo.getElementAt(i).getIdTrabajo());
+                for(int i=0; i<listaPlanes.getSize(); i++){
+                    plan.crear(personaCrear.leer().getIdPersona(), listaPlanes.getElementAt(i).getIdPlanes());
+                }
+                for(int i=0; i<listaTrabajo.getSize();i++){
+                    trabajoPersona.crear(personaCrear.leer().getIdPersona(), listaTrabajo.getElementAt(i).getIdTrabajo());
+                }
+            }
+
+    //<SE CREA UN REGISTRO EN LA TABLA ALUMNO..
+            alumno.crear(personaCrear.leer().getIdPersona());
+        
+            if(personaDatos.getIdPersona()!=0){
+                JOptionPane.showMessageDialog(null, "Los datos se guardaron"); 
+            }else{
+                JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
+            }
         }
     
-    //<SE CREA UN REGISTRO EN LA TABLA ALUMNO..
-        alumno.crear(personaCrear.leer().getIdPersona());
-        
-        if(personaDatos.getIdPersona()!=0){
-            JOptionPane.showMessageDialog(null, "Los datos se guardaron"); 
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
-            return;
-        }
-        btnAsignarCurso.setEnabled(true);
-        btnGuardar.setEnabled(false);
-        //limpiar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+/*
+    if(JOptionPane.showConfirmDialog(null, "No ha seleccionado planes y/o trabajos que posee el alumno ¿Quiere continuar sin agregarlos?","", + 
+             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                       
+    //SE VERIFICA SI SE INGRESÓ ALGO CORRESPONDIENTE DE EDIFICIO..
+            if(!txtBloque.getText().equals("") && !txtPiso.getText().equals("") && !txtDepto.getText().equals("")){
+                edificio.crear(txtBloque.getText(), txtPiso.getText(), txtDepto.getText());
+                idEdificio=edificio.leer().getIdEdificio();
+            }
+    //<SE CREA UN DOMICILIO...            
+            domicilioId.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calle.getIdLugar(), idEdificio);            
+            
+    //<SE CREA REGISTRO DE FOTO Y TRAE EL ULTIMO id
+            Foto foto = new Foto();
     
+            ctrlFoto.crear(imagen);
+            foto = (Foto) ctrlFoto.leerUltimaFoto();
+        
+    //<AQUI SE DA DE ALTA UNA PERSONA..       
+            if(txtHijos.getText().equals("")){
+                hijos=0;
+            }else{
+                hijos=Integer.parseInt(txtHijos.getText());
+            }
+            Sexo item=(Sexo) cbSexo.getSelectedItem();
+            personaCrear.crear(txtNombre.getText(), txtApellido.getText(), fecha.getDate(), item.getIdSexo(), txtCuil.getText(), hijos, txtCorreo.getText(), txtCelular.getText(), domicilioId.leer().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), foto.getIdFoto(), nacimiento.getIdLugar(), false);
+        
+            personaDatos=personaCrear.leer();
+        
+    //LOS ListModel SON PARA PODER SACAR EL TAMAÑO DE LAS LISTAS, PODER RECORRERLAS Y PODER ACCEDER AL ID DE CADA OBJETO GUARDADO
+            ListModel<Planes> listaPlanes=listPlan.getModel();
+            ListModel<Trabajo> listaTrabajo=listTrabajo.getModel();
+        
+            for(int i=0; i<listaPlanes.getSize(); i++){
+                plan.crear(personaCrear.leer().getIdPersona(), listaPlanes.getElementAt(i).getIdPlanes());
+            }
+            for(int i=0; i<listaTrabajo.getSize();i++){
+                trabajoPersona.crear(personaCrear.leer().getIdPersona(), listaTrabajo.getElementAt(i).getIdTrabajo());
+            }
+    
+    //<SE CREA UN REGISTRO EN LA TABLA ALUMNO..
+            alumno.crear(personaCrear.leer().getIdPersona());
+        
+            if(personaDatos.getIdPersona()!=0){
+                JOptionPane.showMessageDialog(null, "Los datos se guardaron"); 
+            }else{
+                JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
+                return;
+            }
+            btnAsignarCurso.setEnabled(true);
+            btnGuardar.setEnabled(false);
+        //limpiar();     
+            
+    */    
     
     private void btnAsignarPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarPlanActionPerformed
         // TODO add your handling code here:
