@@ -9,7 +9,10 @@ import Controlador.CtrlCodigoPostal;
 import Controlador.CtrlLugar;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -39,7 +42,7 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
         
         try {
             Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT nombre, codigoPostal FROM lugar INNER JOIN codigoPostal"
+            ResultSet rs= st.executeQuery("SELECT nombre, codigoPostal FROM lugar RIGTH JOIN codigoPostal"
                     + " WHERE idLugar = localidad AND nivel = '"+idLugar+"' ORDER BY nombre ASC");
             
             while (rs.next()) {                
@@ -127,6 +130,11 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
         btnAgregarBarrio.setBackground(new java.awt.Color(38, 86, 186));
         btnAgregarBarrio.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarBarrio.setText("Agregar barrio");
+        btnAgregarBarrio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarBarrioActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel3.setText("Codigo Postal:");
@@ -241,6 +249,15 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnAgregarBarrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarBarrioActionPerformed
+        this.setVisible(false);
+        try {
+            Principal.crearBarrio();//Llama al frame de Crear barrio
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Barrio_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAgregarBarrioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -30,6 +30,7 @@ public class TipoDoc_consulta extends javax.swing.JInternalFrame {
     public TipoDoc_consulta() throws ClassNotFoundException {
         initComponents();
         btnModificar.setEnabled(false);
+        cargarListaTipoDocumento();
     }
 
     public void cargarListaTipoDocumento(){

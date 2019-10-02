@@ -686,7 +686,7 @@ public class Principal extends javax.swing.JFrame {
         sexo.setVisible(true);
     }
     public static void crearTipoDoc() throws ClassNotFoundException{
-        TipoDoc_consulta tipo = new TipoDoc_consulta();
+        TipoDoc_crear tipo = new TipoDoc_crear();
         
         panelPrincipal.add(tipo);
         tipo.setVisible(true);

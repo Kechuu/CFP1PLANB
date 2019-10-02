@@ -46,8 +46,8 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
     public void cargarCombo(JComboBox combo){
         try {
             Statement set = con.createStatement();
-            ResultSet rs = set.executeQuery("SELECT articulo FROM licencia ORDER BY articulo ASC");
-            combo.addItem("Seleccione uno de los articulos...");
+            ResultSet rs = set.executeQuery("SELECT * FROM licencia ORDER BY articulo ASC");
+            //combo.addItem("Seleccione uno de los articulos...");
             
             while (rs.next()) {                
                 combo.addItem(String.valueOf(rs.getInt("articulo")));
@@ -267,9 +267,11 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
             }else{
                 
         String articulo = (String) cbLicencia.getSelectedItem();
+        txtCambiarArt.setText(articulo);
         
         licencia = ctrlLicencia.leer(Integer.parseInt(articulo));
         areaDetalle.setText(licencia.getDetalle());
+        txtDetalle.setText(licencia.getDetalle());
             }
         }
         
