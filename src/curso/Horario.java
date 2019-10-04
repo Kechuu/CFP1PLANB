@@ -384,7 +384,7 @@ public class Horario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         CtrlHorario ctrlHorario=new CtrlHorario();
         
-        ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 2);
+        //ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 2);
         //CtrlHorario ctrlHorario = new CtrlHorario();
 
         
