@@ -266,7 +266,6 @@ public class Barrio_consulta extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_listaBarriosValueChanged
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAtras;

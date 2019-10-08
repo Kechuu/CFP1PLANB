@@ -29,8 +29,7 @@ public class CtrlCursoAlumno {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(float saldo, java.util.Date fechaIngreso, int idAlumno, int idEstadoAlumno, int idCurso,
-            int idMotivoBaja){
+    public void crear(float saldo, java.util.Date fechaIngreso, int idAlumno, int idEstadoAlumno, int idCurso){
         
         java.sql.Date fecha1=new Date(fechaIngreso.getTime());
         
@@ -38,7 +37,7 @@ public class CtrlCursoAlumno {
           
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO cursoAlumno (costo,saldo,fechaIngreso,"
-                    + "fechaBaja, idAlumno,idEstadoAlumno,idCurso,idMotivoBaja) VALUES (?,?,?,?,?,?,?,?)");
+                    + "fechaBaja, idAlumno,idEstadoAlumno,idCurso) VALUES (?,?,?,?,?,?,?)");
             
             ps.setFloat(1, 0);
             ps.setFloat(2, saldo);
@@ -47,7 +46,7 @@ public class CtrlCursoAlumno {
             ps.setInt(5, idAlumno);
             ps.setInt(6, idEstadoAlumno);
             ps.setInt(7, idCurso);
-            ps.setInt(8, idMotivoBaja);
+            //ps.setInt(8, idMotivoBaja);
             
             int res = ps.executeUpdate();
             con.close();
@@ -186,7 +185,7 @@ public class CtrlCursoAlumno {
         
         try {
             con=clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.idTipoCurso, tipoCurso.detalle, cursoAlumno.costo FROM cursoAlumno"
+            ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.idTipoCurso, tipoCurso.detalle FROM cursoAlumno"
                     + " INNER JOIN curso ON cursoAlumno.idCurso = curso.idCurso"
                     + " INNER JOIN tipoCurso ON curso.idTipoCurso = tipoCurso.idTipoCurso"
                     + " WHERE cursoAlumno.idAlumno = ? AND cursoAlumno.idEstadoAlumno=1");
@@ -205,7 +204,6 @@ public class CtrlCursoAlumno {
                 
                 tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
                 tipoCurso.setDetalle(rs.getString("detalle"));
-                tipoCurso.setCosto(rs.getFloat("cursoAlumno.costo"));
                 
                 cbCurso.addItem(tipoCurso);
             }

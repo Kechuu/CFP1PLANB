@@ -1235,6 +1235,14 @@ public final class Modificar extends javax.swing.JInternalFrame {
         listaCargo();
         listaTitulo();
         
+        
+        if(JOptionPane.showConfirmDialog(null, "¿Desea seguir modificando?","", + 
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                
+            }else{
+                Principal.activarPanel();
+                dispose();
+            }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     void listaCargo(){

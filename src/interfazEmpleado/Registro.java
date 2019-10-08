@@ -43,7 +43,7 @@ import modelo.Titulo;
  *
  * @author araa
  */
-public class Registro extends javax.swing.JInternalFrame {
+public final class Registro extends javax.swing.JInternalFrame {
 
     public static int banderaEmpleado=0;
     Connection con=clases.Conectar.conexion();
@@ -65,10 +65,25 @@ public class Registro extends javax.swing.JInternalFrame {
      * Creates new form Registro1
      * @param cuil
      */
+
     public Registro(String cuil) {
         initComponents();
         
         desactivar();
+        cargarComponentes();
+        txtDni.setEditable(false);
+        txtCuil.setText(cuil);
+        obtenerDni(cuil);
+    }
+
+    public Registro(){
+        initComponents();
+        desactivar();
+        cargarComponentes();
+        txtDni.setEditable(true);
+        
+    }
+    void cargarComponentes(){
         tipo.cargarComboTipoDocumento(cbTipoDoc);
         lugar.cargarComboLocalidad(cbLocalidad);
         lugar.cargarComboLocalidad(cbNacimiento);
@@ -84,12 +99,9 @@ public class Registro extends javax.swing.JInternalFrame {
         listCargo.setModel(modeloCargo);
         listTitulo.setModel(modeloTitulo);
         
-        txtCuil.setText(cuil);
-        obtenerDni(cuil);
-        
         btnSiguiente.setText("Siguiente");
     }
-
+    
     void obtenerDni(String cuil){
         String dni=cuil.substring(3, 11);
         txtDni.setText(dni);
@@ -1111,16 +1123,11 @@ public class Registro extends javax.swing.JInternalFrame {
             }
 
         }
-        btnSiguiente.setText("Terminar");
+        
         break;
 
         case 2:
-        if(modeloCargo.isEmpty() || modeloTitulo.isEmpty()){
-            JOptionPane.showMessageDialog(null, "No ha seleccionado un cargo y/o título del empleado");
-        }else{
-            btnGuardar.setEnabled(true);
-            btnSiguiente.setEnabled(false);
-        }
+        
         break;
 
         }
@@ -1142,57 +1149,64 @@ public class Registro extends javax.swing.JInternalFrame {
         byte[] imagen = fotoPanel.getBytes();
 
         int hijos=0;
+        
+        if(modeloCargo.isEmpty() || modeloTitulo.isEmpty()){
+            JOptionPane.showMessageDialog(null, "No ha seleccionado un cargo y/o título del empleado");
+        }else{
+            
         //SE VERIFICA SI SE INGRESÓ ALGO CORRESPONDIENTE DE EDIFICIO..
-        if(!txtBloque.getText().equals("") && !txtPiso.getText().equals("") && !txtDepto.getText().equals("")){
-            edificio.crear(txtBloque.getText(), txtPiso.getText(), txtDepto.getText());
-            idEdificio=edificio.leer().getIdEdificio();
-        }
+            if(!txtBloque.getText().equals("") && !txtPiso.getText().equals("") && !txtDepto.getText().equals("")){
+                edificio.crear(txtBloque.getText(), txtPiso.getText(), txtDepto.getText());
+                idEdificio=edificio.leer().getIdEdificio();
+            }
 
         //<SE CREA UN DOMICILIO...
-        domicilioId.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calle.getIdLugar(), idEdificio);
+            domicilioId.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calle.getIdLugar(), idEdificio);
 
         //<SE CREA REGISTRO DE FOTO Y TRAE EL ULTIMO id
-        Foto foto = new Foto();
+            Foto foto = new Foto();
     
-        ctrlFoto.crear(imagen);
-        foto = (Foto) ctrlFoto.leerUltimaFoto();
+            ctrlFoto.crear(imagen);
+            foto = (Foto) ctrlFoto.leerUltimaFoto();
        
         //<AQUI SE DA DE ALTA UNA PERSONA..
-        if(txtHijos.getText().equals("")){
-            hijos=0;
-        }else{
-            hijos=Integer.parseInt(txtHijos.getText());
-        }
-        Sexo item=(Sexo) cbSexo.getSelectedItem();
-        personaCrear.crear(txtNombre.getText(), txtApellido.getText(), fecha.getDate(), item.getIdSexo(), txtCuil.getText(), hijos, txtCorreo.getText(), txtCelular.getText(), domicilioId.leer().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), foto.getIdFoto(), nacimiento.getIdLugar(), false);
+            if(txtHijos.getText().equals("")){
+                hijos=0;
+            }else{
+                hijos=Integer.parseInt(txtHijos.getText());
+            }
+            Sexo item=(Sexo) cbSexo.getSelectedItem();
+            personaCrear.crear(txtNombre.getText(), txtApellido.getText(), fecha.getDate(), item.getIdSexo(), txtCuil.getText(), hijos, txtCorreo.getText(), txtCelular.getText(), domicilioId.leer().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), foto.getIdFoto(), nacimiento.getIdLugar(), false);
 
-        personaDatos=personaCrear.leer();
+            personaDatos=personaCrear.leer(txtCuil.getText());
         
         //SE CREA UN REGISTRO EN LA TABLA EMPLEADO
-        java.util.Date fechaHoy=new Date();
-        Gremio itemGremio=(Gremio) cbGremio.getSelectedItem();
+            java.util.Date fechaHoy=new Date();
+            Gremio itemGremio=(Gremio) cbGremio.getSelectedItem();
         
-        ctrlEmpleado.crear(fechaHoy, personaDatos.getIdPersona(), 1, itemGremio.getIdGremio());
+            ctrlEmpleado.crear(fechaHoy, personaDatos.getIdPersona(), 1, itemGremio.getIdGremio());
         
         //LOS ListModel SON PARA PODER SACAR EL TAMAÑO DE LAS LISTAS, PODER RECORRERLAS Y PODER ACCEDER AL ID DE CADA OBJETO GUARDADO
-        ListModel<Cargo> listaCargo=listCargo.getModel();
-        ListModel<Titulo>listaTitulo=listTitulo.getModel();
+            ListModel<Cargo> listaCargo=listCargo.getModel();
+            ListModel<Titulo>listaTitulo=listTitulo.getModel();
         
-        for(int i=0; i<listaCargo.getSize(); i++){
-            ctrlEmpleadoCargo.crear(listaCargo.getElementAt(i).getIdCargo(), ctrlEmpleado.leer().getIdEmpleado());
-        }
-        for(int i=0; i<listaTitulo.getSize();i++){
-            ctrlEmpleadoTitulo.crear(listaTitulo.getElementAt(i).getIdTitulo(), ctrlEmpleado.leer().getIdEmpleado());
-        }
+            for(int i=0; i<listaCargo.getSize(); i++){
+                ctrlEmpleadoCargo.crear(listaCargo.getElementAt(i).getIdCargo(), ctrlEmpleado.leer().getIdEmpleado());
+            }
+            for(int i=0; i<listaTitulo.getSize();i++){
+                ctrlEmpleadoTitulo.crear(listaTitulo.getElementAt(i).getIdTitulo(), ctrlEmpleado.leer().getIdEmpleado());
+            }
 
-        if(personaDatos.getIdPersona()!=0){
-            JOptionPane.showMessageDialog(null, "Los datos se guardaron");
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
-            return;
+            if(personaDatos.getIdPersona()!=0){
+                JOptionPane.showMessageDialog(null, "Los datos se guardaron");
+            }else{
+                JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
+                return;
+            }
+            btnAsignarCurso.setEnabled(true);
+            btnGuardar.setEnabled(false);
         }
-        btnAsignarCurso.setEnabled(true);
-        btnGuardar.setEnabled(false);
+        
         //limpiar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 

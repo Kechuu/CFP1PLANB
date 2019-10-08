@@ -3,6 +3,7 @@ package usuario;
 import Controlador.CtrlCargo;
 import Controlador.CtrlPersona;
 import Controlador.CtrlUsuario;
+import interfazAlumno.PanelDni;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -47,8 +48,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
         initComponents();
         
         //cargarCombo(cbUsuario);
-        ctrlCargo.cargarCombo(cbJerarquia);
-        
+        ctrlCargo.cargarCombo(cbJerarquia);        
     }
     
     /**
@@ -75,8 +75,8 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         cbJerarquia = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
-        btnCancelar = new javax.swing.JButton();
         btnCrearUser = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -180,21 +180,21 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
-        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-
         btnCrearUser.setBackground(new java.awt.Color(38, 86, 186));
         btnCrearUser.setForeground(new java.awt.Color(255, 255, 255));
         btnCrearUser.setText("Aceptar");
         btnCrearUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearUserActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -205,8 +205,8 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(27, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCrearUser, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCrearUser, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27))
         );
         jPanel3Layout.setVerticalGroup(
@@ -291,16 +291,24 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
 
     private void btnCrearUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUserActionPerformed
         // TODO add your handling code here:
-        if(Arrays.equals(txtPass.getPassword(), txtPass2.getPassword())){
-            Cargo item=(Cargo) cbJerarquia.getSelectedItem();
-            Persona idPersona=(Persona) cbEmpleado.getSelectedItem();
-            jerarquia(item.getDetalle());
-            
-            ctrlUsuario.crear(txtUser.getText(), String.copyValueOf(txtPass.getPassword()),jerarquia, idPersona.getIdPersona());
+    
+        //HACER UNA BUSQUEDA PREVIA SI EXISTE UN USS CON EL MISMO ID DE PERSONA..!
+        if(PanelDni.alumnoEmpleado==3){
             
         }else{
-            JOptionPane.showMessageDialog(null, "Vuelva a ingresar su contraseña..");
+            if(Arrays.equals(txtPass.getPassword(), txtPass2.getPassword())){
+                Cargo item=(Cargo) cbJerarquia.getSelectedItem();
+                Persona idPersona=(Persona) cbEmpleado.getSelectedItem();
+                jerarquia(item.getDetalle());
+            
+                ctrlUsuario.crear(txtUser.getText(), String.copyValueOf(txtPass.getPassword()),jerarquia, idPersona.getIdPersona());
+            
+            }else{
+                JOptionPane.showMessageDialog(null, "Vuelva a ingresar su contraseña..");
+            }
         }
+        
+        
     }//GEN-LAST:event_btnCrearUserActionPerformed
 
     void jerarquia(String cargo){
@@ -322,12 +330,6 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
             break;
         }
     }
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        Principal.activarPanel();
-        dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
     private void cbJerarquiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbJerarquiaItemStateChanged
         // TODO add your handling code here:
         if(evt.getStateChange()==ItemEvent.SELECTED){
@@ -369,6 +371,19 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
             btnCrearUser.requestFocus();
         }
     }//GEN-LAST:event_txtPass2KeyPressed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        Principal.activarPanel();
+        dispose();
+        if(PanelDni.alumnoEmpleado==3){
+            dispose();
+            Login log=new Login();
+            Principal.panelPrincipal.add(log);
+            log.setVisible(true);
+            JOptionPane.showMessageDialog(null, "desde clave de esc");
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     public Vector<Persona> cargarFiltrado(int cargo) {
         //CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
