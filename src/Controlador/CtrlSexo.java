@@ -5,6 +5,7 @@
  */
 package Controlador;
 
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,8 +35,8 @@ public class CtrlSexo {
             int res = ps.executeUpdate();
             con.close();
             
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
     
@@ -57,8 +58,8 @@ public class CtrlSexo {
             
             con.close();
             
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
     public Sexo leer(String detalle){
@@ -79,8 +80,8 @@ public class CtrlSexo {
             }
             
             con.close();
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }catch(HeadlessException | SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
         return sx;
     }
@@ -107,7 +108,7 @@ public class CtrlSexo {
             }
             
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
         
     }

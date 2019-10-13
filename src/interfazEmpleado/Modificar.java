@@ -1028,7 +1028,7 @@ public final class Modificar extends javax.swing.JInternalFrame {
             }
         }
         
-        txtCasa.setText(String.valueOf(persona.getIdDomicilio().getNro()));
+        txtCasa.setText(String.valueOf(persona.getIdDomicilio().getNroLote()));
         txtCelular.setText(persona.getCelular());
         txtCorreo.setText(persona.getCorreo());
         txtFijo.setText(persona.getIdDomicilio().getTelefono());
@@ -1217,7 +1217,7 @@ public final class Modificar extends javax.swing.JInternalFrame {
     
         
     //DOMICILIO    
-        if(personaDatos.getIdDomicilio().getNro()!=Integer.parseInt(txtCasa.getText()) || !personaDatos.getIdDomicilio().getTelefono().equals(txtFijo.getText())
+        if(personaDatos.getIdDomicilio().getNroLote()!=Integer.parseInt(txtCasa.getText()) || !personaDatos.getIdDomicilio().getTelefono().equals(txtFijo.getText())
                 || calle.getIdLugar()!=calleId.getIdLugar()){
             
             domicilioId.cambiarDomicilio(personaDatos.getIdDomicilio().getIdDomicilio(), Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calleId.getIdLugar(), idEdificio);        

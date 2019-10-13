@@ -14,8 +14,6 @@ import interfazAlumno.PanelDni;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.Escuela;
-import modelo.Lugar;
 /**
  *
  * @author jesus
