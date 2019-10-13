@@ -138,7 +138,7 @@ public class CtrlCargo {
             }
             
         } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR cargos");       
         }
         
     }

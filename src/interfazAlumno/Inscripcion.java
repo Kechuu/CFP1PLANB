@@ -1006,6 +1006,9 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                         panelContenedor.setEnabledAt(2, true);
                         panelContenedor.setSelectedIndex(2);
                         panelContenedor.setEnabledAt(1, false);
+                        
+                        btnGuardar.setEnabled(true);
+                        btnGuardar.requestFocus();
                     }else{
                         return;
                     }

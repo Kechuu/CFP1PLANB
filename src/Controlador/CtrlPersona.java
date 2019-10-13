@@ -304,18 +304,18 @@ public class CtrlPersona {
                     PanelDni.validarPersona = validarPersona;
                     
                     switch (PanelDni.alumnoEmpleado) {
-                        case 1:
+                        case 1://ESTE SERA EN CASO DE QUE SE TRATE DE UN ALUMNO
                             {
                                 CambiaPanel cambiaPanel = new CambiaPanel(menu.Principal.panelSubMenu, new AlumnoMenu(persona));
                                 break;
                             }
-                        case 2:
+                        case 2://EN CASO DE QUE SE TRATE DE UN EMPLEADO
                             {
                                 CambiaPanel cambiaPanel=new CambiaPanel(menu.Principal.panelSubMenu, new EmpleadoMenu(persona));
                                 break;
                             }
                             
-                        case 3:
+                        case 3://ESTE ES EN CASO DE QUE SE QUIERA CREAR UN USUARIO..
                         {
                             Principal.desactivarPanel();
                             CrearUsuario crearUs=new CrearUsuario();
@@ -331,21 +331,21 @@ public class CtrlPersona {
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
                 
                 switch(PanelDni.alumnoEmpleado){
-                    case 1:
+                    case 1://EN CASO DE QUE EL ALUMNO NO EXISTA
                         Principal.desactivarPanel();
                         Inscripcion inscripcion =new Inscripcion(CUIL);
                         Principal.panelPrincipal.add(inscripcion);
                         inscripcion.setVisible(true);      
                     break;
                     
-                    case 2:
+                    case 2://EN CASO DE QUE EL EMPLEADO NO EXISTA
                         Principal.desactivarPanel();
                         Registro registro=new Registro(CUIL);
                         Principal.panelPrincipal.add(registro);
                         registro.setVisible(true);
                     break;
                     
-                    case 3:
+                    case 3://ESTE SERA EN CASO DE QUE EL EMPLEADO AL QUE SE QUIERA CREAR, NO ESTE DADO DE ALTA
                         Registro registroE=new Registro(CUIL);
                         Principal.panelPrincipal.add(registroE);
                         registroE.setVisible(true);
