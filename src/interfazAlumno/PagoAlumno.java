@@ -47,7 +47,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         obtenerDni(persona.getCUIL());
         txtNombre.setText(persona.getApellidoPersona()+" "+persona.getNombrePersona());
         fecha.setDate(date);
-        
+        ctrlPagosVarios.llenarTabla(ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno(), tablaHistorialPago);
     }
 
     void obtenerDni(String cuil){
@@ -80,7 +80,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         fecha = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtabla = new javax.swing.JTable();
+        tablaHistorialPago = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         btnRegistrarPago = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -165,7 +165,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Apeliido y Nombre");
 
-        jtabla.setModel(new javax.swing.table.DefaultTableModel(
+        tablaHistorialPago.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -176,7 +176,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jtabla);
+        jScrollPane1.setViewportView(tablaHistorialPago);
 
         btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
         btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -479,8 +479,8 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtabla;
     public javax.swing.JPanel panel;
+    private javax.swing.JTable tablaHistorialPago;
     private javax.swing.JTextField txtCooperativa;
     private javax.swing.JTextField txtDni;
     private javax.swing.JTextField txtImporte;
