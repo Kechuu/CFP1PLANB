@@ -401,12 +401,12 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
         if(cbConceptoPago.getSelectedIndex()!=0 && !txtImporte.getText().equals("")){
-            
+        //SE CREA UN REGISTRO DEL PAGO QUE SE REALIZARA..    
             ctrlPagosVarios.crear(fecha.getDate(), (String) cbConceptoPago.getSelectedItem(), Float.parseFloat(txtImporte.getText()), 1, ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno());
         
+        //EN CASO DE QUE NO SEA PARA UNA CERTIFICACION Y SEA UNA COOPERATIVA SE HARÁ UNA MODIFICACION EN LA TABLA CURSO ALUMNO PARA TENER UN SALDO DE LO ABONADO
             if(cbConceptoPago.getSelectedIndex()==1){
                 TipoCurso itemCurso=(TipoCurso) cbCurso.getSelectedItem();
-                //alumno curso saldo
                 ctrlCursoAlum.pagarSaldo(ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno(), ctrlCurso.leer(itemCurso.getIdTipoCurso()).getIdCurso(), Float.parseFloat(txtSaldo.getText()), Float.parseFloat(txtCooperativa.getText()));
             }
         }else{

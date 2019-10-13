@@ -24,7 +24,7 @@ public class CtrlDomicilio {
     public void crear(int nro, String telefono, int idCalle, int idEdificio){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO domicilio (nro,telefono,idLugar,idEdificio) VALUES (?,?,?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO domicilio (nroLote,telefono,idLugar,idEdificio) VALUES (?,?,?,?)");
             
             ps.setInt(1, nro);
             ps.setString(2, telefono);

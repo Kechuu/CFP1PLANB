@@ -109,6 +109,11 @@ public class Login extends javax.swing.JInternalFrame {
         txtNombreEscuela.setText("Centro De Formación Profesional");
 
         pass.setText("jPasswordField1");
+        pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passActionPerformed(evt);
+            }
+        });
         pass.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 passKeyPressed(evt);
@@ -236,6 +241,10 @@ public class Login extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnNuevoUserActionPerformed
 
+    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passActionPerformed
+
     void confirmacion(){
         
         usuario=ctrlUsuario.confirmar(txtUser.getText(), String.valueOf(pass.getPassword()));
@@ -252,6 +261,7 @@ public class Login extends javax.swing.JInternalFrame {
             
             if(escuela.getIdEscuela()!=0){
                 Principal.activarPanel();
+                
             }else{
                 if(JOptionPane.showConfirmDialog(null, "No a terminado su configuración general ¿Desea completarla antes de continuar?","", + 
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
