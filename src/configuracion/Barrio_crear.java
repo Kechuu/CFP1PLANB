@@ -24,11 +24,13 @@ import modelo.Lugar;
  *
  * @author RociojulietaVazquez
  */
-public class Barrio_crear extends javax.swing.JInternalFrame {
-    CtrlLugar lugar = new CtrlLugar();
+public final class Barrio_crear extends javax.swing.JInternalFrame {
+    //CtrlLugar lugar1 = new CtrlLugar();
     Connection con = clases.Conectar.conexion();
     /**
      * Creates new form crearBarrio
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
     public Barrio_crear() throws ClassNotFoundException, SQLException {
         initComponents();
@@ -82,7 +84,7 @@ public class Barrio_crear extends javax.swing.JInternalFrame {
             
             tabla.setModel(modelo);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
              JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS BARRIOS EN LA TABLA"); 
         }
     }
