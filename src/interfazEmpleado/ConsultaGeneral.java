@@ -59,7 +59,7 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
         String nomBarrio=barrio.getNombre();
         String local=ctrlLugar.leer(barrio.getDe()).getNombre();
         
-        txtDomicilio.setText(calle+" "+nomBarrio+" N° "+personaDatos.getIdDomicilio().getNro());
+        txtDomicilio.setText(calle+" "+nomBarrio+" N° "+personaDatos.getIdDomicilio().getNroLote());
         txtLocalidad.setText(local);
         
         txtTelefono.setText(personaDatos.getIdDomicilio().getTelefono());

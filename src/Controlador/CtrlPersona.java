@@ -30,7 +30,7 @@ public class CtrlPersona {
     ResultSet rs;
     //public int CUIL = 0;
     
-    public void crear(String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, int sexo, String CUIL, int hijoPersona,
+    public void crear(String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, int idSexo, String CUIL, int hijoPersona,
             String correo, String celular, int idDomicilio, int idTipoDocumento, int idNacionalidad, int idFoto, int lugarNacimiento,
             boolean borrado){
         
@@ -40,14 +40,14 @@ public class CtrlPersona {
         
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO persona (nombrePersona,apellidoPersona,fechaNacimiento,sexo,"
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO persona (nombrePersona,apellidoPersona,fechaNacimiento,idSexo,"
                     + "CUIL,hijoPersona,correo,celular,idDomicilio,idTipoDocumento,idNacionalidad,idFoto, lugarNacimiento,borrado"
                     + ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         
             ps.setString(1, nombrePersona.toUpperCase());
             ps.setString(2, apellidoPersona.toUpperCase());
             ps.setDate(3, (java.sql.Date) fecha);
-            ps.setInt(4, sexo);
+            ps.setInt(4, idSexo);
             ps.setString(5, CUIL);
             ps.setInt(6, hijoPersona);
             ps.setString(7, correo);
@@ -64,7 +64,7 @@ public class CtrlPersona {
           
         } catch (NumberFormatException | SQLException e) {
             JOptionPane.showMessageDialog(null, "es el control de persona");
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
     

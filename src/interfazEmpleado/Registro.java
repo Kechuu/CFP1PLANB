@@ -1114,20 +1114,29 @@ public final class Registro extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Le falta completar domicilio: seleccionar localidad, barrio y/o calle");
                 return;
 
-            }else{
+            }else {
+                    if (txtCelular.getText().equalsIgnoreCase("") || txtFijo.getText().equalsIgnoreCase("")
+                            || txtCorreo.getText().equalsIgnoreCase("")) {
+                        if (JOptionPane.showConfirmDialog(null, "Está dejando vacíos campos de celular, teléfono fijo o correo ¿Quiere continuar sin agregarlos?", "", +JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
-                if(JOptionPane.showConfirmDialog(null, "Está dejando vacíos campos de celular, teléfono fijo y correo ¿Quiere continuar sin agregarlos?","", +
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                            panelContenedor.setEnabledAt(2, true);
+                            panelContenedor.setSelectedIndex(2);
+                            panelContenedor.setEnabledAt(1, false);
 
-                panelContenedor.setEnabledAt(2, true);
-                panelContenedor.setSelectedIndex(2);
-                panelContenedor.setEnabledAt(1, false);
-                
-                btnGuardar.setEnabled(true);
-                btnGuardar.requestFocus();
-            }else{
-                return;
-            }
+                            btnGuardar.setEnabled(true);
+                            btnGuardar.requestFocus();
+                        } else {
+                            return;
+                        }
+                    }else{
+                        
+                            panelContenedor.setEnabledAt(2, true);
+                            panelContenedor.setSelectedIndex(2);
+                            panelContenedor.setEnabledAt(1, false);
+
+                            btnGuardar.setEnabled(true);
+                            btnGuardar.requestFocus();
+                    }
 
         }
         

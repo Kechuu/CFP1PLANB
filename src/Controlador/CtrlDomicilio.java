@@ -7,6 +7,7 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import modelo.Domicilio;
 import modelo.Lugar;
@@ -21,12 +22,12 @@ public class CtrlDomicilio {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(int nro, String telefono, int idCalle, int idEdificio){
+    public void crear(int nroLote, String telefono, int idCalle, int idEdificio){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO domicilio (nro,telefono,idLugar,idEdificio) VALUES (?,?,?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO domicilio (nroLote,telefono,idLugar,idEdificio) VALUES (?,?,?,?)");
             
-            ps.setInt(1, nro);
+            ps.setInt(1, nroLote);
             ps.setString(2, telefono);
             ps.setInt(3, idCalle);
             ps.setInt(4, idEdificio);
@@ -34,9 +35,9 @@ public class CtrlDomicilio {
             int res = ps.executeUpdate();
             con.close();
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "pasa por control domiclio");
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
     
@@ -57,13 +58,13 @@ public class CtrlDomicilio {
         
     }
     
-    public void cambiarDomicilio(int idDomicilio, int nro, String telefono, int idCalle, int idEdificio){
+    public void cambiarDomicilio(int idDomicilio, int nroLote, String telefono, int idCalle, int idEdificio){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("UPDATE domicilio SET nro = ?, telefono = ?, idLugar = ?,"
                     + "idEdificio = ? WHERE idDomicilio = ?");
             
-            ps.setInt(1, nro);
+            ps.setInt(1, nroLote);
             ps.setString(2, telefono);
             ps.setInt(3, idCalle);
             ps.setInt(4, idEdificio);
@@ -92,7 +93,7 @@ public class CtrlDomicilio {
             
             if (rs.next()) {
                 domicilio.setIdDomicilio(rs.getInt("idDomicilio"));
-                domicilio.setNro(rs.getInt("nro"));
+                domicilio.setNro(rs.getInt("nroLote"));
                 domicilio.setTelefono(rs.getString("telefono"));
                 domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar")));
                 domicilio.setIdEdificio(rs.getInt("idEdificio"));
@@ -120,7 +121,7 @@ public class CtrlDomicilio {
             
             if (rs.next()) {
                 domicilio.setIdDomicilio(rs.getInt("idDomicilio"));
-                domicilio.setNro(rs.getInt("nro"));
+                domicilio.setNro(rs.getInt("nroLote"));
                 domicilio.setTelefono(rs.getString("telefono"));
                 domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar")));
                 domicilio.setIdEdificio(rs.getInt("idEdificio"));
