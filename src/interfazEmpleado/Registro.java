@@ -1113,21 +1113,7 @@ public final class Registro extends javax.swing.JInternalFrame {
             if(cbLocalidad.getSelectedIndex()==0 || cbBarrio.getSelectedIndex()==0 || cbCalle.getSelectedIndex()==0){
                 JOptionPane.showMessageDialog(null, "Le falta completar domicilio: seleccionar localidad, barrio y/o calle");
 
-<<<<<<< HEAD
-            }else{
-                if(JOptionPane.showConfirmDialog(null, "Está dejando vacíos campos de celular, teléfono fijo y correo ¿Quiere continuar sin agregarlos?","", +
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-
-                panelContenedor.setEnabledAt(2, true);
-                panelContenedor.setSelectedIndex(2);
-                panelContenedor.setEnabledAt(1, false);
-                
-                btnGuardar.setEnabled(true);
-                btnGuardar.requestFocus();
-            }else{
-                return;
-            }
-=======
+            
             }else {
                     if (txtCelular.getText().equalsIgnoreCase("") || txtFijo.getText().equalsIgnoreCase("")
                             || txtCorreo.getText().equalsIgnoreCase("")) {
@@ -1151,8 +1137,6 @@ public final class Registro extends javax.swing.JInternalFrame {
                             btnGuardar.setEnabled(true);
                             btnGuardar.requestFocus();
                     }
->>>>>>> 058c8881e5d4d68cb083b33909d176767ca034e2
-
         }
         
         break;
