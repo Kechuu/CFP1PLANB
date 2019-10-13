@@ -401,7 +401,7 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_listDisponibleValueChanged
 
     private void btnInscribirCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirCursosActionPerformed
-        // TODO add your handling code here:
+       // TODO add your handling code here:
         
         ListModel<TipoCurso> listaCurso=listCurso.getModel();
         

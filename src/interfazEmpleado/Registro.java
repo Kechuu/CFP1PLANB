@@ -20,10 +20,13 @@ import Controlador.CtrlPersona;
 import Controlador.CtrlSexo;
 import Controlador.CtrlTipoDocumento;
 import Controlador.CtrlTitulo;
+import interfazAlumno.PanelDni;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -38,6 +41,7 @@ import modelo.Persona;
 import modelo.Sexo;
 import modelo.TipoDocumento;
 import modelo.Titulo;
+import usuario.CrearUsuario;
 
 /**
  *
@@ -1118,6 +1122,9 @@ public final class Registro extends javax.swing.JInternalFrame {
                 panelContenedor.setEnabledAt(2, true);
                 panelContenedor.setSelectedIndex(2);
                 panelContenedor.setEnabledAt(1, false);
+                
+                btnGuardar.setEnabled(true);
+                btnGuardar.requestFocus();
             }else{
                 return;
             }
@@ -1207,6 +1214,20 @@ public final class Registro extends javax.swing.JInternalFrame {
             btnGuardar.setEnabled(false);
         }
         
+        if(PanelDni.alumnoEmpleado==3){
+            
+            try {
+                this.setVisible(false);
+                CrearUsuario crear= new CrearUsuario(personaDatos);
+                Principal.panelPrincipal.add(crear);
+                //this.setComponentZOrder(crear, 0);
+                
+                crear.setVisible(true);
+                
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         //limpiar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 

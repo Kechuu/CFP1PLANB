@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import modelo.PagoVarios;
 /**
  *
@@ -72,5 +74,49 @@ public class CtrlPagosVarios {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
         return pagoVarios;
+    }
+    
+    public void llenarTabla(int idAlumno, JTable tabla){
+        
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Detalle");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Importe");
+        modelo.addColumn("Saldo");
+        modelo.addColumn("Fecha");
+        
+        Object[] datos= new Object[5];
+        try{
+
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT pagosVarios.detalle, persona.nombrePersona, persona.apellidoPersona, pagosVarios.importe, curso.costo, pagosVarios.fecha FROM persona "
+                    + " INNER JOIN alumno ON persona.idPersona = alumno.idPersona"
+                    + " INNER JOIN pagosVarios ON alumno.idAlumno = pagosVarios.idAlumno"
+                    + " WHERE alumno.idAlumno = ? ORDER BY pagosVarios.fecha");
+           
+            ps.setInt(1, idAlumno);
+            rs=ps.executeQuery();
+            
+            while(rs.next()){
+                
+                datos[0]=rs.getString(1);
+                String nombre= rs.getString(2) +" "+ rs.getString(3);
+                datos[1]=nombre;
+//                datos[2]=rs.getString(3);
+                
+                datos[2]=String.valueOf(rs.getInt(4));
+                datos[3]=String.valueOf(rs.getFloat(5));
+                datos[4]=String.valueOf(rs.getDate(6));
+                
+                modelo.addRow(datos);
+             
+                JOptionPane.showMessageDialog(null, datos);
+            }
+           
+            tabla.setModel(modelo);
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getErrorCode());
+        }
     }
 }

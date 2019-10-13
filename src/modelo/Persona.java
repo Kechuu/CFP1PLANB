@@ -152,6 +152,6 @@ public class Persona {
     
     @Override
     public String toString(){
-        return this.apellidoPersona;
+        return this.apellidoPersona+" "+this.nombrePersona;
     }
 }
