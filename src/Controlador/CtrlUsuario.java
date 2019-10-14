@@ -21,16 +21,16 @@ public class CtrlUsuario {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(String user, String pass, int jerarquia, int idPersona){
+    public void crear(String user, String pass, int jerarquia, int idEmpleado){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO usuario (user,pass,jerarquia,idPersona,borrado) "
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO usuario (user,pass,jerarquia,idEmpleado,borrado) "
                     + "VALUES (?,?,?,?,?)");
         
             ps.setString(1, user);
             ps.setString(2, pass);
             ps.setInt(3, jerarquia);
-            ps.setInt(4, idPersona);
+            ps.setInt(4, idEmpleado);
             ps.setBoolean(5, false);
             
             int res = ps.executeUpdate();
@@ -110,15 +110,16 @@ public class CtrlUsuario {
         }
     }
     
-    public Usuario leer(int idPersona){
+    public Usuario leer(int idEmpleado){
         Usuario usuario = new Usuario();
         CtrlPersona ctrlPersona = new CtrlPersona();
+        CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM usuario WHERE idPersona = ? AND borrado = FALSE");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM usuario WHERE idEmpleado = ? AND borrado = FALSE");
             
-            ps.setInt(1, idPersona);
+            ps.setInt(1, idEmpleado);
             rs = ps.executeQuery();
             
             if(rs.next()){
@@ -126,7 +127,8 @@ public class CtrlUsuario {
                 usuario.setUser(rs.getString("user"));
                 usuario.setPass(rs.getString("pass"));
                 usuario.setJerarquia(rs.getInt("jerarquia"));
-                usuario.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
+                usuario.setIdEmpleado(ctrlEmpleado.leerIdEmpleado(rs.getInt("idEmpleado")));
+                
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -141,6 +143,7 @@ public class CtrlUsuario {
     public Usuario confirmar(String user, String pass){
         Usuario usuario=new Usuario();
         CtrlPersona ctrlPersona=new CtrlPersona();
+        CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
         
         try{
             con=clases.Conectar.conexion();
@@ -156,7 +159,8 @@ public class CtrlUsuario {
                 usuario.setUser(rs.getString("user"));
                 usuario.setPass(rs.getString("pass"));
                 usuario.setJerarquia(rs.getInt("jerarquia"));
-                usuario.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
+                usuario.setIdEmpleado(ctrlEmpleado.leerIdEmpleado(rs.getInt("idEmpleado")));
+                
             }else{
                 JOptionPane.showMessageDialog(null, "No está registrado");
             }

@@ -171,7 +171,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         btnAsignarTrabajo = new javax.swing.JButton();
         btnDeshacerTrabajo = new javax.swing.JButton();
         btnDeshacerPlanes = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
         btncancelar = new javax.swing.JButton();
         fotoPanel = new JPanelWebCam.JPanelWebCam();
@@ -785,16 +784,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
         panelContenedor.addTab("Otros datos", panelOtros);
 
-        btnGuardar.setBackground(new java.awt.Color(38, 86, 186));
-        btnGuardar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuardar.setText("Guardar datos");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-
         btnSiguiente.setBackground(new java.awt.Color(38, 86, 186));
         btnSiguiente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnSiguiente.setForeground(new java.awt.Color(255, 255, 255));
@@ -856,7 +845,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(fotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -870,16 +858,14 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelContenedor)
+                    .addComponent(panelContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(fotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(52, 52, 52)
                         .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -937,7 +923,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         btnAtras.setEnabled(false);
         panelContenedor.setEnabledAt(1, false);
         panelContenedor.setEnabledAt(2, false);
-        btnGuardar.setEnabled(false);
         btnAsignarCurso.setEnabled(false);
     }
     
@@ -1006,28 +991,17 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                         panelContenedor.setEnabledAt(2, true);
                         panelContenedor.setSelectedIndex(2);
                         panelContenedor.setEnabledAt(1, false);
-                        
-                        btnGuardar.setEnabled(true);
-                        btnGuardar.requestFocus();
+                       
                     }else{
                         return;
                     }
                     
                 }
-                //btnSiguiente.setText("Terminar");
+                btnSiguiente.setText("Terminar");
             break;
             
             case 2:
-                /*if(modeloPlan.isEmpty() || modeloTrabajo.isEmpty()){
-                    if(JOptionPane.showConfirmDialog(null, "No ha seleccionado planes y/o trabajos que posee el alumno ¿Quiere continuar sin agregarlos?","", + 
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                        
-                        btnGuardar.setEnabled(true);
-                        btnSiguiente.setEnabled(false);
-                    }else{
-                        return;
-                    }
-                }*/
+                guardar();
             break;
             
                 
@@ -1076,8 +1050,8 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_cbBarrioItemStateChanged
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        boolean bandera=false;
+    void guardar(){
+        boolean planEmpleado=false;
         
         CtrlDomicilio domicilioId=new CtrlDomicilio();
         CtrlEdificio edificio=new CtrlEdificio();
@@ -1098,62 +1072,60 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         if(modeloPlan.isEmpty() || modeloTrabajo.isEmpty()){
             if(JOptionPane.showConfirmDialog(null, "No ha seleccionado planes y/o trabajos que posee el alumno ¿Quiere continuar sin agregarlos?","", + 
              JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                bandera=true;
+                planEmpleado=true;
             }else{
                 return;
-            }
-        }else{
-            //SE VERIFICA SI SE INGRESÓ ALGO CORRESPONDIENTE DE EDIFICIO..
-            if(!txtBloque.getText().equals("") && !txtPiso.getText().equals("") && !txtDepto.getText().equals("")){
-                edificio.crear(txtBloque.getText(), txtPiso.getText(), txtDepto.getText());
-                idEdificio=edificio.leer().getIdEdificio();
-            }
-    //<SE CREA UN DOMICILIO...            
-            domicilioId.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calle.getIdLugar(), idEdificio);            
-            
-    //<SE CREA REGISTRO DE FOTO Y TRAE EL ULTIMO id
-            Foto foto = new Foto();
-    
-            ctrlFoto.crear(imagen);
-            foto = (Foto) ctrlFoto.leerUltimaFoto();
+            }   
+        }
         
-    //<AQUI SE DA DE ALTA UNA PERSONA..       
-            if(txtHijos.getText().equals("")){
-                hijos=0;
-            }else{
-                hijos=Integer.parseInt(txtHijos.getText());
-            }
-            Sexo item=(Sexo) cbSexo.getSelectedItem();
-            personaCrear.crear(txtNombre.getText(), txtApellido.getText(), fecha.getDate(), item.getIdSexo(), txtCuil.getText(), hijos, txtCorreo.getText(), txtCelular.getText(), domicilioId.leer().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), foto.getIdFoto(), nacimiento.getIdLugar(), false);
-        
-            personaDatos=personaCrear.leer(txtCuil.getText());
-        
-    //LOS ListModel SON PARA PODER SACAR EL TAMAÑO DE LAS LISTAS, PODER RECORRERLAS Y PODER ACCEDER AL ID DE CADA OBJETO GUARDADO
-            if(bandera){
-                
-                ListModel<Planes> listaPlanes=listPlan.getModel();
-                ListModel<Trabajo> listaTrabajo=listTrabajo.getModel();
-        
-                for(int i=0; i<listaPlanes.getSize(); i++){
-                    plan.crear(personaCrear.leer().getIdPersona(), listaPlanes.getElementAt(i).getIdPlanes());
-                }
-                for(int i=0; i<listaTrabajo.getSize();i++){
-                    trabajoPersona.crear(personaCrear.leer().getIdPersona(), listaTrabajo.getElementAt(i).getIdTrabajo());
-                }
-            }
+        //SE VERIFICA SI SE INGRESÓ ALGO CORRESPONDIENTE DE EDIFICIO..
+        if (!txtBloque.getText().equals("") && !txtPiso.getText().equals("") && !txtDepto.getText().equals("")) {
+            edificio.crear(txtBloque.getText(), txtPiso.getText(), txtDepto.getText());
+            idEdificio = edificio.leer().getIdEdificio();
+        }
+        //<SE CREA UN DOMICILIO...            
+        domicilioId.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calle.getIdLugar(), idEdificio);
 
-    //<SE CREA UN REGISTRO EN LA TABLA ALUMNO..
-            alumno.crear(personaCrear.leer().getIdPersona());
-        
-            if(personaDatos.getIdPersona()!=0){
-                JOptionPane.showMessageDialog(null, "Los datos se guardaron"); 
-            }else{
-                JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
+        //<SE CREA REGISTRO DE FOTO Y TRAE EL ULTIMO id
+        Foto foto = new Foto();
+
+        ctrlFoto.crear(imagen);
+        foto = (Foto) ctrlFoto.leerUltimaFoto();
+
+        //<AQUI SE DA DE ALTA UNA PERSONA..       
+        if (txtHijos.getText().equals("")) {
+            hijos = 0;
+        } else {
+            hijos = Integer.parseInt(txtHijos.getText());
+        }
+        Sexo item = (Sexo) cbSexo.getSelectedItem();
+        personaCrear.crear(txtNombre.getText(), txtApellido.getText(), fecha.getDate(), item.getIdSexo(), txtCuil.getText(), hijos, txtCorreo.getText(), txtCelular.getText(), domicilioId.leer().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), foto.getIdFoto(), nacimiento.getIdLugar(), false);
+
+        personaDatos = personaCrear.leer(txtCuil.getText());
+
+        //LOS ListModel SON PARA PODER SACAR EL TAMAÑO DE LAS LISTAS, PODER RECORRERLAS Y PODER ACCEDER AL ID DE CADA OBJETO GUARDADO
+        if (planEmpleado) {
+
+            ListModel<Planes> listaPlanes = listPlan.getModel();
+            ListModel<Trabajo> listaTrabajo = listTrabajo.getModel();
+
+            for (int i = 0; i < listaPlanes.getSize(); i++) {
+                plan.crear(personaCrear.leer().getIdPersona(), listaPlanes.getElementAt(i).getIdPlanes());
+            }
+            for (int i = 0; i < listaTrabajo.getSize(); i++) {
+                trabajoPersona.crear(personaCrear.leer().getIdPersona(), listaTrabajo.getElementAt(i).getIdTrabajo());
             }
         }
-    
-    }//GEN-LAST:event_btnGuardarActionPerformed
-    
+
+        //<SE CREA UN REGISTRO EN LA TABLA ALUMNO..
+        alumno.crear(personaCrear.leer().getIdPersona());
+
+        if (personaDatos.getIdPersona() != 0) {
+            JOptionPane.showMessageDialog(null, "Los datos se guardaron");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
+        }
+    }    
     private void btnAsignarPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarPlanActionPerformed
         // TODO add your handling code here:
         
@@ -1315,7 +1287,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnDeshacerPlanes;
     private javax.swing.JButton btnDeshacerTrabajo;
-    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JButton btncancelar;
     private javax.swing.JComboBox<String> cbBarrio;

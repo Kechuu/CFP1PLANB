@@ -49,6 +49,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
     
     Usuario usuarioDatos=new Usuario();
     int jerarquia=0;
+    int idEmpleado=0;
     public CrearUsuario() throws ClassNotFoundException {
         initComponents();
         
@@ -61,7 +62,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
         initComponents();
        
     //SE OBTIENE EL ID-EMPLEADO POR MEDIO DEL ID-PERSONA PASADO POR PARAMETRO    
-        int idEmpleado=ctrlEmpleado.leer(persona.getIdPersona()).getIdEmpleado();
+        idEmpleado=ctrlEmpleado.leer(persona.getIdPersona()).getIdEmpleado();
     
         JOptionPane.showMessageDialog(null, persona.getApellidoPersona()+persona.getNombrePersona());
         ctrlCargo.cargoEmpleado(idEmpleado, cbJerarquia);
@@ -310,7 +311,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
     private void btnCrearUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUserActionPerformed
         // TODO add your handling code here:
         Persona idPersona=(Persona) cbEmpleado.getSelectedItem();
-               
+        idEmpleado=ctrlEmpleado.leer(idPersona.getIdPersona()).getIdEmpleado();
     /*
     EL USUARIO SE PUEDE CREAR DESDE DOS PARTIDAS... DESDE EL LOGIN ANTES DE ENTRAR AL SISTEMA
         Y CUANDO YA SE ESTE EN EL SISTEMA
@@ -324,7 +325,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
                 Cargo item=(Cargo) cbJerarquia.getSelectedItem();
                 jerarquia(item.getDetalle());
             
-                ctrlUsuario.crear(txtUser.getText(), String.copyValueOf(txtPass.getPassword()),jerarquia, idPersona.getIdPersona());
+                ctrlUsuario.crear(txtUser.getText(), String.copyValueOf(txtPass.getPassword()),jerarquia, idEmpleado);
             
                 if(ctrlUsuario.verificar(txtUser.getText(), String.copyValueOf(txtPass.getPassword()))){
                     JOptionPane.showMessageDialog(null, "EL usuario ya ha sido creado... ");
@@ -344,7 +345,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
                 Cargo item=(Cargo) cbJerarquia.getSelectedItem();
                 jerarquia(item.getDetalle());
             
-                ctrlUsuario.crear(txtUser.getText(), String.copyValueOf(txtPass.getPassword()),jerarquia, idPersona.getIdPersona());
+                ctrlUsuario.crear(txtUser.getText(), String.copyValueOf(txtPass.getPassword()),jerarquia, idEmpleado);
             
                 if(ctrlUsuario.verificar(txtUser.getText(), String.copyValueOf(txtPass.getPassword()))){
                     JOptionPane.showMessageDialog(null, "EL usuario ya ha sido creado... ");

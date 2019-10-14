@@ -15,7 +15,7 @@ public class Usuario {
     private String user;
     private String pass;
     private int jerarquia;
-    private Persona idPersona;
+    private Empleado idEmpleado;
     private boolean borrado;
 
     public int getIdUsuario() {
@@ -42,12 +42,12 @@ public class Usuario {
         this.jerarquia = jerarquia;
     }
 
-    public Persona getIdPersona() {
-        return idPersona;
+    public Empleado getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public void setIdPersona(Persona idPersona) {
-        this.idPersona = idPersona;
+    public void setIdEmpleado(Empleado idEmpleadi) {
+        this.idEmpleado = idEmpleado;
     }
 
     public String getUser() {

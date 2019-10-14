@@ -76,7 +76,7 @@ public class CtrlPersona {
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE persona SET nombrePersona = ?, apellidoPersona = ?,"
-                    + "fechaNacimiento = ?, sexo = ?, CUIL = ?, hijoPersona = ?, correo = ?, celular = ?, idDomicilio = ?,"
+                    + "fechaNacimiento = ?, idSexo = ?, CUIL = ?, hijoPersona = ?, correo = ?, celular = ?, idDomicilio = ?,"
                     + "idTipoDocumento = ?, idNacionalidad = ?, idFoto = ?, lugarNacimiento = ?, borrado = ? WHERE idPersona = ?");
             
             ps.setString(1, nombrePersona.toUpperCase());
@@ -152,7 +152,7 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setSexo(rs.getInt("sexo"));
+                persona.setSexo(rs.getInt("idSexo"));
                 persona.setCUIL(rs.getString("CUIL"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
@@ -191,7 +191,7 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setSexo(rs.getInt("sexo"));
+                persona.setSexo(rs.getInt("idSexo"));
                 persona.setCUIL(rs.getString("CUIL"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
@@ -230,7 +230,7 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setSexo(rs.getInt("sexo"));
+                persona.setSexo(rs.getInt("idSexo"));
                 persona.setCUIL(rs.getString("CUIL"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
@@ -287,7 +287,7 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setSexo(rs.getInt("sexo"));
+                persona.setSexo(rs.getInt("idSexo"));
                 persona.setCUIL(rs.getString("CUIL"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
@@ -318,7 +318,7 @@ public class CtrlPersona {
                         case 3://ESTE ES EN CASO DE QUE SE QUIERA CREAR UN USUARIO..
                         {
                             Principal.desactivarPanel();
-                            CrearUsuario crearUs=new CrearUsuario();
+                            CrearUsuario crearUs=new CrearUsuario(persona);
                             Principal.panelPrincipal.add(crearUs);
                             crearUs.setVisible(true);
                         }

@@ -118,7 +118,6 @@ public final class Registro extends javax.swing.JInternalFrame {
         btnAtras.setEnabled(false);
         panelContenedor.setEnabledAt(1, false);
         panelContenedor.setEnabledAt(2, false);
-        btnGuardar.setEnabled(false);
         btnAsignarCurso.setEnabled(false);
     }
     /**
@@ -205,7 +204,6 @@ public final class Registro extends javax.swing.JInternalFrame {
         btnDeshacerTitulo = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
         btnAsignarCurso = new javax.swing.JButton();
         btncancelar = new javax.swing.JButton();
         fotoPanel = new JPanelWebCam.JPanelWebCam();
@@ -878,16 +876,6 @@ public final class Registro extends javax.swing.JInternalFrame {
             }
         });
 
-        btnGuardar.setBackground(new java.awt.Color(38, 86, 186));
-        btnGuardar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuardar.setText("Guardar datos");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-
         btnAsignarCurso.setBackground(new java.awt.Color(38, 86, 186));
         btnAsignarCurso.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnAsignarCurso.setForeground(new java.awt.Color(255, 255, 255));
@@ -933,7 +921,6 @@ public final class Registro extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addComponent(btnSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE))
                     .addComponent(fotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAsignarCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btncancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -943,20 +930,18 @@ public final class Registro extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(panelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(panelContenedor)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(fotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(52, 52, 52)
                         .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1110,11 +1095,11 @@ public final class Registro extends javax.swing.JInternalFrame {
 
             case 1:
             
-            if(cbLocalidad.getSelectedIndex()==0 || cbBarrio.getSelectedIndex()==0 || cbCalle.getSelectedIndex()==0){
-                JOptionPane.showMessageDialog(null, "Le falta completar domicilio: seleccionar localidad, barrio y/o calle");
+                if (cbLocalidad.getSelectedIndex() == 0 || cbBarrio.getSelectedIndex() == 0 || cbCalle.getSelectedIndex() == 0) {
+                    JOptionPane.showMessageDialog(null, "Le falta completar domicilio: seleccionar localidad, barrio y/o calle");
 
-            
-            }else {
+                }else{
+                    
                     if (txtCelular.getText().equalsIgnoreCase("") || txtFijo.getText().equalsIgnoreCase("")
                             || txtCorreo.getText().equalsIgnoreCase("")) {
                         if (JOptionPane.showConfirmDialog(null, "Está dejando vacíos campos de celular, teléfono fijo o correo ¿Quiere continuar sin agregarlos?", "", +JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -1123,32 +1108,28 @@ public final class Registro extends javax.swing.JInternalFrame {
                             panelContenedor.setSelectedIndex(2);
                             panelContenedor.setEnabledAt(1, false);
 
-                            btnGuardar.setEnabled(true);
-                            btnGuardar.requestFocus();
-                        } else {
-                            return;
-                        }
-                    }else{
-                        
-                            panelContenedor.setEnabledAt(2, true);
-                            panelContenedor.setSelectedIndex(2);
-                            panelContenedor.setEnabledAt(1, false);
+                            btnSiguiente.setText("Guardar");
 
-                            btnGuardar.setEnabled(true);
-                            btnGuardar.requestFocus();
+                        }
+                    } else {
+
+                        panelContenedor.setEnabledAt(2, true);
+                        panelContenedor.setSelectedIndex(2);
+                        panelContenedor.setEnabledAt(1, false);
+
+                        btnSiguiente.setText("Guardar");
                     }
-        }
-        
+                }
         break;
 
         case 2:
-        
+            guardar();
         break;
 
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    void guardar(){
         CtrlDomicilio domicilioId=new CtrlDomicilio();
         CtrlEdificio edificio=new CtrlEdificio();
         CtrlPersona personaCrear=new CtrlPersona();
@@ -1219,7 +1200,6 @@ public final class Registro extends javax.swing.JInternalFrame {
                 return;
             }
             btnAsignarCurso.setEnabled(true);
-            btnGuardar.setEnabled(false);
         }
         
         if(PanelDni.alumnoEmpleado==3){
@@ -1236,9 +1216,7 @@ public final class Registro extends javax.swing.JInternalFrame {
                 Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        //limpiar();
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
+    }    
     private void btnAsignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarCursoActionPerformed
         // TODO add your handling code here:
         banderaEmpleado=1;
@@ -1326,7 +1304,6 @@ public final class Registro extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnDeshacerCargo;
     private javax.swing.JButton btnDeshacerTitulo;
-    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JButton btncancelar;
     private javax.swing.JComboBox<Lugar> cbBarrio;
