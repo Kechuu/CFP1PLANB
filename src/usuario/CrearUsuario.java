@@ -50,11 +50,14 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
     Usuario usuarioDatos=new Usuario();
     int jerarquia=0;
     int idEmpleado=0;
+    
+    
     public CrearUsuario() throws ClassNotFoundException {
         initComponents();
         
         //cargarCombo(cbUsuario);
         ctrlCargo.cargarCombo(cbJerarquia);  
+        JOptionPane.showMessageDialog(null, "hola");
         
     }
     
@@ -164,6 +167,11 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
         cbJerarquia.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbJerarquiaItemStateChanged(evt);
+            }
+        });
+        cbJerarquia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbJerarquiaActionPerformed(evt);
             }
         });
 
@@ -434,6 +442,10 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
             log.setVisible(true);
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void cbJerarquiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbJerarquiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbJerarquiaActionPerformed
 
     public Vector<Persona> cargarFiltrado(int cargo) {
         //CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();

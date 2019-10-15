@@ -7,6 +7,8 @@ package configuracion;
 
 import Controlador.CtrlCodigoPostal;
 import Controlador.CtrlLugar;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +22,7 @@ import modelo.Lugar;
 
 /**
  *
- * @author RociojulietaVazquez
+ * @author 
  */
 public class Localidad_modificar extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
@@ -31,6 +33,7 @@ public class Localidad_modificar extends javax.swing.JInternalFrame {
     int c=0;
     /**
      * Creates new form modificarlocalidad
+     * @throws java.lang.ClassNotFoundException
      */
     
     public Localidad_modificar() throws ClassNotFoundException {
@@ -46,7 +49,10 @@ public class Localidad_modificar extends javax.swing.JInternalFrame {
         codigoPostal = ctrlCodigoPostal.leer(Localidad_consulta.idLocalidad);
         bandera=0;
         idCodigoPostal = codigoPostal.getIdCodigoPostal();
+        txtLocalidad.setText(Localidad_consulta.nombreLocalidad);
         txtCodigoActual.setText(codigoPostal.getCodigoPostal());
+        txtCambiarCodigo.setText(codigoPostal.getCodigoPostal());
+        txtLocalidad.setFocusable(true);
     }
 
     
@@ -159,6 +165,12 @@ public class Localidad_modificar extends javax.swing.JInternalFrame {
         txtCodigoActual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodigoActualActionPerformed(evt);
+            }
+        });
+
+        txtCambiarCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCambiarCodigoKeyPressed(evt);
             }
         });
 
@@ -293,6 +305,13 @@ public class Localidad_modificar extends javax.swing.JInternalFrame {
         txtCodigoActual.setText(codigoPostal1.getCodigoPostal());
         }
     }//GEN-LAST:event_cbLocalidadActualItemStateChanged
+
+    private void txtCambiarCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCambiarCodigoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtCambiarCodigoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

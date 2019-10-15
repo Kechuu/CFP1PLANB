@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlTrabajo;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -23,10 +25,12 @@ public class Trabajo_crear extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     /**
      * Creates new form CrearTrabajo
+     * @throws java.lang.ClassNotFoundException
      */
     public Trabajo_crear() throws ClassNotFoundException {
         initComponents();
         llenarTablaTrabajo(tablaTrabajo);
+        txtTrabajo.setFocusable(true);
     }
 
     public void llenarTablaTrabajo(JTable tabla){
@@ -98,6 +102,12 @@ public class Trabajo_crear extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setText("Nuevo trabajo:");
+
+        txtTrabajo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTrabajoKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -195,6 +205,7 @@ public class Trabajo_crear extends javax.swing.JInternalFrame {
             ctrlTrabajo.crear(txtTrabajo.getText());
             llenarTablaTrabajo(tablaTrabajo);
             txtTrabajo.setText("");
+            txtTrabajo.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -204,6 +215,13 @@ public class Trabajo_crear extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtTrabajoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTrabajoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtTrabajoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

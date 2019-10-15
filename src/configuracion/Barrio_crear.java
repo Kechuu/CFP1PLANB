@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlLugar;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +38,8 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
         initComponents();
             cargarComboLocalidad(cbLocalidad);
             txtnuevoBarrio.setEnabled(false);
-            btnAceptar.setEnabled(false);        
+            btnAceptar.setEnabled(false); 
+            txtnuevoBarrio.setFocusable(true);
     }
 
     
@@ -154,6 +157,12 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel4.setText("Nuevo barrio");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+
+        txtnuevoBarrio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtnuevoBarrioKeyPressed(evt);
+            }
+        });
         jPanel1.add(txtnuevoBarrio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 230, -1));
 
         btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
@@ -244,6 +253,7 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
             ctrlLugar.crear(txtnuevoBarrio.getText(), 2, lugar.getIdLugar());
             llenarTablaBarrio(tablaBarrios, lugar.getIdLugar());
             txtnuevoBarrio.setText("");
+            txtnuevoBarrio.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -254,6 +264,7 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
         lugar = (Lugar) cbLocalidad.getSelectedItem();
         llenarTablaBarrio(tablaBarrios, lugar.getIdLugar());
         txtnuevoBarrio.setEnabled(true);
+        txtnuevoBarrio.setFocusable(true);
         btnAceptar.setEnabled(true);
     }//GEN-LAST:event_cbLocalidadItemStateChanged
 
@@ -270,6 +281,13 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
        
     }//GEN-LAST:event_formMousePressed
+
+    private void txtnuevoBarrioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnuevoBarrioKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtnuevoBarrioKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

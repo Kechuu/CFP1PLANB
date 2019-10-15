@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlCargo;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,6 +35,8 @@ public class Cargo_modificar extends javax.swing.JInternalFrame {
                 cbCargoActual.setSelectedIndex(i);
             }
         }
+        txtCambiarCargo.setText(Cargo_consulta.nombreCargo);
+        txtCambiarCargo.setFocusable(true);
     }
 
     public void cargarComboCargo(JComboBox<Cargo> cbCargoActual){
@@ -107,6 +111,12 @@ public class Cargo_modificar extends javax.swing.JInternalFrame {
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel4.setText("Cambiar cargo:");
+
+        txtCambiarCargo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCambiarCargoKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -188,6 +198,7 @@ public class Cargo_modificar extends javax.swing.JInternalFrame {
             cbCargoActual.removeAllItems();
             cargarComboCargo(cbCargoActual);
             txtCambiarCargo.setText("");
+            txtCambiarCargo.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -197,6 +208,13 @@ public class Cargo_modificar extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtCambiarCargoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCambiarCargoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtCambiarCargoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

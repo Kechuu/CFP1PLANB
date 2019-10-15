@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlTrabajo;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,6 +29,7 @@ public class Trabajo_modificar extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     /**
      * Creates new form ModificarTrabajo
+     * @throws java.lang.ClassNotFoundException
      */
     public Trabajo_modificar() throws ClassNotFoundException {
         initComponents();
@@ -36,6 +39,8 @@ public class Trabajo_modificar extends javax.swing.JInternalFrame {
                 cbTrabajoActual.setSelectedIndex(i);
             }
         }
+        txtTrabajo.setText(Trabajo_consulta.nombreTrabajo);
+        txtTrabajo.setFocusable(true);
     }
 
     public void cargarComboCargo(JComboBox<Trabajo> cbTrabajoActual){
@@ -110,6 +115,12 @@ public class Trabajo_modificar extends javax.swing.JInternalFrame {
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel4.setText("Cambiar trabajo:");
+
+        txtTrabajo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTrabajoKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -191,6 +202,7 @@ public class Trabajo_modificar extends javax.swing.JInternalFrame {
             cbTrabajoActual.removeAllItems();
             cargarComboCargo(cbTrabajoActual);
             txtTrabajo.setText("");
+            txtTrabajo.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -200,6 +212,13 @@ public class Trabajo_modificar extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtTrabajoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTrabajoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtTrabajoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

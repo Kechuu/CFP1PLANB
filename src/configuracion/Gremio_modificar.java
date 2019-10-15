@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlGremio;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,6 +35,8 @@ public class Gremio_modificar extends javax.swing.JInternalFrame {
                 cbGremiosActuales.setSelectedIndex(i);
             }
         }
+        txtGremios.setText(Gremio_consulta.nombreGremio);
+        txtGremios.setFocusable(true);
     }
 
     public void cargarComboGremio(JComboBox<Gremio> cbGremiosActuales){
@@ -107,6 +111,12 @@ public class Gremio_modificar extends javax.swing.JInternalFrame {
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel4.setText("Cambiar gremio:");
+
+        txtGremios.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtGremiosKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -188,6 +198,7 @@ public class Gremio_modificar extends javax.swing.JInternalFrame {
             cbGremiosActuales.removeAllItems();
             cargarComboGremio(cbGremiosActuales);
             txtGremios.setText("");
+            txtGremios.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -197,6 +208,13 @@ public class Gremio_modificar extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtGremiosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGremiosKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtGremiosKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

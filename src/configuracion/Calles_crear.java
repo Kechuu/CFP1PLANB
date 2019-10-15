@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlLugar;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,6 +35,7 @@ public final class Calles_crear extends javax.swing.JInternalFrame {
         initComponents();
         cbBarrio.setEnabled(false);
         cargarComboLocalidad(cbLocalidad);
+        txtNuevaCalle.setFocusable(true);
     }
 
     public void cargarComboLocalidad(JComboBox<Lugar> cbLocalidad){
@@ -223,6 +226,12 @@ public final class Calles_crear extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel4.setText("Nueva calle");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
+
+        txtNuevaCalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNuevaCalleKeyPressed(evt);
+            }
+        });
         jPanel1.add(txtNuevaCalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 270, -1));
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
@@ -291,6 +300,7 @@ public final class Calles_crear extends javax.swing.JInternalFrame {
             ctrlLugar.crear(txtNuevaCalle.getText(), 1, lugar.getIdLugar());
             llenarTablaCalle(tablaCalles, lugar.getIdLugar());
             txtNuevaCalle.setText("");
+            txtNuevaCalle.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -316,7 +326,15 @@ public final class Calles_crear extends javax.swing.JInternalFrame {
         lugar = (Lugar) cbBarrio.getSelectedItem();
         
         llenarTablaCalle(tablaCalles, lugar.getIdLugar());
+        txtNuevaCalle.setFocusable(true);
     }//GEN-LAST:event_cbBarrioItemStateChanged
+
+    private void txtNuevaCalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNuevaCalleKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtNuevaCalleKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

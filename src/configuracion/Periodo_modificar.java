@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlPeriodo;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,6 +34,8 @@ public class Periodo_modificar extends javax.swing.JInternalFrame {
                 cbPeriodoActual.setSelectedIndex(i);
             }
         }
+        txtPeriodicidad.setText(Periodo_consulta.nombrePeriodo);
+        txtPeriodicidad.setFocusable(true);
     }
 
     public void cargarComboPeriodo(JComboBox<Periodo> cbPeriodoActual){
@@ -106,6 +110,12 @@ public class Periodo_modificar extends javax.swing.JInternalFrame {
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel4.setText("Cambiar periodicidad:");
+
+        txtPeriodicidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPeriodicidadKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -187,6 +197,7 @@ public class Periodo_modificar extends javax.swing.JInternalFrame {
             cbPeriodoActual.removeAllItems();
             cargarComboPeriodo(cbPeriodoActual);
             txtPeriodicidad.setText("");
+            txtPeriodicidad.setFocusable(true);
         }
         
         
@@ -197,6 +208,13 @@ public class Periodo_modificar extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtPeriodicidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPeriodicidadKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtPeriodicidadKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

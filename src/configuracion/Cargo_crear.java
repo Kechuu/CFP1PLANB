@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlCargo;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -27,6 +29,7 @@ public class Cargo_crear extends javax.swing.JInternalFrame {
     public Cargo_crear() throws ClassNotFoundException {
         initComponents();
         llenarTablaCargo(tablaCargo);
+        txtCargo.setFocusable(true);
     }
 
     
@@ -115,6 +118,12 @@ public class Cargo_crear extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setText("Nuevo cargo:");
+
+        txtCargo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCargoKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -215,9 +224,17 @@ public class Cargo_crear extends javax.swing.JInternalFrame {
             ctrlCargo.crear(txtCargo.getText());
             llenarTablaCargo(tablaCargo);
             txtCargo.setText("");
+            txtCargo.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void txtCargoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCargoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtCargoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
