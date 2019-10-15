@@ -104,8 +104,8 @@ public class CtrlCargo {
                 cbCargo.addItem(cargo);
             }
             
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+        } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento: "+e.getMessage());       
         }
         
     }
