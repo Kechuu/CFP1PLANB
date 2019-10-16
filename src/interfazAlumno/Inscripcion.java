@@ -21,8 +21,11 @@ import Controlador.CtrlTipoCurso;
 import Controlador.CtrlTipoDocumento;
 import Controlador.CtrlTrabajo;
 import com.sun.glass.events.KeyEvent;
+import configuracion.Sexo_crear;
 import java.awt.event.ItemEvent;
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -149,11 +152,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         txtPiso = new javax.swing.JTextField();
         txtDepto = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        txtManzana = new javax.swing.JTextField();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        txtLote = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         txtCasa = new javax.swing.JTextField();
         panelOtros = new javax.swing.JPanel();
@@ -391,7 +389,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel19.setText("Barrio");
+        jLabel19.setText("Barrio:");
 
         panel.setBackground(new java.awt.Color(255, 255, 255));
         panel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "contactos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
@@ -457,7 +455,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jLabel21.setText("Calle");
+        jLabel21.setText("Calle/Manzana:");
 
         cbCalle.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -526,56 +524,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Sin nombre"));
-
-        txtManzana.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        txtManzana.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtManzanaKeyPressed(evt);
-            }
-        });
-
-        jLabel30.setText("Manzana");
-
-        jLabel31.setText("Lote");
-
-        txtLote.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtLote, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel30))
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addGap(33, 33, 33)
-                            .addComponent(txtManzana, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel31))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel30)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtManzana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel31)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-
-        jLabel20.setText("N° de casa");
+        jLabel20.setText("N° de casa/lote:");
 
         txtCasa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
@@ -593,17 +542,16 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel19)
                                     .addComponent(jLabel21)
                                     .addComponent(jLabel20))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbBarrio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCasa, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cbBarrio, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCasa, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(51, 51, 51)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(73, 73, 73))
                             .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 25, Short.MAX_VALUE))
+                        .addGap(0, 9, Short.MAX_VALUE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
@@ -624,12 +572,10 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                         .addComponent(jLabel16)
                         .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -858,7 +804,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
+                    .addComponent(panelContenedor)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(fotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1217,6 +1163,18 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
     private void btnAgregarSxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarSxActionPerformed
         // TODO add your handling code here:
+        try {
+    //ESTA BANDERA ES PARA SABER SI, EN CASO DE CANCELAR, SE DEBA ACTIVAR LOS PANELES DEL MENU PRINCIPAL O NO..        
+            Sexo_crear.sxBandera=1;
+            
+            Sexo_crear sxC = new Sexo_crear();
+            Principal.panelPrincipal.add(sxC);
+            this.setComponentZOrder(sxC, 0);
+            sxC.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnAgregarSxActionPerformed
 
     private void cbTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTipoItemStateChanged
@@ -1239,13 +1197,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_txtApellidoKeyPressed
-
-    private void txtManzanaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtManzanaKeyPressed
-        // TODO add your handling code here:
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            txtLote.requestFocus();
-        }
-    }//GEN-LAST:event_txtManzanaKeyPressed
 
     private void txtBloqueKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBloqueKeyPressed
         // TODO add your handling code here:
@@ -1320,8 +1271,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1331,7 +1280,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1352,8 +1300,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDni;
     private javax.swing.JTextField txtFijo;
     private javax.swing.JTextField txtHijos;
-    private javax.swing.JTextField txtLote;
-    private javax.swing.JTextField txtManzana;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPiso;
     // End of variables declaration//GEN-END:variables

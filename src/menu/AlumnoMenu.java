@@ -7,7 +7,7 @@ package menu;
 
 import interfazAlumno.AsignarCurso;
 import interfazAlumno.Modificar;
-import interfazAlumno.Eliminar;
+import interfazAlumno.DarBajaCurso;
 //import interfazAlumno.Pago;
 import interfazAlumno.PagoAlumno;
 import interfazAlumno.PanelDni;
@@ -177,7 +177,7 @@ public class AlumnoMenu extends javax.swing.JPanel {
         Principal.desactivarPanel();
         menu.Principal.menuAlumno=1;
         
-        Eliminar baja= new Eliminar(objPersona);
+        DarBajaCurso baja= new DarBajaCurso(objPersona);
         Principal.panelPrincipal.add(baja);
         baja.setVisible(true);
     }//GEN-LAST:event_btnBajaAlumnoActionPerformed

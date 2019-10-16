@@ -23,6 +23,7 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class Sexo_crear extends javax.swing.JInternalFrame {
+    public static int sxBandera=0;
     Connection con = clases.Conectar.conexion();
     /**
      * Creates new form CrearTrabajo
@@ -179,9 +180,7 @@ public class Sexo_crear extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
         );
 
         pack();
@@ -202,8 +201,12 @@ public class Sexo_crear extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
-        dispose();
+        if(sxBandera==1){
+            dispose();
+        }else{
+            Principal.activarPanel();
+            dispose();    
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtSexoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSexoKeyPressed

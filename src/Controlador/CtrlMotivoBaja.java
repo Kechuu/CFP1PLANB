@@ -70,6 +70,7 @@ public class CtrlMotivoBaja {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                motivoBaja.setIdMotivoBaja(rs.getInt("idMotivoBaja"));
                 motivoBaja.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "MB No existe lo que está buscando");
@@ -90,6 +91,7 @@ public class CtrlMotivoBaja {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                motivoBaja.setIdMotivoBaja(rs.getInt("idMotivoBaja"));
                 motivoBaja.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "MB No existe lo que está buscando");

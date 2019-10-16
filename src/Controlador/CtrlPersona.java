@@ -98,7 +98,7 @@ public class CtrlPersona {
             int res = ps.executeUpdate();
             
             if(res > 0){
-                //Nada de Nada :v
+                JOptionPane.showMessageDialog(null, "Se modificaron los datos");
             }else{
                 JOptionPane.showMessageDialog(null, "Error al guardar los cambios");
             }

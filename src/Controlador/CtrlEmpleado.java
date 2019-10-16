@@ -43,17 +43,18 @@ public class CtrlEmpleado {
         }
     }
     
-    public void darDeBaja(Date fechaBaja, int idPersona, int idEstadoEmpleado, int idEmpleado){
+    public void darDeBaja(java.util.Date fechaBaja, int idPersona, int idEstadoEmpleado){
+        
+        java.sql.Date fecha=new Date(fechaBaja.getTime());
+        
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE empleado SET fechaBaja = ?, borrado = ?, idEstadoEmpleado = ?"
-                    + " WHERE idEmpleado = ? AND idPersona = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE empleado SET fechaBaja = ?, idEstadoEmpleado = ?"
+                    + " WHERE idPersona = ?");
             
-            ps.setDate(1, fechaBaja);
-            ps.setBoolean(2, true);
-            ps.setInt(3, idEstadoEmpleado);
-            ps.setInt(4, idEmpleado);
-            ps.setInt(5, idPersona);
+            ps.setDate(1, fecha);
+            ps.setInt(2, idEstadoEmpleado);
+            ps.setInt(3, idPersona);
             
             int res = ps.executeUpdate();
             
@@ -111,6 +112,7 @@ public class CtrlEmpleado {
             
             if (rs.next()) {
                 empleado.setIdEmpleado(rs.getInt("idEmpleado"));
+                empleado.setFechaIngreso(rs.getDate("fechaIngreso"));
                 empleado.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
                 empleado.setIdEstadoEmpleado(ctrlEstadoEmpleado.leer(rs.getInt("idEstadoEmpleado")));
                 empleado.setIdGremio(ctrlGremio.leer(rs.getInt("idGremio")));

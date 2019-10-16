@@ -22,7 +22,7 @@ import modelo.TipoCurso;
  *
  * @author Nero
  */
-public class Eliminar extends javax.swing.JInternalFrame {
+public class DarBajaCurso extends javax.swing.JInternalFrame {
 
     CtrlCurso ctrlCurso=new CtrlCurso();
     CtrlCursoAlumno ctrlCursoAlum= new CtrlCursoAlumno();
@@ -35,11 +35,11 @@ public class Eliminar extends javax.swing.JInternalFrame {
     /**
      * Creates new form Eliminar
      */
-    public Eliminar() {
+    public DarBajaCurso() {
         initComponents();
     }
     
-    public Eliminar(Persona persona){
+    public DarBajaCurso(Persona persona){
         initComponents();
         
         //btnDarBaja.setEnabled(false);
@@ -156,6 +156,19 @@ public class Eliminar extends javax.swing.JInternalFrame {
 
         txtDetalle.setColumns(20);
         txtDetalle.setRows(5);
+        txtDetalle.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDetalleFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDetalleFocusLost(evt);
+            }
+        });
+        txtDetalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtDetalleKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtDetalle);
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -166,12 +179,10 @@ public class Eliminar extends javax.swing.JInternalFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel13)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -302,10 +313,13 @@ public class Eliminar extends javax.swing.JInternalFrame {
     public boolean isOptimizedDrawingEnabled(){
         return false;
     }
+    
     private void btnDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarBajaActionPerformed
         // TODO add your handling code here:
-        ListModel<TipoCurso>modelo=listCursos.getModel();        
+        //ListModel<TipoCurso>modelo=listCursos.getModel();
+    //CAPTURA EL ITEM QUE SE HAYA SELECCIONADO DE LA LISTA..
         int idCurso=ctrlCurso.leer(listCursos.getSelectedValue().getIdTipoCurso()).getIdCurso();
+        
         
         if(cbMotivoBaja.getSelectedIndex()!=0 && txtDetalle.getText().equals("")){
             MotivoBaja itemMotivo=(MotivoBaja) cbMotivoBaja.getSelectedItem();
@@ -328,6 +342,20 @@ public class Eliminar extends javax.swing.JInternalFrame {
             txtDetalle.setEnabled(true);
         }
     }//GEN-LAST:event_cbMotivoBajaItemStateChanged
+
+    private void txtDetalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDetalleKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtDetalleKeyPressed
+
+    private void txtDetalleFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDetalleFocusGained
+        // TODO add your handling code here:
+        cbMotivoBaja.setEnabled(false);
+    }//GEN-LAST:event_txtDetalleFocusGained
+
+    private void txtDetalleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDetalleFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDetalleFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

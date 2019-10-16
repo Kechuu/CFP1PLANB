@@ -8,6 +8,9 @@ package menu;
 import interfazEmpleado.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Persona;
 import usuario.Login;
 /**
@@ -139,9 +142,15 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         this.setVisible(false);
         Principal.desactivarPanel();
         
-        ConsultaEstado empleado=new ConsultaEstado();
-        Principal.panelPrincipal.add(empleado);
-        empleado.setVisible(true);
+        ConsultaGeneral empleado;
+        try {
+            empleado = new ConsultaGeneral(personaObj);
+            Principal.panelPrincipal.add(empleado);
+            empleado.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(EmpleadoMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_btnConsultarEstadoActionPerformed
 
     private void btnModificarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarDatosActionPerformed
@@ -160,7 +169,7 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         this.setVisible(false);
         Principal.desactivarPanel();
         
-        Eliminar empleado=new Eliminar();
+        DarBajaCurso empleado=new DarBajaCurso(personaObj);
         Principal.panelPrincipal.add(empleado);
         empleado.setVisible(true);
     }//GEN-LAST:event_btnDarBajaActionPerformed

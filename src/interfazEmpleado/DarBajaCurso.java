@@ -8,9 +8,12 @@ package interfazEmpleado;
 import Controlador.CtrlAlumno;
 import Controlador.CtrlCurso;
 import Controlador.CtrlCursoAlumno;
+import Controlador.CtrlCursoProfesor;
+import Controlador.CtrlEmpleado;
 import Controlador.CtrlMotivoBaja;
 import Controlador.CtrlPersona;
 import java.util.Date;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import menu.Principal;
@@ -25,13 +28,14 @@ import modelo.TipoCurso;
 public class DarBajaCurso extends javax.swing.JInternalFrame {
 
     CtrlCurso ctrlCurso=new CtrlCurso();
-    CtrlCursoAlumno ctrlCursoAlum= new CtrlCursoAlumno();
-    CtrlAlumno ctrlAlumno=new CtrlAlumno();
     CtrlPersona ctrlPersona=new CtrlPersona();
     Persona personaModelo=new Persona();
-    CtrlMotivoBaja ctrlMotivo=new CtrlMotivoBaja();
-    
+    CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
+    CtrlCursoProfesor ctrlCursoProfesor=new CtrlCursoProfesor();
     java.util.Date date=new Date();
+    
+    DefaultListModel<TipoCurso>modeloCursos;
+    DefaultListModel<TipoCurso>modeloDisponible;
     /**
      * Creates new form Eliminar
      */
@@ -40,7 +44,18 @@ public class DarBajaCurso extends javax.swing.JInternalFrame {
     }
     
     public DarBajaCurso(Persona persona){
-  
+
+        initComponents();
+        
+        personaModelo=persona;
+        
+        txtNombre.setText(personaModelo.getApellidoPersona()+" "+personaModelo.getNombrePersona());
+        obtenerDni();
+        
+        ctrlCursoProfesor.llenarLista(ctrlEmpleado.leer(persona.getIdPersona()).getIdEmpleado(), listDisponible);
+        fecha.setDate(date);
+        
+        modeloDisponible=(DefaultListModel<TipoCurso>) listDisponible.getModel();
     }
     
     final void obtenerDni(){
@@ -62,11 +77,7 @@ public class DarBajaCurso extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        listCursos = new javax.swing.JList<>();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        listCursoBaja = new javax.swing.JList<>();
-        btnAsignar = new javax.swing.JButton();
-        btnDeshacer = new javax.swing.JButton();
+        listDisponible = new javax.swing.JList<>();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txtDni = new javax.swing.JTextField();
@@ -113,29 +124,7 @@ public class DarBajaCurso extends javax.swing.JInternalFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cursos Inscriptos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
-        jScrollPane3.setViewportView(listCursos);
-
-        jScrollPane4.setViewportView(listCursoBaja);
-
-        btnAsignar.setBackground(new java.awt.Color(38, 86, 186));
-        btnAsignar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnAsignar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAsignar.setText(">>");
-        btnAsignar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAsignarActionPerformed(evt);
-            }
-        });
-
-        btnDeshacer.setBackground(new java.awt.Color(38, 86, 186));
-        btnDeshacer.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnDeshacer.setForeground(new java.awt.Color(255, 255, 255));
-        btnDeshacer.setText("<<");
-        btnDeshacer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeshacerActionPerformed(evt);
-            }
-        });
+        jScrollPane3.setViewportView(listDisponible);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -143,29 +132,15 @@ public class DarBajaCurso extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAsignar, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                    .addComponent(btnDeshacer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
+                .addComponent(jScrollPane3)
                 .addContainerGap())
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(btnAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnDeshacer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -174,6 +149,9 @@ public class DarBajaCurso extends javax.swing.JInternalFrame {
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setText("Empleado:");
 
+        txtDni.setEditable(false);
+
+        txtNombre.setEditable(false);
         txtNombre.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         btnDarBaja.setBackground(new java.awt.Color(38, 86, 186));
@@ -194,27 +172,25 @@ public class DarBajaCurso extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(346, 346, 346)
-                .addComponent(btnDarBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(311, 311, 311))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(66, 66, 66)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDarBaja, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -229,16 +205,18 @@ public class DarBajaCurso extends javax.swing.JInternalFrame {
                         .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel11)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel12)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel12))
                     .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDarBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnDarBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -260,30 +238,26 @@ public class DarBajaCurso extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        
-            Principal.activarPanel();
-            dispose();    
+        // TODO add your handling code here:        
+        Principal.activarPanel();
+        dispose();    
         
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarBajaActionPerformed
+
+        //DefaultListModel lista=(DefaultListModel) listDisponible.getModel();
+        
+        int idCurso=ctrlCurso.leer(listDisponible.getSelectedValue().getIdTipoCurso()).getIdCurso();
+        
+        ctrlCursoProfesor.borrar(ctrlEmpleado.leer(personaModelo.getIdPersona()).getIdEmpleado(), idCurso);
+        
     }//GEN-LAST:event_btnDarBajaActionPerformed
-
-    private void btnAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAsignarActionPerformed
-
-    private void btnDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeshacerActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAsignar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnDarBaja;
-    private javax.swing.JButton btnDeshacer;
     private com.toedter.calendar.JDateChooser fecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -293,9 +267,7 @@ public class DarBajaCurso extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JList<TipoCurso> listCursoBaja;
-    private javax.swing.JList<TipoCurso> listCursos;
+    private javax.swing.JList<TipoCurso> listDisponible;
     private javax.swing.JTextField txtDni;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
