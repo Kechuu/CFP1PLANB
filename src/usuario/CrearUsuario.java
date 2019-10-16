@@ -50,6 +50,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
     Usuario usuarioDatos=new Usuario();
     int jerarquia=0;
     int idEmpleado=0;
+    
     public CrearUsuario() throws ClassNotFoundException {
         initComponents();
         
@@ -64,7 +65,6 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
     //SE OBTIENE EL ID-EMPLEADO POR MEDIO DEL ID-PERSONA PASADO POR PARAMETRO    
         idEmpleado=ctrlEmpleado.leer(persona.getIdPersona()).getIdEmpleado();
     
-        JOptionPane.showMessageDialog(null, persona.getApellidoPersona()+persona.getNombrePersona());
         ctrlCargo.cargoEmpleado(idEmpleado, cbJerarquia);
         
         cbEmpleado.addItem(persona);

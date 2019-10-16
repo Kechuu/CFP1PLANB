@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import modelo.Titulo;
 /**
  *
@@ -106,6 +108,41 @@ public class CtrlTitulo {
             
         } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+        }
+        
+    }
+    public void llenarTabla(int idPersona, JTable tabla) throws SQLException{
+        
+        con=clases.Conectar.conexion();
+    
+        ps=(PreparedStatement)con.prepareStatement("SELECT titulo.detalle FROM titulo"
+                + " INNER JOIN empleadoTitulo ON titulo.idTitulo = empleadoTitulo.idTitulo"
+                + " INNER JOIN empleado ON empleadoTitulo.idEmpleado = empleado.idEmpleado"
+                + " WHERE empleado.idPersona=?");
+        
+        ps.setInt(1, idPersona);
+        
+        rs=ps.executeQuery();
+        
+        DefaultTableModel modelo =new DefaultTableModel();
+        modelo.addColumn("Titulo");
+        
+        tabla.setModel(modelo);
+        
+        String[] datos= new String[1];
+        try{
+            
+            while(rs.next()){
+                
+	            datos[0]=rs.getString(1);
+	            
+            	    modelo.addRow(datos);
+            }
+
+             tabla.setModel(modelo);
+         }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LAS LOCALIDADES EN LA TABLA"); 
         }
         
     }

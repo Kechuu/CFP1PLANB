@@ -7,11 +7,19 @@ package interfazEmpleado;
 
 import Controlador.CtrlAlumno;
 import Controlador.CtrlCursoAlumno;
+import Controlador.CtrlCursoProfesor;
+import Controlador.CtrlEmpleado;
+import Controlador.CtrlGremio;
 import Controlador.CtrlLugar;
 import Controlador.CtrlPersonaTrabajo;
 import Controlador.CtrlPlanPersona;
+import Controlador.CtrlTitulo;
+import Controlador.CtrlTrabajo;
+import java.sql.Date;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import menu.Principal;
+import modelo.Empleado;
 import modelo.Lugar;
 import modelo.Persona;
 
@@ -22,13 +30,13 @@ import modelo.Persona;
 public class ConsultaGeneral extends javax.swing.JInternalFrame {
 
     CtrlLugar ctrlLugar=new CtrlLugar();
-    CtrlCursoAlumno ctrlCursoAlumno=new CtrlCursoAlumno();
-    CtrlPersonaTrabajo ctrlPersonaTrabajo=new CtrlPersonaTrabajo();
-    CtrlPlanPersona ctrlPlanPersona=new CtrlPlanPersona();
-    CtrlAlumno ctrlAlumno=new CtrlAlumno();
     Lugar barrio=new Lugar();
     Persona personaDatos=new Persona();
-    
+
+    CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
+    CtrlGremio ctrlGremio=new CtrlGremio();
+    CtrlTitulo ctrlTitulo=new CtrlTitulo();
+    CtrlCursoProfesor ctrlCursoP=new CtrlCursoProfesor();
     /**
      * Creates new form EstadoAlumno
      */
@@ -39,6 +47,7 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
     /**
      *
      * @param persona
+     * @throws java.sql.SQLException
      */
     public ConsultaGeneral(Persona persona) throws SQLException{
         initComponents();
@@ -65,9 +74,11 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
         txtTelefono.setText(personaDatos.getIdDomicilio().getTelefono());
         txtCorreo.setText(personaDatos.getCorreo());
         
-        
+        txtFechaIngreso.setText(String.valueOf(ctrlEmpleado.leer(personaDatos.getIdPersona()).getFechaIngreso()));
         //TABLAS
-        
+        ctrlCursoP.llenarTabla(ctrlEmpleado.leer(personaDatos.getIdPersona()).getIdEmpleado(), tablaCurso);
+        ctrlGremio.llenarTabla(personaDatos.getIdPersona(), tablaGremio);
+        ctrlTitulo.llenarTabla(personaDatos.getIdPersona(), tablaTitulo);
     }
     
     void obtenerDni(String cuil){
@@ -105,12 +116,12 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
         tablaCurso = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tablaTrabajo = new javax.swing.JTable();
+        tablaGremio = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tablaPlanes = new javax.swing.JTable();
+        tablaTitulo = new javax.swing.JTable();
         btncancelar = new javax.swing.JButton();
-        txtNombre2 = new javax.swing.JTextField();
+        txtFechaIngreso = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
@@ -277,7 +288,7 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Cursos a cargo", jPanel3);
 
-        tablaTrabajo.setModel(new javax.swing.table.DefaultTableModel(
+        tablaGremio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -288,7 +299,7 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
                 "Gremio"
             }
         ));
-        jScrollPane3.setViewportView(tablaTrabajo);
+        jScrollPane3.setViewportView(tablaGremio);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -313,7 +324,7 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Gremio", jPanel4);
 
-        tablaPlanes.setModel(new javax.swing.table.DefaultTableModel(
+        tablaTitulo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -324,7 +335,7 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
                 "Titulo"
             }
         ));
-        jScrollPane4.setViewportView(tablaPlanes);
+        jScrollPane4.setViewportView(tablaTitulo);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -355,8 +366,8 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
             }
         });
 
-        txtNombre2.setEditable(false);
-        txtNombre2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
+        txtFechaIngreso.setEditable(false);
+        txtFechaIngreso.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         jLabel24.setText("Fecha de ingreso:");
 
@@ -377,7 +388,7 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel24)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombre2))
+                        .addComponent(txtFechaIngreso))
                     .addComponent(jTabbedPane1))
                 .addContainerGap())
         );
@@ -388,7 +399,7 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel24))
                         .addGap(18, 18, 18)
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -441,12 +452,6 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -458,22 +463,15 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel panel1;
-    private javax.swing.JPanel panel2;
     private javax.swing.JTable tablaCurso;
-    private javax.swing.JTable tablaPlanes;
-    private javax.swing.JTable tablaTrabajo;
+    private javax.swing.JTable tablaGremio;
+    private javax.swing.JTable tablaTitulo;
     private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtCorreo1;
     private javax.swing.JTextField txtDni;
-    private javax.swing.JTextField txtDni1;
     private javax.swing.JTextField txtDomicilio;
-    private javax.swing.JTextField txtDomicilio1;
+    private javax.swing.JTextField txtFechaIngreso;
     private javax.swing.JTextField txtLocalidad;
-    private javax.swing.JTextField txtLocalidad1;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombre1;
-    private javax.swing.JTextField txtNombre2;
     private javax.swing.JTextField txtTelefono;
-    private javax.swing.JTextField txtTelefono1;
     // End of variables declaration//GEN-END:variables
 }
