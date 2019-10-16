@@ -10,7 +10,9 @@ import usuario.*;
 import java.awt.Dimension;
 
 import clases.CambiaPanel;
+import com.sun.glass.events.KeyEvent;
 import interfazAlumno.PanelDni;
+import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,22 +72,22 @@ public class Principal extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         panelSubMenu = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        menuConfiguracion = new javax.swing.JMenu();
+        menuCalle = new javax.swing.JMenuItem();
+        menuBarrio = new javax.swing.JMenuItem();
+        menuLocalidad = new javax.swing.JMenuItem();
+        menuNacionalidad = new javax.swing.JMenuItem();
+        menuTipoDoc = new javax.swing.JMenuItem();
+        meunCargo = new javax.swing.JMenuItem();
+        menuTitulo = new javax.swing.JMenuItem();
+        menuPlan = new javax.swing.JMenuItem();
+        menuGremio = new javax.swing.JMenuItem();
+        menuSexo = new javax.swing.JMenuItem();
+        menuLugarCursado = new javax.swing.JMenuItem();
+        menuPeriodo = new javax.swing.JMenuItem();
+        menuTrabajo = new javax.swing.JMenuItem();
+        menuSalir = new javax.swing.JMenu();
+        menuOpcionSalir = new javax.swing.JMenuItem();
 
         jMenuItem8.setText("jMenuItem8");
 
@@ -320,125 +322,140 @@ public class Principal extends javax.swing.JFrame {
         escritorio.add(panelPrincipal);
         panelPrincipal.setBounds(0, 100, 1000, 500);
 
-        jMenu1.setText("Configuración");
+        menuConfiguracion.setText("Configuración");
 
-        jMenuItem2.setText("Calle");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuCalle.setText("Calle");
+        menuCalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuCalleActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
-
-        jMenuItem1.setText("Barrio");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+        menuCalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                menuCalleKeyPressed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        menuConfiguracion.add(menuCalle);
 
-        jMenuItem3.setText("Localidad");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menuBarrio.setText("Barrio");
+        menuBarrio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menuBarrioActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
-
-        jMenuItem14.setText("Nacionalidad");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
+        menuBarrio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                menuBarrioKeyPressed(evt);
             }
         });
-        jMenu1.add(jMenuItem14);
+        menuConfiguracion.add(menuBarrio);
 
-        jMenuItem17.setText("Tipo Documento");
-        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+        menuLocalidad.setText("Localidad");
+        menuLocalidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem17ActionPerformed(evt);
+                menuLocalidadActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem17);
-
-        jMenuItem4.setText("Cargo");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+        menuLocalidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                menuLocalidadKeyPressed(evt);
             }
         });
-        jMenu1.add(jMenuItem4);
+        menuConfiguracion.add(menuLocalidad);
 
-        jMenuItem6.setText("Titulo");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        menuNacionalidad.setText("Nacionalidad");
+        menuNacionalidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                menuNacionalidadActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem6);
+        menuConfiguracion.add(menuNacionalidad);
 
-        jMenuItem7.setText("Plan");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        menuTipoDoc.setText("Tipo Documento");
+        menuTipoDoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                menuTipoDocActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem7);
+        menuConfiguracion.add(menuTipoDoc);
 
-        jMenuItem10.setText("Gremio");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        meunCargo.setText("Cargo");
+        meunCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                meunCargoActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem10);
+        menuConfiguracion.add(meunCargo);
 
-        jMenuItem16.setText("Sexo");
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+        menuTitulo.setText("Titulo");
+        menuTitulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
+                menuTituloActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem16);
+        menuConfiguracion.add(menuTitulo);
 
-        jMenuItem11.setText("Lugar de Cursado");
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+        menuPlan.setText("Plan");
+        menuPlan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
+                menuPlanActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem11);
+        menuConfiguracion.add(menuPlan);
 
-        jMenuItem15.setText("Periodo");
-        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+        menuGremio.setText("Gremio");
+        menuGremio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem15ActionPerformed(evt);
+                menuGremioActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem15);
+        menuConfiguracion.add(menuGremio);
 
-        jMenuItem12.setText("Trabajo");
-        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+        menuSexo.setText("Sexo");
+        menuSexo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem12ActionPerformed(evt);
+                menuSexoActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem12);
+        menuConfiguracion.add(menuSexo);
 
-        menuBar.add(jMenu1);
-
-        jMenu2.setText("Salir");
-
-        jMenuItem5.setText("Salir");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        menuLugarCursado.setText("Lugar de Cursado");
+        menuLugarCursado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                menuLugarCursadoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        menuConfiguracion.add(menuLugarCursado);
 
-        menuBar.add(jMenu2);
+        menuPeriodo.setText("Periodo");
+        menuPeriodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPeriodoActionPerformed(evt);
+            }
+        });
+        menuConfiguracion.add(menuPeriodo);
+
+        menuTrabajo.setText("Trabajo");
+        menuTrabajo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTrabajoActionPerformed(evt);
+            }
+        });
+        menuConfiguracion.add(menuTrabajo);
+
+        menuBar.add(menuConfiguracion);
+
+        menuSalir.setText("Salir");
+
+        menuOpcionSalir.setText("Salir");
+        menuOpcionSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuOpcionSalirActionPerformed(evt);
+            }
+        });
+        menuSalir.add(menuOpcionSalir);
+
+        menuBar.add(menuSalir);
 
         setJMenuBar(menuBar);
 
@@ -771,10 +788,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCursosActionPerformed
 
     
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void menuOpcionSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOpcionSalirActionPerformed
         // TODO add your handling code here:
         System.exit(0);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_menuOpcionSalirActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
@@ -812,7 +829,7 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEmpleadosActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuBarrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBarrioActionPerformed
         desactivarPanel();
         
         try {
@@ -820,9 +837,9 @@ public class Principal extends javax.swing.JFrame {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuBarrioActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void menuCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCalleActionPerformed
         
         desactivarPanel();
         
@@ -831,18 +848,18 @@ public class Principal extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_menuCalleActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void menuLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLocalidadActionPerformed
         desactivarPanel();
         try {
             consultaLocalidad();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_menuLocalidadActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void meunCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meunCargoActionPerformed
         desactivarPanel();
         
         try {
@@ -850,9 +867,9 @@ public class Principal extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_meunCargoActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void menuTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTituloActionPerformed
         desactivarPanel();
         
         try {
@@ -860,9 +877,9 @@ public class Principal extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_menuTituloActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void menuPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPlanActionPerformed
         desactivarPanel();
         
         try {
@@ -870,9 +887,9 @@ public class Principal extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_menuPlanActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void menuGremioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGremioActionPerformed
         desactivarPanel();
         
         try {
@@ -880,9 +897,9 @@ public class Principal extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    }//GEN-LAST:event_menuGremioActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+    private void menuLugarCursadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLugarCursadoActionPerformed
         desactivarPanel();
         
         try {
@@ -890,57 +907,74 @@ public class Principal extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
+    }//GEN-LAST:event_menuLugarCursadoActionPerformed
 
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+    private void menuTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTrabajoActionPerformed
         desactivarPanel();
         try {
             consultaTrabajo();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem12ActionPerformed
+    }//GEN-LAST:event_menuTrabajoActionPerformed
 
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+    private void menuNacionalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNacionalidadActionPerformed
         desactivarPanel();
         try {
             consultaNacionalidad();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
+    }//GEN-LAST:event_menuNacionalidadActionPerformed
 
-    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+    private void menuPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPeriodoActionPerformed
         desactivarPanel();
         try {
             consultaPeriodo();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem15ActionPerformed
+    }//GEN-LAST:event_menuPeriodoActionPerformed
 
-    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        desactivarPanel();
-        try {
 
-            /*user = new CrearUsuario();
-            panelPrincipal.add(user);
-            user.setVisible(true);*/
-                                         
-            sexoConsulta();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }                                           
-    
-    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+    private void menuTipoDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTipoDocActionPerformed
         desactivarPanel();
         try {
             consultaTipoDoc();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem17ActionPerformed
+    }//GEN-LAST:event_menuTipoDocActionPerformed
+
+    private void menuSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSexoActionPerformed
+        desactivarPanel();
+        try {
+            sexoConsulta();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuSexoActionPerformed
+
+    private void menuCalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_menuCalleKeyPressed
+        if(evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.menuCalleActionPerformed(e);
+        }
+    }//GEN-LAST:event_menuCalleKeyPressed
+
+    private void menuBarrioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_menuBarrioKeyPressed
+        if(evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.menuBarrioActionPerformed(e);
+        }
+    }//GEN-LAST:event_menuBarrioKeyPressed
+
+    private void menuLocalidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_menuLocalidadKeyPressed
+        if(evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.menuLocalidadActionPerformed(e);
+        }
+    }//GEN-LAST:event_menuLocalidadKeyPressed
 
     /**
      * @param args the command line arguments
@@ -990,36 +1024,28 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
-    private javax.swing.JMenu jMenu8;
-    private javax.swing.JMenu jMenu9;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     public static javax.swing.JLabel labelInstitucion;
     public static javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem menuBarrio;
+    private javax.swing.JMenuItem menuCalle;
+    private javax.swing.JMenu menuConfiguracion;
+    private javax.swing.JMenuItem menuGremio;
+    private javax.swing.JMenuItem menuLocalidad;
+    private javax.swing.JMenuItem menuLugarCursado;
+    private javax.swing.JMenuItem menuNacionalidad;
+    private javax.swing.JMenuItem menuOpcionSalir;
+    private javax.swing.JMenuItem menuPeriodo;
+    private javax.swing.JMenuItem menuPlan;
+    private javax.swing.JMenu menuSalir;
+    private javax.swing.JMenuItem menuSexo;
+    private javax.swing.JMenuItem menuTipoDoc;
+    private javax.swing.JMenuItem menuTitulo;
+    private javax.swing.JMenuItem menuTrabajo;
+    private javax.swing.JMenuItem meunCargo;
     public static javax.swing.JPanel panelMenu;
     public static javax.swing.JPanel panelPrincipal;
     public static javax.swing.JPanel panelSubMenu;

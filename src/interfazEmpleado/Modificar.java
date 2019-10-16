@@ -930,7 +930,7 @@ public final class Modificar extends javax.swing.JInternalFrame {
         }
         
         for(int i=0; i<cbSexo.getItemCount();i++){
-            if(cbSexo.getItemAt(i).getIdSexo()==persona.getSexo()){
+            if(cbSexo.getItemAt(i).getIdSexo()==persona.getSexo().getIdSexo()){
                 cbSexo.setSelectedIndex(i);
                 i=cbSexo.getItemCount()+1;
             }

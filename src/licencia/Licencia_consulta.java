@@ -25,6 +25,7 @@ public class Licencia_consulta extends javax.swing.JInternalFrame {
     public static String numeroArticulo;
     /**
      * Creates new form licencia
+     * @throws java.lang.ClassNotFoundException
      */
     public Licencia_consulta() throws ClassNotFoundException { 
         initComponents();
