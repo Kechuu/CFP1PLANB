@@ -6,6 +6,8 @@
 package menu;
 
 import Controlador.CtrlEscuela;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -208,6 +210,11 @@ public class ConfiguracionGeneral extends javax.swing.JInternalFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
+        btnGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarKeyPressed(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
         btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -248,7 +255,6 @@ public class ConfiguracionGeneral extends javax.swing.JInternalFrame {
                                     .addComponent(txtInstitucion)
                                     .addComponent(txtDirector))
                                 .addGap(82, 82, 82)))))
-                .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11))
         );
@@ -325,6 +331,13 @@ public class ConfiguracionGeneral extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnGuardarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnGuardarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

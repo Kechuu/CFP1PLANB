@@ -5,6 +5,7 @@
  */
 package licencia;
 
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -126,6 +127,11 @@ public class Licencia_consulta extends javax.swing.JInternalFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
+        btnAgregar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAgregarKeyPressed(evt);
+            }
+        });
 
         btnModificar.setBackground(new java.awt.Color(38, 86, 186));
         btnModificar.setForeground(new java.awt.Color(255, 255, 255));
@@ -133,6 +139,11 @@ public class Licencia_consulta extends javax.swing.JInternalFrame {
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
+            }
+        });
+        btnModificar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnModificarKeyPressed(evt);
             }
         });
 
@@ -144,6 +155,11 @@ public class Licencia_consulta extends javax.swing.JInternalFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
+        btnEliminar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEliminarKeyPressed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(38, 86, 186));
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
@@ -153,6 +169,11 @@ public class Licencia_consulta extends javax.swing.JInternalFrame {
                 jButton4ActionPerformed(evt);
             }
         });
+        jButton4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton4KeyPressed(evt);
+            }
+        });
 
         btnAsignar.setBackground(new java.awt.Color(38, 86, 186));
         btnAsignar.setForeground(new java.awt.Color(255, 255, 255));
@@ -160,6 +181,11 @@ public class Licencia_consulta extends javax.swing.JInternalFrame {
         btnAsignar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAsignarActionPerformed(evt);
+            }
+        });
+        btnAsignar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAsignarKeyPressed(evt);
             }
         });
 
@@ -265,6 +291,41 @@ public class Licencia_consulta extends javax.swing.JInternalFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnAsignarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAsignarKeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAsignarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAsignarKeyPressed
+
+    private void btnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarKeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAgregarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAgregarKeyPressed
+
+    private void btnModificarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarKeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnModificarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnModificarKeyPressed
+
+    private void btnEliminarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarKeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnEliminarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnEliminarKeyPressed
+
+    private void jButton4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton4KeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.jButton4ActionPerformed(e);
+        }
+    }//GEN-LAST:event_jButton4KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

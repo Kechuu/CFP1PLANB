@@ -6,6 +6,7 @@
 package licencia;
 
 import Controlador.CtrlLicencia;
+import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import menu.Principal;
 
@@ -16,9 +17,11 @@ import menu.Principal;
 public class CrearLicencia extends javax.swing.JInternalFrame {
     /**
      * Creates new form agregarlicencia
+     * @throws java.lang.ClassNotFoundException
      */
     public CrearLicencia() throws ClassNotFoundException {
         initComponents();
+        txtArticulo.setFocusable(true);
     }
 
     /**
@@ -80,6 +83,11 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
+        btnAgregar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAgregarKeyPressed(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -87,6 +95,11 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
+            }
+        });
+        btnCancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCancelarKeyPressed(evt);
             }
         });
 
@@ -167,6 +180,20 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarKeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAgregarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAgregarKeyPressed
+
+    private void btnCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelarKeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnCancelarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnCancelarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -8,6 +8,8 @@ package curso;
 import Controlador.CtrlCurso;
 import Controlador.CtrlLugarCurso;
 import Controlador.CtrlTipoCurso;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -230,6 +232,11 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
                 btnCancelar1ActionPerformed(evt);
             }
         });
+        btnCancelar1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCancelar1KeyPressed(evt);
+            }
+        });
         jPanel2.add(btnCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(212, 324, 100, -1));
 
         btnEliminar.setBackground(new java.awt.Color(38, 86, 186));
@@ -238,6 +245,11 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
+            }
+        });
+        btnEliminar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEliminarKeyPressed(evt);
             }
         });
         jPanel2.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(479, 324, 100, -1));
@@ -286,6 +298,20 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
     private void TablaCursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaCursosMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_TablaCursosMouseClicked
+
+    private void btnEliminarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnEliminarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnEliminarKeyPressed
+
+    private void btnCancelar1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelar1KeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnCancelar1ActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnCancelar1KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

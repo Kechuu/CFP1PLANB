@@ -13,6 +13,8 @@ import interfazAlumno.PagoAlumno;
 import interfazAlumno.PanelDni;
 import interfazAlumno.EstadoAlumno;
 import interfazAlumno.Inscripcion;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,11 +79,21 @@ public class AlumnoMenu extends javax.swing.JPanel {
                 btnModificarDatosActionPerformed(evt);
             }
         });
+        btnModificarDatos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnModificarDatosKeyPressed(evt);
+            }
+        });
 
         btnBajaAlumno.setText("Dar de baja a curso");
         btnBajaAlumno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBajaAlumnoActionPerformed(evt);
+            }
+        });
+        btnBajaAlumno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnBajaAlumnoKeyPressed(evt);
             }
         });
 
@@ -91,6 +103,11 @@ public class AlumnoMenu extends javax.swing.JPanel {
                 btnPagosActionPerformed(evt);
             }
         });
+        btnPagos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnPagosKeyPressed(evt);
+            }
+        });
 
         btnConsultar.setText("Consultar");
         btnConsultar.addActionListener(new java.awt.event.ActionListener() {
@@ -98,11 +115,21 @@ public class AlumnoMenu extends javax.swing.JPanel {
                 btnConsultarActionPerformed(evt);
             }
         });
+        btnConsultar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnConsultarKeyPressed(evt);
+            }
+        });
 
         btnAsignarCurso.setText("Asignar a curso");
         btnAsignarCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAsignarCursoActionPerformed(evt);
+            }
+        });
+        btnAsignarCurso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAsignarCursoKeyPressed(evt);
             }
         });
 
@@ -193,6 +220,41 @@ public class AlumnoMenu extends javax.swing.JPanel {
         Principal.panelPrincipal.add(asignar);
         asignar.setVisible(true);
     }//GEN-LAST:event_btnAsignarCursoActionPerformed
+
+    private void btnModificarDatosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarDatosKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnModificarDatosActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnModificarDatosKeyPressed
+
+    private void btnAsignarCursoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAsignarCursoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAsignarCursoActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAsignarCursoKeyPressed
+
+    private void btnBajaAlumnoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBajaAlumnoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnBajaAlumnoActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnBajaAlumnoKeyPressed
+
+    private void btnPagosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnPagosKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnPagosActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnPagosKeyPressed
+
+    private void btnConsultarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnConsultarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnConsultarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnConsultarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

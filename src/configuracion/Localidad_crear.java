@@ -120,6 +120,11 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
+        btnCancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCancelarKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -129,6 +134,11 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
                 btnAceptarActionPerformed(evt);
             }
         });
+        btnAceptar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAceptarKeyPressed(evt);
+            }
+        });
 
         btnAgregarBarrio.setBackground(new java.awt.Color(38, 86, 186));
         btnAgregarBarrio.setForeground(new java.awt.Color(255, 255, 255));
@@ -136,6 +146,11 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
         btnAgregarBarrio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarBarrioActionPerformed(evt);
+            }
+        });
+        btnAgregarBarrio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAgregarBarrioKeyPressed(evt);
             }
         });
 
@@ -275,6 +290,27 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
             this.btnAceptarActionPerformed(e);
         }
     }//GEN-LAST:event_txtCodigoPostalKeyPressed
+
+    private void btnAceptarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAceptarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAceptarKeyPressed
+
+    private void btnAgregarBarrioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarBarrioKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAgregarBarrioActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAgregarBarrioKeyPressed
+
+    private void btnCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnCancelarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnCancelarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
