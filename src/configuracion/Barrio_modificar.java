@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlLugar;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,7 +71,7 @@ public class Barrio_modificar extends javax.swing.JInternalFrame {
             
             id = lugar.leer(Barrio_consulta.idBarrio, 2);
             txtNuevoBarrio.setText(id.getNombre());
-            
+            txtNuevoBarrio.setFocusable(true);
         }
     }
 
@@ -172,6 +174,12 @@ public class Barrio_modificar extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel4.setText("Nuevo barrio:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 233, -1, -1));
+
+        txtNuevoBarrio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNuevoBarrioKeyPressed(evt);
+            }
+        });
         jPanel1.add(txtNuevoBarrio, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 261, 274, -1));
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
@@ -264,6 +272,13 @@ public class Barrio_modificar extends javax.swing.JInternalFrame {
             
         
     }//GEN-LAST:event_cbLocalidadItemStateChanged
+
+    private void txtNuevoBarrioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNuevoBarrioKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtNuevoBarrioKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlPeriodo;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -21,10 +23,12 @@ public class Periodo_crear extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     /**
      * Creates new form CrearGremio
+     * @throws java.lang.ClassNotFoundException
      */
     public Periodo_crear() throws ClassNotFoundException {
         initComponents();
         llenarTablaPeriodo(tablaPeriodicidad);
+        txtPeriodicidad.setFocusable(true);
     }
 
     public void llenarTablaPeriodo(JTable tabla){
@@ -96,6 +100,12 @@ public class Periodo_crear extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setText("Nueva periodo:");
+
+        txtPeriodicidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPeriodicidadKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -197,6 +207,7 @@ public class Periodo_crear extends javax.swing.JInternalFrame {
             ctrlPeriodo.crear(txtPeriodicidad.getText());
             llenarTablaPeriodo(tablaPeriodicidad);
             txtPeriodicidad.setText("");
+            txtPeriodicidad.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -206,6 +217,13 @@ public class Periodo_crear extends javax.swing.JInternalFrame {
        // Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtPeriodicidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPeriodicidadKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtPeriodicidadKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

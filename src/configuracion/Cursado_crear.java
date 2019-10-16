@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlLugarCurso;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -26,6 +28,7 @@ public class Cursado_crear extends javax.swing.JInternalFrame {
     public Cursado_crear() throws ClassNotFoundException {
         initComponents();
         llenarTablaCursado(tablaCursado);
+        txtCursado.setFocusable(true);
     }
 
     public void llenarTablaCursado(JTable tabla){
@@ -97,6 +100,12 @@ public class Cursado_crear extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setText("Nuevo Lugar de Cursado:");
+
+        txtCursado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCursadoKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -199,9 +208,17 @@ public class Cursado_crear extends javax.swing.JInternalFrame {
             ctrlLugarCurso.crear(txtCursado.getText());
             llenarTablaCursado(tablaCursado);
             txtCursado.setText("");
+            txtCursado.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void txtCursadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCursadoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtCursadoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

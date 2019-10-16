@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlGremio;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -26,6 +28,8 @@ public class Gremio_crear extends javax.swing.JInternalFrame {
      */
     public Gremio_crear() throws ClassNotFoundException {
         initComponents();
+        txtGremios.setFocusable(true);
+        llenarTablaCursado(tablaGremios);
     }
 
     public void llenarTablaCursado(JTable tabla){
@@ -97,6 +101,12 @@ public class Gremio_crear extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setText("Nuevo gremio:");
+
+        txtGremios.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtGremiosKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -196,6 +206,7 @@ public class Gremio_crear extends javax.swing.JInternalFrame {
             ctrlGremio.crear(txtGremios.getText());
             llenarTablaCursado(tablaGremios);
             txtGremios.setText("");
+            txtGremios.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -205,6 +216,13 @@ public class Gremio_crear extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtGremiosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGremiosKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtGremiosKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

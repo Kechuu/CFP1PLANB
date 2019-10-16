@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlNacionalidad;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -23,10 +25,12 @@ public class Nacionalidad_crear extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     /**
      * Creates new form AgregarNacionalidad
+     * @throws java.lang.ClassNotFoundException
      */
     public Nacionalidad_crear() throws ClassNotFoundException {
         initComponents();
         llenarTablaNacionalidad(tablaNacionalidad);
+        txtNacionalidad.setFocusable(true);
     }
 
     public void llenarTablaNacionalidad(JTable tabla){
@@ -99,6 +103,12 @@ public class Nacionalidad_crear extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setText("Nueva nacionalidad:");
+
+        txtNacionalidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNacionalidadKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -200,9 +210,17 @@ public class Nacionalidad_crear extends javax.swing.JInternalFrame {
             ctrlNacionalidad.crear(txtNacionalidad.getText());
             llenarTablaNacionalidad(tablaNacionalidad);
             txtNacionalidad.setText("");
+            txtNacionalidad.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void txtNacionalidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNacionalidadKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtNacionalidadKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

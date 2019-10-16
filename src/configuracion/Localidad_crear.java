@@ -7,6 +7,8 @@ package configuracion;
 
 import Controlador.CtrlCodigoPostal;
 import Controlador.CtrlLugar;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,6 +33,7 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
     public Localidad_crear() throws ClassNotFoundException {
         initComponents();
         llenarTablaLocalidad(tablaLocalidad, 3);
+        txtLocalidad.setFocusable(true);
     }
 
     public void llenarTablaLocalidad(JTable tabla, int idLugar){
@@ -133,6 +136,12 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
         btnAgregarBarrio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarBarrioActionPerformed(evt);
+            }
+        });
+
+        txtCodigoPostal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodigoPostalKeyPressed(evt);
             }
         });
 
@@ -246,6 +255,7 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
             llenarTablaLocalidad(tablaLocalidad, 3);
             txtLocalidad.setText("");
             txtCodigoPostal.setText("");
+            txtLocalidad.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -258,6 +268,13 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
             Logger.getLogger(Barrio_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAgregarBarrioActionPerformed
+
+    private void txtCodigoPostalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoPostalKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtCodigoPostalKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

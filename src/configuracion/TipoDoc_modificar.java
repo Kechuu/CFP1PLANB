@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlTipoDocumento;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,6 +36,8 @@ public class TipoDoc_modificar extends javax.swing.JInternalFrame {
                 cbTipo.setSelectedIndex(i);
             }
         }
+        txtTipo.setText(TipoDoc_consulta.nombreTipoDoc);
+        txtTipo.setFocusable(true);
     }
 
     public void cargarComboCargo(JComboBox<TipoDocumento> cbTipo){
@@ -108,6 +112,12 @@ public class TipoDoc_modificar extends javax.swing.JInternalFrame {
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel4.setText("Cambiar a:");
+
+        txtTipo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTipoKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -192,6 +202,7 @@ public class TipoDoc_modificar extends javax.swing.JInternalFrame {
             cbTipo.removeAllItems();
             cargarComboCargo(cbTipo);
             txtTipo.setText("");
+            txtTipo.setFocusable(true);
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -200,6 +211,13 @@ public class TipoDoc_modificar extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtTipoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTipoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtTipoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

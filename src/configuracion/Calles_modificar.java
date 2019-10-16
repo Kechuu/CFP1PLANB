@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlLugar;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -82,6 +84,7 @@ public class Calles_modificar extends javax.swing.JInternalFrame {
             
             id = lugar.leer(Calles_consulta.idCalle, 1);
             txtCambiarCalle.setText(id.getNombre());
+            txtCambiarCalle.setFocusable(true);
             
         }
     }
@@ -219,6 +222,12 @@ public class Calles_modificar extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel4.setText("Cambiar calle:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 279, -1, -1));
+
+        txtCambiarCalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCambiarCalleKeyPressed(evt);
+            }
+        });
         jPanel1.add(txtCambiarCalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 307, 274, -1));
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
@@ -350,6 +359,13 @@ public class Calles_modificar extends javax.swing.JInternalFrame {
         
     
     }//GEN-LAST:event_cbLocalidadItemStateChanged
+
+    private void txtCambiarCalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCambiarCalleKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtCambiarCalleKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

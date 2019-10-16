@@ -5,6 +5,8 @@
  */package configuracion;
 
 import Controlador.CtrlTitulo;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -22,10 +24,12 @@ public class Titulo_crear extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     /**
      * Creates new form creartitulo
+     * @throws java.lang.ClassNotFoundException
      */
     public Titulo_crear() throws ClassNotFoundException {
         initComponents();
         llenarTablaTitulo(tablaTitulo);
+        txtTitulo.setFocusable(true);
     }
 
     public void llenarTablaTitulo(JTable tabla){
@@ -97,6 +101,12 @@ public class Titulo_crear extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setText("Nuevo titulo:");
+
+        txtTitulo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTituloKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -195,6 +205,7 @@ public class Titulo_crear extends javax.swing.JInternalFrame {
             ctrlTitulo.crear(txtTitulo.getText());
             llenarTablaTitulo(tablaTitulo);
             txtTitulo.setText("");
+            txtTitulo.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -204,6 +215,13 @@ public class Titulo_crear extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtTituloKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTituloKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtTituloKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlSexo;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,6 +32,7 @@ public class Sexo_crear extends javax.swing.JInternalFrame {
     public Sexo_crear() throws ClassNotFoundException {
         initComponents();
         llenarTablaSexo(tablaSexo);
+        txtSexo.setFocusable(true);
     }
     
     public void llenarTablaSexo(JTable tabla){
@@ -115,6 +118,12 @@ public class Sexo_crear extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setText("Nuevo:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 254, -1, 21));
+
+        txtSexo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSexoKeyPressed(evt);
+            }
+        });
         jPanel1.add(txtSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 281, 315, -1));
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
@@ -176,6 +185,7 @@ public class Sexo_crear extends javax.swing.JInternalFrame {
             ctrlSexo.crear(txtSexo.getText());
             llenarTablaSexo(tablaSexo);
             txtSexo.setText("");
+            txtSexo.setFocusable(true);
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -188,6 +198,13 @@ public class Sexo_crear extends javax.swing.JInternalFrame {
             dispose();    
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtSexoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSexoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtSexoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

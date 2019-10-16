@@ -6,6 +6,8 @@
 package configuracion;
 
 import Controlador.CtrlPlanes;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -28,6 +30,7 @@ public class Plan_crear extends javax.swing.JInternalFrame {
     public Plan_crear() throws ClassNotFoundException {
         initComponents();
         llenarTablaPlan(tablaPlan);
+        txtPlan.setFocusable(true);
     }
 
     public void llenarTablaPlan(JTable tabla){
@@ -100,6 +103,12 @@ public class Plan_crear extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setText("Nuevo planes:");
+
+        txtPlan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPlanKeyPressed(evt);
+            }
+        });
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -198,6 +207,7 @@ public class Plan_crear extends javax.swing.JInternalFrame {
             ctrlPlanes.crear(txtPlan.getText());
             llenarTablaPlan(tablaPlan);
             txtPlan.setText("");
+            txtPlan.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -207,6 +217,13 @@ public class Plan_crear extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtPlanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPlanKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtPlanKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
