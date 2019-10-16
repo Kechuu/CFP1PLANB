@@ -5,6 +5,8 @@
  */
 package menu;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import licencia.*;
@@ -44,11 +46,21 @@ public class LicenciaMenu extends javax.swing.JPanel {
                 btnArticulosActionPerformed(evt);
             }
         });
+        btnArticulos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnArticulosKeyPressed(evt);
+            }
+        });
 
         btnAsignarProfesor.setText("Asignar Profesor");
         btnAsignarProfesor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAsignarProfesorActionPerformed(evt);
+            }
+        });
+        btnAsignarProfesor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAsignarProfesorKeyPressed(evt);
             }
         });
 
@@ -58,11 +70,21 @@ public class LicenciaMenu extends javax.swing.JPanel {
                 btnConsultasActionPerformed(evt);
             }
         });
+        btnConsultas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnConsultasKeyPressed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar Licencia");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
+            }
+        });
+        btnModificar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnModificarKeyPressed(evt);
             }
         });
 
@@ -143,6 +165,34 @@ public class LicenciaMenu extends javax.swing.JPanel {
         Principal.panelPrincipal.add(modificar);
         modificar.setVisible(true);
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnArticulosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnArticulosKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnArticulosActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnArticulosKeyPressed
+
+    private void btnAsignarProfesorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAsignarProfesorKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAsignarProfesorActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAsignarProfesorKeyPressed
+
+    private void btnModificarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnModificarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnModificarKeyPressed
+
+    private void btnConsultasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnConsultasKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnConsultasActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnConsultasKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

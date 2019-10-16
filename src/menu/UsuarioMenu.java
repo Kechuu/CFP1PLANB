@@ -5,6 +5,8 @@
  */
 
 package menu;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import usuario.ModificarNombre;
 import usuario.ModificarPass;
 /**
@@ -41,11 +43,21 @@ public class UsuarioMenu extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton1KeyPressed(evt);
+            }
+        });
 
         jButton2.setText("Cambiar contraseña");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+        jButton2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton2KeyPressed(evt);
             }
         });
 
@@ -84,6 +96,20 @@ public class UsuarioMenu extends javax.swing.JPanel {
         Principal.panelPrincipal.add(user);
         user.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.jButton1ActionPerformed(e);
+        }
+    }//GEN-LAST:event_jButton1KeyPressed
+
+    private void jButton2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.jButton2ActionPerformed(e);
+        }
+    }//GEN-LAST:event_jButton2KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

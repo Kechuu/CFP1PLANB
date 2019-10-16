@@ -6,6 +6,7 @@
 package licencia;
 
 import Controlador.CtrlLicencia;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,6 +25,7 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
     int bandera=0;
     /**
      * Creates new form modificarLicencia
+     * @throws java.lang.ClassNotFoundException
      */
     public ModificarLicencia() throws ClassNotFoundException {
         initComponents();
@@ -34,12 +36,14 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
                     cbLicencia.setSelectedIndex(i);
                 }
             }
+        txtCambiarArt.setText(Licencia_consulta.numeroArticulo);
         CtrlLicencia ctrlLicencia = new CtrlLicencia();
         Licencia licencia = new Licencia();
         String hola = (String) cbLicencia.getSelectedItem();
 //        JOptionPane.showMessageDialog(null, hola);
         licencia = ctrlLicencia.leer(Integer.parseInt(hola));
         areaDetalle.setText(licencia.getDetalle());
+        txtDetalle.setText(licencia.getDetalle());
         bandera=0;
     }
 
@@ -120,6 +124,11 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
                 btnAceptarActionPerformed(evt);
             }
         });
+        btnAceptar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAceptarKeyPressed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(38, 86, 186));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -127,6 +136,11 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+        jButton2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton2KeyPressed(evt);
             }
         });
 
@@ -141,6 +155,12 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel6.setText("Detalle:");
+
+        txtDetalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtDetalleKeyPressed(evt);
+            }
+        });
 
         cbLicencia.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -276,6 +296,27 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_cbLicenciaItemStateChanged
+
+    private void jButton2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.jButton2ActionPerformed(e);
+        }
+    }//GEN-LAST:event_jButton2KeyPressed
+
+    private void btnAceptarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAceptarKeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAceptarKeyPressed
+
+    private void txtDetalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDetalleKeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_txtDetalleKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

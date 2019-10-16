@@ -9,6 +9,8 @@ import Controlador.CtrlEmpleado;
 import Controlador.CtrlEmpleadoLicencia;
 import Controlador.CtrlLicencia;
 import Controlador.CtrlPersona;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -185,6 +187,11 @@ public class AsignarLicencia extends javax.swing.JInternalFrame {
                 btnAceptarActionPerformed(evt);
             }
         });
+        btnAceptar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAceptarKeyPressed(evt);
+            }
+        });
         jPanel2.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(469, 292, 100, -1));
 
         jButton2.setBackground(new java.awt.Color(38, 86, 186));
@@ -193,6 +200,11 @@ public class AsignarLicencia extends javax.swing.JInternalFrame {
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+        jButton2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton2KeyPressed(evt);
             }
         });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(593, 292, 100, -1));
@@ -314,6 +326,20 @@ public class AsignarLicencia extends javax.swing.JInternalFrame {
         */
         
     }//GEN-LAST:event_cbxEmpleadoItemStateChanged
+
+    private void btnAceptarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAceptarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAceptarKeyPressed
+
+    private void jButton2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.jButton2ActionPerformed(e);
+        }
+    }//GEN-LAST:event_jButton2KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

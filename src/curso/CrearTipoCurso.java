@@ -7,7 +7,9 @@ package curso;
 
 
 import Controlador.CtrlTipoCurso;
+import com.sun.glass.events.KeyEvent;
 import configuracion.Periodo_crear;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -138,6 +140,11 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
+        btnGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarKeyPressed(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -145,6 +152,11 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
+            }
+        });
+        btnCancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCancelarKeyPressed(evt);
             }
         });
 
@@ -294,6 +306,20 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
     private void txtNombreCursoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreCursoKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreCursoKeyTyped
+
+    private void btnGuardarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnGuardarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnGuardarKeyPressed
+
+    private void btnCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnCancelarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnCancelarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -6,6 +6,8 @@
 package curso;
 
 import Controlador.CtrlHorario;
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Time;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -211,7 +213,6 @@ public class Horario extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaHorarios = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
-        btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
@@ -291,13 +292,9 @@ public class Horario extends javax.swing.JInternalFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
-
-        btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
-        btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAceptar.setText("Aceptar");
-        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAceptarActionPerformed(evt);
+        btnAgregar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAgregarKeyPressed(evt);
             }
         });
 
@@ -307,6 +304,11 @@ public class Horario extends javax.swing.JInternalFrame {
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
+            }
+        });
+        btnCancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCancelarKeyPressed(evt);
             }
         });
 
@@ -332,9 +334,8 @@ public class Horario extends javax.swing.JInternalFrame {
                             .addComponent(txtHasta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -355,11 +356,9 @@ public class Horario extends javax.swing.JInternalFrame {
                     .addComponent(btnAgregar))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar)
-                    .addComponent(btnCancelar))
-                .addGap(34, 34, 34))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addComponent(btnCancelar)
+                .addGap(32, 32, 32))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -441,10 +440,6 @@ public class Horario extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:       
-    }//GEN-LAST:event_btnAceptarActionPerformed
-
     private void tablaHorariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaHorariosMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tablaHorariosMouseClicked
@@ -469,9 +464,22 @@ public class Horario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDesdeActionPerformed
 
+    private void btnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAgregarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAgregarKeyPressed
+
+    private void btnCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnCancelarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnCancelarKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<String> cbDias;

@@ -5,6 +5,8 @@
  */
 package configuracion;
 
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -211,6 +213,11 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
+        btnAgregar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAgregarKeyPressed(evt);
+            }
+        });
         jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 190, 100, -1));
 
         btnModificar.setBackground(new java.awt.Color(38, 86, 186));
@@ -222,6 +229,11 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
                 btnModificarActionPerformed(evt);
             }
         });
+        btnModificar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnModificarKeyPressed(evt);
+            }
+        });
         jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 100, -1));
 
         btnAtras.setBackground(new java.awt.Color(38, 86, 186));
@@ -231,6 +243,11 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
         btnAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAtrasActionPerformed(evt);
+            }
+        });
+        btnAtras.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAtrasKeyPressed(evt);
             }
         });
         jPanel1.add(btnAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, -1, -1));
@@ -316,6 +333,27 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
         btnModificar.setEnabled(true);
         
     }//GEN-LAST:event_listaCalleValueChanged
+
+    private void btnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAgregarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAgregarKeyPressed
+
+    private void btnModificarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnModificarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnModificarKeyPressed
+
+    private void btnAtrasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAtrasKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAtrasActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAtrasKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

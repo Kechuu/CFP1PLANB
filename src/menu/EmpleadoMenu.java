@@ -6,6 +6,8 @@
 package menu;
 
 import interfazEmpleado.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,11 +59,21 @@ public class EmpleadoMenu extends javax.swing.JPanel {
                 btnAsignarCursoActionPerformed(evt);
             }
         });
+        btnAsignarCurso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAsignarCursoKeyPressed(evt);
+            }
+        });
 
         btnConsultarEstado.setText("Consultar Estado");
         btnConsultarEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConsultarEstadoActionPerformed(evt);
+            }
+        });
+        btnConsultarEstado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnConsultarEstadoKeyPressed(evt);
             }
         });
 
@@ -71,11 +83,21 @@ public class EmpleadoMenu extends javax.swing.JPanel {
                 btnModificarDatosActionPerformed(evt);
             }
         });
+        btnModificarDatos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnModificarDatosKeyPressed(evt);
+            }
+        });
 
         btnDarBaja.setText("Dar de baja");
         btnDarBaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDarBajaActionPerformed(evt);
+            }
+        });
+        btnDarBaja.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnDarBajaKeyPressed(evt);
             }
         });
 
@@ -151,6 +173,34 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         Principal.panelPrincipal.add(empleado);
         empleado.setVisible(true);
     }//GEN-LAST:event_btnDarBajaActionPerformed
+
+    private void btnModificarDatosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarDatosKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnModificarDatosActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnModificarDatosKeyPressed
+
+    private void btnAsignarCursoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAsignarCursoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAsignarCursoActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAsignarCursoKeyPressed
+
+    private void btnDarBajaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDarBajaKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnDarBajaActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnDarBajaKeyPressed
+
+    private void btnConsultarEstadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnConsultarEstadoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnConsultarEstadoActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnConsultarEstadoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

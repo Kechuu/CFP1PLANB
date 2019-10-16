@@ -8,9 +8,11 @@ package curso;
 import Controlador.CtrlCurso;
 import Controlador.CtrlCursoHora;
 import Controlador.CtrlHorario;
+import com.sun.glass.events.KeyEvent;
 import menu.Principal;
 import configuracion.Cursado_crear;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -409,6 +411,11 @@ public class CrearCurso extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
+        btnCancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCancelarKeyPressed(evt);
+            }
+        });
 
         btnAgregarHorario.setBackground(new java.awt.Color(38, 86, 186));
         btnAgregarHorario.setForeground(new java.awt.Color(255, 255, 255));
@@ -445,6 +452,11 @@ public class CrearCurso extends javax.swing.JInternalFrame {
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
+            }
+        });
+        btnGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarKeyPressed(evt);
             }
         });
 
@@ -803,6 +815,20 @@ public class CrearCurso extends javax.swing.JInternalFrame {
     private void fechaFinalizacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fechaFinalizacionKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaFinalizacionKeyTyped
+
+    private void btnGuardarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnGuardarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnGuardarKeyPressed
+
+    private void btnCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnCancelarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnCancelarKeyPressed
 
     public void cargarCursoHorario(int idCurso){
         CtrlHorario ctrlHorario = new CtrlHorario();

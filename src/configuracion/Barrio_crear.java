@@ -173,6 +173,11 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
+        btnCancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCancelarKeyPressed(evt);
+            }
+        });
         jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, 100, -1));
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
@@ -183,6 +188,11 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
                 btnAceptarActionPerformed(evt);
             }
         });
+        btnAceptar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAceptarKeyPressed(evt);
+            }
+        });
         jPanel1.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 100, -1));
 
         btnAgregarCalle.setBackground(new java.awt.Color(38, 86, 186));
@@ -191,6 +201,11 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
         btnAgregarCalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarCalleActionPerformed(evt);
+            }
+        });
+        btnAgregarCalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAgregarCalleKeyPressed(evt);
             }
         });
         jPanel1.add(btnAgregarCalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, 130, -1));
@@ -288,6 +303,27 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
             this.btnAceptarActionPerformed(e);
         }
     }//GEN-LAST:event_txtnuevoBarrioKeyPressed
+
+    private void btnAgregarCalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarCalleKeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAgregarCalleActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAgregarCalleKeyPressed
+
+    private void btnCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelarKeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnCancelarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnCancelarKeyPressed
+
+    private void btnAceptarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAceptarKeyPressed
+        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAceptarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAceptarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

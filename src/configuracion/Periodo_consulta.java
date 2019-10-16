@@ -5,6 +5,8 @@
  */
 package configuracion;
 
+import com.sun.glass.events.KeyEvent;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -107,6 +109,11 @@ public class Periodo_consulta extends javax.swing.JInternalFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
+        btnAgregar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAgregarKeyPressed(evt);
+            }
+        });
 
         btnModificar.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
         btnModificar.setText("Modificar");
@@ -115,12 +122,22 @@ public class Periodo_consulta extends javax.swing.JInternalFrame {
                 btnModificarActionPerformed(evt);
             }
         });
+        btnModificar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnModificarKeyPressed(evt);
+            }
+        });
 
         btnAtras.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         btnAtras.setText("Atras");
         btnAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAtrasActionPerformed(evt);
+            }
+        });
+        btnAtras.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAtrasKeyPressed(evt);
             }
         });
 
@@ -207,6 +224,27 @@ public class Periodo_consulta extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAgregarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAgregarKeyPressed
+
+    private void btnModificarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnModificarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnModificarKeyPressed
+
+    private void btnAtrasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAtrasKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnAtrasActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnAtrasKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

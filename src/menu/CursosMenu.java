@@ -6,6 +6,8 @@
 package menu;
 
 import curso.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 /**
  *
  * @author araa
@@ -43,11 +45,21 @@ public class CursosMenu extends javax.swing.JPanel {
                 btnHorarioActionPerformed(evt);
             }
         });
+        btnHorario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnHorarioKeyPressed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar Curso");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
+            }
+        });
+        btnEliminar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEliminarKeyPressed(evt);
             }
         });
 
@@ -60,11 +72,21 @@ public class CursosMenu extends javax.swing.JPanel {
                 btnCrearCursoActionPerformed(evt);
             }
         });
+        btnCrearCurso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCrearCursoKeyPressed(evt);
+            }
+        });
 
         btnModificarCurso.setText("Modificar Curso");
         btnModificarCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarCursoActionPerformed(evt);
+            }
+        });
+        btnModificarCurso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnModificarCursoKeyPressed(evt);
             }
         });
 
@@ -130,6 +152,34 @@ public class CursosMenu extends javax.swing.JPanel {
         Principal.panelPrincipal.add(curso);
         curso.setVisible(true);
     }//GEN-LAST:event_btnModificarCursoActionPerformed
+
+    private void btnCrearCursoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearCursoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnCrearCursoActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnCrearCursoKeyPressed
+
+    private void btnModificarCursoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarCursoKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnModificarCursoActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnModificarCursoKeyPressed
+
+    private void btnEliminarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnEliminarActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnEliminarKeyPressed
+
+    private void btnHorarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnHorarioKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            ActionEvent e = null;
+            this.btnHorarioActionPerformed(e);
+        }
+    }//GEN-LAST:event_btnHorarioKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
