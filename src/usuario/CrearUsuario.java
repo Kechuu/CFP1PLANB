@@ -51,10 +51,6 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
     int jerarquia=0;
     int idEmpleado=0;
     
-<<<<<<< HEAD
-=======
-    
->>>>>>> 607323d8c395e87653bf771c79fb7647eb7dd5a0
     public CrearUsuario() throws ClassNotFoundException {
         initComponents();
         
