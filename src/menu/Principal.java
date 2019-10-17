@@ -742,12 +742,20 @@ public class Principal extends javax.swing.JFrame {
     }
     
     private void btnAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlumnosActionPerformed
-        try {
+    /*    try {
             PanelDni.alumnoEmpleado=1;
             CambiaPanel cambiaPanel = new CambiaPanel(panelSubMenu, new PanelDni());
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+        try{
+            FormDni.alumnoEmpleadoUser=1;
+            new CambiaPanel(panelSubMenu, new AlumnoMenu());
+            
+        }catch(Exception e){
+            
         }
+        
     }//GEN-LAST:event_btnAlumnosActionPerformed
 
     private void btnListadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListadosActionPerformed

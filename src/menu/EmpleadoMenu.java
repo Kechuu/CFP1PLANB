@@ -18,23 +18,30 @@ import usuario.Login;
  * @author araa
  */
 public class EmpleadoMenu extends javax.swing.JPanel {
-
+    
+    public static int empleadoMenu=0;//sirve para saber desde qué sub menu proviene..
     Persona personaObj=new Persona();
     /**
      * Creates new form EmpleadoMenu
      * @param persona
      */
+    
+    public EmpleadoMenu(){
+        initComponents();
+        this.setBounds(0, 85, 240, 174);
+    }
+    
     public EmpleadoMenu(Persona persona) {
         initComponents();
         
         this.setBounds(0, 85, 240, 174);
         this.personaObj=persona;
         
-        if(Login.usuario.getJerarquia()==3){
+        /*if(Login.usuario.getJerarquia()==3){
             btnModificarDatos.setVisible(false);
             btnAsignarCurso.setVisible(false);
             btnDarBaja.setVisible(false);
-        }
+        }*/
     }
 
     /**
@@ -127,19 +134,21 @@ public class EmpleadoMenu extends javax.swing.JPanel {
 
     private void btnAsignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarCursoActionPerformed
 
-        Registro.banderaEmpleado=2;
+/*        Registro.banderaEmpleado=2;
         this.setVisible(false);
         Principal.desactivarPanel();
         AsignarCurso asignar=new AsignarCurso(personaObj);
         Principal.panelPrincipal.add(asignar);
-        asignar.setVisible(true);
+        asignar.setVisible(true);*/
         
+        empleadoMenu=2;
+        panelDni();
         
     }//GEN-LAST:event_btnAsignarCursoActionPerformed
 
     private void btnConsultarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarEstadoActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+/*        this.setVisible(false);
         Principal.desactivarPanel();
         
         ConsultaGeneral empleado;
@@ -149,29 +158,35 @@ public class EmpleadoMenu extends javax.swing.JPanel {
             empleado.setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(EmpleadoMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        }*/
+        empleadoMenu=4;
+        panelDni();
     }//GEN-LAST:event_btnConsultarEstadoActionPerformed
 
     private void btnModificarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarDatosActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+/*        this.setVisible(false);
         Principal.desactivarPanel();
         
         Modificar empleado= new Modificar(personaObj);
         Principal.panelPrincipal.add(empleado);
-        empleado.setVisible(true);
+        empleado.setVisible(true);*/
+        empleadoMenu=1;
+        panelDni();
+        
     }//GEN-LAST:event_btnModificarDatosActionPerformed
 
     private void btnDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarBajaActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+/*        this.setVisible(false);
         Principal.desactivarPanel();
         
         DarBajaCurso empleado=new DarBajaCurso(personaObj);
         Principal.panelPrincipal.add(empleado);
-        empleado.setVisible(true);
+        empleado.setVisible(true);*/
+        empleadoMenu=3;
+        panelDni();
     }//GEN-LAST:event_btnDarBajaActionPerformed
 
     private void btnModificarDatosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarDatosKeyPressed
@@ -202,6 +217,17 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnConsultarEstadoKeyPressed
 
+
+    void panelDni(){
+        this.setVisible(false);
+        Principal.desactivarPanel();
+       
+        FormDni.alumnoEmpleadoUser=1;
+        FormDni dni=new FormDni();
+        Principal.panelPrincipal.add(dni);
+        dni.setVisible(true);
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignarCurso;

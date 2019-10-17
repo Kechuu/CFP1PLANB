@@ -68,7 +68,7 @@ public class CtrlPersona {
         }
     }
     
-    public void editar(int idPersona, String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, boolean sexo, String CUIL, String hijoPersona,
+    public void editar(int idPersona, String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, int sexo, String CUIL, String hijoPersona,
             String correo, String celular, int idDomicilio, int idTipoDocumento, int idNacionalidad, int idFoto, int lugarNacimiento,
             boolean borrado){
         java.sql.Date fecha =new Date(fechaNacimiento.getTime());
@@ -82,7 +82,7 @@ public class CtrlPersona {
             ps.setString(1, nombrePersona.toUpperCase());
             ps.setString(2, apellidoPersona.toUpperCase());
             ps.setDate(3, fecha);
-            ps.setBoolean(4, sexo);
+            ps.setInt(4, sexo);
             ps.setString(5, CUIL);
             ps.setInt(6, hijo);
             ps.setString(7, correo);
@@ -359,5 +359,48 @@ public class CtrlPersona {
         }
         
      return persona;
+    }
+    
+    public Persona buscarPersona(String sql, String cuil) throws ClassNotFoundException{
+        PanelDni dni = new PanelDni();
+        Persona persona = new Persona();
+        CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
+        CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
+        CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
+        CtrlFoto ctrlFoto = new CtrlFoto();
+        CtrlLugar ctrlLugarNacimiento = new CtrlLugar();
+        
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement(sql);
+            ps.setString(1, cuil);
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                persona.setIdPersona(rs.getInt("idPersona"));
+                persona.setNombrePersona(rs.getString("nombrePersona"));
+                persona.setApellidoPersona(rs.getString("apellidoPersona"));
+                persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
+                persona.setSexo(rs.getInt("idSexo"));
+                persona.setCUIL(rs.getString("CUIL"));
+                persona.setHijoPersona(rs.getInt("hijoPersona"));
+                persona.setCorreo(rs.getString("correo"));
+                persona.setCelular(rs.getString("celular"));
+                persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("idDomicilio")));
+                persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("idTipoDocumento")));
+                persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("idNacionalidad")));
+                persona.setIdFoto(ctrlFoto.leer(rs.getInt("idFoto")));
+                persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("lugarNacimiento")));
+
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                        
+            }
+            
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        
+        return persona;
     }
 }
