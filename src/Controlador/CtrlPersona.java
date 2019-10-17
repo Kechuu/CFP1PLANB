@@ -373,6 +373,7 @@ public class CtrlPersona {
         CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
         CtrlFoto ctrlFoto = new CtrlFoto();
         CtrlLugar ctrlLugarNacimiento = new CtrlLugar();
+        CtrlSexo ctrlSexo=new CtrlSexo();
         
         try {
             con = clases.Conectar.conexion();
@@ -385,7 +386,7 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setSexo(rs.getInt("idSexo"));
+                persona.setSexo(ctrlSexo.leer(rs.getInt("idSexo")));
                 persona.setCUIL(rs.getString("CUIL"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
