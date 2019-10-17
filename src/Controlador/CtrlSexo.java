@@ -62,14 +62,14 @@ public class CtrlSexo {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-    public Sexo leer(String detalle){
+    public Sexo leer(int idSexo){
         Sexo sx=new Sexo();
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM sexo WHERE detalle = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM sexo WHERE idSexo = ?");
             
-            ps.setString(1, detalle.toUpperCase());
+            ps.setInt(1, idSexo);
             rs = ps.executeQuery();
             
             if(rs.next()){
