@@ -4,10 +4,6 @@
  * and open the template in the editor.
  */
 package Controlador;
-import clases.CambiaPanel;
-import interfazAlumno.Inscripcion;
-import interfazAlumno.PanelDni;
-import interfazEmpleado.Registro;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -15,11 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import menu.AlumnoMenu;
-import menu.EmpleadoMenu;
-import menu.*;
 import modelo.Persona;
-import usuario.CrearUsuario;
 /**
  *
  * @author jesus
@@ -28,6 +20,7 @@ public class CtrlPersona {
     Connection con = null;
     PreparedStatement ps;
     ResultSet rs;
+    String cuil2=null;
     //public int CUIL = 0;
     
     public void crear(String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, int idSexo, String CUIL, int hijoPersona,
@@ -255,7 +248,7 @@ public class CtrlPersona {
     }
     public void generarCUIL(int DNI, char sx) throws ClassNotFoundException{
         //PanelDni dni = new PanelDni();
-        int validarPersona = PanelDni.validarPersona;
+        //int validarPersona = PanelDni.validarPersona;
     //HACER LA VARIABLE validarPersona STATIC!!!
         /*
         Codigo de CUIL :v
@@ -266,7 +259,7 @@ public class CtrlPersona {
         
     }
     
-    public Persona buscarAlumno(String CUIL, int validarPersona) throws ClassNotFoundException{
+    /*public Persona buscarAlumno(String CUIL, int validarPersona) throws ClassNotFoundException{
         PanelDni dni = new PanelDni();
         Persona persona = new Persona();
         CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
@@ -363,10 +356,10 @@ public class CtrlPersona {
         }
         
      return persona;
-    }
+    }*/
+
     
     public Persona buscarPersona(String sql, String cuil) throws ClassNotFoundException{
-        PanelDni dni = new PanelDni();
         Persona persona = new Persona();
         CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
         CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
@@ -396,12 +389,38 @@ public class CtrlPersona {
                 persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("idNacionalidad")));
                 persona.setIdFoto(ctrlFoto.leer(rs.getInt("idFoto")));
                 persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("lugarNacimiento")));
-
+                
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
-                        
             }
+            con.close();
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        
+        return persona;
+    }
+    
+    public Persona buscarUsuario(String sql, String cuil) throws ClassNotFoundException{
+        //cuil2=cuil;
+        Persona persona = new Persona();
+        
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement(sql);
+            ps.setString(1, cuil);
+            rs = ps.executeQuery();
             
+            if (rs.next()) {
+                persona.setIdPersona(rs.getInt("idPersona"));
+                persona.setNombrePersona(rs.getString("nombrePersona"));
+                persona.setApellidoPersona(rs.getString("apellidoPersona"));
+                persona.setHijoPersona(rs.getInt("idEmpleado"));
+               
+            }else{
+                
+            }
+            con.close();
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }

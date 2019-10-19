@@ -11,7 +11,6 @@ import java.awt.Dimension;
 
 import clases.CambiaPanel;
 import com.sun.glass.events.KeyEvent;
-import interfazAlumno.PanelDni;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -759,12 +758,7 @@ public class Principal extends javax.swing.JFrame {
     }
     
     private void btnAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlumnosActionPerformed
-    /*    try {
-            PanelDni.alumnoEmpleado=1;
-            CambiaPanel cambiaPanel = new CambiaPanel(panelSubMenu, new PanelDni());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+
         try{
             FormDni.alumnoEmpleadoUser=1;
             new CambiaPanel(panelSubMenu, new AlumnoMenu());
@@ -829,11 +823,13 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed
         // TODO add your handling code here:
-        try {
-            PanelDni.alumnoEmpleado=2;
-            CambiaPanel cambiaPanel = new CambiaPanel(panelSubMenu, new PanelDni());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+
+        try{
+            FormDni.alumnoEmpleadoUser=2;
+            CambiaPanel cambiaPanel = new CambiaPanel(panelSubMenu, new EmpleadoMenu());
+            
+        }catch(Exception e){
+            
         }
     }//GEN-LAST:event_btnEmpleadosActionPerformed
 

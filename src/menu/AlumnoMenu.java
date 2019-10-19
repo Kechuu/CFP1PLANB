@@ -6,20 +6,9 @@
 package menu;
 
 import interfazAlumno.AsignarCurso;
-import interfazAlumno.Modificar;
-import interfazAlumno.DarBajaCurso;
-//import interfazAlumno.Pago;
-import interfazAlumno.PagoAlumno;
-import interfazAlumno.PanelDni;
-import interfazAlumno.EstadoAlumno;
-import interfazAlumno.Inscripcion;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.Persona;
-import usuario.Login;
 /**
  *
  * @author araa
@@ -177,71 +166,35 @@ public class AlumnoMenu extends javax.swing.JPanel {
 
     private void btnModificarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarDatosActionPerformed
         // TODO add your handling code here:
-    /*    this.setVisible(false);
-        Principal.desactivarPanel();
-        
-        Modificar modificar=new Modificar(objPersona);
-        Principal.panelPrincipal.add(modificar);
-        modificar.setVisible(true);
-        */
-        alumnoMenu=1;
+        alumnoMenu=2;
         panelDni();
     }//GEN-LAST:event_btnModificarDatosActionPerformed
 
     private void btnBajaAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaAlumnoActionPerformed
         // TODO add your handling code here:
-        /*this.setVisible(false);
-        Principal.desactivarPanel();
-        menu.Principal.menuAlumno=1;
-        
-        DarBajaCurso baja= new DarBajaCurso(objPersona);
-        Principal.panelPrincipal.add(baja);
-        baja.setVisible(true);*/
-        alumnoMenu=3;
+        alumnoMenu=4;
         panelDni();
     }//GEN-LAST:event_btnBajaAlumnoActionPerformed
 
     private void btnPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosActionPerformed
         // TODO add your handling code here:
         AsignarCurso.banderaAsignar=2;
-        
-        /*this.setVisible(false);
-        Principal.desactivarPanel();
-        
-        PagoAlumno pagos=new PagoAlumno(objPersona);
-        Principal.panelPrincipal.add(pagos);
-        pagos.setVisible(true);*/
-        alumnoMenu=4;
+  
+        alumnoMenu=5;
         panelDni();
     }//GEN-LAST:event_btnPagosActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         // TODO add your handling code here:
-        /*this.setVisible(false);
-        Principal.desactivarPanel();
-        
-        EstadoAlumno estado;
-        try {
-            estado = new EstadoAlumno(objPersona);
-            Principal.panelPrincipal.add(estado);
-            estado.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(AlumnoMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
-        alumnoMenu=5;
+    
+        alumnoMenu=6;
         panelDni();
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnAsignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarCursoActionPerformed
         // TODO add your handling code here:
-        /*this.setVisible(false);
-        Principal.desactivarPanel();
-        Inscripcion.bandera=2;
-        AsignarCurso asignar=new AsignarCurso(objPersona);
-        Principal.panelPrincipal.add(asignar);
-        asignar.setVisible(true);*/
-        alumnoMenu=2;
+        
+        alumnoMenu=3;
         panelDni();
     }//GEN-LAST:event_btnAsignarCursoActionPerformed
 
@@ -282,6 +235,7 @@ public class AlumnoMenu extends javax.swing.JPanel {
 
     private void btnDarAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarAltaActionPerformed
         // TODO add your handling code here:
+        alumnoMenu=1;
         panelDni();
     }//GEN-LAST:event_btnDarAltaActionPerformed
 

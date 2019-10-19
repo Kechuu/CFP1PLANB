@@ -43,32 +43,6 @@ public class ModificarNombre extends javax.swing.JInternalFrame {
         
     }
     
-    public void cargarCombo(JComboBox<Usuario> cb){
-        
-        try {
-            con=clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM usuario ORDER BY user ASC");
-            rs=ps.executeQuery();
-            
-            Usuario user=new Usuario();
-            user.setIdUsuario(0);
-            user.setUser("Seleccione un usuario...");
-            cb.addItem(user);
-            
-            while (rs.next()) {                
-            
-                user=new Usuario();
-                user.setIdUsuario(rs.getInt("idUsuario"));
-                user.setUser(rs.getString("user"));
-                
-                cb.addItem(user);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
-        }
-        
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

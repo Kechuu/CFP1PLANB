@@ -117,7 +117,6 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
             }
             
             listaCalle.setModel(modelo);
-            
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error, "+e);
         }

@@ -27,6 +27,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="jPanel1" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -1013,10 +1014,10 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="btnDeshacerTrabajo" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="cbTrabajo" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnAsignarTrabajo" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnDeshacerTrabajo" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jScrollPane4" min="-2" pref="94" max="-2" attributes="0"/>
                           </Group>

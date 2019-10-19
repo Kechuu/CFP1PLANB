@@ -6,6 +6,8 @@
 package menu;
 
 import Controlador.CtrlPersona;
+import Controlador.CtrlUsuario;
+import clases.CambiaPanel;
 import interfazAlumno.AsignarCurso;
 import interfazAlumno.DarBajaCurso;
 import interfazAlumno.EstadoAlumno;
@@ -17,10 +19,14 @@ import interfazEmpleado.Registro;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static menu.Principal.panelSubMenu;
 import modelo.Persona;
+import modelo.Usuario;
+import usuario.CrearUsuario;
 
 /**
  *
@@ -28,9 +34,12 @@ import modelo.Persona;
  */
 public class FormDni extends javax.swing.JInternalFrame {
     Persona personaObj=new Persona();
+    Usuario usuarioObj=new Usuario();
+    CtrlPersona ctrlPersona = new CtrlPersona();
+    CtrlUsuario ctrlUsuario=new CtrlUsuario();
+    
     public static int validarPersona = 0;
     public static int alumnoEmpleadoUser=0;
-    public static boolean existe=false;
     String sql=null;
     String cuil=null;
     char sx;
@@ -195,8 +204,7 @@ public class FormDni extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtDniKeyReleased
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-        CtrlPersona ctrlPersona = new CtrlPersona();
-
+        
         // TODO add your handling code here:
         //  <VALIDACION>
         if (masculino.isSelected()==false && femenino.isSelected()==false) {
@@ -230,18 +238,26 @@ public class FormDni extends javax.swing.JInternalFrame {
             break;
                 
             case 3://buscar un usuario..
-                sql="SELECT * FROM persona INNER JOIN empleado ON persona.idPersona = empleado.idPersona"
-                        + " INNER JOIN usuario ON empleado.idEmpleado = usuario.idEmpleado WHERE persona.CUIL=?";
+                sql="SELECT persona.idPersona, persona.nombrePersona, persona.apellidoPersona, empleado.idEmpleado FROM persona"
+                        + " INNER JOIN empleado ON persona.idPersona = empleado.idPersona"
+                        + " WHERE persona.CUIL=?";
+                try{
+                    metodo(personaObj=ctrlPersona.buscarUsuario(sql, cuil));                    
+                }catch(Exception e){
+                    
+                }
             break;
         }
         
-        try {
-            
-            personaObj=ctrlPersona.buscarPersona(sql, cuil);      
-            
-            metodo(personaObj);
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(FormDni.class.getName()).log(Level.SEVERE, null, ex);
+        if(alumnoEmpleadoUser!=3){
+            try {
+
+                personaObj = ctrlPersona.buscarPersona(sql, cuil);
+
+                metodo(personaObj);
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(FormDni.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }//GEN-LAST:event_btnCargarActionPerformed
@@ -251,7 +267,6 @@ public class FormDni extends javax.swing.JInternalFrame {
         int resp=personaObj.getIdPersona();
         
         switch(alumnoEmpleadoUser){
-            
             case 1:
             //ALUMNO..
                 if(resp==0){
@@ -264,32 +279,40 @@ public class FormDni extends javax.swing.JInternalFrame {
                     Principal.desactivarPanel();
                     
                     switch (AlumnoMenu.alumnoMenu) {
+                        
                         case 1:
+                            JOptionPane.showMessageDialog(null, "EL ALUMNO YA HA SIDO DADO DE ALTA");
+                            
+                            Principal.activarPanel();
+                            new CambiaPanel(panelSubMenu, new AlumnoMenu());
+                        break;
+                        
+                        case 2:
 
                             ModificarEmpleado modificar = new ModificarEmpleado(personaObj);
                             Principal.panelPrincipal.add(modificar);
                             modificar.setVisible(true);
                             break;
 
-                        case 2:
+                        case 3:
                             AsignarCurso asignar=new AsignarCurso(personaObj);
                             Principal.panelPrincipal.add(asignar);
                             asignar.setVisible(true);
                             break;
 
-                        case 3:
+                        case 4:
                             DarBajaCurso curso=new DarBajaCurso(personaObj);
                             Principal.panelPrincipal.add(curso);
                             curso.setVisible(true);
                             break;
 
-                        case 4:
+                        case 5:
                             PagoAlumno pago=new PagoAlumno(personaObj);
                             Principal.panelPrincipal.add(pago);
                             pago.setVisible(true);
                             break;
 
-                        case 5:
+                        case 6:
                             EstadoAlumno consulta=new EstadoAlumno(personaObj);
                             Principal.panelPrincipal.add(consulta);
                             consulta.setVisible(true);
@@ -309,25 +332,33 @@ public class FormDni extends javax.swing.JInternalFrame {
                 }else{
                     Principal.desactivarPanel();
                     switch(EmpleadoMenu.empleadoMenu){
+                        
                         case 1:
+                            JOptionPane.showMessageDialog(null, "EL EMPLEADO YA HA SIDO DADO DE ALTA");
+                            
+                            Principal.activarPanel();
+                            new CambiaPanel(panelSubMenu, new EmpleadoMenu());
+                        break;
+                        
+                        case 2:
                             ModificarEmpleado empleado=new ModificarEmpleado(personaObj);
                             Principal.panelPrincipal.add(empleado);
                             empleado.setVisible(true);
                         break;
                             
-                        case 2:
+                        case 3:
                             AsignarCurso curso=new AsignarCurso(personaObj);
                             Principal.panelPrincipal.add(curso);
                             curso.setVisible(true);
                         break;
                             
-                        case 3:
+                        case 4:
                             DarBajaCurso baja=new DarBajaCurso(personaObj);
                             Principal.panelPrincipal.add(baja);
                             baja.setVisible(true);
                         break;
                             
-                        case 4:
+                        case 5:
                             ConsultaGeneral consulta=new ConsultaGeneral(personaObj);
                             Principal.panelPrincipal.add(consulta);
                             consulta.setVisible(true);
@@ -338,10 +369,36 @@ public class FormDni extends javax.swing.JInternalFrame {
                 
             case 3:
             //USUARIO..
-                
+                if(resp==0){
+                    //ENTRA AQUI SI NO EXISTE TANTO EL EMPLEADO COMO EL USUARIO
+                    dispose();
+                    Registro empleadoUs=new Registro(cuil);
+                    Principal.panelPrincipal.add(empleadoUs);
+                    empleadoUs.setVisible(true);                    
+                }else{
+                    try{
+                //EN LA SIGUIENTE LINEA SE HACE UNA CONSULTA PARA VERIFICAR SI EL EMPLEADO TIENE UN USUARIO..
+                //EL CAMPO hijo-persona EN ESTA OCASION LA USO PARA ALMACENAR EL ID DE EMPLEADO..
+                        usuarioObj=ctrlUsuario.leer(personaObj.getHijoPersona());
+                    }catch(Exception e){
+                        
+                    }
+                    
+                    if(usuarioObj.getIdUsuario()==0){
+                        JOptionPane.showMessageDialog(null, "NO EXISTE UN USUARIO PARA ESE EMPLEADO");
+                        CrearUsuario user=new CrearUsuario(personaObj);
+                        Principal.panelPrincipal.add(user);
+                        user.setVisible(true);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "EL USUARIO SÍ EXISTE");
+                    }
+                }
             break;
+            
         }
+        
     }
+    
     private void masculinoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masculinoMouseClicked
         // TODO add your handling code here:
         if (masculino.isSelected() == true) {
