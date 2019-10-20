@@ -248,7 +248,7 @@ public class Login extends javax.swing.JInternalFrame {
     void confirmacion(){
         
         usuario=ctrlUsuario.confirmar(txtUser.getText(), String.valueOf(pass.getPassword()));
-        
+
         if(usuario.getIdUsuario()!=0){
             this.setVisible(false);
             dispose();

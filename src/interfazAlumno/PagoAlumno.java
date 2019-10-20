@@ -9,11 +9,13 @@ import Controlador.CtrlAlumno;
 import Controlador.CtrlCurso;
 import Controlador.CtrlCursoAlumno;
 import Controlador.CtrlPagosVarios;
+import Controlador.CtrlUsuario;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Persona;
 import modelo.TipoCurso;
+import usuario.Login;
 
 /**
  *
@@ -21,6 +23,7 @@ import modelo.TipoCurso;
  */
 public class PagoAlumno extends javax.swing.JInternalFrame {
     
+    CtrlUsuario ctrlUsuario=new CtrlUsuario();
     CtrlPagosVarios ctrlPagosVarios=new CtrlPagosVarios();
     CtrlCurso ctrlCurso=new CtrlCurso();
     CtrlCursoAlumno ctrlCursoAlum=new CtrlCursoAlumno();
@@ -404,10 +407,12 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
 
     private void btnRegistrarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPagoActionPerformed
         // TODO add your handling code here:
+        int idEmpleado=0;
+        idEmpleado=Login.usuario.getIdEmpleado().getIdEmpleado();
         
         if(cbConceptoPago.getSelectedIndex()!=0 && !txtImporte.getText().equals("")){
         //SE CREA UN REGISTRO DEL PAGO QUE SE REALIZARA..    
-            ctrlPagosVarios.crear(fecha.getDate(), (String) cbConceptoPago.getSelectedItem(), Float.parseFloat(txtImporte.getText()), 1, ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno());
+            ctrlPagosVarios.crear(fecha.getDate(), (String) cbConceptoPago.getSelectedItem(), Float.parseFloat(txtImporte.getText()), idEmpleado, ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno());
         
         //EN CASO DE QUE NO SEA PARA UNA CERTIFICACION Y SEA UNA COOPERATIVA SE HARÁ UNA MODIFICACION EN LA TABLA CURSO ALUMNO PARA TENER UN SALDO DE LO ABONADO
             if(cbConceptoPago.getSelectedIndex()==1){

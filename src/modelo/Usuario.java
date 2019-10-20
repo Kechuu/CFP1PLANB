@@ -46,7 +46,7 @@ public class Usuario {
         return idEmpleado;
     }
 
-    public void setIdEmpleado(Empleado idEmpleadi) {
+    public void setIdEmpleado(Empleado idEmpleado) {
         this.idEmpleado = idEmpleado;
     }
 
