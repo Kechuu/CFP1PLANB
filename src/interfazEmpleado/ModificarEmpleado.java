@@ -24,10 +24,14 @@ import Controlador.CtrlPersonaTrabajo;
 import Controlador.CtrlSexo;
 import Controlador.CtrlTipoDocumento;
 import Controlador.CtrlTitulo;
+import configuracion.Barrio_crear;
+import configuracion.Calles_crear;
+import configuracion.Localidad_crear;
 import configuracion.Sexo_crear;
 import interfazAlumno.Inscripcion;
 import java.awt.event.ItemEvent;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -219,15 +223,16 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Modificar datos");
+        jLabel1.setText("Modificar datos -Empleado");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(800, 800, 800)
-                .addComponent(jLabel1))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(39, 39, 39))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -398,7 +403,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(jLabel29))
@@ -408,7 +413,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnAgregarSx)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(jLabel33))
@@ -636,7 +641,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -789,7 +794,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
                         .addComponent(btnAsignarCargo)
                         .addComponent(btnDeshacerCargo))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addComponent(jLabel28)
@@ -908,6 +913,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1222,6 +1228,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         if(JOptionPane.showConfirmDialog(null, "¿Desea seguir modificando?","", + 
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                 
+                    panelContenedor.setSelectedIndex(0);
             }else{
                 Principal.activarPanel();
                 dispose();
@@ -1347,14 +1354,38 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
 
     private void btnLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalidadActionPerformed
         // TODO add your handling code here:
+         try {
+            Localidad_crear crear = new Localidad_crear();
+            Principal.panelPrincipal.add(crear);
+            this.setComponentZOrder(crear, 0);
+            crear.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnLocalidadActionPerformed
 
     private void btnBarrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBarrioActionPerformed
         // TODO add your handling code here:
+          try {
+            Barrio_crear crear=new Barrio_crear();
+            Principal.panelPrincipal.add(crear);
+            this.setComponentZOrder(crear, 0);
+            crear.setVisible(true);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnBarrioActionPerformed
 
     private void btnCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalleActionPerformed
         // TODO add your handling code here:
+         try {
+            Calles_crear crear=new Calles_crear();
+            Principal.panelPrincipal.add(crear);
+            this.setComponentZOrder(crear, 0);
+            crear.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnCalleActionPerformed
 
 

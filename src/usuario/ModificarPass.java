@@ -263,6 +263,7 @@ public class ModificarPass extends javax.swing.JInternalFrame {
         if(Arrays.equals(nuevaPass.getPassword(), passNew2.getPassword())){
             ctrlUsuario.editarPass(Login.usuario.getIdUsuario(), String.valueOf(nuevaPass.getPassword()));
         
+            dispose();
             Login log=new Login();
             panelPrincipal.add(log);
             log.setVisible(true);

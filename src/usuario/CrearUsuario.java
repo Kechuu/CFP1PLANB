@@ -434,13 +434,14 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
-        dispose();
         if(FormDni.alumnoEmpleadoUser==3){
             dispose();
             Login log=new Login();
             Principal.panelPrincipal.add(log);
             log.setVisible(true);
+        }else{
+            Principal.activarPanel();
+            dispose();    
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
 

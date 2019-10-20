@@ -20,11 +20,15 @@ import Controlador.CtrlPersona;
 import Controlador.CtrlSexo;
 import Controlador.CtrlTipoDocumento;
 import Controlador.CtrlTitulo;
+import configuracion.Barrio_crear;
+import configuracion.Calles_crear;
+import configuracion.Localidad_crear;
 import configuracion.Sexo_crear;
 import interfazAlumno.Inscripcion;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,6 +48,7 @@ import modelo.Sexo;
 import modelo.TipoDocumento;
 import modelo.Titulo;
 import usuario.CrearUsuario;
+import usuario.Login;
 
 /**
  *
@@ -212,15 +217,16 @@ public final class Registro extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Carga De Datos");
+        jLabel1.setText("Carga De Datos -Empleado");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(800, 800, 800)
-                .addComponent(jLabel1))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(39, 39, 39))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1171,8 +1177,10 @@ public final class Registro extends javax.swing.JInternalFrame {
             }
 
             if(personaDatos.getIdPersona()!=0){
-                JOptionPane.showMessageDialog(null, "Los datos se guardaron");                
+                JOptionPane.showMessageDialog(null, "Los datos se guardaron");  
+                btnSiguiente.setEnabled(false);
                 btnAsignarCurso.setEnabled(true);
+                panelContenedor.setSelectedIndex(0);
             }else{
                 JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
                 return;
@@ -1198,7 +1206,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         banderaEmpleado=1;
         
-        AsignarCurso asignar=new AsignarCurso(personaDatos);
+        AsignarCursoAcargo asignar=new AsignarCursoAcargo(personaDatos);
         
         Principal.panelPrincipal.add(asignar);
         this.setComponentZOrder(asignar, 0);
@@ -1209,8 +1217,16 @@ public final class Registro extends javax.swing.JInternalFrame {
 
     private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
-        dispose();
+        
+        if(FormDni.alumnoEmpleadoUser==3){
+            dispose();
+            Login log=new Login();
+            Principal.panelPrincipal.add(log);
+            log.setVisible(true);
+        }else{    
+            Principal.activarPanel();
+            dispose();
+        }
     }//GEN-LAST:event_btncancelarActionPerformed
 
     @Override
@@ -1282,14 +1298,38 @@ public final class Registro extends javax.swing.JInternalFrame {
 
     private void btnLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalidadActionPerformed
         // TODO add your handling code here:
+        try {
+            Localidad_crear crear = new Localidad_crear();
+            Principal.panelPrincipal.add(crear);
+            this.setComponentZOrder(crear, 0);
+            crear.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnLocalidadActionPerformed
 
     private void btnBarrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBarrioActionPerformed
         // TODO add your handling code here:
+         try {
+            Barrio_crear crear=new Barrio_crear();
+            Principal.panelPrincipal.add(crear);
+            this.setComponentZOrder(crear, 0);
+            crear.setVisible(true);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnBarrioActionPerformed
 
     private void btnCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalleActionPerformed
         // TODO add your handling code here:
+         try {
+            Calles_crear crear=new Calles_crear();
+            Principal.panelPrincipal.add(crear);
+            this.setComponentZOrder(crear, 0);
+            crear.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnCalleActionPerformed
 
 

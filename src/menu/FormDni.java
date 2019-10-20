@@ -13,6 +13,7 @@ import interfazAlumno.DarBajaCurso;
 import interfazAlumno.EstadoAlumno;
 import interfazAlumno.Inscripcion;
 import interfazAlumno.PagoAlumno;
+import interfazEmpleado.AsignarCursoAcargo;
 import interfazEmpleado.ConsultaGeneral;
 import interfazEmpleado.ModificarEmpleado;
 import interfazEmpleado.Registro;
@@ -347,7 +348,7 @@ public class FormDni extends javax.swing.JInternalFrame {
                         break;
                             
                         case 3:
-                            AsignarCurso curso=new AsignarCurso(personaObj);
+                            AsignarCursoAcargo curso=new AsignarCursoAcargo(personaObj);
                             Principal.panelPrincipal.add(curso);
                             curso.setVisible(true);
                         break;

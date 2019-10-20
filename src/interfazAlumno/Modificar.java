@@ -22,9 +22,13 @@ import Controlador.CtrlSexo;
 import Controlador.CtrlTipoCurso;
 import Controlador.CtrlTipoDocumento;
 import Controlador.CtrlTrabajo;
+import configuracion.Barrio_crear;
+import configuracion.Calles_crear;
+import configuracion.Localidad_crear;
 import configuracion.Sexo_crear;
 import java.awt.event.ItemEvent;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1088,8 +1092,9 @@ public final class Modificar extends javax.swing.JInternalFrame {
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                 
             }else{
-                Principal.activarPanel();
                 dispose();
+                Principal.activarPanel();
+                
             }
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -1372,14 +1377,38 @@ public final class Modificar extends javax.swing.JInternalFrame {
 
     private void btnLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalidadActionPerformed
         // TODO add your handling code here:
+        try {
+            Localidad_crear crear = new Localidad_crear();
+            Principal.panelPrincipal.add(crear);
+            this.setComponentZOrder(crear, 0);
+            crear.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnLocalidadActionPerformed
 
     private void btnBarrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBarrioActionPerformed
         // TODO add your handling code here:
+         try {
+            Barrio_crear crear=new Barrio_crear();
+            Principal.panelPrincipal.add(crear);
+            this.setComponentZOrder(crear, 0);
+            crear.setVisible(true);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnBarrioActionPerformed
 
     private void btnCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalleActionPerformed
         // TODO add your handling code here:
+        try {
+            Calles_crear crear=new Calles_crear();
+            Principal.panelPrincipal.add(crear);
+            this.setComponentZOrder(crear, 0);
+            crear.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnCalleActionPerformed
 
 
