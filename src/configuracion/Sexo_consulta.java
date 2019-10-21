@@ -5,16 +5,15 @@
  */
 package configuracion;
 
+import Controlador.CtrlSexo;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Sexo;
 
@@ -25,36 +24,32 @@ import modelo.Sexo;
 public final class Sexo_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static String nombreSexo;
+    DefaultListModel modelo =null;
+    CtrlSexo ctrlSexo=null;
     /**
      * Creates new form Trabajo
      * @throws java.lang.ClassNotFoundException
      */
     public Sexo_consulta() throws ClassNotFoundException {
+        modelo = new DefaultListModel();
+        ctrlSexo = new CtrlSexo();
+        
         initComponents();
-       cargarListaSexo();
+        cargarListaSexo();
         btnModificar.setEnabled(false);
     }
 
      public void cargarListaSexo(){
-        DefaultListModel<Sexo> modelo = new DefaultListModel<>();
+        List<Sexo> lista = new ArrayList();
         
-        try {
-            Statement st=(Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM sexo ORDER BY detalle ASC");
-            
-            while (rs.next()) {
-                Sexo sexo = new Sexo();
-                sexo.setIdSexo(rs.getInt("idSexo"));
-                sexo.setDetalle(rs.getString("detalle"));
-                
-                modelo.addElement(sexo);
-            }
-            
-            listaSexo.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error, "+e);
-        }
+        lista = ctrlSexo.cargarListaSexo();
+        
+            for (int i = 0; i < lista.size(); i++) {
+               modelo.addElement(lista.get(i).getDetalle());
+           }
+        
+        listaSexo.setModel(modelo);
+        
     
     }
     
@@ -198,9 +193,8 @@ public final class Sexo_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        Sexo sexoModificar = new Sexo();
-        sexoModificar = listaSexo.getSelectedValue();
-        nombreSexo = sexoModificar.getDetalle();
+        String nombre = (String) listaSexo.getSelectedValuesList().toString();
+        nombreSexo = nombre.substring(1, nombre.length()-1);
         
         this.setVisible(false);
         try {

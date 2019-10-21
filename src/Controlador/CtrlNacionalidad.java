@@ -9,7 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.Nacionalidad;
@@ -111,4 +112,52 @@ public class CtrlNacionalidad {
         }
         
     }
+    
+    public List<Nacionalidad> cargarListaNacionalidad(){
+        List<Nacionalidad> listaNacionalidad = new ArrayList();
+        ResultSet rst;
+        con =clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM nacionalidad ORDER BY detalle ASC");
+            
+            rst= ps.executeQuery();
+            
+            while (rst.next()) {
+                Nacionalidad nacionalidad = new Nacionalidad();
+                nacionalidad.setIdNacionalidad(rst.getInt("idNacionalidad"));
+                nacionalidad.setDetalle(rst.getString("detalle"));
+                
+                listaNacionalidad.add(nacionalidad);
+            } 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, "+e);
+        }
+    return listaNacionalidad;
+    }
+    
+    public List<Nacionalidad> leerTodos(){
+        
+        ResultSet rst;
+        List<Nacionalidad> lista = new ArrayList();
+        con = clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM nacionalidad ORDER BY detalle ASC");
+            
+            rst=ps.executeQuery();
+            
+            while (rst.next()) {                
+                Nacionalidad nacionalidad = new Nacionalidad();
+                nacionalidad.setIdNacionalidad(rst.getInt("idNacionalidad"));
+                nacionalidad.setDetalle(rst.getString("detalle"));
+                
+                lista.add(nacionalidad);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return lista;
+    }
+    
+    
 }

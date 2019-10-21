@@ -5,57 +5,51 @@
  */
 package configuracion;
 
+import Controlador.CtrlTrabajo;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import menu.Principal;
-import modelo.Cargo;
 import modelo.Trabajo;
 
 /**
  *
  * @author RociojulietaVazquez
  */
-public class Trabajo_consulta extends javax.swing.JInternalFrame {
+public final class Trabajo_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static String nombreTrabajo;
+    DefaultListModel modelo = null;
+    CtrlTrabajo ctrlTrabajo =null;
     /**
      * Creates new form Trabajo
+     * @throws java.lang.ClassNotFoundException
      */
     public Trabajo_consulta() throws ClassNotFoundException {
+        modelo = new DefaultListModel();
+        ctrlTrabajo = new CtrlTrabajo();
+        
         initComponents();
         cargarListaTrabajo();
         btnModificar.setEnabled(false);
     }
 
       public void cargarListaTrabajo(){
-        DefaultListModel<Trabajo> modelo = new DefaultListModel<>();
+         List<Trabajo> lista = new ArrayList();
         
-        try {
-            Statement st=(Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM trabajo ORDER BY detalle ASC");
-            
-            while (rs.next()) {
-                Trabajo trabajo = new Trabajo();
-                trabajo.setIdTrabajo(rs.getInt("idTrabajo"));
-                trabajo.setDetalle(rs.getString("detalle"));
-                
-                modelo.addElement(trabajo);
-            }
-            
-            listaTrabajo.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error, "+e);
-        }
-    
+        lista = ctrlTrabajo.cargarListaTrabajo();
+        
+            for (int i = 0; i < lista.size(); i++) {
+               modelo.addElement(lista.get(i).getDetalle());
+           }
+        
+        listaTrabajo.setModel(modelo);
+        
     }
     
     /**
@@ -216,9 +210,9 @@ public class Trabajo_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        Trabajo trabajoModificar = new Trabajo();
-        trabajoModificar = listaTrabajo.getSelectedValue();
-        nombreTrabajo = trabajoModificar.getDetalle();
+        String nombre = (String) listaTrabajo.getSelectedValuesList().toString();
+        nombreTrabajo = nombre.substring(1,nombre.length()-1);
+        
         this.setVisible(false);
 
         try {

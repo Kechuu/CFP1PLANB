@@ -44,7 +44,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnArticulos">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ver Art&#xed;culos"/>
+        <Property name="text" type="java.lang.String" value="Crear Art&#xed;culos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnArticulosActionPerformed"/>
@@ -53,7 +53,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAsignarProfesor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Asignar Profesor"/>
+        <Property name="text" type="java.lang.String" value="Asignar Licencia"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAsignarProfesorActionPerformed"/>

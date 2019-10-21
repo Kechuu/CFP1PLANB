@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.Planes;
@@ -132,5 +134,52 @@ public class CtrlPlanes {
         }
         
     }
+    
+    public List<Planes> cargarListaPlanes(){
+        List<Planes> listaPlanes = new ArrayList();
+        ResultSet rst;
+        con =clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM planes ORDER BY detalle ASC");
+            
+            rst= ps.executeQuery();
+            
+            while (rst.next()) {
+                Planes planes = new Planes();
+                planes.setIdPlanes(rst.getInt("idPlanes"));
+                planes.setDetalle(rst.getString("detalle"));
+                
+                listaPlanes.add(planes);
+            } 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, "+e);
+        }
+    return listaPlanes;
+    }
+    
+    public List<Planes> leerTodos(){
+        
+        ResultSet rst;
+        List<Planes> lista = new ArrayList();
+        con = clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM planes ORDER BY detalle ASC");
+            
+            rst=ps.executeQuery();
+            
+            while (rst.next()) {                
+                Planes planes = new Planes();
+                planes.setIdPlanes(rst.getInt("idPlanes"));
+                planes.setDetalle(rst.getString("detalle"));
+                
+                lista.add(planes);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return lista;
+    }
+    
     
 }

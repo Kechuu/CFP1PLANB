@@ -25,12 +25,22 @@ import modelo.Lugar;
  *
  * @author RociojulietaVazquez
  */
-public class Localidad_crear extends javax.swing.JInternalFrame {
+public final class Localidad_crear extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
+    DefaultTableModel modelo=null;
+    CtrlLugar ctrlLugar=null;
+    CtrlCodigoPostal ctrlCodigoPostal=null;
+    Lugar lugar=null;
     /**
      * Creates new form crearLocalidad
+     * @throws java.lang.ClassNotFoundException
      */
     public Localidad_crear() throws ClassNotFoundException {
+        modelo = new DefaultTableModel();
+        ctrlLugar = new CtrlLugar();
+        lugar = new Lugar();
+        ctrlCodigoPostal = new CtrlCodigoPostal();
+        
         initComponents();
         llenarTablaLocalidad(tablaLocalidad, 3);
         txtLocalidad.setFocusable(true);
@@ -56,8 +66,8 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
             
             tabla.setModel(modelo);
             
-        } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LAS LOCALIDADES EN LA TABLA"); 
+        } catch (SQLException e) {
+             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LAS LOCALIDADES EN LA TABLA: : "+e); 
         }
     }
     
@@ -251,21 +261,14 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        CtrlLugar ctrlLugar = new CtrlLugar();
-        CtrlCodigoPostal ctrlCodigoPostal = new CtrlCodigoPostal();
-        Lugar lugar = new Lugar();
-        
         if (txtLocalidad.getText().equalsIgnoreCase("") || txtCodigoPostal.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "Tienen que estar cargados todos los campos para guardar");
         }else{
             ctrlLugar.crear(txtLocalidad.getText(), 3, 1);
             
-            
             lugar = ctrlLugar.leer(txtLocalidad.getText(),3);
             
-            
             ctrlCodigoPostal.crear(lugar.getIdLugar(), txtCodigoPostal.getText());
-            
             
             llenarTablaLocalidad(tablaLocalidad, 3);
             txtLocalidad.setText("");

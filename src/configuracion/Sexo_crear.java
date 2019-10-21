@@ -9,52 +9,51 @@ import Controlador.CtrlSexo;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import menu.Principal;
+import modelo.Sexo;
 
 
 /**
  *
  * @author RociojulietaVazquez
  */
-public class Sexo_crear extends javax.swing.JInternalFrame {
+public final class Sexo_crear extends javax.swing.JInternalFrame {
     public static int sxBandera=0;
     Connection con = clases.Conectar.conexion();
+    DefaultTableModel modelo = null;
+    CtrlSexo ctrlSexo = null;
     /**
      * Creates new form CrearTrabajo
      * @throws java.lang.ClassNotFoundException
      */
     public Sexo_crear() throws ClassNotFoundException {
+        modelo = new DefaultTableModel();
+        ctrlSexo = new CtrlSexo();
+        
         initComponents();
         llenarTablaSexo(tablaSexo);
         txtSexo.setFocusable(true);
     }
     
     public void llenarTablaSexo(JTable tabla){
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Nombre");
-        tabla.setModel(modelo);
-        String[] dato = new String[1];
+        String[] fila = new String[1];
+        List<Sexo> lista = new ArrayList();
         
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT detalle FROM sexo ORDER BY detalle ASC");
-            
-            while (rs.next()) {                
-                dato[0]=rs.getString(1);
-                modelo.addRow(dato);
-            }
-            
-            tabla.setModel(modelo);
-            
-        } catch (SQLException e) {
-             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LA TABLA: "+e.getLocalizedMessage()); 
+        lista = ctrlSexo.leerTodos();
+        modelo.setRowCount(0);
+        modelo.addColumn("Nombre");
+        
+        for (int i = 0; i < lista.size(); i++) {
+            fila[0] = lista.get(i).getDetalle();
+            modelo.addRow(fila);
         }
+        
+        tabla.setModel(modelo);
     }
     
     /**
@@ -187,9 +186,7 @@ public class Sexo_crear extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-      CtrlSexo ctrlSexo = new CtrlSexo();
-      
-        if (txtSexo.getText().equalsIgnoreCase("")) {
+    if (txtSexo.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
             ctrlSexo.crear(txtSexo.getText());

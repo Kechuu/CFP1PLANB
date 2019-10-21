@@ -9,10 +9,6 @@ import Controlador.CtrlPeriodo;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Periodo;
@@ -21,14 +17,20 @@ import modelo.Periodo;
  *
  * @author RociojulietaVazquez
  */
-public class Periodo_modificar extends javax.swing.JInternalFrame {
+public final class Periodo_modificar extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
+    CtrlPeriodo ctrlPeriodo = null;
+    Periodo periodo=null;
     /**
      * Creates new form ModificarGremio
+     * @throws java.lang.ClassNotFoundException
      */
     public Periodo_modificar() throws ClassNotFoundException {
+        ctrlPeriodo = new CtrlPeriodo();
+        periodo = new Periodo();
+        
         initComponents();
-        cargarComboPeriodo(cbPeriodoActual);
+        ctrlPeriodo.cargarCombo(cbPeriodoActual);
         for (int i = 0; i < cbPeriodoActual.getItemCount(); i++) {
             if (cbPeriodoActual.getItemAt(i).getDetalle().equalsIgnoreCase(Periodo_consulta.nombrePeriodo)) {
                 cbPeriodoActual.setSelectedIndex(i);
@@ -36,29 +38,6 @@ public class Periodo_modificar extends javax.swing.JInternalFrame {
         }
         txtPeriodicidad.setText(Periodo_consulta.nombrePeriodo);
         txtPeriodicidad.setFocusable(true);
-    }
-
-    public void cargarComboPeriodo(JComboBox<Periodo> cbPeriodoActual){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM periodo ORDER BY detalle ASC");
-            Periodo periodo = new Periodo();
-            periodo.setIdPeriodo(0);
-            periodo.setDetalle("Seleccione una opcion...");
-            cbPeriodoActual.addItem(periodo);
-            
-            while (rs.next()) {                
-                periodo = new Periodo();
-                periodo.setIdPeriodo(rs.getInt("idPeriodo"));
-                periodo.setDetalle(rs.getString("detalle"));
-                cbPeriodoActual.addItem(periodo);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
-        }
-        
     }
     
     /**
@@ -197,15 +176,13 @@ public class Periodo_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        CtrlPeriodo ctrlPeriodo = new CtrlPeriodo();
-        Periodo periodo = new Periodo();
         if (txtPeriodicidad.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
             periodo = (Periodo) cbPeriodoActual.getSelectedItem();
             ctrlPeriodo.editar(periodo.getIdPeriodo(), txtPeriodicidad.getText());
             cbPeriodoActual.removeAllItems();
-            cargarComboPeriodo(cbPeriodoActual);
+            ctrlPeriodo.cargarCombo(cbPeriodoActual);
             txtPeriodicidad.setText("");
             txtPeriodicidad.setFocusable(true);
         }

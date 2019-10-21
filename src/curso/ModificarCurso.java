@@ -8,6 +8,8 @@ package curso;
 import Controlador.CtrlCurso;
 import Controlador.CtrlCursoHora;
 import Controlador.CtrlHorario;
+import Controlador.CtrlLugarCurso;
+import Controlador.CtrlTipoCurso;
 import menu.Principal;
 import configuracion.Cursado_modificar;
 import java.awt.event.ActionEvent;
@@ -32,18 +34,41 @@ import modelo.LugarCurso;
  *
  * @author araa
  */
-public class ModificarCurso extends javax.swing.JInternalFrame {
+public final class ModificarCurso extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
-    public DefaultTableModel modelo2 = new DefaultTableModel();
+    public DefaultTableModel modelo2 = null,modelo=null;
     public int bandera = 0;
     public int banderaTabla = 0;
+    CtrlTipoCurso ctrlTipoCurso=null;
+    CtrlLugarCurso ctrlLugarCurso=null;
+    Date fechaInicio1 = null;
+    Date fechaFinalizacion1 = null;
+    Curso curso = null;
+    CtrlCurso ctrlCurso = null;
+    CtrlCursoHora ctrlCursoHora = null;
+    LugarCurso lugarCurso = null;
+    TipoCurso tipoCurso = null;
+    CtrlHorario ctrlHorario = null;
     /**
      * Creates new form NewJInternalFrame
      */
     public ModificarCurso() {
+        modelo2=new DefaultTableModel();
+        ctrlTipoCurso = new CtrlTipoCurso();
+        ctrlLugarCurso = new CtrlLugarCurso();
+        modelo = new DefaultTableModel();
+        fechaInicio1 = new Date();
+        fechaFinalizacion1 = new Date();
+        curso = new Curso();
+        ctrlCurso = new CtrlCurso();
+        ctrlCursoHora=new CtrlCursoHora();
+        lugarCurso = new LugarCurso();
+        tipoCurso = new TipoCurso();
+        ctrlHorario = new CtrlHorario();
+        
         initComponents();
         bandera = 1;
-        cargarComboTipoCurso(cbxNombreCurso);
+        ctrlTipoCurso.cargarCombo(cbxNombreCurso);
         bandera=0;
         llenarTablaHorario2(TablaHorario2);
         btnAgregarHorario.setEnabled(false);
@@ -56,55 +81,7 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
         tabla.setModel(modelo2);
         banderaTabla=0;
     }
-    
-    public void cargarComboTipoCurso(JComboBox<TipoCurso> cbTipoCurso){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM tipoCurso ORDER BY detalle ASC");
-            TipoCurso tipoCurso = new TipoCurso();
-            tipoCurso.setIdTipoCurso(0);
-            tipoCurso.setDetalle("Seleccione una opcion...");
-            cbTipoCurso.addItem(tipoCurso);
-            
-            while (rs.next()) {
-                tipoCurso = new TipoCurso();
-                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
-                tipoCurso.setDetalle(rs.getString("detalle"));
-                cbTipoCurso.addItem(tipoCurso);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
-        }
-        
-    }
-    
-    public void cargarComboLugarCurso(JComboBox<LugarCurso> cbLugarCurso){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM lugarCurso ORDER BY detalle ASC");
-            LugarCurso lugarCurso = new LugarCurso();
-            lugarCurso.setIdLugarCurso(0);
-            lugarCurso.setDetalle("Seleccione una opcion...");
-            cbLugarCurso.addItem(lugarCurso);
-            
-            while (rs.next()) {                
-                lugarCurso = new LugarCurso();
-                lugarCurso.setIdLugarCurso(rs.getInt("idLugarCurso"));
-                lugarCurso.setDetalle(rs.getString("detalle"));
-                cbLugarCurso.addItem(lugarCurso);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
-        }
-        
-    }
-    
     public void llenarTablaHorario(JTable tabla){
-        DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Dia");
         modelo.addColumn("Desde");
         modelo.addColumn("Hasta");
@@ -164,7 +141,7 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
             
             tabla.setModel(modelo);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
              JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS BARRIOS EN LA TABLA"); 
         }
     }
@@ -332,7 +309,7 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
             }
         });
 
-        cbxTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Mañana", "Tarde", "Noche" }));
+        cbxTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Mañana", "Tarde", "Vespertino", "Noche" }));
         cbxTurno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxTurnoActionPerformed(evt);
@@ -605,14 +582,6 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         
-        Date fechaInicio1 = new Date();
-        Date fechaFinalizacion1 = new Date();
-
-        Curso curso = new Curso();
-        CtrlCurso ctrlCurso = new CtrlCurso();
-        CtrlCursoHora ctrlCursoHora = new CtrlCursoHora();
-        LugarCurso lugarCurso = new LugarCurso();
-        TipoCurso tipoCurso = new TipoCurso();
         String turno= (String) cbxTurno.getSelectedItem();
         int turnoInt=0;
         
@@ -623,8 +592,12 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
             if (turno.equalsIgnoreCase("Tarde")) {
                 turnoInt=2;
             }else{
-                if (turno.equalsIgnoreCase("Noche")) {
+                if (turno.equalsIgnoreCase("Vespertino")) {
                     turnoInt=3;
+                }else{
+                    if (turno.equalsIgnoreCase("Noche")) {
+                        turnoInt=4;
+                    }
                 }
             }
         }
@@ -654,7 +627,7 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
             cbxNombreCurso.removeAllItems();
             cbxLugarCurso.removeAllItems();
-            cargarComboLugarCurso(cbxLugarCurso);
+            ctrlLugarCurso.cargarCombo(cbxLugarCurso);
             //cargarComboTipoCurso(cbxNombreCurso);
             cbxTurno.setSelectedIndex(0);
             fechaInicio.setDate(null);
@@ -688,21 +661,13 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
 
     
     public void cargarCursoHorario(int idCurso){
-        CtrlHorario ctrlHorario = new CtrlHorario();
-        CtrlCursoHora ctrlCursoHora = new CtrlCursoHora();
         for (int i = 0; i < modelo2.getRowCount(); i++) {
             String dia = (String) TablaHorario2.getValueAt(i, 0);
             String desde = (String) TablaHorario2.getValueAt(i, 1);
             String hasta = (String) TablaHorario2.getValueAt(i, 2);
             
-            
-            
             Time desde1 = Time.valueOf(desde);
             Time hasta1 = Time.valueOf(hasta);
-            //JOptionPane.showMessageDialog(null, desde1);
-            
-            //java.sql.Time desde1 = new java.sql.Time(d);
-            //java.sql.Date hasta1 = new java.sql.Date(h);
             
             switch(dia){
                 case "Lunes":
@@ -769,10 +734,10 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
     private void btnNuevoTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoTurnoActionPerformed
         // TODO add your handling code here:
         
-        ModificarTipoCurso curso=new ModificarTipoCurso();
-        Principal.panelPrincipal.add(curso);
-        this.setComponentZOrder(curso, 0);
-        curso.setVisible(true);
+        ModificarTipoCurso cursoM=new ModificarTipoCurso();
+        Principal.panelPrincipal.add(cursoM);
+        this.setComponentZOrder(cursoM, 0);
+        cursoM.setVisible(true);
         
     }//GEN-LAST:event_btnNuevoTurnoActionPerformed
 
@@ -825,10 +790,7 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbxNombreCursoMouseClicked
 
     private void cbxNombreCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNombreCursoItemStateChanged
-        TipoCurso tipoCurso = new TipoCurso();
-        CtrlCurso ctrlCurso = new CtrlCurso();
         tipoCurso = (TipoCurso) cbxNombreCurso.getSelectedItem();
-        Curso curso = new Curso();
         
         if (bandera==0) {
             curso = ctrlCurso.leer(tipoCurso.getIdTipoCurso());
@@ -861,7 +823,7 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
 
     public void elegirComboLugarCurso(String detalle){
         cbxLugarCurso.removeAllItems();
-        cargarComboLugarCurso(cbxLugarCurso);
+        ctrlLugarCurso.cargarCombo(cbxLugarCurso);
         for (int i = 0; i < cbxLugarCurso.getItemCount(); i++) {
                 if (cbxLugarCurso.getItemAt(i).getDetalle().equalsIgnoreCase(detalle)) {
                     cbxLugarCurso.setSelectedIndex(i);
@@ -938,8 +900,6 @@ public class ModificarCurso extends javax.swing.JInternalFrame {
     }
     
     public void vaciarTablas(JTable tabla){
-        
-        DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Dia");
         modelo.addColumn("Desde");
         modelo.addColumn("Hasta");

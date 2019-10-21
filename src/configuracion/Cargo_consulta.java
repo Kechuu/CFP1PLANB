@@ -5,58 +5,51 @@
  */
 package configuracion;
 
+import Controlador.CtrlCargo;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Cargo;
 
 
 /**
- *
  * @author RociojulietaVazquez
  */
-public class Cargo_consulta extends javax.swing.JInternalFrame {
+public final class Cargo_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static String nombreCargo;
     public static int idCargo;
+    DefaultListModel modelo=null;
+    CtrlCargo ctrlCargo=null;
     /**
      * Creates new form cargo
+     * @throws java.lang.ClassNotFoundException
      */
     public Cargo_consulta() throws ClassNotFoundException {
+        modelo = new DefaultListModel();
+        ctrlCargo = new CtrlCargo();
+        
         initComponents();
         cargarListaCargo();
         btnModificar.setEnabled(false);
     }
 
        public void cargarListaCargo(){
-        DefaultListModel<Cargo> modelo = new DefaultListModel<>();
+        List<Cargo> lista = new ArrayList();
         
-        try {
-            Statement st=(Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM cargo ORDER BY detalle ASC");
-            
-            while (rs.next()) {
-                Cargo cargo = new Cargo();
-                cargo.setIdCargo(rs.getInt("idCargo"));
-                cargo.setDetalle(rs.getString("detalle"));
-                
-                modelo.addElement(cargo);
-            }
-            
-            listaCargo.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error, "+e);
-        }
-    
+        lista = ctrlCargo.cargarListaCargo();
+        
+            for (int i = 0; i < lista.size(); i++) {
+                modelo.addElement(lista.get(i).getDetalle());
+           }
+        
+            listaCargo.setModel(modelo);    
     }
     
     /**
@@ -90,6 +83,7 @@ public class Cargo_consulta extends javax.swing.JInternalFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 565, -1));
 
+        listaCargo.setToolTipText("");
         listaCargo.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 listaCargoValueChanged(evt);
@@ -173,10 +167,9 @@ public class Cargo_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        Cargo cargoModificar = new Cargo();
-        cargoModificar = listaCargo.getSelectedValue();
-        idCargo = cargoModificar.getIdCargo();
-        nombreCargo = cargoModificar.getDetalle();
+        String nombre = (String) listaCargo.getSelectedValuesList().toString();
+        nombreCargo = nombre.substring(1, nombre.length()-1);
+        
         this.setVisible(false);
 
             try {

@@ -9,10 +9,6 @@ import Controlador.CtrlSexo;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Sexo;
@@ -22,14 +18,21 @@ import modelo.Sexo;
  *
  * @author RociojulietaVazquez
  */
-public class Sexo_modificar extends javax.swing.JInternalFrame {
+public final class Sexo_modificar extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
+    CtrlSexo ctrlSexo = null;
+    Sexo sexo = null;
+    
     /**
      * Creates new form ModificarTrabajo
+     * @throws java.lang.ClassNotFoundException
      */
     public Sexo_modificar() throws ClassNotFoundException {
+        ctrlSexo = new CtrlSexo();
+        sexo = new Sexo();
+        
         initComponents();
-        cargarComboSexo(cbSexoActual);
+        ctrlSexo.cargarCombo(cbSexoActual);
         for (int i = 0; i < cbSexoActual.getItemCount(); i++) {
             if (cbSexoActual.getItemAt(i).getDetalle().equalsIgnoreCase(Sexo_consulta.nombreSexo)) {
                 cbSexoActual.setSelectedIndex(i);
@@ -37,29 +40,6 @@ public class Sexo_modificar extends javax.swing.JInternalFrame {
         }
         txtSexo.setText(Sexo_consulta.nombreSexo);
         txtSexo.setFocusable(true);
-    }
-    
-       public void cargarComboSexo(JComboBox<Sexo> cbSexoActual){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM sexo ORDER BY detalle ASC");
-            Sexo sexo = new Sexo();
-            sexo.setIdSexo(0);
-            sexo.setDetalle("Seleccione una opcion...");
-            cbSexoActual.addItem(sexo);
-            
-            while (rs.next()) {                
-                sexo = new Sexo();
-                sexo.setIdSexo(rs.getInt("idSexo"));
-                sexo.setDetalle(rs.getString("detalle"));
-                cbSexoActual.addItem(sexo);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR");       
-        }
-        
     }
     
     /**
@@ -198,15 +178,13 @@ public class Sexo_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-      CtrlSexo ctrlSexo = new CtrlSexo();
-      Sexo sexo = new Sexo();
-        if (txtSexo.getText().equalsIgnoreCase("")) {
+      if (txtSexo.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
             sexo = (Sexo) cbSexoActual.getSelectedItem();
             ctrlSexo.editar(sexo.getIdSexo(), txtSexo.getText());
             cbSexoActual.removeAllItems();
-            cargarComboSexo(cbSexoActual);
+            ctrlSexo.cargarCombo(cbSexoActual);
             txtSexo.setText("");
             txtSexo.setFocusable(true);
         }

@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -146,4 +148,53 @@ public class CtrlTitulo {
         }
         
     }
+    
+    public List<Titulo> cargarListaTitulo(){
+        List<Titulo> listaTitulo = new ArrayList();
+        ResultSet rst;
+        con =clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM titulo ORDER BY detalle ASC");
+            
+            rst= ps.executeQuery();
+            
+            while (rst.next()) {
+                Titulo titulo = new Titulo();
+                titulo.setIdTitulo(rst.getInt("idTitulo"));
+                titulo.setDetalle(rst.getString("detalle"));
+                
+                listaTitulo.add(titulo);
+            } 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, "+e);
+        }
+    return listaTitulo;
+    }
+    
+    public List<Titulo> leerTodos(){
+        
+        ResultSet rst;
+        List<Titulo> lista = new ArrayList();
+        con = clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM titulo ORDER BY detalle ASC");
+            
+            rst=ps.executeQuery();
+            
+            while (rst.next()) {                
+                Titulo titulo = new Titulo();
+                titulo.setIdTitulo(rst.getInt("idTitulo"));
+                titulo.setDetalle(rst.getString("detalle"));
+                
+                lista.add(titulo);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return lista;
+    }
+    
+    
+    
 }

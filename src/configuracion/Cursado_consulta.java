@@ -5,16 +5,15 @@
  */
 package configuracion;
 
+import Controlador.CtrlLugarCurso;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.LugarCurso;
 
@@ -22,39 +21,37 @@ import modelo.LugarCurso;
  *
  * @author araa
  */
-public class Cursado_consulta extends javax.swing.JInternalFrame {
+public final class Cursado_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static int idLugarCursado;
     public static String nombreLugarCursado;
+    DefaultListModel modelo=null;
+    CtrlLugarCurso ctrlLugarCurso=null;
     /**
      * Creates new form Cursado_consulta
+     * @throws java.lang.ClassNotFoundException
      */
     public Cursado_consulta() throws ClassNotFoundException {
+        modelo = new DefaultListModel();
+        ctrlLugarCurso = new CtrlLugarCurso();
+        
         initComponents();
         cargarListaCursado();
         btnModificar.setEnabled(false);
     }
 
-    public void cargarListaCursado(){
-        DefaultListModel<LugarCurso> modelo = new DefaultListModel<>();
+    
+       public void cargarListaCursado(){
+        List<LugarCurso> lista = new ArrayList();
         
-        try {
-            Statement st=(Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM lugarCurso ORDER BY detalle ASC");
-            
-            while (rs.next()) {
-                LugarCurso lugarCurso = new LugarCurso();
-                lugarCurso.setIdLugarCurso(rs.getInt("idLugarCurso"));
-                lugarCurso.setDetalle(rs.getString("detalle"));
-                
-                modelo.addElement(lugarCurso);
-            }
-            
-            listaCursado.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error, "+e);
-        }
+        lista = ctrlLugarCurso.cargarListaCursado();
+        
+            for (int i = 0; i < lista.size(); i++) {
+               modelo.addElement(lista.get(i).getDetalle());
+           }
+        
+        listaCursado.setModel(modelo);
+           
     
     }
     
@@ -215,10 +212,9 @@ public class Cursado_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        LugarCurso lugarCursoModificar = new LugarCurso();
-        lugarCursoModificar = listaCursado.getSelectedValue();
-        idLugarCursado = lugarCursoModificar.getIdLugarCurso();
-        nombreLugarCursado = lugarCursoModificar.getDetalle();
+        String nombre = (String) listaCursado.getSelectedValuesList().toString();
+        nombreLugarCursado = nombre.substring(1, nombre.length()-1);
+        
         this.setVisible(false);
 
         try {

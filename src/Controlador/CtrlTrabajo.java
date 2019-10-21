@@ -9,7 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.Trabajo;
@@ -110,4 +111,52 @@ public class CtrlTrabajo {
         }
         
     }
+    
+    public List<Trabajo> cargarListaTrabajo(){
+        List<Trabajo> listaTrabajo = new ArrayList();
+        ResultSet rst;
+        con =clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM trabajo ORDER BY detalle ASC");
+            
+            rst= ps.executeQuery();
+            
+            while (rst.next()) {
+                Trabajo trabajo = new Trabajo();
+                trabajo.setIdTrabajo(rst.getInt("idTrabajo"));
+                trabajo.setDetalle(rst.getString("detalle"));
+                
+                listaTrabajo.add(trabajo);
+            } 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, "+e);
+        }
+    return listaTrabajo;
+    }
+    
+    public List<Trabajo> leerTodos(){
+        
+        ResultSet rst;
+        List<Trabajo> lista = new ArrayList();
+        con = clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM trabajo ORDER BY detalle ASC");
+            
+            rst=ps.executeQuery();
+            
+            while (rst.next()) {                
+                Trabajo trabajo = new Trabajo();
+                trabajo.setIdTrabajo(rst.getInt("idTrabajo"));
+                trabajo.setDetalle(rst.getString("detalle"));
+                
+                lista.add(trabajo);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return lista;
+    }
+    
+    
 }

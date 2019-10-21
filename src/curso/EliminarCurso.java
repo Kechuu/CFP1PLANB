@@ -27,18 +27,31 @@ import modelo.TipoCurso;
  * @author araa
  */
 public final class EliminarCurso extends javax.swing.JInternalFrame {
-   
+    DefaultTableModel modelo =null;
     Connection con = clases.Conectar.conexion();
+    CtrlTipoCurso ctrlTipoCurso = null;
+    CtrlCurso ctrlCurso = null;
+    TipoCurso tipoCurso = null;
+    CtrlLugarCurso ctrlLugarCurso = null;
+    LugarCurso lugarCurso = null;
+                
+        
     /**
      * Creates new form NewJInternalFrame
      */
     public EliminarCurso() {
+        modelo = new DefaultTableModel();
+        ctrlTipoCurso =new CtrlTipoCurso();
+        ctrlCurso=new CtrlCurso();
+        tipoCurso = new TipoCurso();
+        ctrlLugarCurso = new CtrlLugarCurso();
+        lugarCurso = new LugarCurso();
+        
         initComponents();
         llenarTablaCurso(TablaCursos);
       }
   
     public void llenarTablaCurso(JTable tabla){
-        DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Nombre");
         modelo.addColumn("Ciclo Lectivo");
         modelo.addColumn("Turno");
@@ -58,8 +71,6 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
                     + "costo,cupo,fechaInicio,fechaFinalizacion,idLugarCurso FROM curso WHERE borrado=FALSE");
             
             while (rs.next()) {                
-                CtrlTipoCurso ctrlTipoCurso = new CtrlTipoCurso();
-                TipoCurso tipoCurso = new TipoCurso();
                 
                 int idTipoCurso = rs.getInt(1);
                 //JOptionPane.showMessageDialog(null, idTipoCurso);
@@ -94,8 +105,6 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
                 dato[5]=rs.getString(6);
                 dato[6]=rs.getString(7);
                 
-                CtrlLugarCurso ctrlLugarCurso = new CtrlLugarCurso();
-                LugarCurso lugarCurso = new LugarCurso();
                 int idLugarCurso = rs.getInt(8);
                 
                 lugarCurso = ctrlLugarCurso.leer(idLugarCurso);
@@ -112,9 +121,6 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
          
     
     public void eliminarCurso(){
-        CtrlTipoCurso ctrlTipoCurso = new CtrlTipoCurso();
-        CtrlCurso ctrlCurso = new CtrlCurso();
-        TipoCurso tipoCurso = new TipoCurso();
         int filaSeleccionada = TablaCursos.getSelectedRow();
         
         if (filaSeleccionada>=0) {
@@ -134,13 +140,9 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
                     break;
                 case "Noche":
                     ctrlCurso.borrar(tipoCurso.getIdTipoCurso(), 3, Integer.parseInt(cicloLectivo));
-                    break;
-                
+                    break;   
             }
-            
-        
         }
-        
     }
     
     /**

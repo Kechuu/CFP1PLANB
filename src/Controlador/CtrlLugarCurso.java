@@ -8,6 +8,10 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.LugarCurso;
 /**
@@ -79,4 +83,78 @@ public class CtrlLugarCurso {
         }
         return lugarCurso;
     }
+    
+    public List<LugarCurso> cargarListaCursado(){
+        List<LugarCurso> listaCursado = new ArrayList();
+        ResultSet rst;
+        con = clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM lugarCurso ORDER BY detalle ASC");
+            rst= ps.executeQuery();
+            
+            while (rst.next()) {
+                LugarCurso lugarCurso = new LugarCurso();
+                lugarCurso.setIdLugarCurso(rst.getInt("idLugarCurso"));
+                lugarCurso.setDetalle(rst.getString("detalle"));
+                
+                listaCursado.add(lugarCurso);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, "+e);
+        }
+        return listaCursado;
+    }
+    
+    public List<LugarCurso> leerTodos(){
+        
+        ResultSet rst;
+        List<LugarCurso> lista = new ArrayList();
+        con = clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM lugarCurso ORDER BY detalle ASC");
+            
+            rst=ps.executeQuery();
+            
+            while (rst.next()) {                
+                LugarCurso lugarCurso = new LugarCurso();
+                lugarCurso.setIdLugarCurso(rst.getInt("idLugarCurso"));
+                lugarCurso.setDetalle(rst.getString("detalle"));
+                
+                lista.add(lugarCurso);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return lista;
+    }
+    
+    public void cargarCombo(JComboBox<LugarCurso> cbLugarCurso){
+        
+        try {
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM lugarCurso ORDER BY detalle ASC");
+            rs=ps.executeQuery();
+            
+            LugarCurso lugarCurso=new LugarCurso();
+            lugarCurso.setIdLugarCurso(0);
+            lugarCurso.setDetalle("Seleccione una opción...");
+            cbLugarCurso.addItem(lugarCurso);
+            
+            while (rs.next()) {                
+            
+                lugarCurso=new LugarCurso();
+                
+                lugarCurso.setIdLugarCurso(rs.getInt("idLugarCurso"));
+                lugarCurso.setDetalle(rs.getString("detalle"));
+                cbLugarCurso.addItem(lugarCurso);
+            }
+            
+        } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento: "+e.getMessage());       
+        }
+        
+    }
+    
 }

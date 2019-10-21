@@ -40,7 +40,7 @@ public class LicenciaMenu extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(239, 238, 240));
 
-        btnArticulos.setText("Ver Artículos");
+        btnArticulos.setText("Crear Artículos");
         btnArticulos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnArticulosActionPerformed(evt);
@@ -52,7 +52,7 @@ public class LicenciaMenu extends javax.swing.JPanel {
             }
         });
 
-        btnAsignarProfesor.setText("Asignar Profesor");
+        btnAsignarProfesor.setText("Asignar Licencia");
         btnAsignarProfesor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAsignarProfesorActionPerformed(evt);

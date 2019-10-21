@@ -9,13 +9,8 @@ import Controlador.CtrlPlanes;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import menu.Principal;
-import modelo.Cargo;
 import modelo.Planes;
 
 
@@ -25,12 +20,18 @@ import modelo.Planes;
  */
 public class Plan_modificar extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
+    CtrlPlanes ctrlPlanes = null;
+    Planes planes =null;
     /**
      * Creates new form ModificarPlanes
+     * @throws java.lang.ClassNotFoundException
      */
     public Plan_modificar() throws ClassNotFoundException {
+        ctrlPlanes = new CtrlPlanes();
+        planes = new Planes();
+        
         initComponents();
-        cargarComboPlan(cbPlanActual);
+        ctrlPlanes.cargarComboPlan(cbPlanActual);
         for (int i = 0; i < cbPlanActual.getItemCount(); i++) {
             if (cbPlanActual.getItemAt(i).getDetalle().equalsIgnoreCase(Plan_consulta.nombrePlanes)) {
                 cbPlanActual.setSelectedIndex(i);
@@ -40,30 +41,6 @@ public class Plan_modificar extends javax.swing.JInternalFrame {
         txtPlan.setFocusable(true);
     }
 
-        public void cargarComboPlan(JComboBox<Planes> cbPlanActual){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM planes ORDER BY detalle ASC");
-            Planes planes = new Planes();
-            planes.setIdPlanes(0);
-            planes.setDetalle("Seleccione una opcion...");
-            cbPlanActual.addItem(planes);
-            
-            while (rs.next()) {                
-                planes = new Planes();
-                planes.setIdPlanes(rs.getInt("idPlan"));
-                planes.setDetalle(rs.getString("detalle"));
-                cbPlanActual.addItem(planes);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS PLANES");       
-        }
-        
-    }
-
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -201,15 +178,13 @@ public class Plan_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        CtrlPlanes ctrlPlanes = new CtrlPlanes();
-        Planes planes = new Planes();
         if (txtPlan.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
             planes = (Planes) cbPlanActual.getSelectedItem();
             ctrlPlanes.editar(planes.getIdPlanes(), txtPlan.getText());
             cbPlanActual.removeAllItems();
-            cargarComboPlan(cbPlanActual);
+            ctrlPlanes.cargarComboPlan(cbPlanActual);
             txtPlan.setText("");
             txtPlan.setFocusable(true);
         }

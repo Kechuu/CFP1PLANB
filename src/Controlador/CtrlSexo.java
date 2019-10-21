@@ -10,9 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import modelo.Planes;
 import modelo.Sexo;
 
 /**
@@ -112,5 +113,52 @@ public class CtrlSexo {
         }
         
     }
+    
+    public List<Sexo> cargarListaSexo(){
+        List<Sexo> listaSexo = new ArrayList();
+        ResultSet rst;
+        con =clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM sexo ORDER BY detalle ASC");
+            
+            rst= ps.executeQuery();
+            
+            while (rst.next()) {
+                Sexo sexo = new Sexo();
+                sexo.setIdSexo(rst.getInt("idSexo"));
+                sexo.setDetalle(rst.getString("detalle"));
+                
+                listaSexo.add(sexo);
+            } 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, "+e);
+        }
+    return listaSexo;
+    }
+    
+    public List<Sexo> leerTodos(){
+        
+        ResultSet rst;
+        List<Sexo> lista = new ArrayList();
+        con = clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM sexo ORDER BY detalle ASC");
+            
+            rst=ps.executeQuery();
+            
+            while (rst.next()) {                
+                Sexo sexo = new Sexo();
+                sexo.setIdSexo(rst.getInt("idSexo"));
+                sexo.setDetalle(rst.getString("detalle"));
+                
+                lista.add(sexo);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return lista;
+    }
+    
     
 }

@@ -5,16 +5,15 @@
  */
 package configuracion;
 
+import Controlador.CtrlPlanes;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Planes;
 
@@ -23,40 +22,35 @@ import modelo.Planes;
  *
  * @author RociojulietaVazquez
  */
-public class Plan_consulta extends javax.swing.JInternalFrame {
+public final class Plan_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static String nombrePlanes;
+    DefaultListModel modelo = null;
+    CtrlPlanes ctrlPlanes =null;
     /**
      * Creates new form Planes
      * @throws java.lang.ClassNotFoundException
      */
     public Plan_consulta() throws ClassNotFoundException {
+        modelo = new DefaultListModel();
+        ctrlPlanes = new CtrlPlanes();
+        
         initComponents();
         cargarListaPlan();
         btnModificar.setEnabled(false);
     }
 
       public void cargarListaPlan(){
-        DefaultListModel<Planes> modelo = new DefaultListModel<>();
+         List<Planes> lista = new ArrayList();
         
-        try {
-            Statement st=(Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM planes ORDER BY detalle ASC");
-            
-            while (rs.next()) {
-                Planes planes = new Planes();
-                planes.setIdPlanes(rs.getInt("idPlanes"));
-                planes.setDetalle(rs.getString("detalle"));
-                
-                modelo.addElement(planes);
-            }
-            
-            listaPlan.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error, "+e);
-        }
-    
+        lista = ctrlPlanes.cargarListaPlanes();
+        
+            for (int i = 0; i < lista.size(); i++) {
+               modelo.addElement(lista.get(i).getDetalle());
+           }
+        
+        listaPlan.setModel(modelo);
+        
     }
     
     /**
@@ -216,9 +210,9 @@ public class Plan_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        Planes planesModificar = new Planes();
-        planesModificar = listaPlan.getSelectedValue();
-        nombrePlanes = planesModificar.getDetalle();
+        String nombre = (String) listaPlan.getSelectedValuesList().toString();
+        nombrePlanes = nombre.substring(1, nombre.length()-1);
+        
         this.setVisible(false);
 
         try {

@@ -9,24 +9,31 @@ import Controlador.CtrlCargo;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import menu.Principal;
+import modelo.Cargo;
 
 
 /**
  *
  * @author
  */
-public class Cargo_crear extends javax.swing.JInternalFrame {
+public final class Cargo_crear extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
+    DefaultTableModel modelo = null;
+    CtrlCargo ctrlCargo = null;
     /**
      * Creates new form crearcargo
+     * @throws java.lang.ClassNotFoundException
      */
     public Cargo_crear() throws ClassNotFoundException {
+        modelo = new DefaultTableModel();
+        ctrlCargo = new CtrlCargo();
+        
         initComponents();
         llenarTablaCargo(tablaCargo);
         txtCargo.setFocusable(true);
@@ -34,25 +41,19 @@ public class Cargo_crear extends javax.swing.JInternalFrame {
 
     
     public void llenarTablaCargo(JTable tabla){
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Nombre");
-        tabla.setModel(modelo);
-        String[] dato = new String[1];
+        String[] fila = new String[1];
+        List<Cargo> lista = new ArrayList();
         
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT detalle FROM cargo ORDER BY detalle ASC");
-            
-            while (rs.next()) {                
-                dato[0]=rs.getString(1);
-                modelo.addRow(dato);
-            }
-            
-            tabla.setModel(modelo);
-            
-        } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS CARGOS EN LA TABLA"); 
+        lista = ctrlCargo.leerTodos();
+        modelo.setRowCount(0);
+        modelo.addColumn("Nombre");
+        
+        for (int i = 0; i < lista.size(); i++) {
+            fila[0] = lista.get(i).getDetalle();
+            modelo.addRow(fila);
         }
+        
+        tabla.setModel(modelo);
     }
     
     
@@ -226,8 +227,6 @@ public class Cargo_crear extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        CtrlCargo ctrlCargo = new CtrlCargo();
-        
         if (txtCargo.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se puede cargar un registro en blanco");
         }else{

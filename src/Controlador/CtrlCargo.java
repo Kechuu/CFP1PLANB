@@ -9,6 +9,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.Cargo;
@@ -142,4 +146,51 @@ public class CtrlCargo {
         }
         
     }
+    
+    public List<Cargo> cargarListaCargo(){
+        List<Cargo> listaCargo = new ArrayList();
+        ResultSet rst;
+        con =clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM cargo ORDER BY detalle ASC");
+            
+            rst= ps.executeQuery();
+            
+            while (rst.next()) {
+                Cargo cargo = new Cargo();
+                cargo.setIdCargo(rst.getInt("idCargo"));
+                cargo.setDetalle(rst.getString("detalle"));
+                
+                listaCargo.add(cargo);
+            } 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, "+e);
+        }
+    return listaCargo;
+    }
+    
+    public List<Cargo> leerTodos(){
+        
+        ResultSet rst;
+        List<Cargo> lista = new ArrayList();
+        con = clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM cargo ORDER BY detalle ASC");
+            
+            rst=ps.executeQuery();
+            
+            while (rst.next()) {                
+                Cargo cargo = new Cargo();
+                cargo.setIdCargo(rst.getInt("idCargo"));
+                cargo.setDetalle(rst.getString("detalle"));
+                
+                lista.add(cargo);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return lista;
+    }
+    
 }

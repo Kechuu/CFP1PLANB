@@ -5,20 +5,17 @@
  */
 package configuracion;
 
+import Controlador.CtrlLugar;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Lugar;
 
@@ -27,101 +24,45 @@ import modelo.Lugar;
  *
  * @author RociojulietaVazquez
  */
-public class Calles_consulta extends javax.swing.JInternalFrame {
+public final class Calles_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
-    public static String idCalle;
+    public static String nombreCalle="";
     public static String nombreBarrio="";
     public static String nombreLocalidad="";
     public static int modificar = 0;
+    DefaultListModel modelo =null;
+    CtrlLugar ctrlLugar = null;
+    Lugar lugar = null, lugar1 =null;
     /**
      * Creates new form calles
+     * @throws java.lang.ClassNotFoundException
      */
     public Calles_consulta() throws ClassNotFoundException {
+        modelo = new DefaultListModel();
+        ctrlLugar = new CtrlLugar();
+        lugar = new Lugar();
+        lugar1 = new Lugar();
+        
         initComponents();
         btnModificar.setEnabled(true);
-        cargarComboLocalidad(cbLocalidad);
+        ctrlLugar.cargarComboLocalidad(cbLocalidad);
     }
+    
+    
+    public void cargarListaCalles(){
+        
+        if (cbBarrio.getSelectedIndex() != 0) {
+            List<Lugar> lista = new ArrayList();
+            lugar = (Lugar) cbBarrio.getSelectedItem();
 
-    public void cargarComboLocalidad(JComboBox<Lugar> cbLocalidad){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM lugar WHERE nivel = 3 ORDER BY nombre ASC");
-            Lugar lugar = new Lugar();
-            lugar.setIdLugar(0);
-            lugar.setNombre("Seleccione una opcion...");
-            lugar.setNivel(0);
-            lugar.setDe(0);
-            cbLocalidad.addItem(lugar);
-            
-            while (rs.next()) {                
-                lugar = new Lugar();
-                lugar.setIdLugar(rs.getInt("idLugar"));
-                lugar.setNombre(rs.getString("nombre"));
-                lugar.setNivel(rs.getInt("nivel"));
-                lugar.setDe(rs.getInt("de"));
-                cbLocalidad.addItem(lugar);
+            lista = ctrlLugar.cargarListaCalles(lugar.getIdLugar());
+
+            for (int i = 0; i < lista.size(); i++) {
+                modelo.addElement(lista.get(i).getNombre());
             }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
-        }
-        
-    }
-    
-    public Vector<Lugar> cargarBarrio(int idLugar) {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Vector<Lugar> datos = new Vector<>();
-        Lugar dat = null;
-        try {
-            String sql = "SELECT * FROM lugar WHERE nivel=2 and de =" + idLugar;
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            dat = new Lugar();
-            dat.setIdLugar(0);
-            dat.setNombre("Seleccionae una opción...");
-            dat.setNivel(0);
-            dat.setDe(0);
-            datos.add(dat);
-                while (rs.next()) {
-                    dat = new Lugar();
-                    dat.setIdLugar(rs.getInt("idLugar"));
-                    dat.setNombre(rs.getString("nombre"));
-                    dat.setNivel(rs.getInt("nivel"));
-                    dat.setDe(rs.getInt("de"));
-                    datos.add(dat);
-                }
-                rs.close();
-        } catch (SQLException ex) {
-            System.err.println("Error consulta :" + ex.getMessage());
-        }
-        return datos;
-    }
-    
-    public void cargarListaCalles(int idLugar){
-        DefaultListModel<Lugar> modelo = new DefaultListModel<>();
-        
-        try {
-            Statement st=(Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM lugar WHERE nivel = 1 AND de = '"+ idLugar +"'ORDER BY nombre ASC");
-            
-            while (rs.next()) {
-                Lugar lugar = new Lugar();
-                lugar.setIdLugar(rs.getInt("idLugar"));
-                lugar.setNombre(rs.getString("nombre"));
-                lugar.setNivel(rs.getInt("nivel"));
-                lugar.setDe(rs.getInt("de"));
-                
-                modelo.addElement(lugar);
-            }
-            
+
             listaCalle.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error, "+e);
         }
-    
     }
     
     /**
@@ -278,16 +219,15 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-
-        Lugar lugarModificar = new Lugar();
+        lugar = (Lugar) cbLocalidad.getSelectedItem();
+        lugar1 = (Lugar) cbBarrio.getSelectedItem();
         
-        lugarModificar = listaCalle.getSelectedValue();
+        modificar=1;
+        String nombre = (String) listaCalle.getSelectedValuesList().toString();
+        nombreLocalidad = lugar.getNombre();
+        nombreBarrio = lugar1.getNombre();
+        nombreCalle = nombre.substring(1, nombre.length()-1);
         
-        idCalle = lugarModificar.getNombre();
-        nombreBarrio = cbBarrio.getSelectedItem().toString();
-        nombreLocalidad = cbLocalidad.getSelectedItem().toString();
-        modificar = 1;
-
         this.setVisible(false);
 
         try {
@@ -304,28 +244,23 @@ public class Calles_consulta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAtrasActionPerformed
 
     private void cbBarrioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbBarrioItemStateChanged
-
-        Lugar lugar = new Lugar();
-        
-        lugar = (Lugar) cbBarrio.getSelectedItem();
-        
-        
-        cargarListaCalles(lugar.getIdLugar());
-        
-        
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            modelo.clear();
+            cargarListaCalles();
+        }
     }//GEN-LAST:event_cbBarrioItemStateChanged
 
     private void cbLocalidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLocalidadItemStateChanged
+        
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            if (cbLocalidad.getSelectedIndex() != 0) {
+                
+                lugar = (Lugar) cbLocalidad.getSelectedItem();
+                DefaultComboBoxModel modelo1 = new DefaultComboBoxModel(ctrlLugar.cargarFiltrado(lugar.getIdLugar(), 2));
 
-        Lugar lugar = new Lugar();
-
-        lugar = (Lugar) cbLocalidad.getSelectedItem();
-        cbBarrio.setEnabled(true);
-        
-        DefaultComboBoxModel modelo = new DefaultComboBoxModel(cargarBarrio(lugar.getIdLugar()));
-        cbBarrio.setModel(modelo);
-        
-        
+                cbBarrio.setModel(modelo1);
+            }
+        }
     }//GEN-LAST:event_cbLocalidadItemStateChanged
 
     private void listaCalleValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaCalleValueChanged

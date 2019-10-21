@@ -5,55 +5,59 @@
  */
 package licencia;
 
+import Controlador.CtrlLicencia;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import menu.Principal;
+import modelo.Licencia;
 
 /**
  *
  * @author RociojulietaVazquez
  */
-public class Licencia_consulta extends javax.swing.JInternalFrame {
+public final class Licencia_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
-    public static String numeroArticulo;
+    public static String numeroArticulo="";
+    public static int bandera=0;
+    DefaultTableModel modelo = null;
+    CtrlLicencia ctrlLicencia = null;
     /**
      * Creates new form licencia
      * @throws java.lang.ClassNotFoundException
      */
     public Licencia_consulta() throws ClassNotFoundException { 
+        modelo = new DefaultTableModel();
+        ctrlLicencia = new CtrlLicencia();
+        
         initComponents();
         llenarTablaBarrio(tablaLicencia);
     }
 
     public void llenarTablaBarrio(JTable tabla){
-        DefaultTableModel modelo = new DefaultTableModel();
+        String[] fila = new String[2];
+        List<Licencia> lista = new ArrayList();
+        
+        lista = ctrlLicencia.leerTodos();
+        modelo.setRowCount(0);
         modelo.addColumn("Articulo");
         modelo.addColumn("Detalle");
-        tabla.setModel(modelo);
-        String[] dato = new String[2];
         
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT articulo,detalle FROM licencia ORDER BY articulo ASC");
-            
-            while (rs.next()) {                
-                dato[0]=rs.getString(1);
-                dato[1]=rs.getString(2);
-                modelo.addRow(dato);
-            }
-            
-            tabla.setModel(modelo);
-            
-        } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS BARRIOS EN LA TABLA"); 
+        for (int i = 0; i < lista.size(); i++) {
+            fila[0]=String.valueOf(lista.get(i).getArticulo());
+            fila[1]=lista.get(i).getDetalle();
+            modelo.addRow(fila);
         }
+        
+        tabla.setModel(modelo);
     }
     
     
@@ -272,10 +276,11 @@ public class Licencia_consulta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAsignarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-        DefaultTableModel modelo = (DefaultTableModel) tablaLicencia.getModel();
+        
+        modelo = (DefaultTableModel) tablaLicencia.getModel();
         
         numeroArticulo = (String) modelo.getValueAt(tablaLicencia.getSelectedRow(), 0);
+        bandera =1;
         //JOptionPane.showMessageDialog(null, numeroArticulo);
         
         this.setVisible(false);

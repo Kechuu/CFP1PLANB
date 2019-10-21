@@ -9,48 +9,48 @@ import Controlador.CtrlLugarCurso;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import menu.Principal;
+import modelo.LugarCurso;
 
 /**
  *
  * @author araa
  */
-public class Cursado_crear extends javax.swing.JInternalFrame {
+public final class Cursado_crear extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
+    DefaultTableModel modelo = null;
+    CtrlLugarCurso ctrlLugarCurso=null;
     /**
      * Creates new form Cursado_crear
+     * @throws java.lang.ClassNotFoundException
      */
     public Cursado_crear() throws ClassNotFoundException {
+        modelo = new DefaultTableModel();
+        ctrlLugarCurso=new CtrlLugarCurso();
+        
         initComponents();
         llenarTablaCursado(tablaCursado);
         txtCursado.setFocusable(true);
     }
 
     public void llenarTablaCursado(JTable tabla){
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Nombre");
-        tabla.setModel(modelo);
-        String[] dato = new String[1];
+        String[] fila = new String[1];
+        List<LugarCurso> lista = new ArrayList();
         
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT detalle FROM lugarCurso ORDER BY detalle ASC");
-            
-            while (rs.next()) {                
-                dato[0]=rs.getString(1);
-                modelo.addRow(dato);
-            }
-            
-            tabla.setModel(modelo);
-            
-        } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS LUGARES DE CURSADO EN LA TABLA"); 
+        lista = ctrlLugarCurso.leerTodos();
+        modelo.setRowCount(0);
+        modelo.addColumn("Nombre");
+        
+        for (int i = 0; i < lista.size(); i++) {
+            fila[0] = lista.get(i).getDetalle();
+            modelo.addRow(fila);
         }
+        
+        tabla.setModel(modelo);
     }
     
     /**
@@ -210,8 +210,6 @@ public class Cursado_crear extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        CtrlLugarCurso ctrlLugarCurso = new CtrlLugarCurso();
-        
         if (txtCursado.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se puede cargar un registro en blanco");
         }else{

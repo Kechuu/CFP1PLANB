@@ -8,6 +8,10 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.Periodo;
 /**
@@ -80,4 +84,78 @@ public class CtrlPeriodo {
         }
         return periodo;
     }
+    
+    public List<Periodo> cargarListaPeriodo(){
+        List<Periodo> listaPeriodo = new ArrayList();
+        ResultSet rst;
+        con =clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM periodo ORDER BY detalle ASC");
+            
+            rst= ps.executeQuery();
+            
+            while (rst.next()) {
+                Periodo periodo = new Periodo();
+                periodo.setIdPeriodo(rst.getInt("idPeriodo"));
+                periodo.setDetalle(rst.getString("detalle"));
+                
+                listaPeriodo.add(periodo);
+            } 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, "+e);
+        }
+    return listaPeriodo;
+    }
+    
+    public List<Periodo> leerTodos(){
+        
+        ResultSet rst;
+        List<Periodo> lista = new ArrayList();
+        con = clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM periodo ORDER BY detalle ASC");
+            
+            rst=ps.executeQuery();
+            
+            while (rst.next()) {                
+                Periodo periodo = new Periodo();
+                periodo.setIdPeriodo(rst.getInt("idPeriodo"));
+                periodo.setDetalle(rst.getString("detalle"));
+                
+                lista.add(periodo);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return lista;
+    }
+    
+    public void cargarCombo(JComboBox<Periodo> cbPeriodo){
+        
+        try {
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM periodo ORDER BY detalle ASC");
+            rs=ps.executeQuery();
+            
+            Periodo periodo=new Periodo();
+            periodo.setIdPeriodo(0);
+            periodo.setDetalle("Seleccione una opción...");
+            cbPeriodo.addItem(periodo);
+            
+            while (rs.next()) {                
+            
+                periodo=new Periodo();
+                
+                periodo.setIdPeriodo(rs.getInt("idPeriodo"));
+                periodo.setDetalle(rs.getString("detalle"));
+                cbPeriodo.addItem(periodo);
+            }
+            
+        } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento: "+e.getMessage());       
+        }
+        
+    }
+    
 }
