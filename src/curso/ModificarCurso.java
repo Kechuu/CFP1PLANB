@@ -36,7 +36,7 @@ import modelo.LugarCurso;
  */
 public final class ModificarCurso extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
-    public DefaultTableModel modelo2 = null,modelo=null;
+    public DefaultTableModel modelo2 = null;
     public int bandera = 0;
     public int banderaTabla = 0;
     CtrlTipoCurso ctrlTipoCurso=null;
@@ -56,7 +56,6 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
         modelo2=new DefaultTableModel();
         ctrlTipoCurso = new CtrlTipoCurso();
         ctrlLugarCurso = new CtrlLugarCurso();
-        modelo = new DefaultTableModel();
         fechaInicio1 = new Date();
         fechaFinalizacion1 = new Date();
         curso = new Curso();
@@ -82,6 +81,7 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
         banderaTabla=0;
     }
     public void llenarTablaHorario(JTable tabla){
+        DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Dia");
         modelo.addColumn("Desde");
         modelo.addColumn("Hasta");
@@ -900,6 +900,7 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
     }
     
     public void vaciarTablas(JTable tabla){
+        DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Dia");
         modelo.addColumn("Desde");
         modelo.addColumn("Hasta");

@@ -35,7 +35,7 @@ import modelo.LugarCurso;
  */
 public final class CrearCurso extends javax.swing.JInternalFrame {
     public static int origenBandera=0;
-   public DefaultTableModel modelo2 = null,modelo = null;
+   public DefaultTableModel modelo2 = null;
    Connection con = clases.Conectar.conexion();
    public int bandera=0;
    CtrlTipoCurso ctrlTipoCurso=null;
@@ -53,7 +53,6 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
      */
     public CrearCurso() {
         modelo2 = new DefaultTableModel();
-        modelo = new DefaultTableModel();
         ctrlTipoCurso = new CtrlTipoCurso();
         ctrlLugarCurso = new CtrlLugarCurso();
         fechaInicio1 = new Date();
@@ -71,7 +70,7 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
     }
     
     public void vaciarTablas(JTable tabla){
-        
+        DefaultTableModel modelo =new DefaultTableModel();
         modelo.addColumn("Dia");
         modelo.addColumn("Desde");
         modelo.addColumn("Hasta");
@@ -100,6 +99,7 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
     
     
     public void llenarTablaHorario(JTable tabla){
+        DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Dia");
         modelo.addColumn("Desde");
         modelo.addColumn("Hasta");
@@ -658,7 +658,6 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
             vaciarTablas(TablaHorario);
             vaciarTablas(TablaHorario2);
         }
-
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void BotonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarActionPerformed

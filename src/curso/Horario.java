@@ -22,7 +22,7 @@ import menu.Principal;
  *
  * @author araa
  */
-public class Horario extends javax.swing.JInternalFrame {
+public final class Horario extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     /**
      * Creates new form Horario_
