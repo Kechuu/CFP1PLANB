@@ -63,6 +63,7 @@ public final class Calles_consulta extends javax.swing.JInternalFrame {
 
             listaCalle.setModel(modelo);
         }
+    
     }
     
     /**

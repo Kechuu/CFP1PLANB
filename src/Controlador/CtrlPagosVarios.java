@@ -89,9 +89,10 @@ public class CtrlPagosVarios {
         try{
 
             con=clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("SELECT pagosVarios.detalle, persona.nombrePersona, persona.apellidoPersona, pagosVarios.importe, curso.costo, pagosVarios.fecha FROM persona "
+            ps=(PreparedStatement)con.prepareStatement("SELECT pagosVarios.detalle, persona.nombrePersona, persona.apellidoPersona, pagosVarios.importe, cursoAlumno.saldo, pagosVarios.fecha FROM persona "
                     + " INNER JOIN alumno ON persona.idPersona = alumno.idPersona"
                     + " INNER JOIN pagosVarios ON alumno.idAlumno = pagosVarios.idAlumno"
+                    + " INNER JOIN cursoAlumno ON alumno.idAlumno = cursoAlumno.idAlumno"
                     + " WHERE alumno.idAlumno = ? ORDER BY pagosVarios.fecha");
            
             ps.setInt(1, idAlumno);
@@ -110,7 +111,6 @@ public class CtrlPagosVarios {
                 
                 modelo.addRow(datos);
              
-                JOptionPane.showMessageDialog(null, datos);
             }
            
             tabla.setModel(modelo);

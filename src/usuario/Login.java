@@ -8,7 +8,6 @@ package usuario;
 import Controlador.CtrlEscuela;
 import Controlador.CtrlUsuario;
 import clases.CambiaPanel;
-import interfazAlumno.PanelDni;
 import interfazEmpleado.Registro;
 import javax.swing.JOptionPane;
 import menu.Principal;
@@ -17,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import menu.ConfiguracionGeneral;
+import menu.FormDni;
 import static menu.Principal.panelSubMenu;
 import modelo.Escuela;
 import modelo.Usuario;
@@ -32,7 +32,7 @@ public class Login extends javax.swing.JInternalFrame {
     
     public static Usuario usuario=new Usuario();
     public static String nombreEscuela=null;
-    
+    public static boolean existeUsuario=true;
     int contador;
     /**
      * Creates new form Login
@@ -228,14 +228,14 @@ public class Login extends javax.swing.JInternalFrame {
         
         if(clave.equals("claveDirector")){
            this.setVisible(false);
-            try {
-                PanelDni.alumnoEmpleado=3;
-                CambiaPanel cambiaPanel = new CambiaPanel(Principal.panelPrincipal, new PanelDniUs());
-
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
-           
+/*                PanelDni.alumnoEmpleado=3;
+            CambiaPanel cambiaPanel = new CambiaPanel(Principal.panelPrincipal, new PanelDniUs());
+            */
+            FormDni.alumnoEmpleadoUser=3;
+            FormDni dni=new FormDni();
+            Principal.panelPrincipal.add(dni);
+            dni.setVisible(true);
+            
         }else{
             JOptionPane.showMessageDialog(null, "no");
         }
@@ -248,7 +248,7 @@ public class Login extends javax.swing.JInternalFrame {
     void confirmacion(){
         
         usuario=ctrlUsuario.confirmar(txtUser.getText(), String.valueOf(pass.getPassword()));
-        
+
         if(usuario.getIdUsuario()!=0){
             this.setVisible(false);
             dispose();

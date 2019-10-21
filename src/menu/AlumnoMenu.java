@@ -6,20 +6,9 @@
 package menu;
 
 import interfazAlumno.AsignarCurso;
-import interfazAlumno.Modificar;
-import interfazAlumno.DarBajaCurso;
-//import interfazAlumno.Pago;
-import interfazAlumno.PagoAlumno;
-import interfazAlumno.PanelDni;
-import interfazAlumno.EstadoAlumno;
-import interfazAlumno.Inscripcion;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.Persona;
-import usuario.Login;
 /**
  *
  * @author araa
@@ -29,15 +18,14 @@ public class AlumnoMenu extends javax.swing.JPanel {
     /**
      * Creates new form AlumnoMenu
      */
+    public static int alumnoMenu=0;
     public static int pagoAlumno;
     Persona objPersona=new Persona();
     public AlumnoMenu() throws ClassNotFoundException {
         initComponents();
         
-        this.setBounds(0, 65, 240, 210);
+        this.setBounds(0, 45, 260, 260);
         this.setVisible(true);
-      
-        
     }
     
     public AlumnoMenu(Persona persona){
@@ -46,13 +34,13 @@ public class AlumnoMenu extends javax.swing.JPanel {
         this.setBounds(0, 45, 260, 260);
         this.setVisible(true);
         
-        if(Login.usuario.getJerarquia()==3){
+        /*if(Login.usuario.getJerarquia()==3){
             btnModificarDatos.setVisible(false);
             btnAsignarCurso.setVisible(false);
             btnPagos.setVisible(false);
             btnBajaAlumno.setVisible(false);
             
-        }
+        }*/
         objPersona=persona;
     }
 
@@ -70,6 +58,7 @@ public class AlumnoMenu extends javax.swing.JPanel {
         btnPagos = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
         btnAsignarCurso = new javax.swing.JButton();
+        btnDarAlta = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(239, 238, 240));
 
@@ -133,6 +122,18 @@ public class AlumnoMenu extends javax.swing.JPanel {
             }
         });
 
+        btnDarAlta.setText("Dar de alta");
+        btnDarAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDarAltaActionPerformed(evt);
+            }
+        });
+        btnDarAlta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnDarAltaKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,11 +143,14 @@ public class AlumnoMenu extends javax.swing.JPanel {
             .addComponent(btnPagos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnConsultar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnAsignarCurso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnDarAlta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(btnDarAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnModificarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -162,63 +166,36 @@ public class AlumnoMenu extends javax.swing.JPanel {
 
     private void btnModificarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarDatosActionPerformed
         // TODO add your handling code here:
-
-        this.setVisible(false);
-        Principal.desactivarPanel();
-        
-        Modificar modificar=new Modificar(objPersona);
-        Principal.panelPrincipal.add(modificar);
-        modificar.setVisible(true);
+        alumnoMenu=2;
+        panelDni();
     }//GEN-LAST:event_btnModificarDatosActionPerformed
 
     private void btnBajaAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaAlumnoActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        Principal.desactivarPanel();
-        menu.Principal.menuAlumno=1;
-        
-        DarBajaCurso baja= new DarBajaCurso(objPersona);
-        Principal.panelPrincipal.add(baja);
-        baja.setVisible(true);
+        alumnoMenu=4;
+        panelDni();
     }//GEN-LAST:event_btnBajaAlumnoActionPerformed
 
     private void btnPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosActionPerformed
         // TODO add your handling code here:
         AsignarCurso.banderaAsignar=2;
-        
-        this.setVisible(false);
-        Principal.desactivarPanel();
-        
-        PagoAlumno pagos=new PagoAlumno(objPersona);
-        Principal.panelPrincipal.add(pagos);
-        pagos.setVisible(true);
+  
+        alumnoMenu=5;
+        panelDni();
     }//GEN-LAST:event_btnPagosActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        Principal.desactivarPanel();
-        
-        EstadoAlumno estado;
-        try {
-            estado = new EstadoAlumno(objPersona);
-            Principal.panelPrincipal.add(estado);
-            estado.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(AlumnoMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
+    
+        alumnoMenu=6;
+        panelDni();
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnAsignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarCursoActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        Principal.desactivarPanel();
-        Inscripcion.bandera=2;
-        AsignarCurso asignar=new AsignarCurso(objPersona);
-        Principal.panelPrincipal.add(asignar);
-        asignar.setVisible(true);
+        
+        alumnoMenu=3;
+        panelDni();
     }//GEN-LAST:event_btnAsignarCursoActionPerformed
 
     private void btnModificarDatosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarDatosKeyPressed
@@ -256,11 +233,32 @@ public class AlumnoMenu extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnConsultarKeyPressed
 
+    private void btnDarAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarAltaActionPerformed
+        // TODO add your handling code here:
+        alumnoMenu=1;
+        panelDni();
+    }//GEN-LAST:event_btnDarAltaActionPerformed
+
+    private void btnDarAltaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDarAltaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDarAltaKeyPressed
+
+    void panelDni(){
+        this.setVisible(false);
+        Principal.desactivarPanel();
+       
+        FormDni.alumnoEmpleadoUser=1;
+        FormDni dni=new FormDni();
+        Principal.panelPrincipal.add(dni);
+        dni.setVisible(true);
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignarCurso;
     private javax.swing.JButton btnBajaAlumno;
     private javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnDarAlta;
     private javax.swing.JButton btnModificarDatos;
     private javax.swing.JButton btnPagos;
     // End of variables declaration//GEN-END:variables

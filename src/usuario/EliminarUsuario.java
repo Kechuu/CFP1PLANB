@@ -53,7 +53,7 @@ public class EliminarUsuario extends javax.swing.JInternalFrame {
             String sql = "SELECT usuario.idUsuario, persona.nombrePersona, persona.apellidoPersona, usuario.user FROM persona"
                     + " INNER JOIN empleado ON persona.idPersona = empleado.idPersona"
                     + " INNER JOIN empleadoCargo ON empleado.idEmpleado = empleadoCargo.idEmpleado"
-                    + " INNER JOIN usuario ON usuario.idPersona = persona.idPersona"
+                    + " INNER JOIN usuario ON usuario.idEmpleado = empleado.idEmpleado"
                     + " WHERE empleadoCargo.idCargo=? AND empleado.borrado=false";
             
             ps = con.prepareStatement(sql);
@@ -212,8 +212,8 @@ public class EliminarUsuario extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel2)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(12, 12, 12)
-                                        .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(80, 80, 80)
+                                        .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(40, 40, 40)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(12, 12, 12)
@@ -236,7 +236,7 @@ public class EliminarUsuario extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -263,7 +263,9 @@ public class EliminarUsuario extends javax.swing.JInternalFrame {
         Usuario item=null;
         item=(Usuario) cbUsuario.getSelectedItem();
         ctrlUsuario.borrar(item.getIdUsuario());
-        
+
+        cbCargo.setSelectedIndex(0);
+        cbUsuario.setSelectedIndex(0);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

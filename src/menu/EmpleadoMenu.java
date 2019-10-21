@@ -18,23 +18,30 @@ import usuario.Login;
  * @author araa
  */
 public class EmpleadoMenu extends javax.swing.JPanel {
-
+    
+    public static int empleadoMenu=0;//sirve para saber desde qué sub menu proviene..
     Persona personaObj=new Persona();
     /**
      * Creates new form EmpleadoMenu
      * @param persona
      */
+    
+    public EmpleadoMenu(){
+        initComponents();
+        this.setBounds(0, 75, 260, 180);
+    }
+    
     public EmpleadoMenu(Persona persona) {
         initComponents();
         
-        this.setBounds(0, 85, 240, 174);
+        this.setBounds(0, 75, 240, 180);
         this.personaObj=persona;
         
-        if(Login.usuario.getJerarquia()==3){
+        /*if(Login.usuario.getJerarquia()==3){
             btnModificarDatos.setVisible(false);
             btnAsignarCurso.setVisible(false);
             btnDarBaja.setVisible(false);
-        }
+        }*/
     }
 
     /**
@@ -50,6 +57,7 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         btnConsultarEstado = new javax.swing.JButton();
         btnModificarDatos = new javax.swing.JButton();
         btnDarBaja = new javax.swing.JButton();
+        btnDarAlta = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(239, 238, 240));
 
@@ -101,6 +109,18 @@ public class EmpleadoMenu extends javax.swing.JPanel {
             }
         });
 
+        btnDarAlta.setText("Dar de alta");
+        btnDarAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDarAltaActionPerformed(evt);
+            }
+        });
+        btnDarAlta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnDarAltaKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -109,11 +129,14 @@ public class EmpleadoMenu extends javax.swing.JPanel {
             .addComponent(btnModificarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnDarBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnDarAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(btnDarAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
                 .addComponent(btnModificarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -127,19 +150,21 @@ public class EmpleadoMenu extends javax.swing.JPanel {
 
     private void btnAsignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarCursoActionPerformed
 
-        Registro.banderaEmpleado=2;
+/*        Registro.banderaEmpleado=2;
         this.setVisible(false);
         Principal.desactivarPanel();
         AsignarCurso asignar=new AsignarCurso(personaObj);
         Principal.panelPrincipal.add(asignar);
-        asignar.setVisible(true);
+        asignar.setVisible(true);*/
         
+        empleadoMenu=3;
+        panelDni();
         
     }//GEN-LAST:event_btnAsignarCursoActionPerformed
 
     private void btnConsultarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarEstadoActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+/*        this.setVisible(false);
         Principal.desactivarPanel();
         
         ConsultaGeneral empleado;
@@ -149,29 +174,35 @@ public class EmpleadoMenu extends javax.swing.JPanel {
             empleado.setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(EmpleadoMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        }*/
+        empleadoMenu=5;
+        panelDni();
     }//GEN-LAST:event_btnConsultarEstadoActionPerformed
 
     private void btnModificarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarDatosActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+/*        this.setVisible(false);
         Principal.desactivarPanel();
         
         Modificar empleado= new Modificar(personaObj);
         Principal.panelPrincipal.add(empleado);
-        empleado.setVisible(true);
+        empleado.setVisible(true);*/
+        empleadoMenu=2;
+        panelDni();
+        
     }//GEN-LAST:event_btnModificarDatosActionPerformed
 
     private void btnDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarBajaActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+/*        this.setVisible(false);
         Principal.desactivarPanel();
         
         DarBajaCurso empleado=new DarBajaCurso(personaObj);
         Principal.panelPrincipal.add(empleado);
-        empleado.setVisible(true);
+        empleado.setVisible(true);*/
+        empleadoMenu=4;
+        panelDni();
     }//GEN-LAST:event_btnDarBajaActionPerformed
 
     private void btnModificarDatosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarDatosKeyPressed
@@ -202,10 +233,33 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnConsultarEstadoKeyPressed
 
+    private void btnDarAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarAltaActionPerformed
+        // TODO add your handling code here:
+        empleadoMenu=1;
+        panelDni();
+    }//GEN-LAST:event_btnDarAltaActionPerformed
+
+    private void btnDarAltaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDarAltaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDarAltaKeyPressed
+
+
+    void panelDni(){
+        this.setVisible(false);
+        Principal.desactivarPanel();
+       
+        //FormDni.alumnoEmpleadoUser=2;
+        FormDni dni=new FormDni();
+        Principal.panelPrincipal.add(dni);
+        //this.setComponentZOrder(dni, 0);
+        dni.setVisible(true);
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignarCurso;
     private javax.swing.JButton btnConsultarEstado;
+    private javax.swing.JButton btnDarAlta;
     private javax.swing.JButton btnDarBaja;
     private javax.swing.JButton btnModificarDatos;
     // End of variables declaration//GEN-END:variables

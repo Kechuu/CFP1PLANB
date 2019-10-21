@@ -5,7 +5,6 @@ import Controlador.CtrlEmpleado;
 import Controlador.CtrlEmpleadoCargo;
 import Controlador.CtrlPersona;
 import Controlador.CtrlUsuario;
-import interfazAlumno.PanelDni;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -16,6 +15,7 @@ import java.util.Arrays;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import menu.FormDni;
 import menu.Principal;
 import modelo.Cargo;
 import modelo.Persona;
@@ -56,7 +56,6 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
         
         //cargarCombo(cbUsuario);
         ctrlCargo.cargarCombo(cbJerarquia);  
-        JOptionPane.showMessageDialog(null, "hola");
         
     }
     
@@ -71,6 +70,8 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
         cbEmpleado.addItem(persona);
         
     }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -323,29 +324,31 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
         Y CUANDO YA SE ESTE EN EL SISTEMA
         */
         //HACER UNA BUSQUEDA PREVIA SI EXISTE UN USS CON EL MISMO ID DE PERSONA..!
-        if(PanelDni.alumnoEmpleado!=3){
+        if(FormDni.alumnoEmpleadoUser!=3){
     //si no es 3 quiere decir que entro estando ya en el sistema... por lo tal se tendria que hacer una busqueda previa en caso de que
     //el usuario a crear hacia un empleado, ya esté creado...
-            if(ctrlUsuario.leer(idPersona.getIdPersona()).getIdUsuario()!=0){
+            if (ctrlUsuario.leer(idEmpleado).getIdUsuario() != 0){
+                
                 if(Arrays.equals(txtPass.getPassword(), txtPass2.getPassword())){
-                Cargo item=(Cargo) cbJerarquia.getSelectedItem();
-                jerarquia(item.getDetalle());
-            
-                ctrlUsuario.crear(txtUser.getText(), String.copyValueOf(txtPass.getPassword()),jerarquia, idEmpleado);
-            
-                if(ctrlUsuario.verificar(txtUser.getText(), String.copyValueOf(txtPass.getPassword()))){
-                    JOptionPane.showMessageDialog(null, "EL usuario ya ha sido creado... ");
-                    dispose();
-                    Principal.activarPanel();
-                }
-                    
+                    Cargo item = (Cargo) cbJerarquia.getSelectedItem();
+                    jerarquia(item.getDetalle());
+
+                    ctrlUsuario.crear(txtUser.getText(), String.copyValueOf(txtPass.getPassword()), jerarquia, idEmpleado);
+
+                    if (ctrlUsuario.verificar(txtUser.getText(), String.copyValueOf(txtPass.getPassword()))) {
+                        JOptionPane.showMessageDialog(null, "EL usuario ya ha sido creado... ");
+                        dispose();
+                        Principal.activarPanel();
+                    }
+
                 }else{
                     JOptionPane.showMessageDialog(null, "Vuelva a ingresar su contraseña..");
                 }
+                
             }else{
                 JOptionPane.showMessageDialog(null, "Ya existe un usuario para ese empleado");
             }
-            
+
         }else{
             if(Arrays.equals(txtPass.getPassword(), txtPass2.getPassword())){
                 Cargo item=(Cargo) cbJerarquia.getSelectedItem();
@@ -390,7 +393,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
     private void cbJerarquiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbJerarquiaItemStateChanged
         // TODO add your handling code here:
         if(evt.getStateChange()==ItemEvent.SELECTED){
-            if(cbJerarquia.getSelectedIndex()!=0 && PanelDni.alumnoEmpleado!=3){
+            if(cbJerarquia.getSelectedIndex()!=0 && FormDni.alumnoEmpleadoUser!=3){
                 
                 Cargo item;
                 item=(Cargo)cbJerarquia.getSelectedItem();               
@@ -431,13 +434,14 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
-        dispose();
-        if(PanelDni.alumnoEmpleado==3){
+        if(FormDni.alumnoEmpleadoUser==3){
             dispose();
             Login log=new Login();
             Principal.panelPrincipal.add(log);
             log.setVisible(true);
+        }else{
+            Principal.activarPanel();
+            dispose();    
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
 

@@ -9,11 +9,13 @@ import Controlador.CtrlAlumno;
 import Controlador.CtrlCurso;
 import Controlador.CtrlCursoAlumno;
 import Controlador.CtrlPagosVarios;
+import Controlador.CtrlUsuario;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Persona;
 import modelo.TipoCurso;
+import usuario.Login;
 
 /**
  *
@@ -21,6 +23,7 @@ import modelo.TipoCurso;
  */
 public class PagoAlumno extends javax.swing.JInternalFrame {
     
+    CtrlUsuario ctrlUsuario=new CtrlUsuario();
     CtrlPagosVarios ctrlPagosVarios=new CtrlPagosVarios();
     CtrlCurso ctrlCurso=new CtrlCurso();
     CtrlCursoAlumno ctrlCursoAlum=new CtrlCursoAlumno();
@@ -47,7 +50,10 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         obtenerDni(persona.getCUIL());
         txtNombre.setText(persona.getApellidoPersona()+" "+persona.getNombrePersona());
         fecha.setDate(date);
+        
         ctrlPagosVarios.llenarTabla(ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno(), tablaHistorialPago);
+        
+        
     }
 
     void obtenerDni(String cuil){
@@ -355,7 +361,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(jButton6)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -365,10 +371,12 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnRegistrarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27))))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -399,10 +407,12 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
 
     private void btnRegistrarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPagoActionPerformed
         // TODO add your handling code here:
+        int idEmpleado=0;
+        idEmpleado=Login.usuario.getIdEmpleado().getIdEmpleado();
         
         if(cbConceptoPago.getSelectedIndex()!=0 && !txtImporte.getText().equals("")){
         //SE CREA UN REGISTRO DEL PAGO QUE SE REALIZARA..    
-            ctrlPagosVarios.crear(fecha.getDate(), (String) cbConceptoPago.getSelectedItem(), Float.parseFloat(txtImporte.getText()), 1, ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno());
+            ctrlPagosVarios.crear(fecha.getDate(), (String) cbConceptoPago.getSelectedItem(), Float.parseFloat(txtImporte.getText()), idEmpleado, ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno());
         
         //EN CASO DE QUE NO SEA PARA UNA CERTIFICACION Y SEA UNA COOPERATIVA SE HARÁ UNA MODIFICACION EN LA TABLA CURSO ALUMNO PARA TENER UN SALDO DE LO ABONADO
             if(cbConceptoPago.getSelectedIndex()==1){

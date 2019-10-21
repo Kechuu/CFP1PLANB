@@ -145,7 +145,8 @@ public class CtrlEmpleado {
                 empleado.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
                 empleado.setIdEstadoEmpleado(ctrlEstadoEmpleado.leer(rs.getInt("idEstadoEmpleado")));
                 empleado.setIdGremio(ctrlGremio.leer(rs.getInt("idGremio")));
-                }else{
+                
+            }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
             
