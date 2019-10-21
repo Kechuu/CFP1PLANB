@@ -4,11 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/curso/CrearCurso.java</file>
-            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/curso/ModificarCurso.java</file>
-            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/curso/ModificarTipoCurso.java</file>
-            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/curso/CrearTipoCurso.java</file>
-            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/curso/EliminarCurso.java</file>
-            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/curso/Horario.java</file>
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/menu/Principal.java</file>
         </group>
     </open-files>
 </project-private>
