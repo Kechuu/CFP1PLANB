@@ -176,7 +176,7 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
         if (txtArticulo.getText().equalsIgnoreCase("") || areaDetalle.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
-            ctrlLicencia.crear(Integer.parseInt(txtArticulo.getText()), areaDetalle.getText());
+            //ctrlLicencia.crear(Integer.parseInt(txtArticulo.getText()), areaDetalle.getText());
             txtArticulo.setText("");
             areaDetalle.setText("");
         }

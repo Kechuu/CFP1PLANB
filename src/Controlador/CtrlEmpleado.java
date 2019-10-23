@@ -23,7 +23,6 @@ public class CtrlEmpleado {
     public void crear(java.util.Date fechaIngreso, int idPersona, int idEstadoEmpleado, int idGremio){
         
         java.sql.Date fecha=new Date(fechaIngreso.getTime());
-        
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO empleado (fechaIngreso,idPersona,idEstadoEmpleado,"
@@ -32,7 +31,11 @@ public class CtrlEmpleado {
             ps.setDate(1, fecha);
             ps.setInt(2, idPersona);
             ps.setInt(3, idEstadoEmpleado);
-            ps.setInt(4, idGremio);
+            if(idGremio==0){
+                ps.setNull(4, idGremio);
+            }else{
+                ps.setInt(4, idGremio);                
+            }
             ps.setBoolean(5, false);
             
             int res = ps.executeUpdate();
@@ -115,8 +118,8 @@ public class CtrlEmpleado {
                 empleado.setFechaIngreso(rs.getDate("fechaIngreso"));
                 empleado.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
                 empleado.setIdEstadoEmpleado(ctrlEstadoEmpleado.leer(rs.getInt("idEstadoEmpleado")));
-                empleado.setIdGremio(ctrlGremio.leer(rs.getInt("idGremio")));
-                }else{
+                //empleado.setIdGremio(ctrlGremio.leer(rs.getInt("idGremio")));
+            }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
             
@@ -144,7 +147,7 @@ public class CtrlEmpleado {
                 empleado.setIdEmpleado(rs.getInt("idEmpleado"));
                 empleado.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
                 empleado.setIdEstadoEmpleado(ctrlEstadoEmpleado.leer(rs.getInt("idEstadoEmpleado")));
-                empleado.setIdGremio(ctrlGremio.leer(rs.getInt("idGremio")));
+                //empleado.setIdGremio(ctrlGremio.leer(rs.getInt("idGremio")));
                 
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");

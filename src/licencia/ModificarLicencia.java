@@ -31,7 +31,7 @@ public final class ModificarLicencia extends javax.swing.JInternalFrame {
         
         initComponents();
         bandera1=1;
-        ctrlLicencia.cargarCombo(cbLicencia);
+        //ctrlLicencia.cargarCombo(cbLicencia);
         if (Licencia_consulta.bandera==1) {
             
         for (int i = 0; i < cbLicencia.getItemCount(); i++) {
@@ -243,9 +243,9 @@ public final class ModificarLicencia extends javax.swing.JInternalFrame {
         }else{
             bandera1=1;
             String articulo = (String) cbLicencia.getSelectedItem();
-            ctrlLicencia.editar( Integer.parseInt(articulo), txtDetalle.getText());
+            //ctrlLicencia.editar( Integer.parseInt(articulo), txtDetalle.getText());
             cbLicencia.removeAllItems();
-            ctrlLicencia.cargarCombo(cbLicencia);
+            //ctrlLicencia.cargarCombo(cbLicencia);
             bandera1=0;
             areaDetalle.setText("");
             txtCambiarArt.setText("");

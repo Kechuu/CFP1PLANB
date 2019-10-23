@@ -39,6 +39,7 @@ import javax.swing.ListModel;
 import menu.FormDni;
 import menu.Principal;
 import modelo.Cargo;
+import modelo.Empleado;
 import modelo.Foto;
 import modelo.Gremio;
 import modelo.Lugar;
@@ -991,7 +992,7 @@ public final class Registro extends javax.swing.JInternalFrame {
             cbTitulo.removeItem(cbTitulo.getSelectedItem());
             cbTitulo.setSelectedIndex(0);
             
-            btnDeshacerTitulo.setEnabled(false);
+            btnDeshacerTitulo.setEnabled(true);
         }else{
             JOptionPane.showMessageDialog(null, "Necesita seleccionar un titulo");
         }
@@ -1002,6 +1003,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         if(listTitulo.getSelectedIndex()!= -1){
             cbTitulo.addItem(listTitulo.getSelectedValue());
             modeloTitulo.remove(listTitulo.getSelectedIndex());
+            
         }
         
         if(modeloTitulo.isEmpty()){
@@ -1125,12 +1127,13 @@ public final class Registro extends javax.swing.JInternalFrame {
         Lugar nacimiento=(Lugar) cbNacimiento.getSelectedItem();
         Nacionalidad nacionalidad=(Nacionalidad) cbNacionalidad.getSelectedItem();
         Lugar calle=(Lugar)cbCalle.getSelectedItem();
+        Empleado empleadoNew=new Empleado();
         byte[] imagen = fotoPanel.getBytes();
 
         int hijos=0;
         
-        if(modeloCargo.isEmpty() || modeloTitulo.isEmpty() || cbGremio.getSelectedIndex()==0){
-            JOptionPane.showMessageDialog(null, "No ha seleccionado un cargo, título y/o gremio del empleado");
+        if(modeloCargo.isEmpty() || modeloTitulo.isEmpty()){
+            JOptionPane.showMessageDialog(null, "No ha seleccionado un cargo y/o título del empleado");
         }else{
             
         //SE VERIFICA SI SE INGRESÓ ALGO CORRESPONDIENTE DE EDIFICIO..
@@ -1161,19 +1164,26 @@ public final class Registro extends javax.swing.JInternalFrame {
         
         //SE CREA UN REGISTRO EN LA TABLA EMPLEADO
             java.util.Date fechaHoy=new Date();
-            Gremio itemGremio=(Gremio) cbGremio.getSelectedItem();
-        
-            ctrlEmpleado.crear(fechaHoy, personaDatos.getIdPersona(), 1, itemGremio.getIdGremio());
-        
+            Gremio itemGremio;
+            int idGremio=0;
+            if(cbGremio.getSelectedIndex()==0){
+                idGremio=0;
+            }else{
+                itemGremio=(Gremio) cbGremio.getSelectedItem();
+                idGremio=itemGremio.getIdGremio();
+            }
+            ctrlEmpleado.crear(fechaHoy, personaDatos.getIdPersona(), 1, idGremio);
+            empleadoNew=ctrlEmpleado.leer(personaDatos.getIdPersona());
+            
         //LOS ListModel SON PARA PODER SACAR EL TAMAÑO DE LAS LISTAS, PODER RECORRERLAS Y PODER ACCEDER AL ID DE CADA OBJETO GUARDADO
             ListModel<Cargo> listaCargo=listCargo.getModel();
             ListModel<Titulo>listaTitulo=listTitulo.getModel();
         
             for(int i=0; i<listaCargo.getSize(); i++){
-                ctrlEmpleadoCargo.crear(listaCargo.getElementAt(i).getIdCargo(), ctrlEmpleado.leer().getIdEmpleado());
+                ctrlEmpleadoCargo.crear(listaCargo.getElementAt(i).getIdCargo(), ctrlEmpleado.leerIdEmpleado(empleadoNew.getIdEmpleado()).getIdEmpleado());
             }
             for(int i=0; i<listaTitulo.getSize();i++){
-                ctrlEmpleadoTitulo.crear(listaTitulo.getElementAt(i).getIdTitulo(), ctrlEmpleado.leer().getIdEmpleado());
+                ctrlEmpleadoTitulo.crear(listaTitulo.getElementAt(i).getIdTitulo(), ctrlEmpleado.leerIdEmpleado(empleadoNew.getIdEmpleado()).getIdEmpleado());
             }
 
             if(personaDatos.getIdPersona()!=0){
@@ -1185,22 +1195,24 @@ public final class Registro extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
                 return;
             }
-        }
-        
-        if(FormDni.alumnoEmpleadoUser==3){
-            
-            try {
-                this.setVisible(false);
-                CrearUsuario crear= new CrearUsuario(personaDatos);
-                Principal.panelPrincipal.add(crear);
-                //this.setComponentZOrder(crear, 0);
-                
-                crear.setVisible(true);
-                
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
+       
+            if(FormDni.alumnoEmpleadoUser == 3) {
+
+                try{
+                    this.setVisible(false);
+                    CrearUsuario crear = new CrearUsuario(personaDatos);
+                    Principal.panelPrincipal.add(crear);
+                    //this.setComponentZOrder(crear, 0);
+
+                    crear.setVisible(true);
+
+                }catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
+
+        
     }    
     private void btnAsignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarCursoActionPerformed
         // TODO add your handling code here:

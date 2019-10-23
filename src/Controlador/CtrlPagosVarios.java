@@ -90,14 +90,7 @@ public class CtrlPagosVarios {
         
         Object[] datos= new Object[6];
         try{
-
             con=clases.Conectar.conexion();
-            /*ps=(PreparedStatement)con.prepareStatement("SELECT pagosVarios.detalle, persona.nombrePersona, persona.apellidoPersona, pagosVarios.importe, cursoAlumno.saldo, pagosVarios.fecha FROM persona "
-                    + " INNER JOIN alumno ON persona.idPersona = alumno.idPersona"
-                    + " INNER JOIN pagosVarios ON alumno.idAlumno = pagosVarios.idAlumno"
-                    + " INNER JOIN cursoAlumno ON alumno.idAlumno = cursoAlumno.idAlumno"
-                    + " WHERE alumno.idAlumno = ? ORDER BY pagosVarios.fecha");*/
-           
             ps=(PreparedStatement)con.prepareStatement("SELECT pagosVarios.fecha, pagosVarios.detalle, pagosVarios.importe, persona.apellidoPersona, persona.nombrePersona FROM pagosVarios"
                     + " INNER JOIN alumno ON pagosVarios.idAlumno = alumno.idAlumno"
                     //+ " INNER JOIN cursoAlumno ON alumno.idAlumno = cursoAlumno.idAlumno"
@@ -114,7 +107,8 @@ public class CtrlPagosVarios {
     
                 datos[0]=rs.getString(1); //FECHA
                 datos[1]=rs.getString(2);//CONCEPTO
-                datos[2]=rs.getString(3); //COSTO
+                String costo="---";
+                datos[2]=costo; //COSTO
                 datos[3]=rs.getString(3);//IMPORTE
                 String cursoNom="---"; 
                 datos[4]=cursoNom; //CURSO
@@ -149,7 +143,7 @@ public class CtrlPagosVarios {
                 String encargado=rs.getString(5)+" "+rs.getString(6);
                 datos[5]=encargado;//NOMBRE DE ENCARGADO
                 
-                saldoTotal=saldoTotal+rs.getFloat(6);
+                saldoTotal=rs.getFloat(7);
                 modelo.addRow(datos);
             }
             

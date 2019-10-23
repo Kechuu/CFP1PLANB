@@ -325,9 +325,9 @@ public class AsignarCursoAcargo extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -475,7 +475,7 @@ public class AsignarCursoAcargo extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "No a elegido ningún curso para asignar");
         }else{    
             for(int i=0; i<listaCurso.getSize();i++){
-                ctrlCursoP.crear(ctrlCurso.leer(listaCurso.getElementAt(i).getIdTipoCurso()).getIdCurso(), empleadoObj.getIdEmpleado());
+                //ctrlCursoP.crear(ctrlCurso.leer(listaCurso.getElementAt(i).getIdTipoCurso()).getIdCurso(), empleadoObj.getIdEmpleado());
             }
         }
     }//GEN-LAST:event_btnInscribirCursosActionPerformed

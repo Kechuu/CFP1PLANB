@@ -114,14 +114,14 @@ public class CtrlCursoAlumno {
         }
     }
     
-    public void pagarSaldo(int idAlumno, int idCurso, float importe, int cursoAlumno){
+    public void pagarSaldo(int idAlumno, int idCurso, float saldo, int cursoAlumno){
     
             try{
                 con=clases.Conectar.conexion();
                 ps=(PreparedStatement)con.prepareStatement("UPDATE cursoAlumno SET saldo=?"
                         + " WHERE idAlumno=? AND idCurso=? AND idCursoAlumno=?");
                 
-                ps.setFloat(1, importe);
+                ps.setFloat(1, saldo);
                 ps.setInt(2, idAlumno);
                 ps.setInt(3, idCurso);
                 ps.setInt(4, cursoAlumno);

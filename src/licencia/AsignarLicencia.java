@@ -48,7 +48,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         
         initComponents();
         bandera=1;
-        ctrlLicencia.cargarCombo(cbxLicencia);
+        //ctrlLicencia.cargarCombo(cbxLicencia);
         ctrlLicencia.cargarComboEmpleado(cbxEmpleado);
         bandera=0;
     }
@@ -221,7 +221,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
             cbxEmpleado.removeAllItems();
             cbxLicencia.removeAllItems();
             ctrlLicencia.cargarComboEmpleado(cbxEmpleado);
-            ctrlLicencia.cargarCombo(cbxLicencia);
+            //ctrlLicencia.cargarCombo(cbxLicencia); //FALTA AGREGAR PARAMETRO PARA CARACTER
             fechaInicio.setDate(null);
             fechaFinalizacion.setDate(null);
             areaDetalle.setText("");
