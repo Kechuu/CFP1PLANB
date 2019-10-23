@@ -42,7 +42,7 @@ public class Principal extends javax.swing.JFrame {
         log.setVisible(true);
         
         menuAlumno=0;
-        
+        this.setResizable(false);
     }
     
     @SuppressWarnings("unchecked")

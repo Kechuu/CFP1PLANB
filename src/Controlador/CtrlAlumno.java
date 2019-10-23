@@ -7,8 +7,11 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import modelo.Alumno;
+import modelo.Persona;
 /**
  *
  * @author jesus
@@ -162,5 +165,38 @@ public class CtrlAlumno {
         }
         
         return alumno;
+    }
+    
+    public void cargarListaAlumno(JList<Persona>lista){
+        DefaultListModel<Persona> modelo=new DefaultListModel<>();
+        
+        
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM persona"
+                    + " INNER JOIN alumno ON persona.idPersona = alumno.idPersona"
+                    + " WHERE alumno.borrado = false");
+            
+            rs=ps.executeQuery();
+            
+            while(rs.next()){
+                Persona persona=new Persona();
+                
+                persona.setIdPersona(rs.getInt("idPersona"));
+                persona.setNombrePersona(rs.getString("nombrePersona"));
+                persona.setApellidoPersona(rs.getString("apellidoPersona"));
+                persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
+                persona.setCUIL(rs.getString("CUIL"));
+                
+                modelo.addElement(persona);
+            }
+            
+            con.close();
+            
+            lista.setModel(modelo);
+            
+        }catch(Exception e){
+            
+        }
     }
 }

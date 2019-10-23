@@ -29,6 +29,7 @@ public class Caracter {
         this.detalle = detalle;
     }
     
+    @Override
     public String toString(){
         return this.detalle;
     }

@@ -5,6 +5,7 @@
  */
 package menu;
 
+import interfazAlumno.AsignarCurso1;
 import interfazEmpleado.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -150,15 +151,13 @@ public class EmpleadoMenu extends javax.swing.JPanel {
 
     private void btnAsignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarCursoActionPerformed
 
-/*        Registro.banderaEmpleado=2;
+    /*        empleadoMenu=3;
+        panelDni();*/
         this.setVisible(false);
         Principal.desactivarPanel();
-        AsignarCurso asignar=new AsignarCurso(personaObj);
-        Principal.panelPrincipal.add(asignar);
-        asignar.setVisible(true);*/
-        
-        empleadoMenu=3;
-        panelDni();
+        AsignarCursoAcargo1 cu=new AsignarCursoAcargo1();
+        Principal.panelPrincipal.add(cu);
+        cu.setVisible(true);
         
     }//GEN-LAST:event_btnAsignarCursoActionPerformed
 
@@ -200,9 +199,15 @@ public class EmpleadoMenu extends javax.swing.JPanel {
         
         DarBajaCurso empleado=new DarBajaCurso(personaObj);
         Principal.panelPrincipal.add(empleado);
-        empleado.setVisible(true);*/
+        empleado.setVisible(true);
         empleadoMenu=4;
-        panelDni();
+        panelDni();/*
+        */
+        this.setVisible(false);
+        Principal.desactivarPanel();
+        DarBajaCurso1 cu=new DarBajaCurso1();
+        Principal.panelPrincipal.add(cu);
+        cu.setVisible(true);
     }//GEN-LAST:event_btnDarBajaActionPerformed
 
     private void btnModificarDatosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarDatosKeyPressed
