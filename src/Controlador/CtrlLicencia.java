@@ -5,6 +5,7 @@
  */
 package Controlador;
 
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,13 +85,29 @@ public class CtrlLicencia {
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }catch(HeadlessException | SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
         return licencia;
     }
     
-    public void cargarCombo(JComboBox combo, int idCaracter){
+    public void cargarCombo(JComboBox combo){
+        
+        try {
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT articulo FROM licencia ORDER BY articulo ASC");
+            
+            rs=ps.executeQuery();
+            combo.addItem("Seleccione uno de los articulos...");
+            
+            while (rs.next()) {                
+                combo.addItem(String.valueOf(rs.getInt("articulo")));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+    }
+    public void cargarComboFiltrado(JComboBox combo, int idCaracter){
         
         try {
             con=clases.Conectar.conexion();
@@ -107,6 +124,7 @@ public class CtrlLicencia {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
     }
+    
     
     public void cargarComboEmpleado(JComboBox combo){
         
@@ -134,12 +152,12 @@ public class CtrlLicencia {
     }
     
     public List<Licencia> leerTodos(){
-        
+        CtrlCaracter ctrlCaracter = new CtrlCaracter();
         ResultSet rst;
         List<Licencia> lista = new ArrayList();
         con = clases.Conectar.conexion();
         try {
-            ps = (PreparedStatement) con.prepareStatement("SELECT articulo,detalle FROM licencia ORDER BY articulo ASC");
+            ps = (PreparedStatement) con.prepareStatement("SELECT articulo,detalle,idCaracter FROM licencia ORDER BY articulo ASC");
             
             rst=ps.executeQuery();
             
@@ -147,6 +165,7 @@ public class CtrlLicencia {
                 Licencia licencia = new Licencia();
                 licencia.setArticulo(rst.getInt("articulo"));
                 licencia.setDetalle(rst.getString("detalle"));
+                licencia.setIdCaracter(ctrlCaracter.leer(rst.getInt("idCaracter")));
                 
                 lista.add(licencia);
             }

@@ -85,6 +85,28 @@ public class CtrlCaracter {
         }
         return caracter;
     }
+    public Caracter leer(String nombreCaracter){
+        Caracter caracter = new Caracter();
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM caracter WHERE detalle = ?");
+            
+            ps.setString(1, nombreCaracter);
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                caracter.setIdCaracter(rs.getInt("idCaracter"));
+                caracter.setDetalle(rs.getString("detalle"));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            
+            con.close();
+        }catch(HeadlessException | SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return caracter;
+    }
     
     public void cargarCombo(JComboBox<Caracter> cbCaracter){
         
