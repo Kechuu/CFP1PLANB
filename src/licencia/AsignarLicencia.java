@@ -83,7 +83,11 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listaCursosaCargo = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listaCursosaCargo1 = new javax.swing.JList<>();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -91,7 +95,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setText("Caracter:");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, -1, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel3.setText("INICIO:");
@@ -103,14 +107,14 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
 
         jLabel5.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel5.setText("Profesor:");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
 
         cbxEmpleado.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxEmpleadoItemStateChanged(evt);
             }
         });
-        jPanel2.add(cbxEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 211, -1));
+        jPanel2.add(cbxEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 211, -1));
 
         jPanel1.setBackground(new java.awt.Color(38, 86, 186));
 
@@ -125,7 +129,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jLabel1)
-                .addContainerGap(445, Short.MAX_VALUE))
+                .addContainerGap(649, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,11 +139,11 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 726, 50));
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 930, 50));
 
         jLabel7.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel7.setText("Detalle:");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, -1, -1));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 200, -1, -1));
         jPanel2.add(fechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, -1, -1));
         jPanel2.add(fechaFinalizacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, -1, -1));
 
@@ -156,7 +160,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
                 btnAceptarKeyPressed(evt);
             }
         });
-        jPanel2.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 320, 100, -1));
+        jPanel2.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 320, 100, -1));
 
         jButton2.setBackground(new java.awt.Color(38, 86, 186));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -171,31 +175,42 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
                 jButton2KeyPressed(evt);
             }
         });
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 320, 100, -1));
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 320, 100, -1));
 
         areaDetalle.setColumns(20);
         areaDetalle.setRows(5);
         jScrollPane1.setViewportView(areaDetalle);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 224, 79));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 210, 224, 79));
 
         cbxLicencia.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxLicenciaItemStateChanged(evt);
             }
         });
-        jPanel2.add(cbxLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, 220, -1));
+        jPanel2.add(cbxLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 150, 220, -1));
 
         jLabel6.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel6.setText("Articulo:");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 150, -1, -1));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, -1, -1));
 
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 90, 220, -1));
+        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 90, 220, -1));
 
-        jList1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cursos a Cargo", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-        jScrollPane2.setViewportView(jList1);
+        listaCursosaCargo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "A tomar licencia", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jScrollPane2.setViewportView(listaCursosaCargo);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 330, 160));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 200, 170));
+
+        listaCursosaCargo1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cursos a Cargo", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jScrollPane3.setViewportView(listaCursosaCargo1);
+
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 220, 170));
+
+        jButton1.setText(">>");
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, -1, -1));
+
+        jButton3.setText("<<");
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -317,7 +332,9 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbxLicencia;
     private com.toedter.calendar.JDateChooser fechaFinalizacion;
     private com.toedter.calendar.JDateChooser fechaInicio;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<Caracter> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
@@ -327,10 +344,12 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JList<TipoCurso> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<TipoCurso> listaCursosaCargo;
+    private javax.swing.JList<TipoCurso> listaCursosaCargo1;
     // End of variables declaration//GEN-END:variables
 }
