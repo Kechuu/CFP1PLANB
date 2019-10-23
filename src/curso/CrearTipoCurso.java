@@ -6,56 +6,36 @@
 package curso;
 
 
+import Controlador.CtrlPeriodo;
 import Controlador.CtrlTipoCurso;
 import com.sun.glass.events.KeyEvent;
 import configuracion.Periodo_crear;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import menu.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import modelo.Cargo;
 import modelo.Periodo;
 /**
  *
  * @author araa
  */
-public class CrearTipoCurso extends javax.swing.JInternalFrame {   
+public final class CrearTipoCurso extends javax.swing.JInternalFrame {   
     Connection con = clases.Conectar.conexion();
+    CtrlPeriodo ctrlPeriodo = null;
+    Periodo periodo=null;
+    CtrlTipoCurso ctrlTipoCurso=null;
     /**
      * Creates new form NewJInternalFrame
      */
     public CrearTipoCurso() {
+        ctrlPeriodo=new CtrlPeriodo();
+        periodo = new Periodo();
+        ctrlTipoCurso = new CtrlTipoCurso();
+        
         initComponents();
-        cargarComboPeriodo(cbxPeriodo);
-    }
-
-    public void cargarComboPeriodo(JComboBox<Periodo> cbPeriodo){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM periodo ORDER BY detalle ASC");
-            Periodo periodo = new Periodo();
-            periodo.setIdPeriodo(0);
-            periodo.setDetalle("Seleccione una opcion...");
-            cbPeriodo.addItem(periodo);
-            
-            while (rs.next()) {                
-                periodo = new Periodo();
-                periodo.setIdPeriodo(rs.getInt("idPeriodo"));
-                periodo.setDetalle(rs.getString("detalle"));
-                cbPeriodo.addItem(periodo);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
-        }
-        
+        ctrlPeriodo.cargarCombo(cbxPeriodo);
     }
     
     /**
@@ -250,16 +230,13 @@ public class CrearTipoCurso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Periodo periodo = new Periodo();
-        CtrlTipoCurso ctrlTipoCurso = new CtrlTipoCurso();
-        
         if (txtNombreCurso.getText().equalsIgnoreCase("") || txtcosto.getText().equalsIgnoreCase("") || cbxPeriodo.getSelectedIndex()==0) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
             periodo = (Periodo) cbxPeriodo.getSelectedItem();
             ctrlTipoCurso.crear(txtNombreCurso.getText(), Float.parseFloat(txtcosto.getText()),periodo.getIdPeriodo() );
             cbxPeriodo.removeAllItems();
-            cargarComboPeriodo(cbxPeriodo);
+            ctrlPeriodo.cargarCombo(cbxPeriodo);
             txtNombreCurso.setText("");
             txtcosto.setText("");
         }

@@ -5,16 +5,15 @@
  */
 package configuracion;
 
+import Controlador.CtrlTipoDocumento;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.TipoDocumento;
 
@@ -23,39 +22,35 @@ import modelo.TipoDocumento;
  *
  * @author RociojulietaVazquez
  */
-public class TipoDoc_consulta extends javax.swing.JInternalFrame {
+public final class TipoDoc_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static String nombreTipoDoc;
+    DefaultListModel modelo= null;
+    CtrlTipoDocumento ctrlTipoDocumento=null;
     /**
      * Creates new form Trabajo
+     * @throws java.lang.ClassNotFoundException
      */
     public TipoDoc_consulta() throws ClassNotFoundException {
+        modelo =new DefaultListModel();
+        ctrlTipoDocumento = new CtrlTipoDocumento();
+        
         initComponents();
         btnModificar.setEnabled(false);
         cargarListaTipoDocumento();
     }
 
     public void cargarListaTipoDocumento(){
-        DefaultListModel<TipoDocumento> modelo = new DefaultListModel<>();
+        List<TipoDocumento> lista = new ArrayList();
         
-        try {
-            Statement st=(Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM tipoDocumento ORDER BY detalle ASC");
-            
-            while (rs.next()) {
-                TipoDocumento tipoDocumento = new TipoDocumento();
-                tipoDocumento.setIdTipoDocumento(rs.getInt("idTipoDocumento"));
-                tipoDocumento.setDetalle(rs.getString("detalle"));
-                
-                modelo.addElement(tipoDocumento);
-            }
-            
-            listaTipo.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error, "+e);
-        }
-    
+        lista = ctrlTipoDocumento.cargarListatipoDoc();
+        
+            for (int i = 0; i < lista.size(); i++) {
+               modelo.addElement(lista.get(i).getDetalle());
+           }
+        
+        listaTipo.setModel(modelo);
+        
     }
     
     /**
@@ -215,9 +210,9 @@ public class TipoDoc_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        TipoDocumento tipoDocModificar = new TipoDocumento();
-        tipoDocModificar = listaTipo.getSelectedValue();
-        nombreTipoDoc = tipoDocModificar.getDetalle();
+        String nombre = (String) listaTipo.getSelectedValuesList().toString();
+        nombreTipoDoc = nombre.substring(1,nombre.length()-1);
+        
         this.setVisible(false);
 
         try {

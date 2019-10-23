@@ -22,14 +22,20 @@ import modelo.Gremio;
  *
  * @author RociojulietaVazquez
  */
-public class Gremio_modificar extends javax.swing.JInternalFrame {
+public final class Gremio_modificar extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
+    CtrlGremio ctrlGremio = null;
+    Gremio gremio = null;
     /**
      * Creates new form ModificarGremio
+     * @throws java.lang.ClassNotFoundException
      */
     public Gremio_modificar() throws ClassNotFoundException {
+        ctrlGremio = new CtrlGremio();
+        gremio = new Gremio();
+        
         initComponents();
-        cargarComboGremio(cbGremiosActuales);
+        ctrlGremio.cargarCombo(cbGremiosActuales);
         for (int i = 0; i < cbGremiosActuales.getItemCount(); i++) {
             if (cbGremiosActuales.getItemAt(i).getDetalle().equalsIgnoreCase(Gremio_consulta.nombreGremio)) {
                 cbGremiosActuales.setSelectedIndex(i);
@@ -39,28 +45,6 @@ public class Gremio_modificar extends javax.swing.JInternalFrame {
         txtGremios.setFocusable(true);
     }
 
-    public void cargarComboGremio(JComboBox<Gremio> cbGremiosActuales){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM gremio ORDER BY detalle ASC");
-            Gremio gremio = new Gremio();
-            gremio.setIdGremio(0);
-            gremio.setDetalle("Seleccione una opcion...");
-            cbGremiosActuales.addItem(gremio);
-            
-            while (rs.next()) {                
-                gremio = new Gremio();
-                gremio.setIdGremio(rs.getInt("idGremio"));
-                gremio.setDetalle(rs.getString("detalle"));
-                cbGremiosActuales.addItem(gremio);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS LUGARES DE CURSADO");       
-        }
-        
-    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -198,15 +182,13 @@ public class Gremio_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        CtrlGremio ctrlGremio = new CtrlGremio();
-        Gremio gremio = new Gremio();
         if (txtGremios.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
             gremio = (Gremio) cbGremiosActuales.getSelectedItem();
             ctrlGremio.editarGremio(gremio.getIdGremio(), txtGremios.getText());
             cbGremiosActuales.removeAllItems();
-            cargarComboGremio(cbGremiosActuales);
+            ctrlGremio.cargarCombo(cbGremiosActuales);
             txtGremios.setText("");
             txtGremios.setFocusable(true);
         }

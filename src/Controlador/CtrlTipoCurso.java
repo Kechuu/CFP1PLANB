@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import modelo.TipoCurso;
@@ -172,6 +173,31 @@ public class CtrlTipoCurso {
         }
         
     
+    }
+    
+    
+        public void cargarCombo(JComboBox<TipoCurso> cbTipoCurso){
+        
+        try {
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM tipoCurso ORDER BY detalle ASC");
+            rs=ps.executeQuery();
+            TipoCurso tipoCurso = new TipoCurso();
+            tipoCurso.setIdTipoCurso(0);
+            tipoCurso.setDetalle("Seleccione una opcion...");
+            cbTipoCurso.addItem(tipoCurso);
+            
+            while (rs.next()) {                
+                tipoCurso = new TipoCurso();
+                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
+                tipoCurso.setDetalle(rs.getString("detalle"));
+                cbTipoCurso.addItem(tipoCurso);
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
+        }
+        
     }
     
 }

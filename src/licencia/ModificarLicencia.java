@@ -8,10 +8,6 @@ package licencia;
 import Controlador.CtrlLicencia;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Licencia;
@@ -20,47 +16,39 @@ import modelo.Licencia;
  *
  * @author RociojulietaVazquez
  */
-public class ModificarLicencia extends javax.swing.JInternalFrame {
+public final class ModificarLicencia extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
-    int bandera=0;
+    int bandera1=0;
+    CtrlLicencia ctrlLicencia = null;
+    Licencia licencia = null;
     /**
      * Creates new form modificarLicencia
      * @throws java.lang.ClassNotFoundException
      */
     public ModificarLicencia() throws ClassNotFoundException {
+        ctrlLicencia =new CtrlLicencia();
+        licencia =new Licencia();
+        
         initComponents();
-        bandera=1;
-        cargarCombo(cbLicencia);
+        bandera1=1;
+        ctrlLicencia.cargarCombo(cbLicencia);
+        if (Licencia_consulta.bandera==1) {
+            
         for (int i = 0; i < cbLicencia.getItemCount(); i++) {
                 if (cbLicencia.getItemAt(i) == null ? Licencia_consulta.numeroArticulo == null : cbLicencia.getItemAt(i).equals(Licencia_consulta.numeroArticulo)) {
                     cbLicencia.setSelectedIndex(i);
                 }
             }
         txtCambiarArt.setText(Licencia_consulta.numeroArticulo);
-        CtrlLicencia ctrlLicencia = new CtrlLicencia();
-        Licencia licencia = new Licencia();
-        String hola = (String) cbLicencia.getSelectedItem();
-//        JOptionPane.showMessageDialog(null, hola);
-        licencia = ctrlLicencia.leer(Integer.parseInt(hola));
+        
+        licencia = ctrlLicencia.leer(Integer.parseInt(Licencia_consulta.numeroArticulo));
         areaDetalle.setText(licencia.getDetalle());
         txtDetalle.setText(licencia.getDetalle());
-        bandera=0;
+        
+        }
+        bandera1=0;
     }
 
-    public void cargarCombo(JComboBox combo){
-        try {
-            Statement set = con.createStatement();
-            ResultSet rs = set.executeQuery("SELECT * FROM licencia ORDER BY articulo ASC");
-            //combo.addItem("Seleccione uno de los articulos...");
-            
-            while (rs.next()) {                
-                combo.addItem(String.valueOf(rs.getInt("articulo")));
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
-        }
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -183,7 +171,7 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -250,16 +238,15 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        CtrlLicencia ctrlLicencia = new CtrlLicencia();
         if (txtCambiarArt.getText().equalsIgnoreCase("") || txtDetalle.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar regitros vacios");
         }else{
-            bandera=1;
+            bandera1=1;
             String articulo = (String) cbLicencia.getSelectedItem();
             ctrlLicencia.editar( Integer.parseInt(articulo), txtDetalle.getText());
             cbLicencia.removeAllItems();
-            cargarCombo(cbLicencia);
-            bandera=0;
+            ctrlLicencia.cargarCombo(cbLicencia);
+            bandera1=0;
             areaDetalle.setText("");
             txtCambiarArt.setText("");
             txtDetalle.setText("");
@@ -278,23 +265,22 @@ public class ModificarLicencia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void cbLicenciaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLicenciaItemStateChanged
-        CtrlLicencia ctrlLicencia = new CtrlLicencia();
-        Licencia licencia = new Licencia();
-        
-        if (bandera==0) {
-            if (cbLicencia.getSelectedIndex()==0) {
+        if (bandera1 == 0) {
+            if (cbLicencia.getSelectedIndex() == 0) {
                 areaDetalle.setText("");
-            }else{
-                
-        String articulo = (String) cbLicencia.getSelectedItem();
-        txtCambiarArt.setText(articulo);
-        
-        licencia = ctrlLicencia.leer(Integer.parseInt(articulo));
-        areaDetalle.setText(licencia.getDetalle());
-        txtDetalle.setText(licencia.getDetalle());
+                txtCambiarArt.setText("");
+                txtDetalle.setText("");
+            } else {
+
+                String articulo = (String) cbLicencia.getSelectedItem();
+                txtCambiarArt.setText(articulo);
+
+                licencia = ctrlLicencia.leer(Integer.parseInt(articulo));
+                areaDetalle.setText(licencia.getDetalle());
+                txtDetalle.setText(licencia.getDetalle());
             }
         }
-        
+
     }//GEN-LAST:event_cbLicenciaItemStateChanged
 
     private void jButton2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyPressed

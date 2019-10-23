@@ -14,6 +14,7 @@ public class CursoProfesor {
     private int idCursoProfesor;
     private Curso idCurso;
     private Empleado idEmpleado;
+    private Caracter idCaracter;
 
     public int getIdCursoProfesor() {
         return idCursoProfesor;
@@ -37,5 +38,13 @@ public class CursoProfesor {
 
     public void setIdEmpleado(Empleado idEmpleado) {
         this.idEmpleado = idEmpleado;
+    }
+
+    public Caracter getIdCaracter() {
+        return idCaracter;
+    }
+
+    public void setIdCaracter(Caracter idCaracter) {
+        this.idCaracter = idCaracter;
     }
 }

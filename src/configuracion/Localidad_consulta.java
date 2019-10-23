@@ -5,16 +5,15 @@
  */
 package configuracion;
 
+import Controlador.CtrlLugar;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Lugar;
 
@@ -23,44 +22,37 @@ import modelo.Lugar;
  *
  * @author RociojulietaVazquez
  */
-public class Localidad_consulta extends javax.swing.JInternalFrame {
+public final class Localidad_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static int idLocalidad;
-    public static String nombreLocalidad;
-    public Lugar lugar;
+    public static String nombreLocalidad="";
+    Lugar lugar=null;
+    CtrlLugar ctrlLugar = null;
+    DefaultListModel modelo=null;
     /**
      * Creates new form localidad
+     * @throws java.lang.ClassNotFoundException
      */
     public Localidad_consulta() throws ClassNotFoundException {
-        initComponents();
+       lugar=new Lugar();
+       ctrlLugar = new CtrlLugar();
+       modelo = new DefaultListModel(); 
+       
+       initComponents();
        cargarListaLocalidad();
        btnModificar.setEnabled(false);
     }
     
 
     public void cargarListaLocalidad(){
-        DefaultListModel<Lugar> modelo = new DefaultListModel<>();
+        List<Lugar> lista = new ArrayList();
         
-        try {
-            Statement st=(Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT idLugar, nombre, nivel, de, codigoPostal FROM lugar INNER JOIN codigoPostal"
-                    + " WHERE idLugar = localidad AND nivel = 3 ORDER BY nombre ASC");
-            
-            while (rs.next()) {
-                Lugar lugar = new Lugar();
-                lugar.setIdLugar(rs.getInt("idLugar"));
-                lugar.setNombre(rs.getString("nombre"));
-                lugar.setDe(rs.getInt("de"));
-                
-                modelo.addElement(lugar);
-            }
-            
-            listaLocalidad.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error, "+e);
+        lista = ctrlLugar.cargarListaLocalidades();
+        
+        for (int i = 0; i < lista.size(); i++) {
+            modelo.addElement(lista.get(i).getNombre());
         }
-    
+        listaLocalidad.setModel(modelo);
     }
     
     /**
@@ -222,12 +214,8 @@ public class Localidad_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        
-        
-        lugar = listaLocalidad.getSelectedValue();
-        
-        idLocalidad = lugar.getIdLugar();
-        nombreLocalidad = lugar.getNombre();
+        String nombre = (String) listaLocalidad.getSelectedValuesList().toString();
+        nombreLocalidad = nombre.substring(1,nombre.length()-1);
         
         this.setVisible(false);
 

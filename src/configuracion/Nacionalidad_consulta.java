@@ -5,18 +5,16 @@
  */
 package configuracion;
 
+import Controlador.CtrlNacionalidad;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import menu.Principal;
-import modelo.Cargo;
 import modelo.Nacionalidad;
 
 
@@ -24,40 +22,35 @@ import modelo.Nacionalidad;
  *
  * @author RociojulietaVazquez
  */
-public class Nacionalidad_consulta extends javax.swing.JInternalFrame {
+public final class Nacionalidad_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static int idNacionalidad;
     public static String nombreNacionalidad;
+    DefaultListModel modelo = null;
+    CtrlNacionalidad ctrlNacionalidad = null;
     /**
      * Creates new form nacionalidad
+     * @throws java.lang.ClassNotFoundException
      */
     public Nacionalidad_consulta() throws ClassNotFoundException {
+        modelo = new DefaultListModel();
+        ctrlNacionalidad = new CtrlNacionalidad();
+        
         initComponents();
         cargarListaNacionalidad();
         btnModificar.setEnabled(false);
     }
     
       public void cargarListaNacionalidad(){
-        DefaultListModel<Nacionalidad> modelo = new DefaultListModel<>();
+        List<Nacionalidad> lista = new ArrayList();
         
-        try {
-            Statement st=(Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM nacionalidad ORDER BY detalle ASC");
-            
-            while (rs.next()) {
-                Nacionalidad nacionalidad = new Nacionalidad();
-                nacionalidad.setIdNacionalidad(rs.getInt("idNacionalidad"));
-                nacionalidad.setDetalle(rs.getString("detalle"));
-                
-                modelo.addElement(nacionalidad);
-            }
-            
-            listaNacionalidad.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error, "+e);
-        }
-    
+        lista = ctrlNacionalidad.cargarListaNacionalidad();
+        
+            for (int i = 0; i < lista.size(); i++) {
+               modelo.addElement(lista.get(i).getDetalle());
+           }
+        
+        listaNacionalidad.setModel(modelo);
     }
     
     /**
@@ -219,10 +212,9 @@ public class Nacionalidad_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        Nacionalidad nacionalidad = new Nacionalidad();
-        nacionalidad = listaNacionalidad.getSelectedValue();
-        idNacionalidad = nacionalidad.getIdNacionalidad();
-        nombreNacionalidad = nacionalidad.getDetalle();
+        String nombre = (String) listaNacionalidad.getSelectedValuesList().toString();
+        nombreNacionalidad = nombre.substring(1,nombre.length()-1);
+        
         this.setVisible(false);
 
         try {

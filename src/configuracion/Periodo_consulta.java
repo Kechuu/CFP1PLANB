@@ -5,16 +5,15 @@
  */
 package configuracion;
 
+import Controlador.CtrlPeriodo;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Periodo;
 
@@ -22,39 +21,35 @@ import modelo.Periodo;
  *
  * @author RociojulietaVazquez
  */
-public class Periodo_consulta extends javax.swing.JInternalFrame {
+public final class Periodo_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static String nombrePeriodo;
+    DefaultListModel modelo = null;
+    CtrlPeriodo ctrlPeriodo=null;
     /**
      * Creates new form Gremio
+     * @throws java.lang.ClassNotFoundException
      */
     public Periodo_consulta() throws ClassNotFoundException {
+        modelo = new DefaultListModel();
+        ctrlPeriodo = new CtrlPeriodo();
+        
         initComponents();
         cargarListaPeriodo();
         btnModificar.setEnabled(false);
     }
 
       public void cargarListaPeriodo(){
-        DefaultListModel<Periodo> modelo = new DefaultListModel<>();
+         List<Periodo> lista = new ArrayList();
         
-        try {
-            Statement st=(Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM periodo ORDER BY detalle ASC");
-            
-            while (rs.next()) {
-                Periodo periodo = new Periodo();
-                periodo.setIdPeriodo(rs.getInt("idPeriodo"));
-                periodo.setDetalle(rs.getString("detalle"));
-                
-                modelo.addElement(periodo);
-            }
-            
-            listaPeriodicidad.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error, "+e);
-        }
-    
+        lista = ctrlPeriodo.cargarListaPeriodo();
+        
+            for (int i = 0; i < lista.size(); i++) {
+               modelo.addElement(lista.get(i).getDetalle());
+           }
+        
+        listaPeriodicidad.setModel(modelo);
+        
     }
     
     /**
@@ -100,6 +95,11 @@ public class Periodo_consulta extends javax.swing.JInternalFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
+        listaPeriodicidad.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaPeriodicidadValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaPeriodicidad);
 
         btnAgregar.setFont(new java.awt.Font("Tw Cen MT", 1, 14)); // NOI18N
@@ -212,9 +212,9 @@ public class Periodo_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-        Periodo periodoModificar = new Periodo();
-        periodoModificar = listaPeriodicidad.getSelectedValue();
-        nombrePeriodo = periodoModificar.getDetalle();
+        String nombre = (String) listaPeriodicidad.getSelectedValuesList().toString();
+        nombrePeriodo = nombre.substring(1, nombre.length()-1);
+        
         this.setVisible(false);
         
         try {
@@ -245,6 +245,10 @@ public class Periodo_consulta extends javax.swing.JInternalFrame {
             this.btnAtrasActionPerformed(e);
         }
     }//GEN-LAST:event_btnAtrasKeyPressed
+
+    private void listaPeriodicidadValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaPeriodicidadValueChanged
+        btnModificar.setEnabled(true);
+    }//GEN-LAST:event_listaPeriodicidadValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

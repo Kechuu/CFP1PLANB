@@ -15,11 +15,14 @@ import menu.Principal;
  * @author RociojulietaVazquez
  */
 public class CrearLicencia extends javax.swing.JInternalFrame {
+    CtrlLicencia ctrlLicencia = null;
     /**
      * Creates new form agregarlicencia
      * @throws java.lang.ClassNotFoundException
      */
     public CrearLicencia() throws ClassNotFoundException {
+        ctrlLicencia = new CtrlLicencia();
+        
         initComponents();
         txtArticulo.setFocusable(true);
     }
@@ -170,7 +173,6 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        CtrlLicencia ctrlLicencia = new CtrlLicencia();
         if (txtArticulo.getText().equalsIgnoreCase("") || areaDetalle.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{

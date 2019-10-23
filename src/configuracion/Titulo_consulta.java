@@ -5,57 +5,51 @@
  */
 package configuracion;
 
+import Controlador.CtrlTitulo;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import menu.Principal;
-import modelo.Cargo;
 import modelo.Titulo;
 
 /**
  *
  * @author RociojulietaVazquez
  */
-public class Titulo_consulta extends javax.swing.JInternalFrame {
+public final class Titulo_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static String nombreTitulo;
+    DefaultListModel modelo = null;
+    CtrlTitulo ctrlTitulo=null;
     /**
      * Creates new form titulo
+     * @throws java.lang.ClassNotFoundException
      */
     public Titulo_consulta() throws ClassNotFoundException {
+        modelo = new DefaultListModel();
+        ctrlTitulo = new CtrlTitulo();
+        
         initComponents();
         cargarListaTitulo();
         btnModificar.setEnabled(false);
     }
 
       public void cargarListaTitulo(){
-        DefaultListModel<Titulo> modelo = new DefaultListModel<>();
+        List<Titulo> lista = new ArrayList();
         
-        try {
-            Statement st=(Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM titulo ORDER BY detalle ASC");
-            
-            while (rs.next()) {
-                Titulo titulo = new Titulo();
-                titulo.setIdTitulo(rs.getInt("idTitulo"));
-                titulo.setDetalle(rs.getString("detalle"));
-                
-                modelo.addElement(titulo);
-            }
-            
-            listaTitulo.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error, "+e);
-        }
-    
+        lista = ctrlTitulo.cargarListaTitulo();
+        
+            for (int i = 0; i < lista.size(); i++) {
+               modelo.addElement(lista.get(i).getDetalle());
+           }
+        
+        listaTitulo.setModel(modelo);
+        
     }
     
     /**
@@ -217,9 +211,9 @@ public class Titulo_consulta extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        Titulo tituloModificar = new Titulo();
-        tituloModificar = listaTitulo.getSelectedValue();
-        nombreTitulo = tituloModificar.getDetalle();
+        String nombre = (String) listaTitulo.getSelectedValuesList().toString();
+        nombreTitulo = nombre.substring(1,nombre.length()-1);
+        
         this.setVisible(false);
 
         try {

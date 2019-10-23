@@ -8,14 +8,9 @@ package configuracion;
 import Controlador.CtrlLugar;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Lugar;
@@ -25,25 +20,33 @@ import modelo.Lugar;
  *
  * @author RociojulietaVazquez
  */
-public class Calles_modificar extends javax.swing.JInternalFrame {
-    CtrlLugar lugar = new CtrlLugar();
-    Lugar id = new Lugar();
+public final class Calles_modificar extends javax.swing.JInternalFrame {
+    CtrlLugar ctrlLugar = null;
+    Lugar id=null,lugar=null,localidad=null,barrio=null,calle=null;
     Connection con = clases.Conectar.conexion();
     int modificar;
     /**
      * Creates new form modificarcalle
+     * @throws java.lang.ClassNotFoundException
      */
     public Calles_modificar() throws ClassNotFoundException {
+        ctrlLugar = new CtrlLugar();
+        lugar= new Lugar();
+        localidad=new Lugar();
+        barrio=new Lugar();
+        calle=new Lugar();
+        id =new Lugar();
+        
         initComponents();
         modificar = Calles_consulta.modificar;
         
         if (modificar==0) {
-            cargarComboLocalidad(cbLocalidad);
+            ctrlLugar.cargarComboLocalidad(cbLocalidad);
             txtCambiarCalle.setText("");
             btnAceptar.setEnabled(false);
             
         }else{
-            cargarComboLocalidad(cbLocalidad);
+            ctrlLugar.cargarComboLocalidad(cbLocalidad);
             
             for (int i = 0; i < cbLocalidad.getItemCount(); i++) {
                 if (cbLocalidad.getItemAt(i).getNombre().equalsIgnoreCase(Calles_consulta.nombreLocalidad)) {
@@ -52,11 +55,10 @@ public class Calles_modificar extends javax.swing.JInternalFrame {
             }
             
             //INICIO DE CARGA DE COMBO BOX BARRIO
-            Lugar barrio = new Lugar();
             
-            barrio = (Lugar) cbLocalidad.getSelectedItem();
+            localidad = (Lugar) cbLocalidad.getSelectedItem();
             
-            DefaultComboBoxModel modelo = new DefaultComboBoxModel(cargarBarrio(barrio.getIdLugar()));
+            DefaultComboBoxModel modelo = new DefaultComboBoxModel(ctrlLugar.cargarFiltrado(localidad.getIdLugar(),2));
             cbBarrios.setModel(modelo);
             
             for (int i = 0; i < cbBarrios.getItemCount(); i++) {
@@ -67,113 +69,24 @@ public class Calles_modificar extends javax.swing.JInternalFrame {
             //FIN
             
             //INICIO DE CARGA DE COMBO BOX CALLE
-            Lugar calle = new Lugar();
+            barrio = (Lugar) cbBarrios.getSelectedItem();
             
-            calle = (Lugar) cbBarrios.getSelectedItem();
-            
-            DefaultComboBoxModel modelo2 = new DefaultComboBoxModel(cargarCalle(calle.getIdLugar()));
+            DefaultComboBoxModel modelo2 = new DefaultComboBoxModel(ctrlLugar.cargarFiltrado(barrio.getIdLugar(),1));
             
             cbCalles.setModel(modelo2);
             
             for (int i = 0; i < cbCalles.getItemCount(); i++) {
-                if (cbCalles.getItemAt(i).getNombre().equalsIgnoreCase(Calles_consulta.idCalle)) {
+                if (cbCalles.getItemAt(i).getNombre().equalsIgnoreCase(Calles_consulta.nombreCalle)) {
                     cbCalles.setSelectedIndex(i);
                 }
             }
             //FIN
             
-            id = lugar.leer(Calles_consulta.idCalle, 1);
+            id = ctrlLugar.leer(Calles_consulta.nombreCalle, 1);
             txtCambiarCalle.setText(id.getNombre());
             txtCambiarCalle.setFocusable(true);
             
         }
-    }
-
-    public void cargarComboLocalidad(JComboBox<Lugar> cbLocalidad){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM lugar WHERE nivel = 3 ORDER BY nombre ASC");
-            Lugar lugar = new Lugar();
-            lugar.setIdLugar(0);
-            lugar.setNombre("Seleccione una opcion...");
-            lugar.setNivel(0);
-            lugar.setDe(0);
-            cbLocalidad.addItem(lugar);
-            
-            while (rs.next()) {                
-                lugar = new Lugar();
-                lugar.setIdLugar(rs.getInt("idLugar"));
-                lugar.setNombre(rs.getString("nombre"));
-                lugar.setNivel(rs.getInt("nivel"));
-                lugar.setDe(rs.getInt("de"));
-                cbLocalidad.addItem(lugar);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
-        }
-        
-    }
-    
-    public Vector<Lugar> cargarBarrio(int idLugar) {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Vector<Lugar> datos = new Vector<>();
-        Lugar dat = null;
-        try {
-            String sql = "SELECT * FROM lugar WHERE nivel=2 and de =" + idLugar;
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            dat = new Lugar();
-            dat.setIdLugar(0);
-            dat.setNombre("Seleccionae una opción...");
-            dat.setNivel(0);
-            dat.setDe(0);
-            datos.add(dat);
-                while (rs.next()) {
-                    dat = new Lugar();
-                    dat.setIdLugar(rs.getInt("idLugar"));
-                    dat.setNombre(rs.getString("nombre"));
-                    dat.setNivel(rs.getInt("nivel"));
-                    dat.setDe(rs.getInt("de"));
-                    datos.add(dat);
-                }
-                rs.close();
-        } catch (SQLException ex) {
-            System.err.println("Error consulta :" + ex.getMessage());
-        }
-        return datos;
-    }
-    
-    public Vector<Lugar> cargarCalle(int idLugar) {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Vector<Lugar> datos = new Vector<>();
-        Lugar dat = null;
-        try {
-            String sql = "SELECT * FROM lugar WHERE nivel=1 and de =" + idLugar;
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            dat = new Lugar();
-            dat.setIdLugar(0);
-            dat.setNombre("Seleccionae una opción...");
-            dat.setNivel(0);
-            dat.setDe(0);
-            datos.add(dat);
-                while (rs.next()) {
-                    dat = new Lugar();
-                    dat.setIdLugar(rs.getInt("idLugar"));
-                    dat.setNombre(rs.getString("nombre"));
-                    dat.setNivel(rs.getInt("nivel"));
-                    dat.setDe(rs.getInt("de"));
-                    datos.add(dat);
-                }
-                rs.close();
-        } catch (SQLException ex) {
-            System.err.println("Error consulta :" + ex.getMessage());
-        }
-        return datos;
     }
     
     /**
@@ -304,30 +217,24 @@ public class Calles_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        CtrlLugar ctrlLugar = new CtrlLugar();
-        Lugar lugar = new Lugar();
         if (txtCambiarCalle.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
             lugar = (Lugar) cbBarrios.getSelectedItem();
             ctrlLugar.editar(id.getIdLugar(), txtCambiarCalle.getText(), 1, lugar.getIdLugar());
             txtCambiarCalle.setText("");
-            cargarComboLocalidad(cbLocalidad);
+            ctrlLugar.cargarComboLocalidad(cbLocalidad);
             //ACTUALIZACION DEL COMBO BARRIO
-            Lugar barrio = new Lugar();
+            lugar = (Lugar) cbLocalidad.getSelectedItem();
             
-            barrio = (Lugar) cbLocalidad.getSelectedItem();
-            
-            DefaultComboBoxModel modelo = new DefaultComboBoxModel(cargarBarrio(barrio.getIdLugar()));
+            DefaultComboBoxModel modelo = new DefaultComboBoxModel(ctrlLugar.cargarFiltrado(lugar.getIdLugar(),2));
             cbBarrios.setModel(modelo);
             //FIN
             
             //ACTUALIZACION DEL COMBO CALLE
-            Lugar calle = new Lugar();
+            lugar = (Lugar) cbBarrios.getSelectedItem();
             
-            calle = (Lugar) cbBarrios.getSelectedItem();
-            
-            DefaultComboBoxModel modelo2 = new DefaultComboBoxModel(cargarCalle(calle.getIdLugar()));
+            DefaultComboBoxModel modelo2 = new DefaultComboBoxModel(ctrlLugar.cargarFiltrado(lugar.getIdLugar(),2));
             
             cbCalles.setModel(modelo2);
             //FIN
@@ -337,7 +244,7 @@ public class Calles_modificar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void cbCallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCallesActionPerformed
-        // TODO add your handling code here:
+        btnAceptar.setEnabled(true);
     }//GEN-LAST:event_cbCallesActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -347,27 +254,30 @@ public class Calles_modificar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void cbBarriosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbBarriosItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            if (cbBarrios.getSelectedIndex() != 0) {
+                lugar = (Lugar) cbBarrios.getSelectedItem();
+                DefaultComboBoxModel modelo = new DefaultComboBoxModel(ctrlLugar.cargarFiltrado(lugar.getIdLugar(), 1));
 
-        Lugar lugar2 = new Lugar();
-        
-        lugar2 = (Lugar) cbBarrios.getSelectedItem();
-        
-        DefaultComboBoxModel modelo = new DefaultComboBoxModel(cargarCalle(lugar2.getIdLugar()));
-        cbCalles.setModel(modelo);
-        
-        
+                cbCalles.setModel(modelo);
+
+            }
+        }
     }//GEN-LAST:event_cbBarriosItemStateChanged
 
     private void cbLocalidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLocalidadItemStateChanged
     
-        Lugar lugar1 = new Lugar();
+        if(evt.getStateChange()==ItemEvent.SELECTED){
+            if(cbLocalidad.getSelectedIndex()!=0){
+                
+                lugar=(Lugar)cbLocalidad.getSelectedItem();           
+                
+                DefaultComboBoxModel modelo=new DefaultComboBoxModel(ctrlLugar.cargarFiltrado(lugar.getIdLugar(), 2));
+            
+                cbBarrios.setModel(modelo);
+            }
+        }
         
-        lugar1 = (Lugar) cbLocalidad.getSelectedItem();
-        
-        DefaultComboBoxModel modelo = new DefaultComboBoxModel(cargarBarrio(lugar1.getIdLugar()));
-        cbBarrios.setModel(modelo);
-        
-    
     }//GEN-LAST:event_cbLocalidadItemStateChanged
 
     private void txtCambiarCalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCambiarCalleKeyPressed

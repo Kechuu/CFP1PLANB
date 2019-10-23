@@ -9,10 +9,6 @@ import Controlador.CtrlCargo;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Cargo;
@@ -22,14 +18,20 @@ import modelo.Cargo;
  *
  * @author RociojulietaVazquez
  */
-public class Cargo_modificar extends javax.swing.JInternalFrame {
+public final class Cargo_modificar extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
+    CtrlCargo ctrlCargo = null;
+    Cargo cargo = null;
     /**
      * Creates new form modificarcargo
+     * @throws java.lang.ClassNotFoundException
      */
     public Cargo_modificar() throws ClassNotFoundException {
+        ctrlCargo = new CtrlCargo();
+        cargo = new Cargo();
+        
         initComponents();
-        cargarComboCargo(cbCargoActual);
+        ctrlCargo.cargarCombo(cbCargoActual);
         for (int i = 0; i < cbCargoActual.getItemCount(); i++) {
             if (cbCargoActual.getItemAt(i).getDetalle().equalsIgnoreCase(Cargo_consulta.nombreCargo)) {
                 cbCargoActual.setSelectedIndex(i);
@@ -39,29 +41,6 @@ public class Cargo_modificar extends javax.swing.JInternalFrame {
         txtCambiarCargo.setFocusable(true);
     }
 
-    public void cargarComboCargo(JComboBox<Cargo> cbCargoActual){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM cargo ORDER BY detalle ASC");
-            Cargo cargo = new Cargo();
-            cargo.setIdCargo(0);
-            cargo.setDetalle("Seleccione una opcion...");
-            cbCargoActual.addItem(cargo);
-            
-            while (rs.next()) {                
-                cargo = new Cargo();
-                cargo.setIdCargo(rs.getInt("idCargo"));
-                cargo.setDetalle(rs.getString("detalle"));
-                cbCargoActual.addItem(cargo);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
-        }
-        
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -198,15 +177,13 @@ public class Cargo_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        CtrlCargo ctrlCargo = new CtrlCargo();
-        Cargo cargo = new Cargo();
         if (txtCambiarCargo.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
             cargo = (Cargo) cbCargoActual.getSelectedItem();
             ctrlCargo.editar(cargo.getIdCargo(), txtCambiarCargo.getText());
             cbCargoActual.removeAllItems();
-            cargarComboCargo(cbCargoActual);
+            ctrlCargo.cargarCombo(cbCargoActual);
             txtCambiarCargo.setText("");
             txtCambiarCargo.setFocusable(true);
         }

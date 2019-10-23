@@ -9,13 +9,8 @@ import Controlador.CtrlNacionalidad;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import menu.Principal;
-import modelo.Cargo;
 import modelo.Nacionalidad;
 
 
@@ -23,15 +18,20 @@ import modelo.Nacionalidad;
  *
  * @author RociojulietaVazquez
  */
-public class Nacionalidad_modificar extends javax.swing.JInternalFrame {
+public final class Nacionalidad_modificar extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
+    CtrlNacionalidad ctrlNacionalidad = null;
+    Nacionalidad nacionalidad = null;
     /**
      * Creates new form ModificarNacionalidad
      * @throws java.lang.ClassNotFoundException
      */
     public Nacionalidad_modificar() throws ClassNotFoundException {
+        ctrlNacionalidad = new CtrlNacionalidad();
+        nacionalidad = new Nacionalidad();
+        
         initComponents();
-        cargarComboLocalidad(cbNacionalidadActual);
+        ctrlNacionalidad.cargarComboNacionalidad(cbNacionalidadActual);
            for (int i = 0; i < cbNacionalidadActual.getItemCount(); i++) {
             if (cbNacionalidadActual.getItemAt(i).getDetalle().equalsIgnoreCase(Nacionalidad_consulta.nombreNacionalidad)) {
                 cbNacionalidadActual.setSelectedIndex(i);
@@ -39,29 +39,6 @@ public class Nacionalidad_modificar extends javax.swing.JInternalFrame {
         }
            txtNacionalidad.setText(Nacionalidad_consulta.nombreNacionalidad);
            txtNacionalidad.setFocusable(true);
-    }
-
-    public void cargarComboLocalidad(JComboBox<Nacionalidad> cbNacionalidadActual){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM nacionalidad ORDER BY detalle ASC");
-            Nacionalidad nacionalidad = new Nacionalidad();
-            nacionalidad.setIdNacionalidad(0);
-            nacionalidad.setDetalle("Seleccione una opcion...");
-            cbNacionalidadActual.addItem(nacionalidad);
-            
-            while (rs.next()) {                
-                nacionalidad = new Nacionalidad();
-                nacionalidad.setIdNacionalidad(rs.getInt("idNacionalidad"));
-                nacionalidad.setDetalle(rs.getString("detalle"));
-                cbNacionalidadActual.addItem(nacionalidad);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
-        }
-        
     }
     
     /**
@@ -201,16 +178,15 @@ public class Nacionalidad_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
-        Nacionalidad nacionalidad = new Nacionalidad();
         if (txtNacionalidad.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
             nacionalidad = (Nacionalidad) cbNacionalidadActual.getSelectedItem();
             ctrlNacionalidad.editar(nacionalidad.getIdNacionalidad(), txtNacionalidad.getText());
             cbNacionalidadActual.removeAllItems();
-            cargarComboLocalidad(cbNacionalidadActual);
+            ctrlNacionalidad.cargarComboNacionalidad(cbNacionalidadActual);
             txtNacionalidad.setText("");
+            txtNacionalidad.setFocusable(true);
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

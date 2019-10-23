@@ -14,22 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import modelo.Sexo;
+import modelo.Caracter;
 
 /**
  *
- * @author araa
+ * @author jesus
  */
-public class CtrlSexo {
-    
-    Connection con=null;
+public class CtrlCaracter {
+    Connection con = null;
     PreparedStatement ps;
     ResultSet rs;
     
     public void crear(String detalle){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO sexo (detalle) VALUES (?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO caracter (detalle) VALUES (?)");
         
             ps.setString(1, detalle.toUpperCase());
             
@@ -41,13 +40,13 @@ public class CtrlSexo {
         }
     }
     
-    public void editar(int idSexo, String detalle){
+    public void editar(int idCaracter, String detalle){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE sexo SET detalle = ? WHERE idSexo = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE caracter SET detalle = ? WHERE idCaracter = ?");
             
             ps.setString(1, detalle.toUpperCase());
-            ps.setInt(2, idSexo);
+            ps.setInt(2, idCaracter);
             
             int res = ps.executeUpdate();
             
@@ -63,19 +62,19 @@ public class CtrlSexo {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-    public Sexo leer(int idSexo){
-        Sexo sx=new Sexo();
-        
+    
+    public Caracter leer(int idCaracter){
+        Caracter caracter = new Caracter();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM sexo WHERE idSexo = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM caracter WHERE idCaracter = ?");
             
-            ps.setInt(1, idSexo);
+            ps.setInt(1, idCaracter);
             rs = ps.executeQuery();
             
             if(rs.next()){
-                sx.setIdSexo(rs.getInt("idSexo"));
-                sx.setDetalle(rs.getString("detalle"));
+                caracter.setIdCaracter(rs.getInt("idCaracter"));
+                caracter.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -84,74 +83,74 @@ public class CtrlSexo {
         }catch(HeadlessException | SQLException e){
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        return sx;
+        return caracter;
     }
     
-    public void cargarCombo(JComboBox <Sexo> cb){
+    public void cargarCombo(JComboBox<Caracter> cbCaracter){
         
-        try{
+        try {
             con=clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("SELECT * from sexo ORDER BY detalle ASC");
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM caracter ORDER BY detalle ASC");
             rs=ps.executeQuery();
             
-            Sexo sx=new Sexo();
-            sx.setIdSexo(0);
-            sx.setDetalle("Seleccione una opción...");
-            cb.addItem(sx);
+            Caracter caracter=new Caracter();
+            caracter.setIdCaracter(0);
+            caracter.setDetalle("Seleccione una opción...");
+            cbCaracter.addItem(caracter);
             
-            while(rs.next()){
-                sx=new Sexo();
+            while (rs.next()) {                
+            
+                caracter=new Caracter();
                 
-                sx.setIdSexo(rs.getInt("idSexo"));
-                sx.setDetalle(rs.getString("detalle"));
-                
-                cb.addItem(sx);
+                caracter.setIdCaracter(rs.getInt("idCaracter"));
+                caracter.setDetalle(rs.getString("detalle"));
+                cbCaracter.addItem(caracter);
             }
             
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR CARACTERES: "+e.getMessage());       
         }
         
     }
     
-    public List<Sexo> cargarListaSexo(){
-        List<Sexo> listaSexo = new ArrayList();
+    public List<Caracter> cargarListaCargo(){
+        List<Caracter> listaCaracter = new ArrayList();
         ResultSet rst;
         con =clases.Conectar.conexion();
         try {
-            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM sexo ORDER BY detalle ASC");
+            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM caracter ORDER BY detalle ASC");
             
             rst= ps.executeQuery();
             
             while (rst.next()) {
-                Sexo sexo = new Sexo();
-                sexo.setIdSexo(rst.getInt("idSexo"));
-                sexo.setDetalle(rst.getString("detalle"));
+                Caracter caracter = new Caracter();
+                caracter.setIdCaracter(rst.getInt("idCaracter"));
+                caracter.setDetalle(rst.getString("detalle"));
                 
-                listaSexo.add(sexo);
+                listaCaracter.add(caracter);
             } 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error, "+e);
         }
-    return listaSexo;
+    return listaCaracter;
     }
     
-    public List<Sexo> leerTodos(){
+    public List<Caracter> leerTodos(){
         
         ResultSet rst;
-        List<Sexo> lista = new ArrayList();
+        List<Caracter> lista = new ArrayList();
         con = clases.Conectar.conexion();
         try {
-            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM sexo ORDER BY detalle ASC");
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM caracter ORDER BY detalle ASC");
             
             rst=ps.executeQuery();
             
             while (rst.next()) {                
-                Sexo sexo = new Sexo();
-                sexo.setIdSexo(rst.getInt("idSexo"));
-                sexo.setDetalle(rst.getString("detalle"));
+                Caracter caracter = new Caracter();
+                caracter.setIdCaracter(rst.getInt("idCaracter"));
+                caracter.setDetalle(rst.getString("detalle"));
                 
-                lista.add(sexo);
+                lista.add(caracter);
             }
             
         } catch (SQLException e) {
@@ -159,6 +158,5 @@ public class CtrlSexo {
         }
         return lista;
     }
-    
     
 }

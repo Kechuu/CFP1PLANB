@@ -14,6 +14,7 @@ public class Licencia {
     private int idLicencia;
     private int articulo;
     private String detalle;
+    private Caracter idCaracter;
 
     public int getIdLicencia() {
         return idLicencia;
@@ -41,6 +42,14 @@ public class Licencia {
     
     public String toString(){
         return this.detalle;
+    }
+
+    public Caracter getIdCaracter() {
+        return idCaracter;
+    }
+
+    public void setIdCaracter(Caracter idCaracter) {
+        this.idCaracter = idCaracter;
     }
     
 }

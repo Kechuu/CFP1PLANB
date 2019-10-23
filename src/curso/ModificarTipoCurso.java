@@ -13,79 +13,34 @@ import configuracion.Periodo_modificar;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import modelo.Periodo;
 import modelo.TipoCurso;
 /**
  *
  * @author araa
  */
-public class ModificarTipoCurso extends javax.swing.JInternalFrame {
+public final class ModificarTipoCurso extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public int bandera=0;
+    CtrlTipoCurso ctrlTipoCurso = null;
+    CtrlPeriodo ctrlPeriodo = null;
+    Periodo periodo=null;
+    TipoCurso tipoCurso = null;
     /**
      * Creates new form NewJInternalFrame
      */
     public ModificarTipoCurso() {
+        ctrlTipoCurso = new CtrlTipoCurso();
+        ctrlPeriodo = new CtrlPeriodo();
+        periodo = new Periodo();
+        tipoCurso = new TipoCurso();
+        
         initComponents();
         bandera=1;
-        cargarComboTipoCurso(cbxNombreCurso);
+        ctrlTipoCurso.cargarCombo(cbxNombreCurso);
         bandera=0;
-    }
-    
-    public void cargarComboPeriodo(JComboBox<Periodo> cbPeriodo){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM periodo ORDER BY detalle ASC");
-            Periodo periodo = new Periodo();
-            periodo.setIdPeriodo(0);
-            periodo.setDetalle("Seleccione una opcion...");
-            cbPeriodo.addItem(periodo);
-            
-            while (rs.next()) {                
-                periodo = new Periodo();
-                periodo.setIdPeriodo(rs.getInt("idPeriodo"));
-                periodo.setDetalle(rs.getString("detalle"));
-                cbPeriodo.addItem(periodo);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
-        }
-        
-    }
-    
-    public void cargarComboTipoCurso(JComboBox<TipoCurso> cbTipoCurso){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM tipoCurso ORDER BY detalle ASC");
-            TipoCurso tipoCurso = new TipoCurso();
-            tipoCurso.setIdTipoCurso(0);
-            tipoCurso.setDetalle("Seleccione una opcion...");
-            cbTipoCurso.addItem(tipoCurso);
-            
-            while (rs.next()) {                
-                tipoCurso = new TipoCurso();
-                CtrlPeriodo ctrlPeriodo = new CtrlPeriodo();
-                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
-                tipoCurso.setDetalle(rs.getString("detalle"));
-                tipoCurso.setCosto(rs.getFloat("costo"));
-                tipoCurso.setIdPeriodo(ctrlPeriodo.leer(rs.getInt("idPeriodo")));
-                cbTipoCurso.addItem(tipoCurso);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
-        }
-        
     }
     
     /**
@@ -279,15 +234,12 @@ public class ModificarTipoCurso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        CtrlTipoCurso ctrlTipoCurso = new CtrlTipoCurso();
-        Periodo periodo = new Periodo();
         bandera=1;
-        TipoCurso tipoCurso = new TipoCurso();
         tipoCurso = (TipoCurso) cbxNombreCurso.getSelectedItem();
         periodo = (Periodo) cbxPeriodo.getSelectedItem();
         ctrlTipoCurso.editar(tipoCurso.getIdTipoCurso(), txtNombreNuevo.getText(), Float.parseFloat(txtcosto.getText()), periodo.getIdPeriodo());
         cbxNombreCurso.removeAllItems();
-        cargarComboTipoCurso(cbxNombreCurso);
+        ctrlTipoCurso.cargarCombo(cbxNombreCurso);
         vaciarCampos();
         bandera=0;
          /*
@@ -332,10 +284,6 @@ public class ModificarTipoCurso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbxPeriodoItemStateChanged
 
     private void cbxNombreCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNombreCursoItemStateChanged
-        TipoCurso tipoCurso = new TipoCurso();
-        CtrlPeriodo ctrlPeriodo = new CtrlPeriodo();
-        Periodo periodo = new Periodo();
-        CtrlTipoCurso ctrlTipoCurso = new CtrlTipoCurso();
         if (cbxNombreCurso.getSelectedIndex()==0) {
             vaciarCampos();
         }else{
@@ -373,7 +321,7 @@ public class ModificarTipoCurso extends javax.swing.JInternalFrame {
     
     public void cargarPeriodo(String detalle){
         cbxPeriodo.removeAllItems();
-        cargarComboPeriodo(cbxPeriodo);
+        ctrlPeriodo.cargarCombo(cbxPeriodo);
         for (int i = 0; i < cbxPeriodo.getItemCount(); i++) {
                 if (cbxPeriodo.getItemAt(i).getDetalle().equalsIgnoreCase(detalle)) {
                     cbxPeriodo.setSelectedIndex(i);

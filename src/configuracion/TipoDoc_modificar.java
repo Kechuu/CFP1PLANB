@@ -9,13 +9,8 @@ import Controlador.CtrlTipoDocumento;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import menu.Principal;
-import modelo.Cargo;
 import modelo.TipoDocumento;
 
 
@@ -23,14 +18,19 @@ import modelo.TipoDocumento;
  *
  * @author RociojulietaVazquez
  */
-public class TipoDoc_modificar extends javax.swing.JInternalFrame {
+public final class TipoDoc_modificar extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
+    CtrlTipoDocumento ctrlTipoDocumento = null;
+    TipoDocumento tipoDocumento=null;
     /**
      * Creates new form ModificarTrabajo
      */
     public TipoDoc_modificar() throws ClassNotFoundException {
+        ctrlTipoDocumento = new CtrlTipoDocumento();
+        tipoDocumento = new TipoDocumento();
+        
         initComponents();
-        cargarComboCargo(cbTipo);
+        ctrlTipoDocumento.cargarComboTipoDocumento(cbTipo);
         for (int i = 0; i < cbTipo.getItemCount(); i++) {
             if (cbTipo.getItemAt(i).getDetalle().equalsIgnoreCase(TipoDoc_consulta.nombreTipoDoc)) {
                 cbTipo.setSelectedIndex(i);
@@ -38,29 +38,6 @@ public class TipoDoc_modificar extends javax.swing.JInternalFrame {
         }
         txtTipo.setText(TipoDoc_consulta.nombreTipoDoc);
         txtTipo.setFocusable(true);
-    }
-
-    public void cargarComboCargo(JComboBox<TipoDocumento> cbTipo){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM tipoDocumento ORDER BY detalle ASC");
-            TipoDocumento tipoDoc = new TipoDocumento();
-            tipoDoc.setIdTipoDocumento(0);
-            tipoDoc.setDetalle("Seleccione una opcion...");
-            cbTipo.addItem(tipoDoc);
-            
-            while (rs.next()) {                
-                tipoDoc = new TipoDocumento();
-                tipoDoc.setIdTipoDocumento(rs.getInt("idTipoDocumento"));
-                tipoDoc.setDetalle(rs.getString("detalle"));
-                cbTipo.addItem(tipoDoc);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
-        }
-        
     }
     
     /**
@@ -202,15 +179,13 @@ public class TipoDoc_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        CtrlTipoDocumento ctrlTipoDoc = new CtrlTipoDocumento();
-        TipoDocumento tipo = new TipoDocumento();
         if (txtTipo.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
-            tipo = (TipoDocumento) cbTipo.getSelectedItem();
-            ctrlTipoDoc.editar(tipo.getIdTipoDocumento(), txtTipo.getText());
+            tipoDocumento = (TipoDocumento) cbTipo.getSelectedItem();
+            ctrlTipoDocumento.editar(tipoDocumento.getIdTipoDocumento(), txtTipo.getText());
             cbTipo.removeAllItems();
-            cargarComboCargo(cbTipo);
+            ctrlTipoDocumento.cargarComboTipoDocumento(cbTipo);
             txtTipo.setText("");
             txtTipo.setFocusable(true);
         }

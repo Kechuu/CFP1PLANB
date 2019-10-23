@@ -5,16 +5,15 @@
  */
 package configuracion;
 
+import Controlador.CtrlGremio;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Gremio;
 
@@ -23,39 +22,36 @@ import modelo.Gremio;
  *
  * @author RociojulietaVazquez
  */
-public class Gremio_consulta extends javax.swing.JInternalFrame {
+public final class Gremio_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static int idGremio;
     public static String nombreGremio;
+    DefaultListModel modelo = null;
+    CtrlGremio ctrlGremio = null;
     /**
      * Creates new form Gremio
+     * @throws java.lang.ClassNotFoundException
      */
     public Gremio_consulta() throws ClassNotFoundException {
+        modelo = new DefaultListModel();
+        ctrlGremio = new CtrlGremio();
+        
         initComponents();
         cargarListaGremio();
         btnModificar.setEnabled(false);
     }
 
-    public void cargarListaGremio(){
-        DefaultListModel<Gremio> modelo = new DefaultListModel<>();
+     public void cargarListaGremio(){
+        List<Gremio> lista = new ArrayList();
         
-        try {
-            Statement st=(Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM gremio ORDER BY detalle ASC");
-            
-            while (rs.next()) {
-                Gremio gremio = new Gremio();
-                gremio.setIdGremio(rs.getInt("idGremio"));
-                gremio.setDetalle(rs.getString("detalle"));
-                
-                modelo.addElement(gremio);
-            }
-            
-            listaGremios.setModel(modelo);
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error, "+e);
-        }
+        lista = ctrlGremio.cargarListaGremio();
+        
+            for (int i = 0; i < lista.size(); i++) {
+               modelo.addElement(lista.get(i).getDetalle());
+           }
+        
+        listaGremios.setModel(modelo);
+           
     
     }
     
@@ -215,11 +211,11 @@ public class Gremio_consulta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        Gremio gremio = new Gremio();
-        gremio = listaGremios.getSelectedValue();
-        idGremio = gremio.getIdGremio();
-        nombreGremio = gremio.getDetalle();
+        String nombre = (String) listaGremios.getSelectedValuesList().toString();
+        nombreGremio = nombre.substring(1,nombre.length()-1);
+        
         this.setVisible(false);
+        
         try {
             Principal.modificarGremio();
         } catch (ClassNotFoundException ex) {

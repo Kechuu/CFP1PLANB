@@ -9,13 +9,8 @@ import Controlador.CtrlTitulo;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import menu.Principal;
-import modelo.Cargo;
 import modelo.Titulo;
 
 
@@ -23,14 +18,20 @@ import modelo.Titulo;
  *
  * @author RociojulietaVazquez
  */
-public class Titulo_modificar extends javax.swing.JInternalFrame {
+public final class Titulo_modificar extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
+    CtrlTitulo ctrlTitulo = null;
+    Titulo titulo = null;
     /**
      * Creates new form modificartitulo
+     * @throws java.lang.ClassNotFoundException
      */
     public Titulo_modificar() throws ClassNotFoundException {
+        ctrlTitulo = new CtrlTitulo();
+        titulo = new Titulo();
+        
         initComponents();
-        cargarComboTitulo(cbTituloActual);
+        ctrlTitulo.cargarCombo(cbTituloActual);
         for (int i = 0; i < cbTituloActual.getItemCount(); i++) {
             if (cbTituloActual.getItemAt(i).getDetalle().equalsIgnoreCase(Titulo_consulta.nombreTitulo)) {
                 cbTituloActual.setSelectedIndex(i);
@@ -40,29 +41,6 @@ public class Titulo_modificar extends javax.swing.JInternalFrame {
         txtTitulo.setFocusable(true);
     }
 
-    public void cargarComboTitulo(JComboBox<Titulo> cbTituloActual){
-        
-        try {
-            Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM titulo ORDER BY detalle ASC");
-            Titulo titulo = new Titulo();
-            titulo.setIdTitulo(0);
-            titulo.setDetalle("Seleccione una opcion...");
-            cbTituloActual.addItem(titulo);
-            
-            while (rs.next()) {                
-                titulo = new Titulo();
-                titulo.setIdTitulo(rs.getInt("idTitulo"));
-                titulo.setDetalle(rs.getString("detalle"));
-                cbTituloActual.addItem(titulo);
-            }
-            
-        } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR LOS CARGOS");       
-        }
-        
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -200,15 +178,13 @@ public class Titulo_modificar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        CtrlTitulo ctrlTitulo = new CtrlTitulo();
-        Titulo titulo = new Titulo();
         if (txtTitulo.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registro vacios");
         }else{
             titulo = (Titulo) cbTituloActual.getSelectedItem();
             ctrlTitulo.editar(titulo.getIdTitulo(), txtTitulo.getText());
             cbTituloActual.removeAllItems();
-            cargarComboTitulo(cbTituloActual);
+            ctrlTitulo.cargarCombo(cbTituloActual);
             txtTitulo.setText("");
             txtTitulo.setFocusable(true);
         }
