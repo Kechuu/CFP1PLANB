@@ -26,13 +26,14 @@ public class CtrlLicencia {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(int articulo, String detalle){
+    public void crear(int articulo, String detalle, int idCaracter){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO licencia (articulo,detalle) VALUES (?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO licencia (articulo,detalle,idCaracter) VALUES (?,?,?)");
         
             ps.setInt(1, articulo);
             ps.setString(2, detalle.toUpperCase());
+            ps.setInt(3, idCaracter);
             
             int res = ps.executeUpdate();
             
@@ -41,14 +42,15 @@ public class CtrlLicencia {
         }
     }
     
-    public void editar( int articulo, String detalle){
+    public void editar( int articulo, String detalle, int idCaracter){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE licencia SET articulo = ?, detalle = ? WHERE articulo = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE licencia SET articulo = ?, detalle = ?, idCaracter = ? WHERE articulo = ?");
             
             ps.setInt(1, articulo);
             ps.setString(2, detalle);
-            ps.setInt(3 , articulo);
+            ps.setInt(3, idCaracter);
+            ps.setInt(4 , articulo);
             
             int res = ps.executeUpdate();
             
@@ -65,6 +67,7 @@ public class CtrlLicencia {
     
     public Licencia leer(int articulo){
         Licencia licencia = new Licencia();
+        CtrlCaracter ctrlCaracter = new CtrlCaracter();
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM licencia WHERE articulo = ?");
@@ -76,6 +79,8 @@ public class CtrlLicencia {
                 licencia.setIdLicencia(rs.getInt("idLicencia"));
                 licencia.setArticulo(rs.getInt("articulo"));
                 licencia.setDetalle(rs.getString("detalle"));
+                licencia.setIdCaracter(ctrlCaracter.leer(rs.getInt("idCaracter")));
+                
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -85,11 +90,13 @@ public class CtrlLicencia {
         return licencia;
     }
     
-    public void cargarCombo(JComboBox combo){
+    public void cargarCombo(JComboBox combo, int idCaracter){
         
         try {
             con=clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("SELECT articulo FROM licencia ORDER BY articulo ASC");
+            ps=(PreparedStatement)con.prepareStatement("SELECT articulo FROM licencia WHERE idCaracter = ? ORDER BY articulo ASC");
+            ps.setInt(1, idCaracter);
+            
             rs=ps.executeQuery();
             combo.addItem("Seleccione uno de los articulos...");
             

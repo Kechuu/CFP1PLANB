@@ -27,13 +27,14 @@ public class CtrlCursoProfesor {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(int idCurso, int idEmpleado){
+    public void crear(int idCurso, int idEmpleado, int idCaracter){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO cursoProfesor (idCurso, idEmpleado) VALUES (?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO cursoProfesor (idCurso, idEmpleado, idCaracter) VALUES (?,?,?)");
             
             ps.setInt(1, idCurso);
             ps.setInt(2, idEmpleado);
+            ps.setInt(3, idCaracter);
             
             int res = ps.executeUpdate();
             con.close();
@@ -90,6 +91,7 @@ public class CtrlCursoProfesor {
         CursoProfesor cursoProfesor = new CursoProfesor();
         CtrlCurso ctrlCurso = new CtrlCurso();
         CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
+        CtrlCaracter ctrlCaracter = new CtrlCaracter();
         
         try {
             con = clases.Conectar.conexion();
@@ -102,6 +104,7 @@ public class CtrlCursoProfesor {
             if (rs.next()) {
                 cursoProfesor.setIdCurso(ctrlCurso.leer(rs.getInt("idCurso")));
                 cursoProfesor.setIdEmpleado(ctrlEmpleado.leer(rs.getInt("idEmpleado")));
+                cursoProfesor.setIdCaracter(ctrlCaracter.leer(rs.getInt("idCaracter")));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
