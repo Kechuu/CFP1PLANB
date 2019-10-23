@@ -258,7 +258,7 @@ public class Localidad_crear extends javax.swing.JInternalFrame {
         if (txtLocalidad.getText().equalsIgnoreCase("") || txtCodigoPostal.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "Tienen que estar cargados todos los campos para guardar");
         }else{
-            ctrlLugar.crear(txtLocalidad.getText(), 3, 1);
+            ctrlLugar.crear(txtLocalidad.getText(), 3, 0);
             
             
             lugar = ctrlLugar.leer(txtLocalidad.getText(),3);

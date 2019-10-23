@@ -1039,6 +1039,34 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         ctrlEmpleadoT.llenarLista(ctrlEmpleado.leer(personaDatos.getIdPersona()).getIdEmpleado(), listTitulo);
         ctrlEmpleadoC.llenarLista(ctrlEmpleado.leer(personaDatos.getIdPersona()).getIdEmpleado(), listCargo);
         
+        filtrar();
+    }
+    
+    void filtrar(){
+        ListModel<Titulo> listaTit=listTitulo.getModel();
+        ListModel<Cargo> listaCargo=listCargo.getModel();
+        
+        for(int i=0; i<listaTit.getSize(); i++){
+            for(int j=0; j<cbTitulo.getItemCount();j++){
+                Titulo item=null;
+                item=cbTitulo.getItemAt(j);
+                
+                if(listaTit.getElementAt(i).getIdTitulo()==item.getIdTitulo()){
+                    cbTitulo.removeItemAt(j);
+                }
+            }
+        }
+        
+        for(int i=0; i<listaCargo.getSize(); i++){
+            for(int j=0; j<cbCargo.getItemCount();j++){
+                Cargo item=null;
+                item=cbCargo.getItemAt(j);
+                
+                if(listaCargo.getElementAt(i).getIdCargo()==item.getIdCargo()){
+                    cbCargo.removeItemAt(j);
+                }
+            }
+        }
     }
     private void cbBarrioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbBarrioItemStateChanged
         // TODO add your handling code here:

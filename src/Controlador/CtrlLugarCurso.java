@@ -68,6 +68,7 @@ public class CtrlLugarCurso {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                lugarCurso.setIdLugarCurso(rs.getInt("idLugarCurso"));
                 lugarCurso.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");

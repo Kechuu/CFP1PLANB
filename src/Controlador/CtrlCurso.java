@@ -56,7 +56,7 @@ public class CtrlCurso {
             
             con.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ES AQUI!!!");
+            JOptionPane.showMessageDialog(null, "ctrlCurso");
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
         
@@ -155,7 +155,7 @@ public class CtrlCurso {
         }
         return curso;
     }
-//<VER SI ESTO ES REALMENTE NECESARIO :v
+//<VER SI ESTO ES REALMENTE NECESARIO :v -SI ES NECESARIO :vv
     public Curso leerCurso(int idCurso){
         Curso curso = new Curso();
         CtrlTipoCurso ctrlTipoCurso = new CtrlTipoCurso();

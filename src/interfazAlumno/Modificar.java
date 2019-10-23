@@ -91,9 +91,10 @@ public final class Modificar extends javax.swing.JInternalFrame {
         lugar.cargarComboLocalidad(cbLocalidad);
         lugar.cargarComboLocalidad(cbNacimiento);
         nacion.cargarComboNacionalidad(cbNacionalidad);
+        sx.cargarCombo(cbSexo);
+        
         trabajo.cargarComboTrabajo(cbTrabajo);
         planes.cargarComboPlan(cbPlan);
-        sx.cargarCombo(cbSexo);
         
         personaDatos=persona;
         
@@ -129,6 +130,7 @@ public final class Modificar extends javax.swing.JInternalFrame {
         for(int i=0; i<modeloTrabajo.getSize();i++){
             arrayTrabajo.add(i, modeloTrabajo.getElementAt(i));
         }
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1037,10 +1039,37 @@ public final class Modificar extends javax.swing.JInternalFrame {
         ctrlPlanP.llenarLista(persona.getIdPersona(), listPlan);
         ctrlTrabajoP.llenarLista(persona.getIdPersona(), listTrabajo);
         
+        filtrar();
     }
     
-    
-    
+    void filtrar(){
+        ListModel<Trabajo> listaT=listTrabajo.getModel();
+        ListModel<Planes> listaP=listPlan.getModel();
+        
+        for(int i=0; i<listaT.getSize(); i++){
+            
+            for(int j=0; j<cbTrabajo.getItemCount(); j++){
+                Trabajo item=null;
+                item=cbTrabajo.getItemAt(j);
+            
+                if(listaT.getElementAt(i).getIdTrabajo()==item.getIdTrabajo()){
+                    
+                    cbTrabajo.removeItemAt(j);
+                }
+            }
+        }
+        
+        for(int i=0; i<listaP.getSize();i++){
+            for(int j=0; j<cbPlan.getItemCount(); j++){
+                Planes item=null;
+                item=cbPlan.getItemAt(j);
+                
+                if(listaP.getElementAt(i).getIdPlanes()==item.getIdPlanes()){
+                    cbPlan.removeItemAt(j);
+                }
+            }
+        }
+    }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         CtrlDomicilio domicilioId=new CtrlDomicilio();
         CtrlEdificio edificioId=new CtrlEdificio();

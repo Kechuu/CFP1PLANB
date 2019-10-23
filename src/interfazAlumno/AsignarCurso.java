@@ -84,6 +84,8 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
     }*/
     void cargar(){
         txtNombreCompleto.setText(persona.getApellidoPersona()+" "+persona.getNombrePersona());
+    
+        filtrar();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -203,9 +205,9 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -329,8 +331,8 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane6)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,8 +359,8 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
                         .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(54, Short.MAX_VALUE))
                     .addGroup(panelCompletoLayout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29))))
             .addGroup(panelCompletoLayout.createSequentialGroup()
@@ -386,18 +388,17 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(6, 6, 6)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(panelCompletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCompletoLayout.createSequentialGroup()
                         .addComponent(btnInscribirCursos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPago, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)))
-                .addGap(8, 8, 8))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27))
         );
 
         jLayeredPane1.add(panelCompleto, java.awt.BorderLayout.CENTER);
@@ -413,6 +414,7 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jLayeredPane1))
         );
 
@@ -448,6 +450,12 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
                 Principal.activarPanel();
                 dispose();
             break;
+            
+            default:
+                Principal.activarPanel();
+                dispose();
+
+                break;
         }
 
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -469,11 +477,25 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
                 
             }
             ctrlCursoAlum.llenarLista(ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno(), listCursosInscriptos);
-            listCursos.removeAll();
+            modeloCursos.removeAllElements();
         }        
     }//GEN-LAST:event_btnInscribirCursosActionPerformed
 
-    
+    void filtrar(){
+        //modeloDisponible... los que trae de BD
+        ListModel<TipoCurso>lista1=listCursosInscriptos.getModel();
+        
+        for(int i=0; i<lista1.getSize();i++){
+            for(int j=0; j<modeloDisponible.getSize();j++){
+                TipoCurso item=null;
+                item=modeloDisponible.elementAt(j);
+                
+                if(lista1.getElementAt(i).getIdTipoCurso()==item.getIdTipoCurso()){
+                    modeloDisponible.removeElementAt(j);
+                }
+            }
+        }
+    }
     private void listDisponibleValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listDisponibleValueChanged
 
         if(listDisponible.getSelectedIndex()!= -1){
@@ -511,8 +533,10 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
 
     private void btnCursoDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCursoDeshacerActionPerformed
         // TODO add your handling code here:
-        if(listCursosInscriptos.getSelectedIndex()!= -1){
+        if(listCursos.getSelectedIndex()!= -1){
+            
             modeloDisponible.addElement((TipoCurso)listCursos.getSelectedValue());
+            
             modeloCursos.remove(listCursos.getSelectedIndex());
 
             btnCursoAsignar.setEnabled(true);

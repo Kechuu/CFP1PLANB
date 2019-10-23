@@ -90,28 +90,48 @@ public class CtrlCursoAlumno {
             int res = ps.executeUpdate();
             con.close();
             
-            if(res>0) JOptionPane.showMessageDialog(null, "se realizo el cambio");
+            if(res>0) JOptionPane.showMessageDialog(null, "Se realizo el cambio");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
     }
     
-    public void pagarSaldo(int idAlumno,int idCurso, float saldo, float costo){
+    public void costo(int idAlumno,int idCurso, float costo, int cursoAlumno){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoAlumno SET costo=?, saldo = ? WHERE idAlumno = ? AND idCurso = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE cursoAlumno SET costo=? WHERE idAlumno = ? AND idCurso = ? "
+                    + " AND idCursoAlumno=? AND idEstadoAlumno = 1");
             
             ps.setFloat(1, costo);
-            ps.setFloat(2, saldo);
-            ps.setInt(3, idAlumno);
-            ps.setInt(4, idCurso);
-            
+            ps.setInt(2, idAlumno);
+            ps.setInt(3, idCurso);
+            ps.setInt(4, cursoAlumno);
             int res = ps.executeUpdate();
             con.close();
             
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
+    }
+    
+    public void pagarSaldo(int idAlumno, int idCurso, float importe, int cursoAlumno){
+    
+            try{
+                con=clases.Conectar.conexion();
+                ps=(PreparedStatement)con.prepareStatement("UPDATE cursoAlumno SET saldo=?"
+                        + " WHERE idAlumno=? AND idCurso=? AND idCursoAlumno=?");
+                
+                ps.setFloat(1, importe);
+                ps.setInt(2, idAlumno);
+                ps.setInt(3, idCurso);
+                ps.setInt(4, cursoAlumno);
+                
+                ps.execute();
+                
+                con.close();
+            }catch(Exception e){
+                
+            }
     }
     
     public CursoAlumno leer(int idAlumno, int idCurso){
@@ -123,7 +143,7 @@ public class CtrlCursoAlumno {
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoAlumno WHERE idAlumno=? AND idCurso=?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoAlumno WHERE idAlumno=? AND idCurso=? AND idEstadoAlumno=1");
             
             ps.setInt(1, idAlumno);
             ps.setInt(2, idCurso);
@@ -132,13 +152,14 @@ public class CtrlCursoAlumno {
             
             if (rs.next()) {
                 cursoAlumno.setIdCursoAlumno(rs.getInt("idCursoAlumno"));
+                cursoAlumno.setCosto(rs.getFloat("costo"));
                 cursoAlumno.setSaldo(rs.getFloat("saldo"));
                 cursoAlumno.setFechaIngreso(rs.getDate("fechaIngreso"));
                 cursoAlumno.setFechaBajaEgreso(rs.getDate("fechaBaja"));
-                cursoAlumno.setIdAlumno(ctrlAlumno.leer(rs.getInt("idAlumno")));
+                cursoAlumno.setIdAlumno(ctrlAlumno.leerId(rs.getInt("idAlumno")));
                 cursoAlumno.setIdEstadoAlumno(ctrlEstadoAlumno.leer(rs.getInt("idEstadoAlumno")));
-                cursoAlumno.setIdCurso(ctrlCurso.leer(rs.getInt("idCurso")));
-                cursoAlumno.setIdMotivoBaja(ctrlMotivoBaja.leer(rs.getInt("idMotivoBaja")));
+                cursoAlumno.setIdCurso(ctrlCurso.leerCurso(rs.getInt("idCurso")));
+                //cursoAlumno.setIdMotivoBaja(ctrlMotivoBaja.leer(rs.getInt("idMotivoBaja")));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -209,7 +230,7 @@ public class CtrlCursoAlumno {
             }
             
         } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento");       
+                JOptionPane.showMessageDialog(null, "ERROR AL CARGAR COMBO ");       
         }
         
     }
@@ -248,7 +269,7 @@ public class CtrlCursoAlumno {
              tabla.setModel(modelo);
          }
         catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LAS LOCALIDADES EN LA TABLA"); 
+            JOptionPane.showMessageDialog(null, "ERROR"); 
         }
         
     }

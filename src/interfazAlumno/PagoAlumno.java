@@ -8,11 +8,14 @@ package interfazAlumno;
 import Controlador.CtrlAlumno;
 import Controlador.CtrlCurso;
 import Controlador.CtrlCursoAlumno;
+import Controlador.CtrlPago;
 import Controlador.CtrlPagosVarios;
 import Controlador.CtrlUsuario;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import menu.Principal;
+import modelo.Curso;
+import modelo.CursoAlumno;
 import modelo.Persona;
 import modelo.TipoCurso;
 import usuario.Login;
@@ -25,6 +28,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
     
     CtrlUsuario ctrlUsuario=new CtrlUsuario();
     CtrlPagosVarios ctrlPagosVarios=new CtrlPagosVarios();
+    CtrlPago ctrlPago=new CtrlPago();
     CtrlCurso ctrlCurso=new CtrlCurso();
     CtrlCursoAlumno ctrlCursoAlum=new CtrlCursoAlumno();
     CtrlAlumno ctrlAlumno=new CtrlAlumno();
@@ -32,6 +36,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
     Persona personaDatos=new Persona();
     java.util.Date date=new Date();
 
+    float saldoT=0;
     /**
      * Creates new form PagoAlumno
      */
@@ -51,8 +56,9 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         txtNombre.setText(persona.getApellidoPersona()+" "+persona.getNombrePersona());
         fecha.setDate(date);
         
-        ctrlPagosVarios.llenarTabla(ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno(), tablaHistorialPago);
+        saldoT=ctrlPagosVarios.llenarTabla(ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno(), tablaHistorialPago);
         
+        txtSaldoTabla.setText(String.valueOf(saldoT));
         
     }
 
@@ -96,6 +102,10 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         txtImporte = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         txtSaldo = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        txtSaldoTabla = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        cbNumPagos = new javax.swing.JComboBox<>();
 
         Pago.setBackground(new java.awt.Color(38, 86, 186));
 
@@ -138,7 +148,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         txtDni.setEditable(false);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel10.setText("Curso");
+        jLabel10.setText("Cursos inscriptos actualmente");
 
         cbCurso.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -154,7 +164,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel13.setText("Concepto");
 
-        cbConceptoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción...", "Pago cooperativa", "Certificado" }));
+        cbConceptoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "Pago cooperativa", "Certificado" }));
         cbConceptoPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbConceptoPagoActionPerformed(evt);
@@ -182,6 +192,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
 
             }
         ));
+        tablaHistorialPago.setEnabled(false);
         jScrollPane1.setViewportView(tablaHistorialPago);
 
         btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
@@ -276,24 +287,55 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel14.setText("Saldo en total");
+
+        txtSaldoTabla.setEditable(false);
+        txtSaldoTabla.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSaldoTablaKeyPressed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel15.setText("Pago n°");
+
+        cbNumPagos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "Único pago", "Primer pago", "Segundo pago", "Tercer pago" }));
+        cbNumPagos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbNumPagosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(24, 24, 24)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelLayout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel14))
+                            .addGroup(panelLayout.createSequentialGroup()
                                 .addGap(40, 40, 40)
-                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnRegistrarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(cbConceptoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtSaldoTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnRegistrarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbConceptoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbNumPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(467, 467, 467)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
@@ -353,29 +395,38 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
                     .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(5, 5, 5)
-                        .addComponent(cbConceptoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(18, 18, 18))
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(jButton6)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel15)
+                                    .addComponent(jLabel13))
+                                .addGap(32, 32, 32))
+                            .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbConceptoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbNumPagos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(39, 39, 39)))
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSaldoTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRegistrarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
+                    .addGroup(panelLayout.createSequentialGroup()
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelLayout.createSequentialGroup()
+                                .addComponent(jButton6)
                                 .addGap(163, 163, 163)
                                 .addComponent(jButton9))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnRegistrarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27))))
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(15, 15, 15))))
         );
 
@@ -407,18 +458,42 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
 
     private void btnRegistrarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPagoActionPerformed
         // TODO add your handling code here:
+                
         int idEmpleado=0;
+        int idAlumno=0;
+        int idCurso=0;
+        int idCursoAlumno=0;
+                
         idEmpleado=Login.usuario.getIdEmpleado().getIdEmpleado();
+        idAlumno=ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno();
         
-        if(cbConceptoPago.getSelectedIndex()!=0 && !txtImporte.getText().equals("")){
-        //SE CREA UN REGISTRO DEL PAGO QUE SE REALIZARA..    
-            ctrlPagosVarios.crear(fecha.getDate(), (String) cbConceptoPago.getSelectedItem(), Float.parseFloat(txtImporte.getText()), idEmpleado, ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno());
+                
+        if (cbConceptoPago.getSelectedIndex() !=0 && !txtImporte.getText().equals("")) {
+            //SE CREA UN REGISTRO DEL PAGO QUE SE REALIZARA..    
+
+            if(cbConceptoPago.getSelectedIndex() == 2) {//EN CASO DE SER UN CERTIFICADO
+                ctrlPagosVarios.crear(fecha.getDate(), (String) cbConceptoPago.getSelectedItem(), Float.parseFloat(txtImporte.getText()), idEmpleado, idAlumno);
+            }else{
+            //EN CASO DE QUE NO SEA PARA UNA CERTIFICACION Y SEA UNA COOPERATIVA SE HARÁ UNA MODIFICACION EN LA TABLA CURSO ALUMNO PARA TENER UN SALDO DE LO ABONADO
+                if(cbConceptoPago.getSelectedIndex() == 1){
+                    TipoCurso item=null;             
+                    item=(TipoCurso) cbCurso.getSelectedItem();
         
-        //EN CASO DE QUE NO SEA PARA UNA CERTIFICACION Y SEA UNA COOPERATIVA SE HARÁ UNA MODIFICACION EN LA TABLA CURSO ALUMNO PARA TENER UN SALDO DE LO ABONADO
-            if(cbConceptoPago.getSelectedIndex()==1){
-                TipoCurso itemCurso=(TipoCurso) cbCurso.getSelectedItem();
-                ctrlCursoAlum.pagarSaldo(ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno(), ctrlCurso.leer(itemCurso.getIdTipoCurso()).getIdCurso(), Float.parseFloat(txtSaldo.getText()), Float.parseFloat(txtCooperativa.getText()));
+                    idCurso=ctrlCurso.leer(item.getIdTipoCurso()).getIdCurso();
+                    
+                    idCursoAlumno=ctrlCursoAlum.leer(idAlumno, idCurso).getIdCursoAlumno();
+                    
+                    ctrlPago.crear(fecha.getDate(), Float.parseFloat(txtImporte.getText()), idEmpleado, idCursoAlumno);
+                    
+            //SE MODIFICA EL SALDO EN LA TABLA cursoAlumno EN CASO DE SER COOPERATIVA EN ALGUNO DE LOS CURSOS SELECCIONADO
+                    ctrlCursoAlum.costo(idAlumno, idCurso, Float.parseFloat(txtCooperativa.getText()), idCursoAlumno);
+                    
+                    ctrlCursoAlum.pagarSaldo(idAlumno, idCurso, Float.parseFloat(txtImporte.getText()), idCursoAlumno);
+                }
             }
+            
+            saldoT=ctrlPagosVarios.llenarTabla(idAlumno, tablaHistorialPago);
+            txtSaldoTabla.setText(String.valueOf(saldoT));        
         }else{
             JOptionPane.showMessageDialog(null, "Falta seleccionar el concepto de pago y/o ingresar el importe abonado");
         }
@@ -447,7 +522,19 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
             txtCooperativa.setText(String.valueOf(itemTipoCurso.getCosto()));
             txtImporte.setEnabled(true);
         }*/
-        
+        if(cbCurso.getSelectedIndex()!=0){
+            int idCurso=0;
+            CursoAlumno cursoAlumno=new CursoAlumno();
+            
+            TipoCurso item=(TipoCurso)cbCurso.getSelectedItem();
+            idCurso=ctrlCurso.leer(item.getIdTipoCurso()).getIdCurso();
+            
+            cursoAlumno=ctrlCursoAlum.leer(ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno(), idCurso);
+            
+            txtCooperativa.setText(String.valueOf(cursoAlumno.getCosto()));
+            txtSaldo.setText(String.valueOf(cursoAlumno.getSaldo()));
+            
+        }
     }//GEN-LAST:event_cbCursoItemStateChanged
 
     private void txtCooperativaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCooperativaActionPerformed
@@ -467,6 +554,14 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         txtSaldo.setText(String.valueOf(sald));
     }//GEN-LAST:event_txtSaldoKeyPressed
 
+    private void txtSaldoTablaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSaldoTablaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSaldoTablaKeyPressed
+
+    private void cbNumPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNumPagosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbNumPagosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Pago;
@@ -474,6 +569,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnRegistrarPago;
     private javax.swing.JComboBox<String> cbConceptoPago;
     private javax.swing.JComboBox<TipoCurso> cbCurso;
+    private javax.swing.JComboBox<String> cbNumPagos;
     private com.toedter.calendar.JDateChooser fecha;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton9;
@@ -482,6 +578,8 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -496,5 +594,6 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtImporte;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtSaldo;
+    private javax.swing.JTextField txtSaldoTabla;
     // End of variables declaration//GEN-END:variables
 }

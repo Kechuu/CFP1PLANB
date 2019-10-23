@@ -21,13 +21,14 @@ public class CtrlPago {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(Date fecha, float importe, int idCobrador, int idCursoAlumno){
+    public void crear(java.util.Date fecha, float importe, int idCobrador, int idCursoAlumno){
+        java.sql.Date fe=new Date(fecha.getTime());
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("INSERT INTO pago (fecha,importe,idCobrador, idCursoAlumno) "
                     + "VALUES (?,?,?,?)");
         
-            ps.setDate(1, fecha);
+            ps.setDate(1, fe);
             ps.setFloat(2, importe);
             ps.setInt(3, idCobrador);
             ps.setInt(4, idCursoAlumno);

@@ -14,6 +14,7 @@ import java.sql.Date;
 public class CursoAlumno {
     
     private int idCursoAlumno;
+    private float costo;
     private float saldo;
     private Date fechaIngreso;
     private Date fechaBajaEgreso;
@@ -30,6 +31,13 @@ public class CursoAlumno {
         this.idCursoAlumno = idCursoAlumno;
     }
 
+    public float getCosto() {
+        return costo;
+    }
+
+    public void setCosto(float costo) {
+        this.costo = costo;
+    }
     public float getSaldo() {
         return saldo;
     }
