@@ -51,6 +51,7 @@ import modelo.Sexo;
 public final class Inscripcion extends javax.swing.JInternalFrame {
     
     public static int bandera=0;
+    int contadorGuardar=0;
     Connection con = clases.Conectar.conexion();
     CtrlTipoDocumento tipo = new CtrlTipoDocumento();
     CtrlLugar lugar=new CtrlLugar();
@@ -981,30 +982,45 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             break;
             
             case 1:
-                
-                if(cbLocalidad.getSelectedIndex()==0 || cbBarrio.getSelectedIndex()==0 || cbCalle.getSelectedIndex()==0){
-                    JOptionPane.showMessageDialog(null, "Le falta completar domicilio: seleccionar localidad, barrio y/o calle");
-                    return;
-                    
-                }else{
-                    
-                    if(JOptionPane.showConfirmDialog(null, "Está dejando vacíos campos de celular, teléfono fijo y correo ¿Quiere continuar sin agregarlos?","", + 
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                if(contadorGuardar==0){
+                    if (cbLocalidad.getSelectedIndex() == 0 || cbBarrio.getSelectedIndex() == 0 || cbCalle.getSelectedIndex() == 0) {
+                        JOptionPane.showMessageDialog(null, "Le falta completar domicilio: seleccionar localidad, barrio y/o calle");
                         
-                        panelContenedor.setEnabledAt(2, true);
-                        panelContenedor.setSelectedIndex(2);
-                        panelContenedor.setEnabledAt(1, false);
-                       
-                    }else{
-                        return;
-                    }
+                    } else {
+
+                        if(txtCelular.getText().equals("")||txtFijo.getText().equals("")||txtCorreo.getText().equals("")){
+                         
+                            if (JOptionPane.showConfirmDialog(null, "Está dejando vacíos campos de celular, teléfono fijo y correo ¿Quiere continuar sin agregarlos?", "", +JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+
+                                panelContenedor.setEnabledAt(2, true);
+                                panelContenedor.setSelectedIndex(2);
+                                panelContenedor.setEnabledAt(1, false);
+
+                            }
+                        }else{
+                            panelContenedor.setEnabledAt(2, true);
+                            panelContenedor.setSelectedIndex(2);
+                            panelContenedor.setEnabledAt(1, false);
+
+                        }
+                    }  
                     
+                }else{//CUANDO YA SE HA DADO DE ALTA UNA PERSONA Y SOLO ESTÉ 'NAVEGANDO' POR LAS INTERFACES
+                    panelContenedor.setEnabledAt(2, true);
+                    panelContenedor.setSelectedIndex(2);
+                    panelContenedor.setEnabledAt(1, false);
                 }
-                btnSiguiente.setText("Terminar");
+                
             break;
             
             case 2:
-                guardar();
+                if(contadorGuardar==0){
+                    btnSiguiente.setText("Terminar");
+                    guardar();
+                    
+                }else{
+                    btnSiguiente.setEnabled(false);
+                }
             break;
             
                 
@@ -1125,9 +1141,13 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
         if (personaDatos.getIdPersona() != 0) {
             JOptionPane.showMessageDialog(null, "Los datos se guardaron");
-            btnSiguiente.setEnabled(false);
+            
+            btnSiguiente.setText("Siguiente");
+            contadorGuardar++;
             btnAsignarCurso.setEnabled(true);
             panelContenedor.setSelectedIndex(0);
+            panelContenedor.setEnabledAt(2, false);
+            btnAtras.setEnabled(false);
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
         }

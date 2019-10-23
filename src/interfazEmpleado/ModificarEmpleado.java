@@ -1027,10 +1027,14 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         for(int i=0; i<cbGremio.getItemCount();i++){
             Empleado objEmpleado=new Empleado();
             objEmpleado=ctrlEmpleado.leer(personaDatos.getIdPersona());
-            
-            if(cbGremio.getItemAt(i).getDetalle().equals(objEmpleado.getIdGremio().getDetalle())){
-                cbGremio.setSelectedIndex(i);
-                i=cbGremio.getItemCount()+1;
+
+            if(objEmpleado.getIdGremio()==null){
+                
+            }else{
+                if(cbGremio.getItemAt(i).getDetalle().equals(objEmpleado.getIdGremio().getDetalle())) {
+                    cbGremio.setSelectedIndex(i);
+                    i = cbGremio.getItemCount() + 1;
+                }               
             }
         }
         txtHijos.setText(String.valueOf(persona.getHijoPersona()));

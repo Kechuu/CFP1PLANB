@@ -36,7 +36,7 @@ public class DarBajaCurso1 extends javax.swing.JInternalFrame {
     CtrlCursoProfesor ctrlCursoProfesor=new CtrlCursoProfesor();
     java.util.Date date=new Date();
     
-    DefaultListModel<TipoCurso>modeloCursos;
+//    DefaultListModel<TipoCurso>modeloCursos;
     DefaultListModel<TipoCurso>modeloDisponible;
     /**
      * Creates new form Eliminar
@@ -46,6 +46,7 @@ public class DarBajaCurso1 extends javax.swing.JInternalFrame {
         
         fecha.setDate(date);
         ctrlEmpleado.cargarListaEmpleado(listaEmpleados);
+        
         modeloDisponible=new DefaultListModel();
         listDisponible.setModel(modeloDisponible);
     }
@@ -236,8 +237,8 @@ public class DarBajaCurso1 extends javax.swing.JInternalFrame {
                 int idEmpleado = ctrlEmpleado.leer(listaEmpleados.getSelectedValue().getIdPersona()).getIdEmpleado();
                 ctrlCursoProfesor.borrar(idEmpleado, idCurso); 
                 
-                modeloDisponible.removeAllElements();
                 listaEmpleados.clearSelection();
+                modeloDisponible.removeAllElements();                
             }
         }
 

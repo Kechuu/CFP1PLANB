@@ -58,6 +58,7 @@ import usuario.Login;
 public final class Registro extends javax.swing.JInternalFrame {
 
     public static int banderaEmpleado=0;
+    int contadorGuardar=0;
     Connection con=clases.Conectar.conexion();
     CtrlTipoDocumento tipo = new CtrlTipoDocumento();
     CtrlLugar lugar=new CtrlLugar();
@@ -1079,36 +1080,48 @@ public final class Registro extends javax.swing.JInternalFrame {
             break;
 
             case 1:
-            
-                if (cbLocalidad.getSelectedIndex() == 0 || cbBarrio.getSelectedIndex() == 0 || cbCalle.getSelectedIndex() == 0) {
-                    JOptionPane.showMessageDialog(null, "Le falta completar domicilio: seleccionar localidad, barrio y/o calle");
+                if(contadorGuardar==0){
+                    if (cbLocalidad.getSelectedIndex() == 0 || cbBarrio.getSelectedIndex() == 0 || cbCalle.getSelectedIndex() == 0) {
+                        JOptionPane.showMessageDialog(null, "Le falta completar domicilio: seleccionar localidad, barrio y/o calle");
 
-                }else{
-                    
-                    if (txtCelular.getText().equalsIgnoreCase("") || txtFijo.getText().equalsIgnoreCase("")
-                            || txtCorreo.getText().equalsIgnoreCase("")) {
-                        if (JOptionPane.showConfirmDialog(null, "Está dejando vacíos campos de celular, teléfono fijo o correo ¿Quiere continuar sin agregarlos?", "", +JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    } else {
+
+                        if (txtCelular.getText().equalsIgnoreCase("") || txtFijo.getText().equalsIgnoreCase("")
+                                || txtCorreo.getText().equalsIgnoreCase("")) {
+                            if (JOptionPane.showConfirmDialog(null, "Está dejando vacíos campos de celular, teléfono fijo o correo ¿Quiere continuar sin agregarlos?", "", +JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+
+                                panelContenedor.setEnabledAt(2, true);
+                                panelContenedor.setSelectedIndex(2);
+                                panelContenedor.setEnabledAt(1, false);
+
+                                //btnSiguiente.setText("Guardar");
+
+                            }
+                        } else {
 
                             panelContenedor.setEnabledAt(2, true);
                             panelContenedor.setSelectedIndex(2);
                             panelContenedor.setEnabledAt(1, false);
 
-                            btnSiguiente.setText("Guardar");
-
+//                            btnSiguiente.setText("Guardar");
                         }
-                    } else {
-
-                        panelContenedor.setEnabledAt(2, true);
-                        panelContenedor.setSelectedIndex(2);
-                        panelContenedor.setEnabledAt(1, false);
-
-                        btnSiguiente.setText("Guardar");
-                    }
+                    }                    
+                }else{
+                    panelContenedor.setEnabledAt(2, true);
+                    panelContenedor.setSelectedIndex(2);
+                    panelContenedor.setEnabledAt(1, false);
                 }
+
         break;
 
         case 2:
-            guardar();
+            if(contadorGuardar==0){
+                btnSiguiente.setText("Terminar");
+                guardar();
+            }else{
+                btnSiguiente.setEnabled(false);
+            }
+
         break;
 
         }
@@ -1187,10 +1200,15 @@ public final class Registro extends javax.swing.JInternalFrame {
             }
 
             if(personaDatos.getIdPersona()!=0){
-                JOptionPane.showMessageDialog(null, "Los datos se guardaron");  
-                btnSiguiente.setEnabled(false);
+                JOptionPane.showMessageDialog(null, "Los datos se guardaron");
+                
+                btnSiguiente.setText("Siguiente");
+                contadorGuardar++;
+                btnSiguiente.setEnabled(true);
                 btnAsignarCurso.setEnabled(true);
                 panelContenedor.setSelectedIndex(0);
+                panelContenedor.setEnabledAt(2, false);
+                btnAtras.setEnabled(false);
             }else{
                 JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
                 return;
