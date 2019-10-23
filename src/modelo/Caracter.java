@@ -29,7 +29,10 @@ public class Caracter {
         this.detalle = detalle;
     }
     
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> 32e2270d55ba70c09f067e7c30bd6c7a50c6fb63
     public String toString(){
         return this.detalle;
     }

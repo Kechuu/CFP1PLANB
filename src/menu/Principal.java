@@ -79,6 +79,7 @@ public class Principal extends javax.swing.JFrame {
         menuTipoDoc = new javax.swing.JMenuItem();
         meunCargo = new javax.swing.JMenuItem();
         menuTitulo = new javax.swing.JMenuItem();
+        menuCaracterLicencia = new javax.swing.JMenuItem();
         menuPlan = new javax.swing.JMenuItem();
         menuGremio = new javax.swing.JMenuItem();
         menuSexo = new javax.swing.JMenuItem();
@@ -394,6 +395,14 @@ public class Principal extends javax.swing.JFrame {
         });
         menuConfiguracion.add(menuTitulo);
 
+        menuCaracterLicencia.setText("Caracter Licencia");
+        menuCaracterLicencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCaracterLicenciaActionPerformed(evt);
+            }
+        });
+        menuConfiguracion.add(menuCaracterLicencia);
+
         menuPlan.setText("Plan");
         menuPlan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -533,6 +542,23 @@ public class Principal extends javax.swing.JFrame {
         calle.setVisible(true);
     }
     
+    public static void crearCaracter() throws ClassNotFoundException{
+        Caracter_crear caracter = new Caracter_crear();
+        panelPrincipal.add(caracter);
+        caracter.setVisible(true);
+    }
+    
+    public static void modificarCaracter() throws ClassNotFoundException{
+        Caracter_modificar caracter = new Caracter_modificar();
+        panelPrincipal.add(caracter);
+        caracter.setVisible(true);
+    }
+    
+    public static void consultaCaracter() throws ClassNotFoundException{
+        Caracter_Consulta caracter = new Caracter_Consulta();
+        panelPrincipal.add(caracter);
+        caracter.setVisible(true);
+    }
     public static void crearCargo() throws ClassNotFoundException{
         Cargo_crear cargo=new Cargo_crear();
                 
@@ -980,6 +1006,16 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuLocalidadKeyPressed
 
+    private void menuCaracterLicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCaracterLicenciaActionPerformed
+        desactivarPanel();
+        
+        try {
+            consultaCaracter();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuCaracterLicenciaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1036,6 +1072,7 @@ public class Principal extends javax.swing.JFrame {
     public static javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuBarrio;
     private javax.swing.JMenuItem menuCalle;
+    private javax.swing.JMenuItem menuCaracterLicencia;
     private javax.swing.JMenu menuConfiguracion;
     private javax.swing.JMenuItem menuGremio;
     private javax.swing.JMenuItem menuLocalidad;

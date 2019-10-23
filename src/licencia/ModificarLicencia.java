@@ -5,22 +5,25 @@
  */
 package licencia;
 
+import Controlador.CtrlCaracter;
 import Controlador.CtrlLicencia;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Licencia;
-
+import modelo.Caracter;
 /**
  *
  * @author RociojulietaVazquez
  */
 public final class ModificarLicencia extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
-    int bandera1=0;
+    int bandera1=0,bandera2=0;
     CtrlLicencia ctrlLicencia = null;
     Licencia licencia = null;
+    CtrlCaracter ctrlCaracter=null;
+    Caracter caracter = null;
     /**
      * Creates new form modificarLicencia
      * @throws java.lang.ClassNotFoundException
@@ -28,10 +31,13 @@ public final class ModificarLicencia extends javax.swing.JInternalFrame {
     public ModificarLicencia() throws ClassNotFoundException {
         ctrlLicencia =new CtrlLicencia();
         licencia =new Licencia();
+        ctrlCaracter = new CtrlCaracter();
+        caracter= new Caracter();
         
         initComponents();
         bandera1=1;
-        //ctrlLicencia.cargarCombo(cbLicencia);
+        caracter = ctrlCaracter.leer(Licencia_consulta.nombreCaracter);
+        ctrlLicencia.cargarComboFiltrado(cbLicencia,caracter.getIdCaracter());
         if (Licencia_consulta.bandera==1) {
             
         for (int i = 0; i < cbLicencia.getItemCount(); i++) {
@@ -39,6 +45,15 @@ public final class ModificarLicencia extends javax.swing.JInternalFrame {
                     cbLicencia.setSelectedIndex(i);
                 }
             }
+        ctrlCaracter.cargarCombo(cbCaracterActual);
+        ctrlCaracter.cargarCombo(cbCaracterCambio);
+        for (int i = 0; i < cbCaracterActual.getItemCount(); i++) {
+            if (cbCaracterActual.getItemAt(i).getDetalle().equalsIgnoreCase(Licencia_consulta.nombreCaracter)) {
+                cbCaracterActual.setSelectedIndex(i);
+                cbCaracterCambio.setSelectedIndex(i);
+            }
+        }
+        
         txtCambiarArt.setText(Licencia_consulta.numeroArticulo);
         
         licencia = ctrlLicencia.leer(Integer.parseInt(Licencia_consulta.numeroArticulo));
@@ -72,8 +87,14 @@ public final class ModificarLicencia extends javax.swing.JInternalFrame {
         cbLicencia = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         areaDetalle = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        cbCaracterActual = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        cbCaracterCambio = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
 
@@ -98,11 +119,15 @@ public final class ModificarLicencia extends javax.swing.JInternalFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, -1));
+
         jLabel3.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jLabel3.setText("Articulo actual:");
+        jLabel3.setText("Caracter actual:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel4.setText("Detalle:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, -1, -1));
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -117,6 +142,7 @@ public final class ModificarLicencia extends javax.swing.JInternalFrame {
                 btnAceptarKeyPressed(evt);
             }
         });
+        jPanel1.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 100, -1));
 
         jButton2.setBackground(new java.awt.Color(38, 86, 186));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -131,121 +157,91 @@ public final class ModificarLicencia extends javax.swing.JInternalFrame {
                 jButton2KeyPressed(evt);
             }
         });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, 100, -1));
 
         jLabel5.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jLabel5.setText("Cambiar articulo:");
+        jLabel5.setText("Cambiar Caracter:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
 
         txtCambiarArt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCambiarArtActionPerformed(evt);
             }
         });
+        jPanel1.add(txtCambiarArt, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, 56, -1));
 
         jLabel6.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel6.setText("Detalle:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, -1, -1));
 
         txtDetalle.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtDetalleKeyPressed(evt);
             }
         });
+        jPanel1.add(txtDetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 280, 274, -1));
 
-        cbLicencia.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbLicenciaItemStateChanged(evt);
+        cbLicencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbLicenciaActionPerformed(evt);
             }
         });
+        jPanel1.add(cbLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 171, -1));
 
         areaDetalle.setColumns(20);
         areaDetalle.setRows(5);
         jScrollPane1.setViewportView(areaDetalle);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtCambiarArt, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 30, Short.MAX_VALUE))))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cbLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(0, 63, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCambiarArt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(txtDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(btnAceptar))
-                .addGap(21, 21, 21))
-        );
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, 274, 88));
+
+        jLabel2.setText("___________________________________________________________________________________________");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
+
+        cbCaracterActual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCaracterActualActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cbCaracterActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 220, -1));
+
+        jLabel7.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        jLabel7.setText("Articulo actual:");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, -1, -1));
+
+        jPanel1.add(cbCaracterCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 220, -1));
+
+        jLabel8.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        jLabel8.setText("Cambiar articulo:");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 240, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if (txtCambiarArt.getText().equalsIgnoreCase("") || txtDetalle.getText().equalsIgnoreCase("")) {
+        if (txtCambiarArt.getText().equalsIgnoreCase("") || txtDetalle.getText().equalsIgnoreCase("") || cbCaracterCambio.getSelectedIndex()==0) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar regitros vacios");
         }else{
             bandera1=1;
             String articulo = (String) cbLicencia.getSelectedItem();
-            //ctrlLicencia.editar( Integer.parseInt(articulo), txtDetalle.getText());
+            caracter = (Caracter) cbCaracterCambio.getSelectedItem();
+            ctrlLicencia.editar( Integer.parseInt(articulo), txtDetalle.getText(), caracter.getIdCaracter());
             cbLicencia.removeAllItems();
-            //ctrlLicencia.cargarCombo(cbLicencia);
+            cbCaracterActual.removeAllItems();
+            cbCaracterCambio.removeAllItems();
+            ctrlLicencia.cargarCombo(cbLicencia);
+            ctrlCaracter.cargarCombo(cbCaracterActual);
+            ctrlCaracter.cargarCombo(cbCaracterCambio);
             bandera1=0;
             areaDetalle.setText("");
             txtCambiarArt.setText("");
@@ -263,25 +259,6 @@ public final class ModificarLicencia extends javax.swing.JInternalFrame {
         Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void cbLicenciaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLicenciaItemStateChanged
-        if (bandera1 == 0) {
-            if (cbLicencia.getSelectedIndex() == 0) {
-                areaDetalle.setText("");
-                txtCambiarArt.setText("");
-                txtDetalle.setText("");
-            } else {
-
-                String articulo = (String) cbLicencia.getSelectedItem();
-                txtCambiarArt.setText(articulo);
-
-                licencia = ctrlLicencia.leer(Integer.parseInt(articulo));
-                areaDetalle.setText(licencia.getDetalle());
-                txtDetalle.setText(licencia.getDetalle());
-            }
-        }
-
-    }//GEN-LAST:event_cbLicenciaItemStateChanged
 
     private void jButton2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyPressed
         if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
@@ -304,17 +281,64 @@ public final class ModificarLicencia extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtDetalleKeyPressed
 
+    private void cbCaracterActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCaracterActualActionPerformed
+        if (bandera1 == 0) {
+            if (cbCaracterActual.getSelectedIndex() != 0) {
+                caracter = (Caracter) cbCaracterActual.getSelectedItem();
+
+                for (int i = 0; i < cbCaracterCambio.getItemCount(); i++) {
+                    if (cbCaracterCambio.getItemAt(i).getDetalle().equalsIgnoreCase(caracter.getDetalle())) {
+                        cbCaracterCambio.setSelectedIndex(i);
+                    }
+                }
+                bandera2=1;
+                cbLicencia.removeAllItems();
+                ctrlLicencia.cargarComboFiltrado(cbLicencia, caracter.getIdCaracter());
+                txtCambiarArt.setText("");
+                areaDetalle.setText("");
+                txtDetalle.setText("");
+                bandera2=0;
+            }
+        }
+    }//GEN-LAST:event_cbCaracterActualActionPerformed
+
+    private void cbLicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLicenciaActionPerformed
+        if (bandera1 == 0) {
+            if (bandera2 == 0) {
+
+                if (cbLicencia.getSelectedIndex() == 0) {
+                    areaDetalle.setText("");
+                    txtCambiarArt.setText("");
+                    txtDetalle.setText("");
+                } else {
+
+                    String articulo = (String) cbLicencia.getSelectedItem();
+                    txtCambiarArt.setText(articulo);
+
+                    licencia = ctrlLicencia.leer(Integer.parseInt(articulo));
+                    areaDetalle.setText(licencia.getDetalle());
+                    txtDetalle.setText(licencia.getDetalle());
+                }
+            }
+        }
+    }//GEN-LAST:event_cbLicenciaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaDetalle;
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JComboBox<Caracter> cbCaracterActual;
+    private javax.swing.JComboBox<Caracter> cbCaracterCambio;
     private javax.swing.JComboBox<String> cbLicencia;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

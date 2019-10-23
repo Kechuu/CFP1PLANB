@@ -8,13 +8,10 @@ package licencia;
 import Controlador.CtrlLicencia;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import menu.Principal;
@@ -27,6 +24,7 @@ import modelo.Licencia;
 public final class Licencia_consulta extends javax.swing.JInternalFrame {
     Connection con = clases.Conectar.conexion();
     public static String numeroArticulo="";
+    public static String nombreCaracter="";
     public static int bandera=0;
     DefaultTableModel modelo = null;
     CtrlLicencia ctrlLicencia = null;
@@ -43,17 +41,20 @@ public final class Licencia_consulta extends javax.swing.JInternalFrame {
     }
 
     public void llenarTablaBarrio(JTable tabla){
-        String[] fila = new String[2];
+        String[] fila = new String[3];
         List<Licencia> lista = new ArrayList();
         
         lista = ctrlLicencia.leerTodos();
         modelo.setRowCount(0);
+        modelo.setColumnCount(0);
         modelo.addColumn("Articulo");
         modelo.addColumn("Detalle");
+        modelo.addColumn("Caracter");
         
         for (int i = 0; i < lista.size(); i++) {
             fila[0]=String.valueOf(lista.get(i).getArticulo());
             fila[1]=lista.get(i).getDetalle();
+            fila[2]=lista.get(i).getIdCaracter().getDetalle();
             modelo.addRow(fila);
         }
         
@@ -87,7 +88,7 @@ public final class Licencia_consulta extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("LICENCIAS");
+        jLabel1.setText("LICENCIAS GENERALES");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -96,7 +97,7 @@ public final class Licencia_consulta extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jLabel1)
-                .addContainerGap(327, Short.MAX_VALUE))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,6 +281,7 @@ public final class Licencia_consulta extends javax.swing.JInternalFrame {
         modelo = (DefaultTableModel) tablaLicencia.getModel();
         
         numeroArticulo = (String) modelo.getValueAt(tablaLicencia.getSelectedRow(), 0);
+        nombreCaracter = (String) modelo.getValueAt(tablaLicencia.getSelectedRow(), 2);
         bandera =1;
         //JOptionPane.showMessageDialog(null, numeroArticulo);
         

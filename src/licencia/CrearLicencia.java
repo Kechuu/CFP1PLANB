@@ -5,25 +5,31 @@
  */
 package licencia;
 
+import Controlador.CtrlCaracter;
 import Controlador.CtrlLicencia;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import menu.Principal;
-
+import modelo.Caracter;
 /**
  *
  * @author RociojulietaVazquez
  */
 public class CrearLicencia extends javax.swing.JInternalFrame {
     CtrlLicencia ctrlLicencia = null;
+    Caracter caracter= null;
+    CtrlCaracter ctrlCaracter = null;
     /**
      * Creates new form agregarlicencia
      * @throws java.lang.ClassNotFoundException
      */
     public CrearLicencia() throws ClassNotFoundException {
         ctrlLicencia = new CtrlLicencia();
+        caracter = new Caracter();
+        ctrlCaracter = new CtrlCaracter();
         
         initComponents();
+        ctrlCaracter.cargarCombo(cbCaracter);
         txtArticulo.setFocusable(true);
     }
 
@@ -46,8 +52,11 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         scroll = new javax.swing.JScrollPane();
         areaDetalle = new javax.swing.JTextArea();
+        cbCaracter = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
 
@@ -72,11 +81,16 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 487, -1));
+
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
-        jLabel2.setText("Nuevo articulo:");
+        jLabel2.setText("Caracter de Licencia");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel3.setText("Detalle:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
+        jPanel1.add(txtArticulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 56, -1));
 
         btnAgregar.setBackground(new java.awt.Color(38, 86, 186));
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
@@ -91,6 +105,7 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
                 btnAgregarKeyPressed(evt);
             }
         });
+        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 100, -1));
 
         btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -105,52 +120,19 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
                 btnCancelarKeyPressed(evt);
             }
         });
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, 100, -1));
 
         areaDetalle.setColumns(20);
         areaDetalle.setRows(5);
         scroll.setViewportView(areaDetalle);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(58, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnAgregar))
-                .addContainerGap())
-        );
+        jPanel1.add(scroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 314, 60));
+
+        jPanel1.add(cbCaracter, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 220, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        jLabel4.setText("Nuevo articulo:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -160,7 +142,7 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
         );
 
         pack();
@@ -173,12 +155,15 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        if (txtArticulo.getText().equalsIgnoreCase("") || areaDetalle.getText().equalsIgnoreCase("")) {
+        if (txtArticulo.getText().equalsIgnoreCase("") || areaDetalle.getText().equalsIgnoreCase("") || cbCaracter.getSelectedIndex()==0) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
-            //ctrlLicencia.crear(Integer.parseInt(txtArticulo.getText()), areaDetalle.getText());
+            caracter = (Caracter) cbCaracter.getSelectedItem();
+            ctrlLicencia.crear(Integer.parseInt(txtArticulo.getText()), areaDetalle.getText(), caracter.getIdCaracter());
             txtArticulo.setText("");
             areaDetalle.setText("");
+            cbCaracter.removeAllItems();
+            ctrlCaracter.cargarCombo(cbCaracter);
         }
         
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -202,9 +187,11 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea areaDetalle;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JComboBox<Caracter> cbCaracter;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane scroll;
