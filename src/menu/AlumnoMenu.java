@@ -6,6 +6,8 @@
 package menu;
 
 import interfazAlumno.AsignarCurso;
+import interfazAlumno.AsignarCurso1;
+import interfazAlumno.DarBajaCurso1;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import modelo.Persona;
@@ -172,8 +174,14 @@ public class AlumnoMenu extends javax.swing.JPanel {
 
     private void btnBajaAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaAlumnoActionPerformed
         // TODO add your handling code here:
-        alumnoMenu=4;
-        panelDni();
+        //alumnoMenu=4;
+        //panelDni();
+        
+        this.setVisible(false);
+        Principal.desactivarPanel();
+        DarBajaCurso1 cu=new DarBajaCurso1();
+        Principal.panelPrincipal.add(cu);
+        cu.setVisible(true);
     }//GEN-LAST:event_btnBajaAlumnoActionPerformed
 
     private void btnPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosActionPerformed
@@ -194,8 +202,13 @@ public class AlumnoMenu extends javax.swing.JPanel {
     private void btnAsignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarCursoActionPerformed
         // TODO add your handling code here:
         
-        alumnoMenu=3;
-        panelDni();
+        //alumnoMenu=3;
+        //panelDni();
+        this.setVisible(false);
+        Principal.desactivarPanel();
+        AsignarCurso1 cu=new AsignarCurso1();
+        Principal.panelPrincipal.add(cu);
+        cu.setVisible(true);
     }//GEN-LAST:event_btnAsignarCursoActionPerformed
 
     private void btnModificarDatosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarDatosKeyPressed

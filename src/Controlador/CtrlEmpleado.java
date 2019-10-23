@@ -8,8 +8,11 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import modelo.Empleado;
+import modelo.Persona;
 /**
  *
  * @author jesus
@@ -184,5 +187,36 @@ public class CtrlEmpleado {
         }
         
         return empleado;
+    }
+    
+    public void cargarListaEmpleado(JList<Persona>lista){
+        DefaultListModel <Persona> modelo=new DefaultListModel<>();
+        
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM persona"
+                    + " INNER JOIN empleado ON persona.idPersona = empleado.idPersona"
+                    + " WHERE empleado.borrado = false");
+            
+            rs=ps.executeQuery();
+            
+            while(rs.next()){
+                Persona persona=new Persona();
+                
+                persona.setIdPersona(rs.getInt("idPersona"));
+                persona.setNombrePersona(rs.getString("nombrePersona"));
+                persona.setApellidoPersona(rs.getString("apellidoPersona"));
+                
+                modelo.addElement(persona);
+            }
+            
+            con.close();
+            
+            lista.setModel(modelo);
+            
+            
+        }catch(Exception e){
+            
+        }
     }
 }
