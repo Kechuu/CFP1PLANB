@@ -45,6 +45,7 @@ public final class Cargo_crear extends javax.swing.JInternalFrame {
         List<Cargo> lista = new ArrayList();
         
         lista = ctrlCargo.leerTodos();
+        modelo.setColumnCount(0);
         modelo.setRowCount(0);
         modelo.addColumn("Nombre");
         

@@ -60,7 +60,6 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
             String[] fila = new String[1];
             List<Lugar> lista = new ArrayList();
             
-            modelo.setRowCount(0);
             modelo.addColumn("Nombre");
             
             lista = ctrlLugar.llenarTablaBarrio(idLugar);

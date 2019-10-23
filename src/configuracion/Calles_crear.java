@@ -50,7 +50,6 @@ public final class Calles_crear extends javax.swing.JInternalFrame {
             String[] fila = new String[1];
             List<Lugar> lista = new ArrayList();
             
-            modelo.setRowCount(0);
             modelo.addColumn("Nombre");
             
             lista = ctrlLugar.llenarTablaCalle(idLugar);

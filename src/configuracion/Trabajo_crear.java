@@ -44,6 +44,7 @@ public final class Trabajo_crear extends javax.swing.JInternalFrame {
         List<Trabajo> lista = new ArrayList();
         
         lista = ctrlTrabajo.leerTodos();
+        modelo.setColumnCount(0);
         modelo.setRowCount(0);
         modelo.addColumn("Nombre");
         

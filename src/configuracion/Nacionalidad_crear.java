@@ -44,6 +44,7 @@ public final class Nacionalidad_crear extends javax.swing.JInternalFrame {
         List<Nacionalidad> lista = new ArrayList();
         
         lista = ctrlNacionalidad.leerTodos();
+        modelo.setColumnCount(0);
         modelo.setRowCount(0);
         modelo.addColumn("Nombre");
         

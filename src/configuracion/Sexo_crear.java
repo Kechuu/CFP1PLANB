@@ -45,6 +45,7 @@ public final class Sexo_crear extends javax.swing.JInternalFrame {
         List<Sexo> lista = new ArrayList();
         
         lista = ctrlSexo.leerTodos();
+        modelo.setColumnCount(0);
         modelo.setRowCount(0);
         modelo.addColumn("Nombre");
         

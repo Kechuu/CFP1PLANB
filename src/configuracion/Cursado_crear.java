@@ -43,6 +43,7 @@ public final class Cursado_crear extends javax.swing.JInternalFrame {
         
         lista = ctrlLugarCurso.leerTodos();
         modelo.setRowCount(0);
+        modelo.setColumnCount(0);
         modelo.addColumn("Nombre");
         
         for (int i = 0; i < lista.size(); i++) {

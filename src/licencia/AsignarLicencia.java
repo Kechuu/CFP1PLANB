@@ -95,7 +95,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setText("Caracter:");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, -1, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel3.setText("INICIO:");
@@ -103,7 +103,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
 
         jLabel4.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel4.setText("FIN:");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, -1, -1));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 320, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel5.setText("Profesor:");
@@ -114,7 +114,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
                 cbxEmpleadoItemStateChanged(evt);
             }
         });
-        jPanel2.add(cbxEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 211, -1));
+        jPanel2.add(cbxEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 211, -1));
 
         jPanel1.setBackground(new java.awt.Color(38, 86, 186));
 
@@ -145,7 +145,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         jLabel7.setText("Detalle:");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 200, -1, -1));
         jPanel2.add(fechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, -1, -1));
-        jPanel2.add(fechaFinalizacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, -1, -1));
+        jPanel2.add(fechaFinalizacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, -1, -1));
 
         btnAceptar.setBackground(new java.awt.Color(38, 86, 186));
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
@@ -194,7 +194,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         jLabel6.setText("Articulo:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, -1, -1));
 
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 90, 220, -1));
+        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 220, -1));
 
         listaCursosaCargo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "A tomar licencia", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         jScrollPane2.setViewportView(listaCursosaCargo);

@@ -45,6 +45,7 @@ public final class TipoDoc_crear extends javax.swing.JInternalFrame {
         
         lista = ctrlTipoDoc.leerTodos();
         modelo.setRowCount(0);
+        modelo.setColumnCount(0);
         modelo.addColumn("Nombre");
         
         for (int i = 0; i < lista.size(); i++) {
