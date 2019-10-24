@@ -5,19 +5,27 @@
  */
 package licencia;
 
+import Controlador.CtrlCurso;
+import Controlador.CtrlCursoProfesor;
 import Controlador.CtrlEmpleado;
 import Controlador.CtrlEmpleadoLicencia;
 import Controlador.CtrlLicencia;
+import Controlador.CtrlTipoCurso;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Empleado;
 import modelo.Licencia;
 import modelo.Persona;
 import modelo.Caracter;
+import modelo.Curso;
+import modelo.CursoProfesor;
 import modelo.TipoCurso;
 /**
  *
@@ -28,12 +36,19 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
     public int bandera=0;
     CtrlLicencia ctrlLicencia = null;
     Licencia licencia = null;
+    DefaultListModel modelo = null,modelo1=null;
     Persona persona = null;
     Empleado empleado=null;
     Date fechaInicio1=null;
     Date fechaFinalizacion1=null;
     CtrlEmpleado ctrlEmpleado=null;
     CtrlEmpleadoLicencia ctrlEmpleadoLicencia=null;
+    CtrlTipoCurso ctrlTipoCurso =null;
+    CtrlCurso ctrlCurso=null;
+    TipoCurso tipoCurso=null,tipoCurso1;
+    Curso curso = null;
+    CtrlCursoProfesor ctrlCursoProfesor=null;
+    CursoProfesor cursoProfesor=null;
     /**
      * Creates new form asignarLicencia
      */
@@ -46,12 +61,33 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         fechaFinalizacion1=new Date();
         ctrlEmpleado=new CtrlEmpleado();
         ctrlEmpleadoLicencia=new CtrlEmpleadoLicencia();
+        ctrlTipoCurso=new CtrlTipoCurso();
+        ctrlCurso = new CtrlCurso();
+        tipoCurso = new TipoCurso();
+        tipoCurso1=new TipoCurso();
+        curso = new Curso();
+        ctrlCursoProfesor =new CtrlCursoProfesor();
+        modelo = new DefaultListModel();
+        modelo1=new DefaultListModel();
+        cursoProfesor = new CursoProfesor();
         
         initComponents();
         bandera=1;
         //ctrlLicencia.cargarCombo(cbxLicencia);
         ctrlLicencia.cargarComboEmpleado(cbxEmpleado);
         bandera=0;
+        listaCursosaTomar.setModel(modelo1);
+    }
+    
+    public void cargarListaCursoProfesor(int idEmpleado){
+        List<CursoProfesor>lista = new ArrayList();
+        
+        lista = ctrlCursoProfesor.cargarListaCursoProfesor(idEmpleado);
+        
+        for (int i = 0; i < lista.size(); i++) {
+            modelo.addElement(lista.get(i).getIdCurso().getIdTipoCurso().getDetalle());
+        }
+        listaCursosaCargo.setModel(modelo);
     }
     
     /**
@@ -81,13 +117,13 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         areaDetalle = new javax.swing.JTextArea();
         cbxLicencia = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        listaCursosaCargo = new javax.swing.JList<>();
+        listaCursosaTomar = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        listaCursosaCargo1 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        listaCursosaCargo = new javax.swing.JList<>();
+        btnAsignar = new javax.swing.JButton();
+        btnDesAsignar = new javax.swing.JButton();
+        txtCaracter = new javax.swing.JTextField();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -109,12 +145,12 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         jLabel5.setText("Profesor:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
 
-        cbxEmpleado.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbxEmpleadoItemStateChanged(evt);
+        cbxEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxEmpleadoActionPerformed(evt);
             }
         });
-        jPanel2.add(cbxEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 211, -1));
+        jPanel2.add(cbxEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 211, -1));
 
         jPanel1.setBackground(new java.awt.Color(38, 86, 186));
 
@@ -194,23 +230,32 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         jLabel6.setText("Articulo:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, -1, -1));
 
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 220, -1));
-
-        listaCursosaCargo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "A tomar licencia", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-        jScrollPane2.setViewportView(listaCursosaCargo);
+        listaCursosaTomar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "A tomar licencia", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jScrollPane2.setViewportView(listaCursosaTomar);
 
         jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 200, 170));
 
-        listaCursosaCargo1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cursos a Cargo", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-        jScrollPane3.setViewportView(listaCursosaCargo1);
+        listaCursosaCargo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cursos a Cargo", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jScrollPane3.setViewportView(listaCursosaCargo);
 
         jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 220, 170));
 
-        jButton1.setText(">>");
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, -1, -1));
+        btnAsignar.setText(">>");
+        btnAsignar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnAsignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, -1, -1));
 
-        jButton3.setText("<<");
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, -1, -1));
+        btnDesAsignar.setText("<<");
+        btnDesAsignar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesAsignarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnDesAsignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, -1, -1));
+        jPanel2.add(txtCaracter, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 200, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -282,34 +327,6 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_cbxLicenciaItemStateChanged
 
-    private void cbxEmpleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxEmpleadoItemStateChanged
-        /*
-        
-        if (bandera==0) {
-            if (cbxEmpleado.getSelectedIndex()==0) {
-                cbxLicencia.setSelectedIndex(0);
-                areaDetalle.setText("");
-                txtCursos.setText("");
-                fechaInicio.setDate(null);
-                fechaFinalizacion.setDate(null);
-            }else{
-                Persona persona =new Persona();
-                CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
-                Empleado empleado = new Empleado();
-                
-                persona = (Persona) cbxEmpleado.getSelectedItem();
-                
-                empleado = ctrlEmpleado.leer(persona.getIdPersona());
-                
-                //Contar cuantas veces se repite el idEmpleado en cursoEmpleado
-                //Hacer un for con eso e ir guardando (Concatenando) los cursos para mostrarlos en el cuadro de texto
-                
-            }
-        }
-        */
-        
-    }//GEN-LAST:event_cbxEmpleadoItemStateChanged
-
     private void btnAceptarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAceptarKeyPressed
         if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
             ActionEvent e = null;
@@ -324,18 +341,62 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton2KeyPressed
 
+    private void cbxEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxEmpleadoActionPerformed
+        if (bandera != 1) {
+            persona = (Persona) cbxEmpleado.getSelectedItem();
+            empleado = ctrlEmpleado.leer(persona.getIdPersona());
+            cargarListaCursoProfesor(empleado.getIdEmpleado());
+        }
+    }//GEN-LAST:event_cbxEmpleadoActionPerformed
+
+    private void btnAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarActionPerformed
+        if (listaCursosaCargo.getSelectedIndex() != -1) {;
+            String nombre = (String) listaCursosaCargo.getSelectedValuesList().toString();
+            
+            tipoCurso = ctrlTipoCurso.leer(nombre.substring(1, nombre.length()-1));
+            
+            curso = ctrlCurso.leer(tipoCurso.getIdTipoCurso());
+            
+            persona = (Persona) cbxEmpleado.getSelectedItem();
+            empleado = ctrlEmpleado.leer(persona.getIdPersona());
+            
+            cursoProfesor = ctrlCursoProfesor.leerCurso(curso.getIdCurso(), empleado.getIdEmpleado());
+            
+            txtCaracter.setText(cursoProfesor.getIdCaracter().getDetalle());
+            
+            modelo1.addElement(listaCursosaCargo.getSelectedValue());
+            for (int i = 0; i < modelo.size(); i++) {
+                if (modelo.get(i)==listaCursosaCargo.getSelectedValue()) {
+                    modelo.remove(i);
+                }
+            }
+            //Tengo que hacer un metodo que me recorra de nuevo la lista y que me elimine un valor, que es el que seleccione
+            //y a la vez esa lista modificada que se cargue en la lista, sin el elemento que seleccione
+        }
+    }//GEN-LAST:event_btnAsignarActionPerformed
+
+    private void btnDesAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesAsignarActionPerformed
+        if (listaCursosaTomar.getSelectedIndex()!= -1) {
+            modelo.addElement(listaCursosaTomar.getSelectedValue());
+            for (int i = 0; i < modelo1.size(); i++) {
+                if (modelo1.get(i)==listaCursosaTomar.getSelectedValue()) {
+                    modelo1.remove(i);
+                }
+            }
+        }
+    }//GEN-LAST:event_btnDesAsignarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaDetalle;
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnAsignar;
+    private javax.swing.JButton btnDesAsignar;
     private javax.swing.JComboBox<Persona> cbxEmpleado;
     private javax.swing.JComboBox<String> cbxLicencia;
     private com.toedter.calendar.JDateChooser fechaFinalizacion;
     private com.toedter.calendar.JDateChooser fechaInicio;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<Caracter> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -350,6 +411,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList<TipoCurso> listaCursosaCargo;
-    private javax.swing.JList<TipoCurso> listaCursosaCargo1;
+    private javax.swing.JList<TipoCurso> listaCursosaTomar;
+    private javax.swing.JTextField txtCaracter;
     // End of variables declaration//GEN-END:variables
 }

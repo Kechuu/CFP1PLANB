@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -115,10 +117,40 @@ public class CtrlCursoProfesor {
         return cursoProfesor;
     }
     
+    public CursoProfesor leerCurso(int idCurso, int idEmpleado){
+        CursoProfesor cursoProfesor = new CursoProfesor();
+        CtrlCurso ctrlCurso = new CtrlCurso();
+        CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
+        CtrlCaracter ctrlCaracter = new CtrlCaracter();
+        
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM cursoProfesor WHERE idCurso = ? AND idEmpleado = ?");
+            
+            ps.setInt(1, idCurso);
+            ps.setInt(2, idEmpleado);
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                cursoProfesor.setIdCursoProfesor(rs.getInt("idCursoProfesor"));
+                cursoProfesor.setIdCurso(ctrlCurso.leer(rs.getInt("idCurso")));
+                cursoProfesor.setIdEmpleado(ctrlEmpleado.leer(rs.getInt("idEmpleado")));
+                cursoProfesor.setIdCaracter(ctrlCaracter.leer(rs.getInt("idCaracter")));
+            }else{
+                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }
+        return cursoProfesor;
+    }
+    
     public void llenarLista(int idEmpleado, JList<TipoCurso>lista){
     //Este metodo llena lista de los cursos que esta cursando actualmente un determinado empleado
         DefaultListModel <TipoCurso> modelo=new DefaultListModel<>();
-        
+
         try{
             con=clases.Conectar.conexion();
             ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.idTipoCurso, tipoCurso.detalle FROM cursoProfesor"
@@ -190,4 +222,33 @@ public class CtrlCursoProfesor {
         }
         
     }
+    
+    public List<CursoProfesor> cargarListaCursoProfesor(int idEmpleado){
+        List<CursoProfesor> listaCursoProfesor = new ArrayList();
+        CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
+        CtrlCurso ctrlCurso = new CtrlCurso();
+        CtrlCaracter ctrlCaracter =new CtrlCaracter();
+        ResultSet rst;
+        con =clases.Conectar.conexion();
+        try {
+            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM cursoProfesor WHERE idEmpleado = ?");
+            ps.setInt(1, idEmpleado);
+            
+            rst= ps.executeQuery();
+            
+            while (rst.next()) {
+                CursoProfesor cursoProfesor = new CursoProfesor();
+                cursoProfesor.setIdCursoProfesor(rst.getInt("idCursoProfesor"));
+                cursoProfesor.setIdEmpleado(ctrlEmpleado.leerIdEmpleado(rst.getInt("idEmpleado")));
+                cursoProfesor.setIdCurso(ctrlCurso.leerCurso(rst.getInt("idCurso")));
+                cursoProfesor.setIdCaracter(ctrlCaracter.leer(rst.getInt("idCaracter")));
+                
+                listaCursoProfesor.add(cursoProfesor);
+            } 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error, "+e);
+        }
+    return listaCursoProfesor;
+    }
+    
 }
