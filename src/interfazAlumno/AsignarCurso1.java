@@ -498,7 +498,10 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
         }else{
             //int idAlumno=ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno();
 
-            int idAlumno=listaAlumnos.getSelectedValue().getIdPersona();
+            //int idAlumno=listaAlumnos.getSelectedValue().getIdPersona();
+            
+            int idAlumno=ctrlAlumno.leer(listaAlumnos.getSelectedValue().getIdPersona()).getIdAlumno();
+            
             for(int i=0; i<listaCursos.getSize();i++){
                 
                 cursoAlumno.crear(listaCursos.getElementAt(i).getCosto(), fecha.getDate(), idAlumno, 1, ctrlCursoC.leer(listaCursos.getElementAt(i).getIdTipoCurso()).getIdCurso());                    
