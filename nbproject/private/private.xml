@@ -2,6 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/Controlador/CtrlLicencia.java</file>
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/menu/Principal.java</file>
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/Controlador/CtrlTipoCurso.java</file>
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/Controlador/CtrlCursoProfesor.java</file>
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/Controlador/CtrlCurso.java</file>
+            <file>file:/home/jesus/CFP1PLANB/CFP1PLANB/src/licencia/AsignarLicencia.java</file>
+        </group>
+>>>>>>> bc4fc9805a27dfac35f0b7a38b992fec831e5686
     </open-files>
 </project-private>

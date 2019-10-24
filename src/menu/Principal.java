@@ -10,7 +10,6 @@ import usuario.*;
 import java.awt.Dimension;
 
 import clases.CambiaPanel;
-import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;

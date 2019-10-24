@@ -44,6 +44,7 @@ public final class Plan_crear extends javax.swing.JInternalFrame {
         List<Planes> lista = new ArrayList();
         
         lista = ctrlPlanes.leerTodos();
+        modelo.setColumnCount(0);
         modelo.setRowCount(0);
         modelo.addColumn("Nombre");
         

@@ -42,6 +42,7 @@ public final class Periodo_crear extends javax.swing.JInternalFrame {
         List<Periodo> lista = new ArrayList();
         
         lista = ctrlPeriodo.leerTodos();
+        modelo.setColumnCount(0);
         modelo.setRowCount(0);
         modelo.addColumn("Nombre");
         
