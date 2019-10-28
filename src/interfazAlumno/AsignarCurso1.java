@@ -468,7 +468,7 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
     }
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        switch(Inscripcion.bandera){
+        /*switch(Inscripcion.bandera){
             case 1:
                 dispose();
             break;
@@ -483,7 +483,9 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
                 dispose();
 
                 break;
-        }
+        }*/
+        Principal.activarPanel();
+        dispose();
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 

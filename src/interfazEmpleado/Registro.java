@@ -1185,30 +1185,38 @@ public final class Registro extends javax.swing.JInternalFrame {
                 itemGremio=(Gremio) cbGremio.getSelectedItem();
                 idGremio=itemGremio.getIdGremio();
             }
-            ctrlEmpleado.crear(fechaHoy, personaDatos.getIdPersona(), 1, idGremio);
-            empleadoNew=ctrlEmpleado.leer(personaDatos.getIdPersona());
             
-        //LOS ListModel SON PARA PODER SACAR EL TAMAÑO DE LAS LISTAS, PODER RECORRERLAS Y PODER ACCEDER AL ID DE CADA OBJETO GUARDADO
-            ListModel<Cargo> listaCargo=listCargo.getModel();
-            ListModel<Titulo>listaTitulo=listTitulo.getModel();
-        
-            for(int i=0; i<listaCargo.getSize(); i++){
-                ctrlEmpleadoCargo.crear(listaCargo.getElementAt(i).getIdCargo(), ctrlEmpleado.leerIdEmpleado(empleadoNew.getIdEmpleado()).getIdEmpleado());
-            }
-            for(int i=0; i<listaTitulo.getSize();i++){
-                ctrlEmpleadoTitulo.crear(listaTitulo.getElementAt(i).getIdTitulo(), ctrlEmpleado.leerIdEmpleado(empleadoNew.getIdEmpleado()).getIdEmpleado());
-            }
-
             if(personaDatos.getIdPersona()!=0){
-                JOptionPane.showMessageDialog(null, "Los datos se guardaron");
+                //JOptionPane.showMessageDialog(null, "Los datos se guardaron");
+            
+                ctrlEmpleado.crear(fechaHoy, personaDatos.getIdPersona(), 1, idGremio);
+                empleadoNew = ctrlEmpleado.leer(personaDatos.getIdPersona());
+
+                if(empleadoNew.getIdEmpleado()!=0){
+                    //LOS ListModel SON PARA PODER SACAR EL TAMAÑO DE LAS LISTAS, PODER RECORRERLAS Y PODER ACCEDER AL ID DE CADA OBJETO GUARDADO
+                    ListModel<Cargo> listaCargo = listCargo.getModel();
+                    ListModel<Titulo> listaTitulo = listTitulo.getModel();
+
+                    for (int i = 0; i < listaCargo.getSize(); i++) {
+                        ctrlEmpleadoCargo.crear(listaCargo.getElementAt(i).getIdCargo(), ctrlEmpleado.leerIdEmpleado(empleadoNew.getIdEmpleado()).getIdEmpleado());
+                    }
+                    for (int i = 0; i < listaTitulo.getSize(); i++) {
+                        ctrlEmpleadoTitulo.crear(listaTitulo.getElementAt(i).getIdTitulo(), ctrlEmpleado.leerIdEmpleado(empleadoNew.getIdEmpleado()).getIdEmpleado());
+                    }
+                    
+                    JOptionPane.showMessageDialog(null, "Los datos se guardaron");
+                    
+                    btnSiguiente.setText("Siguiente");
+                    contadorGuardar++;
+                    btnSiguiente.setEnabled(true);
+                    btnAsignarCurso.setEnabled(true);
+                    panelContenedor.setSelectedIndex(0);
+                    panelContenedor.setEnabledAt(2, false);
+                    btnAtras.setEnabled(false);
+                }else{
+                    JOptionPane.showMessageDialog(null,"No se pudo guardar los datos");
+                }
                 
-                btnSiguiente.setText("Siguiente");
-                contadorGuardar++;
-                btnSiguiente.setEnabled(true);
-                btnAsignarCurso.setEnabled(true);
-                panelContenedor.setSelectedIndex(0);
-                panelContenedor.setEnabledAt(2, false);
-                btnAtras.setEnabled(false);
             }else{
                 JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
                 return;

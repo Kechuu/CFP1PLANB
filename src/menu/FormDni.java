@@ -283,7 +283,7 @@ public class FormDni extends javax.swing.JInternalFrame {
                     switch (AlumnoMenu.alumnoMenu) {
                         
                         case 1:
-                            JOptionPane.showMessageDialog(null, "EL ALUMNO YA HA SIDO DADO DE ALTA");
+                            JOptionPane.showMessageDialog(null, "EL ALUMNO YA HA SIDO REGISTRADO");
                             
                             Principal.activarPanel();
                             new CambiaPanel(panelSubMenu, new AlumnoMenu());
@@ -336,7 +336,7 @@ public class FormDni extends javax.swing.JInternalFrame {
                     switch(EmpleadoMenu.empleadoMenu){
                         
                         case 1:
-                            JOptionPane.showMessageDialog(null, "EL EMPLEADO YA HA SIDO DADO DE ALTA");
+                            JOptionPane.showMessageDialog(null, "EL EMPLEADO YA HA SIDO REGISTRADO");
                             
                             Principal.activarPanel();
                             new CambiaPanel(panelSubMenu, new EmpleadoMenu());

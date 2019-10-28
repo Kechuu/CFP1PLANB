@@ -990,7 +990,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
                         if(txtCelular.getText().equals("")||txtFijo.getText().equals("")||txtCorreo.getText().equals("")){
                          
-                            if (JOptionPane.showConfirmDialog(null, "Está dejando vacíos campos de celular, teléfono fijo y correo ¿Quiere continuar sin agregarlos?", "", +JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                            if (JOptionPane.showConfirmDialog(null, "Hay campos vacíos, ¿Quiere segeuir sin agregarlos?", "", +JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
                                 panelContenedor.setEnabledAt(2, true);
                                 panelContenedor.setSelectedIndex(2);
@@ -1089,7 +1089,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         int hijos=0;
         
         if(modeloPlan.isEmpty() || modeloTrabajo.isEmpty()){
-            if(JOptionPane.showConfirmDialog(null, "No ha seleccionado planes y/o trabajos que posee el alumno ¿Quiere continuar sin agregarlos?","", + 
+            if(JOptionPane.showConfirmDialog(null, "No ha seleccionado planes y/o trabajos, ¿Quiere seguir sin agregarlos?","", + 
              JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                 planEmpleado=true;
             }else{
@@ -1136,12 +1136,12 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             }
         }
 
-        //<SE CREA UN REGISTRO EN LA TABLA ALUMNO..
-        alumno.crear(personaCrear.leer().getIdPersona());
-
         if (personaDatos.getIdPersona() != 0) {
             JOptionPane.showMessageDialog(null, "Los datos se guardaron");
-            
+
+            //<SE CREA UN REGISTRO EN LA TABLA ALUMNO..
+            alumno.crear(personaDatos.getIdPersona());
+    
             btnSiguiente.setText("Siguiente");
             contadorGuardar++;
             btnAsignarCurso.setEnabled(true);

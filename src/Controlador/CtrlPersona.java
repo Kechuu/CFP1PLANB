@@ -391,7 +391,7 @@ public class CtrlPersona {
                 persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("lugarNacimiento")));
                 
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "La persona no está registrada");
             }
             con.close();
         } catch (HeadlessException | SQLException e) {
