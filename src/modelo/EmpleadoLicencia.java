@@ -18,6 +18,8 @@ public class EmpleadoLicencia {
     private Date fin;
     private Empleado idEmpleado;
     private Licencia idLicencia;
+    private Caracter idCaracter;
+    private Curso idCurso;
 
     public int getIdEmpleadoLicencia() {
         return idEmpleadoLicencia;
@@ -57,6 +59,22 @@ public class EmpleadoLicencia {
 
     public void setIdLicencia(Licencia idLicencia) {
         this.idLicencia = idLicencia;
+    }
+
+    public Caracter getIdCaracter() {
+        return idCaracter;
+    }
+
+    public void setIdCaracter(Caracter idCaracter) {
+        this.idCaracter = idCaracter;
+    }
+
+    public Curso getIdCurso() {
+        return idCurso;
+    }
+
+    public void setIdCurso(Curso idCurso) {
+        this.idCurso = idCurso;
     }
     
     

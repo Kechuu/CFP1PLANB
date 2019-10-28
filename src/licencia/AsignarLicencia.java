@@ -5,6 +5,7 @@
  */
 package licencia;
 
+import Controlador.CtrlCaracter;
 import Controlador.CtrlCurso;
 import Controlador.CtrlCursoProfesor;
 import Controlador.CtrlEmpleado;
@@ -49,6 +50,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
     Curso curso = null;
     CtrlCursoProfesor ctrlCursoProfesor=null;
     CursoProfesor cursoProfesor=null;
+    Caracter caracter=null;
     /**
      * Creates new form asignarLicencia
      */
@@ -70,6 +72,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         modelo = new DefaultListModel();
         modelo1=new DefaultListModel();
         cursoProfesor = new CursoProfesor();
+        caracter =new Caracter();
         
         initComponents();
         bandera=1;
@@ -79,10 +82,10 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         listaCursosaTomar.setModel(modelo1);
     }
     
-    public void cargarListaCursoProfesor(int idEmpleado){
+    public void cargarListaCursoProfesor(int idEmpleado,int idCaracter){
         List<CursoProfesor>lista = new ArrayList();
         
-        lista = ctrlCursoProfesor.cargarListaCursoProfesor(idEmpleado);
+        lista = ctrlCursoProfesor.cargarListaCursoProfesor(idEmpleado,idCaracter);
         
         for (int i = 0; i < lista.size(); i++) {
             modelo.addElement(lista.get(i).getIdCurso().getIdTipoCurso().getDetalle());
@@ -123,7 +126,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         listaCursosaCargo = new javax.swing.JList<>();
         btnAsignar = new javax.swing.JButton();
         btnDesAsignar = new javax.swing.JButton();
-        txtCaracter = new javax.swing.JTextField();
+        cbCaracter = new javax.swing.JComboBox<>();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -255,7 +258,13 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
             }
         });
         jPanel2.add(btnDesAsignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, -1, -1));
-        jPanel2.add(txtCaracter, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 200, -1));
+
+        cbCaracter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCaracterActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cbCaracter, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 220, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -273,35 +282,48 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         bandera=1;
-        persona = (Persona) cbxEmpleado.getSelectedItem();
-        empleado = ctrlEmpleado.leer(persona.getIdPersona());
-        String articulo = (String) cbxLicencia.getSelectedItem();
-        licencia = (Licencia) ctrlLicencia.leer(Integer.parseInt(articulo));
-        
-        if (cbxLicencia.getSelectedIndex()==0 || cbxEmpleado.getSelectedIndex()==0 ||
-                fechaInicio.getDate().toString().equalsIgnoreCase("") || 
-                fechaFinalizacion.getDate().toString().equalsIgnoreCase("")) {
-            JOptionPane.showMessageDialog(null, "Haga la carga correspondiente para poder guardar registros");
-        }else{
-            
-            fechaInicio1 = fechaInicio.getDate();
-            fechaFinalizacion1 = fechaFinalizacion.getDate();
-            long i = fechaInicio1.getTime();
-            long f = fechaFinalizacion1.getTime();
-            java.sql.Date fecha1 = new java.sql.Date(i);
-            java.sql.Date fecha2 = new java.sql.Date(f);
+        if (cbxEmpleado.getSelectedIndex() != 0) {
 
-            
-            ctrlEmpleadoLicencia.crear(fecha1, fecha2, empleado.getIdEmpleado(), licencia.getIdLicencia());
-            
-            cbxEmpleado.removeAllItems();
-            cbxLicencia.removeAllItems();
-            ctrlLicencia.cargarComboEmpleado(cbxEmpleado);
-            //ctrlLicencia.cargarCombo(cbxLicencia); //FALTA AGREGAR PARAMETRO PARA CARACTER
-            fechaInicio.setDate(null);
-            fechaFinalizacion.setDate(null);
-            areaDetalle.setText("");
-            
+            persona = (Persona) cbxEmpleado.getSelectedItem();
+            empleado = ctrlEmpleado.leer(persona.getIdPersona());
+            if (cbxLicencia.getSelectedIndex() != -1 && cbxLicencia.getSelectedIndex()!= 0) {
+                String articulo = (String) cbxLicencia.getSelectedItem();
+                licencia = (Licencia) ctrlLicencia.leer(Integer.parseInt(articulo));
+
+                if (cbxLicencia.getSelectedIndex() == 0 || cbxEmpleado.getSelectedIndex() == 0
+                        || fechaInicio.getDate()==null
+                        || fechaFinalizacion.getDate()==null || modelo1.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Haga la carga correspondiente para poder guardar registros");
+                } else {
+
+                    fechaInicio1 = fechaInicio.getDate();
+                    fechaFinalizacion1 = fechaFinalizacion.getDate();
+                    long i = fechaInicio1.getTime();
+                    long f = fechaFinalizacion1.getTime();
+                    java.sql.Date fecha1 = new java.sql.Date(i);
+                    java.sql.Date fecha2 = new java.sql.Date(f);
+
+                    for (int j = 0; j < modelo1.size(); j++) {
+                        tipoCurso = ctrlTipoCurso.leer(modelo1.get(j).toString());
+                        curso = ctrlCurso.leer(tipoCurso.getIdTipoCurso());
+                        ctrlEmpleadoLicencia.crear(fecha1, fecha2, empleado.getIdEmpleado(), licencia.getIdLicencia(),curso.getIdCurso());
+                    }
+                    cbCaracter.removeAllItems();
+                    cbxEmpleado.removeAllItems();
+                    cbxLicencia.removeAllItems();
+                    ctrlLicencia.cargarComboEmpleado(cbxEmpleado);
+                    //ctrlLicencia.cargarCombo(cbxLicencia); //FALTA AGREGAR PARAMETRO PARA CARACTER
+                    modelo.clear();
+                    modelo1.clear();
+                    listaCursosaCargo.setModel(modelo);
+                    listaCursosaTomar.setModel(modelo1);
+                    fechaInicio.setDate(null);
+                    fechaFinalizacion.setDate(null);
+                    areaDetalle.setText("");
+                    cbCaracter.setEnabled(true);
+
+                }
+            }
         }
         bandera=0;
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -343,26 +365,38 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
 
     private void cbxEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxEmpleadoActionPerformed
         if (bandera != 1) {
+            if (cbxEmpleado.getSelectedIndex() != 0) {
+                bandera=1;
+                cbCaracter.removeAllItems();
+                
+                cbxLicencia.removeAllItems();
+                modelo.clear();
+                modelo1.clear();
+                listaCursosaCargo.setModel(modelo);
+                listaCursosaTomar.setModel(modelo1);
+                areaDetalle.setText("");
+                    
             persona = (Persona) cbxEmpleado.getSelectedItem();
             empleado = ctrlEmpleado.leer(persona.getIdPersona());
-            cargarListaCursoProfesor(empleado.getIdEmpleado());
+                ctrlCursoProfesor.cargarCombo(cbCaracter, empleado.getIdEmpleado());
+                bandera=0;
+            }//cargarListaCursoProfesor(empleado.getIdEmpleado());
+        }else{
+                    cbCaracter.removeAllItems();
+                    cbxLicencia.removeAllItems();
+                    modelo.clear();
+                    modelo1.clear();
+                    listaCursosaCargo.setModel(modelo);
+                    listaCursosaTomar.setModel(modelo1);
+                    fechaInicio.setDate(null);
+                    fechaFinalizacion.setDate(null);
+                    areaDetalle.setText("");
+                    cbCaracter.setEnabled(true);
         }
     }//GEN-LAST:event_cbxEmpleadoActionPerformed
 
     private void btnAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarActionPerformed
         if (listaCursosaCargo.getSelectedIndex() != -1) {;
-            String nombre = (String) listaCursosaCargo.getSelectedValuesList().toString();
-            
-            tipoCurso = ctrlTipoCurso.leer(nombre.substring(1, nombre.length()-1));
-            
-            curso = ctrlCurso.leer(tipoCurso.getIdTipoCurso());
-            
-            persona = (Persona) cbxEmpleado.getSelectedItem();
-            empleado = ctrlEmpleado.leer(persona.getIdPersona());
-            
-            cursoProfesor = ctrlCursoProfesor.leerCurso(curso.getIdCurso(), empleado.getIdEmpleado());
-            
-            txtCaracter.setText(cursoProfesor.getIdCaracter().getDetalle());
             
             modelo1.addElement(listaCursosaCargo.getSelectedValue());
             for (int i = 0; i < modelo.size(); i++) {
@@ -370,6 +404,7 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
                     modelo.remove(i);
                 }
             }
+            cbCaracter.setEnabled(false);
             //Tengo que hacer un metodo que me recorra de nuevo la lista y que me elimine un valor, que es el que seleccione
             //y a la vez esa lista modificada que se cargue en la lista, sin el elemento que seleccione
         }
@@ -386,12 +421,26 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnDesAsignarActionPerformed
 
+    private void cbCaracterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCaracterActionPerformed
+        if (bandera != 1) {
+            if (cbCaracter.getSelectedIndex() != 0) {
+                persona = (Persona) cbxEmpleado.getSelectedItem();
+                empleado = ctrlEmpleado.leer(persona.getIdPersona());
+                caracter = (Caracter) cbCaracter.getSelectedItem();
+                modelo.clear();
+                cargarListaCursoProfesor(empleado.getIdEmpleado(), caracter.getIdCaracter());
+                ctrlLicencia.cargarComboFiltrado(cbxLicencia, caracter.getIdCaracter());
+            }
+        }
+    }//GEN-LAST:event_cbCaracterActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaDetalle;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAsignar;
     private javax.swing.JButton btnDesAsignar;
+    private javax.swing.JComboBox<Caracter> cbCaracter;
     private javax.swing.JComboBox<Persona> cbxEmpleado;
     private javax.swing.JComboBox<String> cbxLicencia;
     private com.toedter.calendar.JDateChooser fechaFinalizacion;
@@ -412,6 +461,5 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList<TipoCurso> listaCursosaCargo;
     private javax.swing.JList<TipoCurso> listaCursosaTomar;
-    private javax.swing.JTextField txtCaracter;
     // End of variables declaration//GEN-END:variables
 }

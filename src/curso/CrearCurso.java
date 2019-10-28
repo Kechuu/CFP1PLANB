@@ -670,6 +670,7 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void BotonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarActionPerformed
+        //llenarTablaHorario(TablaHorario2);
         llenarTabladeHorario2(TablaHorario2);
         bandera=1;
     }//GEN-LAST:event_BotonAgregarActionPerformed
@@ -740,8 +741,8 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
 
     private void btnCrearTipoCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearTipoCursoActionPerformed
         // TODO add your handling code here:
-        vaciarTablas(TablaHorario);
-        vaciarTablas(TablaHorario2);
+        //vaciarTablas(TablaHorario);
+        //vaciarTablas(TablaHorario2);
 
         CrearTipoCurso curso=new CrearTipoCurso();
         Principal.panelPrincipal.add(curso);
@@ -808,6 +809,9 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         cbxNombreCurso.removeAllItems();
         ctrlTipoCurso.cargarCombo(cbxNombreCurso);
+        //vaciarTablas(TablaHorario);
+        //vaciarTablas(TablaHorario2);
+        //llenarTablaHorario(TablaHorario2);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void cargarCursoHorario(int idCurso){

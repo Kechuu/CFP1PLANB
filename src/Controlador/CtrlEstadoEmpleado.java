@@ -67,6 +67,7 @@ public class CtrlEstadoEmpleado {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                estadoEmpleado.setIdEstadoEmpleado(rs.getInt("idEstadoEmpleado"));
                 estadoEmpleado.setDetalle(rs.getString("detalle"));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");

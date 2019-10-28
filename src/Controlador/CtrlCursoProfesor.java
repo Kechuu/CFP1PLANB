@@ -13,10 +13,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.Caracter;
 import modelo.CursoProfesor;
 import modelo.TipoCurso;
 /**
@@ -138,7 +140,7 @@ public class CtrlCursoProfesor {
                 cursoProfesor.setIdEmpleado(ctrlEmpleado.leer(rs.getInt("idEmpleado")));
                 cursoProfesor.setIdCaracter(ctrlCaracter.leer(rs.getInt("idCaracter")));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "cursoProfesor No existe lo que está buscando");
             }
             
         } catch (Exception e) {
@@ -223,7 +225,7 @@ public class CtrlCursoProfesor {
         
     }
     
-    public List<CursoProfesor> cargarListaCursoProfesor(int idEmpleado){
+    public List<CursoProfesor> cargarListaCursoProfesor(int idEmpleado, int idCaracter){
         List<CursoProfesor> listaCursoProfesor = new ArrayList();
         CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
         CtrlCurso ctrlCurso = new CtrlCurso();
@@ -231,8 +233,9 @@ public class CtrlCursoProfesor {
         ResultSet rst;
         con =clases.Conectar.conexion();
         try {
-            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM cursoProfesor WHERE idEmpleado = ?");
+            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM cursoProfesor WHERE idEmpleado = ? AND idCaracter = ?");
             ps.setInt(1, idEmpleado);
+            ps.setInt(2, idCaracter);
             
             rst= ps.executeQuery();
             
@@ -249,6 +252,45 @@ public class CtrlCursoProfesor {
             JOptionPane.showMessageDialog(null, "Error, "+e);
         }
     return listaCursoProfesor;
+    }
+    
+    public void cargarCombo(JComboBox<Caracter> cbCursoProfesor, int idEmpleado){
+        cbCursoProfesor.removeAllItems();
+        CtrlCurso ctrlCurso = new CtrlCurso();
+        CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
+        CtrlCaracter ctrlCaracter = new CtrlCaracter();
+        try {
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT DatosCFP.cursoProfesor.idCaracter FROM DatosCFP.cursoProfesor "
+                    + "WHERE DatosCFP.cursoProfesor.idEmpleado = ?");
+            ps.setInt(1, idEmpleado);
+            
+            rs=ps.executeQuery();
+            
+            Caracter caracter2=new Caracter();
+            Caracter caracter = new Caracter();
+            caracter2.setIdCaracter(0);
+            caracter2.setDetalle("Seleciione un caracter...");
+            cbCursoProfesor.addItem(caracter2);
+            
+            while (rs.next()) {                
+            
+                caracter=new Caracter();
+                caracter2=new Caracter();
+                
+                caracter = ctrlCaracter.leer(rs.getInt("idCaracter"));
+                
+                
+                caracter2.setIdCaracter(caracter.getIdCaracter());
+                caracter2.setDetalle(caracter.getDetalle());
+                
+                cbCursoProfesor.addItem(caracter2);
+            }
+            
+        } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento: "+e.getMessage());       
+        }
+        
     }
     
 }

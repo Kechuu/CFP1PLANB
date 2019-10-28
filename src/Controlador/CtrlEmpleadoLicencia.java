@@ -21,15 +21,16 @@ public class CtrlEmpleadoLicencia {
     PreparedStatement ps;
     ResultSet rs;
     
-    public void crear(java.sql.Date inicio, java.sql.Date fin, int idEmpleado, int idLicencia){
+    public void crear(java.sql.Date inicio, java.sql.Date fin, int idEmpleado, int idLicencia,int idCurso){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO empleadoLicencia (inicio,fin, idEmpleado, idLicencia) VALUES (?,?,?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO empleadoLicencia (inicio,fin, idEmpleado, idLicencia, idCurso) VALUES (?,?,?,?,?)");
         
             ps.setDate(1, inicio);
             ps.setDate(2, fin);
             ps.setInt(3, idEmpleado);
             ps.setInt(4, idLicencia);
+            ps.setInt(5, idCurso);
             
             int res = ps.executeUpdate();
             con.close();
@@ -39,14 +40,16 @@ public class CtrlEmpleadoLicencia {
         }
     }
     
-    public void finDeLicencia(int idEmpleadoLicencia ,int idEmpleado ,Date fin){
+    public void finDeLicencia(int idEmpleadoLicencia ,int idEmpleado ,Date fin, int idCurso){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE empleadoLicencia SET fin = ? WHERE idEmpleadoLicencia = ? AND idEmpleado = ? ");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE empleadoLicencia SET fin = ? WHERE idEmpleadoLicencia = ? AND idEmpleado = ? AND idCurso = ?");
         
             ps.setDate(1, fin);
             ps.setInt(2, idEmpleadoLicencia);
             ps.setInt(3, idEmpleado);
+            ps.setInt(4, idCurso);
+            
              int res = ps.executeUpdate();
             
             if(res > 0){
@@ -66,6 +69,8 @@ public class CtrlEmpleadoLicencia {
         EmpleadoLicencia empleadoLicencia = new EmpleadoLicencia();
         CtrlEmpleado ctrlEmpleado = new CtrlEmpleado();
         CtrlLicencia ctrlLicencia = new CtrlLicencia();
+        CtrlCaracter ctrlCaracter = new CtrlCaracter();
+        CtrlCurso ctrlCurso = new CtrlCurso();
         
         try {
             con = clases.Conectar.conexion();
@@ -80,6 +85,9 @@ public class CtrlEmpleadoLicencia {
                 empleadoLicencia.setFin(rs.getDate("fin"));
                 empleadoLicencia.setIdEmpleado(ctrlEmpleado.leer(rs.getInt("idEmpleado")));
                 empleadoLicencia.setIdLicencia(ctrlLicencia.leer(rs.getInt("idLicencia")));
+                empleadoLicencia.setIdCaracter(ctrlCaracter.leer(rs.getInt("idCaracter")));
+                empleadoLicencia.setIdCurso(ctrlCurso.leerCurso(rs.getInt("idCurso")));
+                
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }

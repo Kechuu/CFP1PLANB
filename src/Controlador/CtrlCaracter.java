@@ -79,7 +79,6 @@ public class CtrlCaracter {
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
             
-            con.close();
         }catch(HeadlessException | SQLException e){
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

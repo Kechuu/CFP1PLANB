@@ -123,7 +123,7 @@ public class CtrlEmpleado {
                 empleado.setIdEstadoEmpleado(ctrlEstadoEmpleado.leer(rs.getInt("idEstadoEmpleado")));
                 //empleado.setIdGremio(ctrlGremio.leer(rs.getInt("idGremio")));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "empleado No existe lo que está buscando");
             }
             
         } catch (Exception e) {
