@@ -1088,7 +1088,7 @@ public final class Registro extends javax.swing.JInternalFrame {
 
                         if (txtCelular.getText().equalsIgnoreCase("") || txtFijo.getText().equalsIgnoreCase("")
                                 || txtCorreo.getText().equalsIgnoreCase("")) {
-                            if (JOptionPane.showConfirmDialog(null, "Está dejando vacíos campos de celular, teléfono fijo o correo ¿Quiere continuar sin agregarlos?", "", +JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                            if (JOptionPane.showConfirmDialog(null, "Hay campos vacíos, ¿Quiere segeuir sin agregarlos?", "", +JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
                                 panelContenedor.setEnabledAt(2, true);
                                 panelContenedor.setSelectedIndex(2);

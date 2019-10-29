@@ -96,7 +96,7 @@ public class CtrlCargo {
             
             Cargo cargo=new Cargo();
             cargo.setIdCargo(0);
-            cargo.setDetalle("Seleccione una opción 1...");
+            cargo.setDetalle("Seleccione una opción...");
             cbCargo.addItem(cargo);
             
             while (rs.next()) {                
