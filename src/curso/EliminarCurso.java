@@ -23,7 +23,7 @@ import modelo.TipoCurso;
 
 
 /**
- *
+ *Revisar que cuando se elimine, que el curso no tenga alumnos y que se haya cumplido el tiempo de cursado
  * @author araa
  */
 public final class EliminarCurso extends javax.swing.JInternalFrame {
@@ -52,6 +52,8 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
       }
   
     public void llenarTablaCurso(JTable tabla){
+        modelo.setColumnCount(0);
+        modelo.setRowCount(0);
         modelo.addColumn("Nombre");
         modelo.addColumn("Ciclo Lectivo");
         modelo.addColumn("Turno");

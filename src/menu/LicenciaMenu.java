@@ -21,7 +21,7 @@ public class LicenciaMenu extends javax.swing.JPanel {
      */
     public LicenciaMenu() {
         initComponents();
-        this.setBounds(0, 145, 240, 138);
+        this.setBounds(0, 145, 240, 210);
     }
 
     /**
