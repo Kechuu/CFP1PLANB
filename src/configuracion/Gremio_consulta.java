@@ -68,7 +68,7 @@ public final class Gremio_consulta extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaGremios = new javax.swing.JList<>();
+        listaGremios = new javax.swing.JList<Gremio>();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
