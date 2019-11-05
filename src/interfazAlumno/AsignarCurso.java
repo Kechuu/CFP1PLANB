@@ -478,6 +478,8 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
             }
             ctrlCursoAlum.llenarLista(ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno(), listCursosInscriptos);
             modeloCursos.removeAllElements();
+            ctrlCurso.llenarLista(listDisponible);//se carga la lista con los cursos disponibles
+        
         }        
     }//GEN-LAST:event_btnInscribirCursosActionPerformed
 

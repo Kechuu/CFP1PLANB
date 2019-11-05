@@ -8,6 +8,7 @@ package configuracion;
 import Controlador.CtrlCodigoPostal;
 import Controlador.CtrlLugar;
 import com.sun.glass.events.KeyEvent;
+import interfazAlumno.Inscripcion;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -256,8 +257,13 @@ public final class Localidad_crear extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
-        dispose();
+if(Inscripcion.banderaInscripcionLugar==1){
+            dispose();
+        }else{
+            Principal.activarPanel();
+            dispose();
+        
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -279,9 +285,18 @@ public final class Localidad_crear extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnAgregarBarrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarBarrioActionPerformed
-        this.setVisible(false);
+//        this.setVisible(false);
         try {
-            Principal.crearBarrio();//Llama al frame de Crear barrio
+            if(Inscripcion.banderaInscripcionLugar==1){
+                Barrio_crear crear=new Barrio_crear();
+                Principal.panelPrincipal.add(crear);
+                this.setComponentZOrder(crear, 0);
+                crear.setVisible(true);
+            }else{
+                this.setVisible(false);
+            Principal.crearBarrio();//Llama al frame de Crear barrio                
+            }
+
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Barrio_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -315,7 +330,10 @@ public final class Localidad_crear extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnCancelarKeyPressed
 
-
+    @Override
+ public boolean isOptimizedDrawingEnabled(){
+        return false;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregarBarrio;

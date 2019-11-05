@@ -9,6 +9,7 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import modelo.Escuela;
 /**
@@ -124,7 +125,7 @@ public class CtrlEscuela {
             rs = ps.executeQuery();
             
             if(rs.next()){
-                JOptionPane.showMessageDialog(null, "si entro aqui");
+                
                 escuela.setIdEscuela(rs.getInt("idEscuela"));
                 escuela.setNombreEscuela(rs.getString("nombre"));
                 escuela.setDireccion(rs.getString("direccion"));
@@ -137,8 +138,8 @@ public class CtrlEscuela {
             }
             
             con.close();
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         return escuela;
     }

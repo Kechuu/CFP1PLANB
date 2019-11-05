@@ -7,6 +7,7 @@ package configuracion;
 
 import Controlador.CtrlLugar;
 import com.sun.glass.events.KeyEvent;
+import interfazAlumno.Inscripcion;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -221,8 +222,13 @@ public final class Calles_crear extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
-        dispose();
+        if(Inscripcion.banderaInscripcionLugar==1){
+            dispose();
+        }else{
+            Principal.activarPanel();
+            dispose();
+        
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed

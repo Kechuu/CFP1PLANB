@@ -431,6 +431,8 @@
           <SubComponents>
             <Component class="javax.swing.JTextField" name="txtCooperativa">
               <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCooperativaFocusGained"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtCooperativaFocusLost"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCooperativaActionPerformed"/>
                 <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCooperativaKeyPressed"/>
               </Events>
@@ -453,6 +455,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtImporte">
               <Events>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtImporteFocusLost"/>
                 <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtImporteKeyPressed"/>
               </Events>
             </Component>
