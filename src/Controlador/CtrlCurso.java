@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.util.Calendar;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -373,13 +374,15 @@ public class CtrlCurso {
     public void llenarLista(JList<TipoCurso>lista){
     //Este metodo llena lista de los cursos que esta cursando actualmente un determinado alumno
         DefaultListModel <TipoCurso> modelo=new DefaultListModel<>();
-        
+        Calendar cal= Calendar.getInstance();
+        int year= cal.get(Calendar.YEAR);
         try{
             con=clases.Conectar.conexion();
             ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.idTipoCurso, tipoCurso.detalle, curso.costo FROM curso"
                     + " INNER JOIN tipoCurso ON curso.idTipoCurso = tipoCurso.idTipoCurso"
-                    + " WHERE curso.cicloLectivo= 2019 AND curso.borrado=false");
+                    + " WHERE curso.cicloLectivo=? AND curso.borrado=false");
             
+            ps.setInt(1, year);
             rs=ps.executeQuery();
             
             while(rs.next()){

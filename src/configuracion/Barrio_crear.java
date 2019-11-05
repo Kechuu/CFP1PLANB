@@ -6,6 +6,7 @@
 package configuracion;
 
 import Controlador.CtrlLugar;
+import interfazAlumno.Inscripcion;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -228,16 +229,29 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
-        dispose();
+        if(Inscripcion.banderaInscripcionLugar==1){
+            dispose();
+        }else{
+            Principal.activarPanel();
+            dispose();
+        
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCalleActionPerformed
         try {
             // TODO add your handling code here:
-            this.setVisible(false);
+            if(Inscripcion.banderaInscripcionLugar==1){
+                //this.setVisible(false);
+            Calles_crear crear1=new Calles_crear();
             
-            Principal.crearCalle();//metodo que esta en la clase Principal
+            Principal.panelPrincipal.add(crear1);
+            this.setComponentZOrder(crear1, 0);
+            crear1.setVisible(true);
+            }else{
+                Principal.crearCalle();
+            }
+            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Barrio_crear.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -311,7 +325,10 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
         btnAceptar.setEnabled(true);
     }//GEN-LAST:event_cbLocalidadActionPerformed
 
-
+    @Override
+    public boolean isOptimizedDrawingEnabled(){
+        return false;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregarCalle;

@@ -59,7 +59,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         saldoT=ctrlPagosVarios.llenarTabla(ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno(), tablaHistorialPago);
         
         txtSaldoTabla.setText(String.valueOf(saldoT));
-        
+        //btnRegistrarPago.setEnabled(false);
     }
 
     void obtenerDni(String cuil){
@@ -206,6 +206,14 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        txtCooperativa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCooperativaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCooperativaFocusLost(evt);
+            }
+        });
         txtCooperativa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCooperativaActionPerformed(evt);
@@ -223,6 +231,11 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Importe");
 
+        txtImporte.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtImporteFocusLost(evt);
+            }
+        });
         txtImporte.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtImporteKeyPressed(evt);
@@ -471,7 +484,12 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
             }
             
             saldoT=ctrlPagosVarios.llenarTabla(idAlumno, tablaHistorialPago);
-            txtSaldoTabla.setText(String.valueOf(saldoT));        
+            txtSaldoTabla.setText(String.valueOf(saldoT));    
+            txtCooperativa.setText("");
+            txtImporte.setText("");
+            txtSaldo.setText("");
+            cbConceptoPago.setSelectedIndex(0);
+            cbCurso.setSelectedIndex(0);
         }else{
             JOptionPane.showMessageDialog(null, "Falta seleccionar el concepto de pago y/o ingresar el importe abonado");
         }
@@ -548,16 +566,41 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
             txtCooperativa.setText(String.valueOf(cursoAlumno.getCosto()));
             //txtCooperativa.setText("1231");
             txtSaldo.setText(String.valueOf(cursoAlumno.getSaldo()));
-
+            
         }
     }//GEN-LAST:event_cbConceptoPagoItemStateChanged
 
     private void txtCooperativaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCooperativaKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode()== KeyEvent.VK_ENTER){
+        if(evt.getKeyCode()== KeyEvent.VK_ENTER || evt.getKeyCode()==KeyEvent.VK_TAB){
             txtSaldo.setText(txtCooperativa.getText());
         }
     }//GEN-LAST:event_txtCooperativaKeyPressed
+
+    private void txtCooperativaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCooperativaFocusGained
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtCooperativaFocusGained
+
+    private void txtCooperativaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCooperativaFocusLost
+        // TODO add your handling code here:
+        txtSaldo.setText(txtCooperativa.getText());
+    }//GEN-LAST:event_txtCooperativaFocusLost
+
+    private void txtImporteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtImporteFocusLost
+        // TODO add your handling code here:
+        //if(evt.getKeyCode()== KeyEvent.VK_ENTER){
+            float primero=0;
+            float segundo=0;
+            
+            primero=Float.parseFloat(txtSaldo.getText());
+            segundo=Float.parseFloat(txtImporte.getText());
+            
+            float resultado=primero-segundo;
+            
+            txtSaldo.setText(String.valueOf(resultado));
+      //  }
+    }//GEN-LAST:event_txtImporteFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

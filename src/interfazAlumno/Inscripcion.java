@@ -51,6 +51,7 @@ import modelo.Sexo;
 public final class Inscripcion extends javax.swing.JInternalFrame {
     
     public static int bandera=0;
+    public static int banderaInscripcionLugar=0;
     int contadorGuardar=0;
     Connection con = clases.Conectar.conexion();
     CtrlTipoDocumento tipo = new CtrlTipoDocumento();
@@ -983,8 +984,8 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             
             case 1:
                 if(contadorGuardar==0){
-                    if (cbLocalidad.getSelectedIndex() == 0 || cbBarrio.getSelectedIndex() == 0 || cbCalle.getSelectedIndex() == 0) {
-                        JOptionPane.showMessageDialog(null, "Le falta completar domicilio: seleccionar localidad, barrio y/o calle");
+                    if (cbLocalidad.getSelectedIndex() == 0 || cbBarrio.getSelectedIndex() == 0 || cbCalle.getSelectedIndex() == 0 || txtCasa.getText() == null || txtCasa.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Le falta completar domicilio: ingresar n° de casa o seleccionar localidad, barrio y/o calle.");
                         
                     } else {
 
@@ -1308,6 +1309,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
     private void btnLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalidadActionPerformed
         // TODO add your handling code here:
+        banderaInscripcionLugar=1;
         try {
             Localidad_crear crear = new Localidad_crear();
             Principal.panelPrincipal.add(crear);
@@ -1321,6 +1323,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
     private void btnBarrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBarrioActionPerformed
         // TODO add your handling code here:
+        banderaInscripcionLugar=1;
         try {
             Barrio_crear crear=new Barrio_crear();
             Principal.panelPrincipal.add(crear);
@@ -1333,6 +1336,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
     private void btnCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalleActionPerformed
         // TODO add your handling code here:
+        banderaInscripcionLugar=1;
         try {
             Calles_crear crear=new Calles_crear();
             Principal.panelPrincipal.add(crear);
