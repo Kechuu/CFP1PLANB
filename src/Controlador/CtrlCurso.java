@@ -397,7 +397,6 @@ public class CtrlCurso {
             
             lista.setModel(modelo);
             
-            con.close();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }

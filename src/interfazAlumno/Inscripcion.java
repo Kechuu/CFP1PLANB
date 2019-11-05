@@ -1475,6 +1475,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private void btnActualizarLocalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarLocalidadActionPerformed
         cbLocalidad.removeAllItems();
         lugar.cargarComboLocalidad(cbLocalidad);
+        txtCodigo.setText("");
         cbBarrio.removeAllItems();
         cbCalle.removeAllItems();
     }//GEN-LAST:event_btnActualizarLocalidadActionPerformed
