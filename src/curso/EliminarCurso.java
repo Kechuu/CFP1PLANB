@@ -57,7 +57,7 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
         llenarTablaCurso(TablaCursos);
       }
   
-    public void llenarTablaCurso(JTable tabla){
+    public void llenarTablaCurso(JTable tabla) {
         modelo.setColumnCount(0);
         modelo.setRowCount(0);
         modelo.addColumn("Nombre");
@@ -69,63 +69,62 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
         modelo.addColumn("FechaFinalizacion");
         modelo.addColumn("Lugar");
         tabla.setModel(modelo);
-                
+
         String[] dato = new String[8];
-        String turno="";
+        String turno = "";
         try {
             Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT idCurso FROM cursoAlumno");
-            while (rs.next()) {                
-                
+            ResultSet rs = st.executeQuery("SELECT idCurso FROM cursoAlumno");
+            while (rs.next()) {
+
                 int idCurso = rs.getInt(1);
                 //JOptionPane.showMessageDialog(null, idTipoCurso);
                 curso = ctrlCurso.leerCurso(idCurso);
-                
+
                 if (!curso.isBorrado()) {
-                    
-                
-                //JOptionPane.showMessageDialog(null, tipoCurso.getDetalle());
-                dato[0]=curso.getIdTipoCurso().getDetalle();
-                
-                dato[1]=String.valueOf(curso.getCicloLectivo());
-    
-                 switch(curso.getTurno()){
-                    case 1:
-                        turno="Mañana";
-                        
-                        break;
-                        
-                    case 2:
-                        turno="Tarde";
-                        
-                        break;
-                    
-                    case 3:
-                        turno="Noche";
-                        
-                        break;
-                        
-                }
-                
-                dato[2]=turno;
-                
-                //Este metodo toma la fecha del sistema y la compara con la de finalizacion de curso
-                Date now = new Date(System.currentTimeMillis());
-                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-                
-                String fechaFinalizacion = (String) curso.getFechaFinalizacion().toString();
-                
-                int comparar = date.format(now).compareTo(fechaFinalizacion);
-                
-                if (comparar>=0) {
-                    //Finalizo el curso
-                    dato[3]="Finalizado";
-                } else {
-                    if (comparar<0) {
-                        //Todavia no finalizo el curso
-                        dato[3]="Activo";
+
+                    //JOptionPane.showMessageDialog(null, tipoCurso.getDetalle());
+                    dato[0] = curso.getIdTipoCurso().getDetalle();
+
+                    dato[1] = String.valueOf(curso.getCicloLectivo());
+
+                    switch (curso.getTurno()) {
+                        case 1:
+                            turno = "Mañana";
+
+                            break;
+
+                        case 2:
+                            turno = "Tarde";
+
+                            break;
+
+                        case 3:
+                            turno = "Noche";
+
+                            break;
+
                     }
-                }
+
+                    dato[2] = turno;
+
+                    //Este metodo toma la fecha del sistema y la compara con la de finalizacion de curso
+                    Date now = new Date(System.currentTimeMillis());
+                    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+
+                    String fechaFinalizacion = (String) curso.getFechaFinalizacion().toString();
+
+                    int comparar = date.format(now).compareTo(fechaFinalizacion);
+
+                    if (comparar >= 0) {
+                        //Finalizo el curso
+                        dato[3] = "Finalizado";
+                    } else {
+                        if (comparar < 0) {
+                            //Todavia no finalizo el curso
+                            dato[3] = "Activo";
+                        }
+                    }
                     int contar = 0;
                     stm = (Statement) con.createStatement();
                     ResultSet rst = stm.executeQuery("SELECT COUNT(idAlumno) FROM cursoAlumno WHERE idCurso = '" + curso.getIdCurso() + "'");
@@ -133,21 +132,20 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
                     if (rst.next()) {
                         dato[4] = String.valueOf(rst.getInt(1));
                     }
-                    
-                dato[5]=String.valueOf(curso.getFechaInicio());
-                dato[6]=String.valueOf(curso.getFechaFinalizacion());
-                
-                                
-                lugarCurso = ctrlLugarCurso.leer(curso.getIdTipoCurso().getIdTipoCurso());
-                dato[7]= lugarCurso.getDetalle();
-                modelo.addRow(dato);
+
+                    dato[5] = String.valueOf(curso.getFechaInicio());
+                    dato[6] = String.valueOf(curso.getFechaFinalizacion());
+
+                    lugarCurso = ctrlLugarCurso.leer(curso.getIdTipoCurso().getIdTipoCurso());
+                    dato[7] = lugarCurso.getDetalle();
+                    modelo.addRow(dato);
                 }
-            
-            tabla.setModel(modelo);
-            
-                }
+
+                tabla.setModel(modelo);
+
+            }
         } catch (SQLException e) {
-             JOptionPane.showMessageDialog(null, e.getLocalizedMessage()); 
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
     }
     
@@ -267,23 +265,12 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
 
         TablaCursos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Detalle", "Ciclolectivo", "Turno", "Costo", "Cupo", "Inicio", "Finalizacion", "Lugar"
+                "Detalle", "Ciclolectivo", "Turno", "Estado", "Alumnos", "Inicio", "Finalizacion", "Lugar"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         TablaCursos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TablaCursosMouseClicked(evt);
@@ -291,7 +278,7 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
         });
         jScrollPane4.setViewportView(TablaCursos);
 
-        jPanel2.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 57, 780, 260));
+        jPanel2.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 37, 780, 280));
         jPanel2.add(txtidCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(664, 280, 49, 26));
 
         btnCancelar1.setBackground(new java.awt.Color(38, 86, 186));
