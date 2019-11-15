@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author jesus
@@ -106,7 +107,6 @@ public class Principal extends javax.swing.JFrame {
 
         labelInstitucion.setFont(new java.awt.Font("Ubuntu", 0, 36)); // NOI18N
         labelInstitucion.setForeground(new java.awt.Color(254, 238, 238));
-        labelInstitucion.setText("Centro de Formacion Profesional 1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -115,12 +115,12 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelInstitucion)
-                .addContainerGap(424, Short.MAX_VALUE))
+                .addContainerGap(988, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(76, Short.MAX_VALUE)
                 .addComponent(labelInstitucion)
                 .addGap(24, 24, 24))
         );
@@ -822,28 +822,44 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        desactivarPanel();
-        CrearUsuario user = null;
-        try {
-            user = new CrearUsuario();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        if (Login.usuario.getJerarquia() == 1) {
+            desactivarPanel();
+            CrearUsuario user = null;
+            try {
+                user = new CrearUsuario();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            panelPrincipal.add(user);
+            user.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "No tiene acceso a este módulo");
         }
-        panelPrincipal.add(user);
-        user.setVisible(true);
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        new CambiaPanel(panelSubMenu, new UsuarioMenu());
+        if(Login.usuario.getJerarquia()==1){
+            new CambiaPanel(panelSubMenu, new UsuarioMenu());
+        }else{
+            JOptionPane.showMessageDialog(null, "No tiene acceso a este módulo");
+        }
+ 
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        desactivarPanel();
         
-        EliminarUsuario user= new EliminarUsuario();
-        panelPrincipal.add(user);
-        user.setVisible(true);
+        if (Login.usuario.getJerarquia() == 1) {
+            desactivarPanel();
+
+            EliminarUsuario user = new EliminarUsuario();
+            panelPrincipal.add(user);
+            user.setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No tiene acceso a este módulo");
+        }
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed

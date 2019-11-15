@@ -378,9 +378,9 @@ public class CtrlCurso {
         int year= cal.get(Calendar.YEAR);
         try{
             con=clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.idTipoCurso, tipoCurso.detalle, curso.costo FROM curso"
+            ps=(PreparedStatement)con.prepareStatement("SELECT curso.idCurso, tipoCurso.detalle, curso.costo, curso.cicloLectivo FROM curso"
                     + " INNER JOIN tipoCurso ON curso.idTipoCurso = tipoCurso.idTipoCurso"
-                    + " WHERE curso.cicloLectivo=? AND curso.borrado=false");
+                    + " WHERE curso.cicloLectivo>=? AND curso.borrado=false");
             
             ps.setInt(1, year);
             rs=ps.executeQuery();
@@ -388,8 +388,10 @@ public class CtrlCurso {
             while(rs.next()){
                 TipoCurso tipoCurso=new TipoCurso();
                 
-                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
-                tipoCurso.setDetalle(rs.getString("detalle"));
+                tipoCurso.setIdTipoCurso(rs.getInt("idCurso"));
+                String detalleLectivo=rs.getString("detalle")+" |Ciclo: "+rs.getString("cicloLectivo");
+                //tipoCurso.setDetalle(rs.getString("detalle"));
+                tipoCurso.setDetalle(detalleLectivo);
                 tipoCurso.setCosto(rs.getFloat("curso.costo"));
                 
                 modelo.addElement(tipoCurso);

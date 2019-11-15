@@ -514,8 +514,9 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
         
         if(cbCurso.getSelectedIndex()!=0){
             TipoCurso item=(TipoCurso)cbCurso.getSelectedItem();
+            
             int idAlumno=ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno();
-            int idCurso=ctrlCurso.leer(item.getIdTipoCurso()).getIdCurso();
+            int idCurso=ctrlCurso.leerCurso(item.getIdTipoCurso()).getIdCurso();
             CursoAlumno cursoAlumnoItem=new CursoAlumno();
             cursoAlumnoItem=ctrlCursoAlum.leer(idAlumno, idCurso);
             
@@ -554,12 +555,12 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
 
     private void cbConceptoPagoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbConceptoPagoItemStateChanged
         // TODO add your handling code here:
-        if (cbCurso.getSelectedIndex() != 0) {
+        /*if (cbCurso.getSelectedIndex() != 0) {  VER LUEGOO
             int idCurso = 0;
             CursoAlumno cursoAlumno = new CursoAlumno();
 
             TipoCurso item = (TipoCurso) cbCurso.getSelectedItem();
-            idCurso = ctrlCurso.leer(item.getIdTipoCurso()).getIdCurso();
+            idCurso = ctrlCurso.leerCurso(item.getIdTipoCurso()).getIdCurso();
 
             cursoAlumno = ctrlCursoAlum.leer(ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno(), idCurso);
 
@@ -567,7 +568,7 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
             //txtCooperativa.setText("1231");
             txtSaldo.setText(String.valueOf(cursoAlumno.getSaldo()));
             
-        }
+        }*/
     }//GEN-LAST:event_cbConceptoPagoItemStateChanged
 
     private void txtCooperativaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCooperativaKeyPressed

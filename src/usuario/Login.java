@@ -260,20 +260,27 @@ public class Login extends javax.swing.JInternalFrame {
             escuela=ctrlEscuela.leer();
             
             if(escuela.getIdEscuela()!=0){
+                Principal.labelInstitucion.setText(escuela.getNombreEscuela());                    
                 Principal.activarPanel();
                 
             }else{
-                if(JOptionPane.showConfirmDialog(null, "No a terminado su configuración general ¿Desea completarla antes de continuar?","", + 
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                
-                ConfiguracionGeneral confi=new ConfiguracionGeneral();
-                Principal.panelPrincipal.add(confi);
-                confi.setVisible(true);    
-            }else{
-                Principal.labelInstitucion.setText(escuela.getNombreEscuela());
-                Principal.activarPanel();
-            }
-                
+                if (usuario.getJerarquia() == 1) {
+                    if (JOptionPane.showConfirmDialog(null, "No a terminado su configuración general ¿Desea completarla antes de continuar?", "", +JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+
+                        ConfiguracionGeneral confi = new ConfiguracionGeneral();
+                        Principal.panelPrincipal.add(confi);
+                        confi.setVisible(true);
+                    } else {
+                        Principal.labelInstitucion.setText(escuela.getNombreEscuela());
+                        Principal.activarPanel();
+                    }
+
+                }else{
+                    
+                    Principal.labelInstitucion.setText(escuela.getNombreEscuela());
+                    Principal.activarPanel();
+                }
+
             }
         }else{
             contador++;

@@ -199,4 +199,34 @@ public class CtrlAlumno {
             
         }
     }
+    
+    public void listaFiltrado(JList<Persona>lista, String filtro){
+        DefaultListModel<Persona>modelo= new DefaultListModel<>();
+        
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM persona"
+                    + " INNER JOIN alumno ON persona.idPersona = alumno.idPersona"
+                    + " WHERE persona.apellidoPersona LIKE '%"+filtro+"%'");
+            
+            rs=ps.executeQuery();
+            
+            while(rs.next()){
+                Persona persona=new Persona();
+                
+                persona.setIdPersona(rs.getInt("idPersona"));
+                persona.setNombrePersona(rs.getString("nombrePersona"));
+                persona.setApellidoPersona(rs.getString("apellidoPersona"));
+                persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
+                persona.setCUIL(rs.getString("CUIL"));
+                
+                modelo.addElement(persona);
+            }
+            
+            con.close();
+            lista.setModel(modelo);
+        }catch(Exception e){
+            
+        }
+    }
 }
