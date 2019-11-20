@@ -389,7 +389,7 @@ public class CtrlCurso {
                 TipoCurso tipoCurso=new TipoCurso();
                 
                 tipoCurso.setIdTipoCurso(rs.getInt("idCurso"));
-                String detalleLectivo=rs.getString("detalle")+" |Ciclo: "+rs.getString("cicloLectivo");
+                String detalleLectivo=rs.getString("detalle")+" | Ciclo Lectivo: "+rs.getString("cicloLectivo");
                 //tipoCurso.setDetalle(rs.getString("detalle"));
                 tipoCurso.setDetalle(detalleLectivo);
                 tipoCurso.setCosto(rs.getFloat("curso.costo"));

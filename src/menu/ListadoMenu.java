@@ -5,6 +5,10 @@
  */
 package menu;
 
+import listado.Deudores;
+import listado.ListadoPorCurso;
+import listado.PorCicloLectivo;
+
 /**
  *
  * @author araa
@@ -32,38 +36,50 @@ public class ListadoMenu extends javax.swing.JPanel {
         btnListadoPorCurso = new javax.swing.JButton();
         btnListadoPorCicloLectivo = new javax.swing.JButton();
         btnListadoDeEgresado = new javax.swing.JButton();
-        btnListadoGeneral = new javax.swing.JButton();
         btnListadoAbandono = new javax.swing.JButton();
         btnListadoDeudores = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(239, 238, 240));
 
-        btnListadoPorCurso.setText("Listado por Curso");
+        btnListadoPorCurso.setText("Listado de Cursos");
+        btnListadoPorCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListadoPorCursoActionPerformed(evt);
+            }
+        });
 
         btnListadoPorCicloLectivo.setText("Listado por Ciclo Lectivo");
+        btnListadoPorCicloLectivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListadoPorCicloLectivoActionPerformed(evt);
+            }
+        });
 
         btnListadoDeEgresado.setText("Listado de Egresados");
-
-        btnListadoGeneral.setText("Listado General");
 
         btnListadoAbandono.setText("Listado de Deserción");
 
         btnListadoDeudores.setText("Listado de Deudores");
+        btnListadoDeudores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListadoDeudoresActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnListadoPorCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnListadoPorCurso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnListadoPorCicloLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnListadoDeudores, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnListadoDeEgresado, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(btnListadoAbandono, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnListadoGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(btnListadoPorCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnListadoPorCicloLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -73,17 +89,52 @@ public class ListadoMenu extends javax.swing.JPanel {
                 .addComponent(btnListadoDeEgresado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnListadoAbandono, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnListadoGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnListadoPorCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListadoPorCursoActionPerformed
+        // TODO add your handling code here:
+        
+       /*
+         this.setVisible(false);
+        Principal.desactivarPanel();
+        
+        ModificarCurso curso= new ModificarCurso();
+        Principal.panelPrincipal.add(curso);
+        curso.setVisible(true);
+        */ 
+        this.setVisible(false);
+        Principal.desactivarPanel();
+        ListadoPorCurso fr=new ListadoPorCurso();
+        
+        Principal.panelPrincipal.add(fr);
+        fr.setVisible(true);
+    }//GEN-LAST:event_btnListadoPorCursoActionPerformed
+
+    private void btnListadoDeudoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListadoDeudoresActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Principal.desactivarPanel();
+        Deudores deu=new Deudores();
+        Principal.panelPrincipal.add(deu);
+        deu.setVisible(true);
+    }//GEN-LAST:event_btnListadoDeudoresActionPerformed
+
+    private void btnListadoPorCicloLectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListadoPorCicloLectivoActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Principal.desactivarPanel();
+        PorCicloLectivo fr=new PorCicloLectivo();
+        Principal.panelPrincipal.add(fr);
+        fr.setVisible(true);
+    }//GEN-LAST:event_btnListadoPorCicloLectivoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnListadoAbandono;
     private javax.swing.JButton btnListadoDeEgresado;
     private javax.swing.JButton btnListadoDeudores;
-    private javax.swing.JButton btnListadoGeneral;
     private javax.swing.JButton btnListadoPorCicloLectivo;
     private javax.swing.JButton btnListadoPorCurso;
     // End of variables declaration//GEN-END:variables
