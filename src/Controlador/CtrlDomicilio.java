@@ -61,7 +61,7 @@ public class CtrlDomicilio {
     public void cambiarDomicilio(int idDomicilio, int nroLote, String telefono, int idCalle, int idEdificio){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE domicilio SET nro = ?, telefono = ?, idLugar = ?,"
+            ps = (PreparedStatement) con.prepareStatement("UPDATE domicilio SET nroLote = ?, telefono = ?, idLugar = ?,"
                     + "idEdificio = ? WHERE idDomicilio = ?");
             
             ps.setInt(1, nroLote);

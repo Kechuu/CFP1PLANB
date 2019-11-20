@@ -35,7 +35,7 @@ import modelo.LugarCurso;
  */
 public final class CrearCurso extends javax.swing.JInternalFrame {
     public static int origenBandera=0;
-   public DefaultTableModel modelo2 = null;
+   public DefaultTableModel  modelo2 = null, modelo3 = null;
    Connection con = clases.Conectar.conexion();
    public int bandera=0;
    CtrlTipoCurso ctrlTipoCurso=null;
@@ -52,7 +52,9 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
      * Creates new form NewJInternalFrame
      */
     public CrearCurso() {
+        //modelo1 = new DefaultTableModel();
         modelo2 = new DefaultTableModel();
+        modelo3 = new DefaultTableModel();
         ctrlTipoCurso = new CtrlTipoCurso();
         ctrlLugarCurso = new CtrlLugarCurso();
         fechaInicio1 = new Date();
@@ -66,6 +68,7 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
         initComponents();
         ctrlTipoCurso.cargarCombo(cbxNombreCurso);
         ctrlLugarCurso.cargarCombo(cbxLugarCurso);
+        llenarTablaHorario(TablaHorario);
         llenarTablaHorario2(TablaHorario2);
     }
     
@@ -77,23 +80,36 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
         tabla.setModel(modelo);
     }
     
+    public void vaciarTablas2(JTable tabla){
+        DefaultTableModel modelo =new DefaultTableModel();
+        modelo3.addColumn("Dia");
+        modelo3.addColumn("Desde");
+        modelo3.addColumn("Hasta");
+        tabla.setModel(modelo3);
+    }
+    
     public void llenarTablaHorario2(JTable tabla){
-        modelo2.addColumn("Dia");
-        modelo2.addColumn("Desde");
-        modelo2.addColumn("Hasta");
-        tabla.setModel(modelo2);
+        modelo3.addColumn("Dia");
+        modelo3.addColumn("Desde");
+        modelo3.addColumn("Hasta");
+        tabla.setModel(modelo3);
     }
     
     
     public void llenarTabladeHorario2(JTable tabla){
         int filaSeleccionada = TablaHorario.getSelectedRow();
-        
+        //JOptionPane.showMessageDialog(null, TablaHorario.getSelectionModel());
         if (filaSeleccionada>=0) {
+            
+            //modelo3.addRow(TablaHorario.getSelectedRow());
+            
+            
             String datos[] = new String[3];
             datos[0]=TablaHorario.getValueAt(filaSeleccionada, 0).toString();
             datos[1]=TablaHorario.getValueAt(filaSeleccionada, 1).toString();
             datos[2]=TablaHorario.getValueAt(filaSeleccionada, 2).toString();
-            modelo2.addRow(datos);
+            modelo3.addRow(datos);
+            
         }
     }
     
@@ -191,7 +207,6 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         cbxNombreCurso = new javax.swing.JComboBox<TipoCurso>();
         btnCrearTipoCurso = new javax.swing.JButton();
-        btnAsigHora = new javax.swing.JButton();
         cbxTurno = new javax.swing.JComboBox<String>();
         cbxLugarCurso = new javax.swing.JComboBox<LugarCurso>();
         jLabel15 = new javax.swing.JLabel();
@@ -207,6 +222,7 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
         fechaFinalizacion = new com.toedter.calendar.JDateChooser();
         btnActualizarPlanes1 = new javax.swing.JButton();
         btnActualizarPlanes2 = new javax.swing.JButton();
+        btnActualizarPlanes3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -309,15 +325,6 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
         btnCrearTipoCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearTipoCursoActionPerformed(evt);
-            }
-        });
-
-        btnAsigHora.setBackground(new java.awt.Color(38, 86, 186));
-        btnAsigHora.setForeground(new java.awt.Color(255, 255, 255));
-        btnAsigHora.setText("Asignar Horario");
-        btnAsigHora.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAsigHoraActionPerformed(evt);
             }
         });
 
@@ -444,6 +451,13 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
             }
         });
 
+        btnActualizarPlanes3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/actualizar(2).png"))); // NOI18N
+        btnActualizarPlanes3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarPlanes3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -489,8 +503,13 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65)
-                        .addComponent(BotonAgregar)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addComponent(BotonAgregar))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnActualizarPlanes3)))
                         .addGap(118, 118, 118)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -501,9 +520,7 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(182, 182, 182)
                         .addComponent(btnCursado, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(185, 185, 185)
-                        .addComponent(btnAsigHora, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(353, 353, 353)
                         .addComponent(btnAgregarHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
@@ -569,15 +586,19 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCursado)
-                    .addComponent(btnAsigHora)
                     .addComponent(btnAgregarHorario))
-                .addGap(5, 5, 5)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(BotonAgregar))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(BotonAgregar))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizarPlanes3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnGuardar)
@@ -706,14 +727,17 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
 
     private void BotonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAgregarActionPerformed
         //llenarTablaHorario(TablaHorario2);
-        llenarTabladeHorario2(TablaHorario2);
-        bandera=1;
+            //llenarTablaHorario2(TablaHorario2);
+            //vaciarTablas2(TablaHorario2);
+            llenarTabladeHorario2(TablaHorario2);
+            bandera = 1;
+        
     }//GEN-LAST:event_BotonAgregarActionPerformed
 
     private void btnAgregarHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarHorarioActionPerformed
         // TODO add your handling code here:
-        vaciarTablas(TablaHorario);
-        vaciarTablas(TablaHorario2);
+        //vaciarTablas(TablaHorario);
+        //vaciarTablas(TablaHorario2);
 
         origenBandera=1;
         
@@ -767,12 +791,6 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
     private void cbxTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTurnoActionPerformed
 
     }//GEN-LAST:event_cbxTurnoActionPerformed
-
-    private void btnAsigHoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsigHoraActionPerformed
-
-        llenarTablaHorario(TablaHorario);
-
-    }//GEN-LAST:event_btnAsigHoraActionPerformed
 
     private void btnCrearTipoCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearTipoCursoActionPerformed
         // TODO add your handling code here:
@@ -851,6 +869,14 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
         ctrlLugarCurso.cargarCombo(cbxLugarCurso);
     }//GEN-LAST:event_btnActualizarPlanes2ActionPerformed
 
+    private void btnActualizarPlanes3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarPlanes3ActionPerformed
+        vaciarTablas(TablaHorario);
+        llenarTablaHorario(TablaHorario);
+        //vaciarTablas(TablaHorario2);
+        bandera=0;
+        //llenarTablaHorario2(TablaHorario2);
+    }//GEN-LAST:event_btnActualizarPlanes3ActionPerformed
+
     public void cargarCursoHorario(int idCurso){
         for (int i = 0; i < modelo2.getRowCount(); i++) {
             
@@ -918,8 +944,8 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
     public static javax.swing.JTable TablaHorario2;
     private javax.swing.JButton btnActualizarPlanes1;
     private javax.swing.JButton btnActualizarPlanes2;
+    private javax.swing.JButton btnActualizarPlanes3;
     private javax.swing.JButton btnAgregarHorario;
-    private javax.swing.JButton btnAsigHora;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCrearTipoCurso;
     private javax.swing.JButton btnCursado;

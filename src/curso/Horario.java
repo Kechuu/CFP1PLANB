@@ -205,15 +205,17 @@ public final class Horario extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        cbDias = new javax.swing.JComboBox<>();
-        txtDesde = new javax.swing.JTextField();
+        cbDias = new javax.swing.JComboBox<String>();
+        hDesde = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txtHasta = new javax.swing.JTextField();
+        hHasta = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaHorarios = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        mDesde = new javax.swing.JTextField();
+        mHasta = new javax.swing.JTextField();
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -238,14 +240,14 @@ public final class Horario extends javax.swing.JInternalFrame {
             }
         });
 
-        txtDesde.addActionListener(new java.awt.event.ActionListener() {
+        hDesde.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDesdeActionPerformed(evt);
+                hDesdeActionPerformed(evt);
             }
         });
-        txtDesde.addKeyListener(new java.awt.event.KeyAdapter() {
+        hDesde.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtDesdeKeyTyped(evt);
+                hDesdeKeyTyped(evt);
             }
         });
 
@@ -255,14 +257,14 @@ public final class Horario extends javax.swing.JInternalFrame {
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setText("Hasta");
 
-        txtHasta.addActionListener(new java.awt.event.ActionListener() {
+        hHasta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtHastaActionPerformed(evt);
+                hHastaActionPerformed(evt);
             }
         });
-        txtHasta.addKeyListener(new java.awt.event.KeyAdapter() {
+        hHasta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtHastaKeyTyped(evt);
+                hHastaKeyTyped(evt);
             }
         });
 
@@ -327,12 +329,20 @@ public final class Horario extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
-                            .addComponent(txtDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(31, 31, 31)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(hDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(mDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(68, 68, 68)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(txtHasta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(76, 76, 76))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(hHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(mHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63)))
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
@@ -351,12 +361,14 @@ public final class Horario extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregar))
+                    .addComponent(hDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregar)
+                    .addComponent(mDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
                 .addGap(32, 32, 32))
         );
@@ -387,38 +399,38 @@ public final class Horario extends javax.swing.JInternalFrame {
         //CtrlHorario ctrlHorario = new CtrlHorario();
 
         
-        if (cbDias.getSelectedIndex()==0 || txtDesde.getText().equalsIgnoreCase("") || 
-                txtHasta.getText().equalsIgnoreCase("")) {
+        if (cbDias.getSelectedIndex()==0 || hDesde.getText().equalsIgnoreCase("") || 
+                hHasta.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
         }else{
             switch(cbDias.getSelectedItem().toString()){
                 case "Lunes":
-                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 1);
+                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 1);
                     break;
                 case "Martes":
-                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 2);
+                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 2);
                     break;
                 case "Miercoles":
-                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 3);
+                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 3);
                     break;
                 case "Jueves":
-                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 4);
+                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 4);
                     break;
                 case "Viernes":
-                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 5);
+                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 5);
                     break;
                 case "Sabado":
-                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 6);
+                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 6);
                     break;
                 case "Domingo":
-                    ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 7);
+                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 7);
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "No es un dia de semana");
                     break;
             }
-             txtDesde.setText("");
-             txtHasta.setText("");
+             hDesde.setText("");
+             hHasta.setText("");
              cbDias.setSelectedIndex(0);
              llenarTablaHorario(tablaHorarios);
         }
@@ -448,21 +460,21 @@ public final class Horario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbDiasActionPerformed
 
-    private void txtHastaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHastaKeyTyped
+    private void hHastaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_hHastaKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtHastaKeyTyped
+    }//GEN-LAST:event_hHastaKeyTyped
 
-    private void txtHastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHastaActionPerformed
+    private void hHastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hHastaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtHastaActionPerformed
+    }//GEN-LAST:event_hHastaActionPerformed
 
-    private void txtDesdeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDesdeKeyTyped
+    private void hDesdeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_hDesdeKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtDesdeKeyTyped
+    }//GEN-LAST:event_hDesdeKeyTyped
 
-    private void txtDesdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDesdeActionPerformed
+    private void hDesdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hDesdeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtDesdeActionPerformed
+    }//GEN-LAST:event_hDesdeActionPerformed
 
     private void btnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarKeyPressed
         if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
@@ -483,6 +495,8 @@ public final class Horario extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<String> cbDias;
+    private javax.swing.JTextField hDesde;
+    private javax.swing.JTextField hHasta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -491,8 +505,8 @@ public final class Horario extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField mDesde;
+    private javax.swing.JTextField mHasta;
     public static javax.swing.JTable tablaHorarios;
-    private javax.swing.JTextField txtDesde;
-    private javax.swing.JTextField txtHasta;
     // End of variables declaration//GEN-END:variables
 }
