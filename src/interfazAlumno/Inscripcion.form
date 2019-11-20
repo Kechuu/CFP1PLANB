@@ -56,7 +56,7 @@
                           <Component id="btnSiguiente" pref="120" max="32767" attributes="0"/>
                       </Group>
                       <Component id="btnAsignarCurso" max="32767" attributes="0"/>
-                      <Component id="btncancelar" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnCancelar" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -78,7 +78,7 @@
                           <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                           <Component id="btnAsignarCurso" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btncancelar" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="btnCancelar" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -1334,7 +1334,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSiguienteActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btncancelar">
+        <Component class="javax.swing.JButton" name="btnCancelar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ba" green="56" red="26" type="rgb"/>
@@ -1348,7 +1348,7 @@
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btncancelarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
           </Events>
         </Component>
         <Container class="JPanelWebCam.JPanelWebCam" name="fotoPanel">

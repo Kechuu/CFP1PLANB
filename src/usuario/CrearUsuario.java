@@ -382,11 +382,11 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
             break;
             
             case "PRECEPTOR":
-                jerarquia=2;
+                jerarquia=3;
             break;
             
             case "PROFESOR":
-                jerarquia=3;
+                jerarquia=4;
             break;
         }
     }

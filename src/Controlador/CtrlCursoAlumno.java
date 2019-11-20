@@ -177,18 +177,20 @@ public class CtrlCursoAlumno {
         
         try{
             con=clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.idTipoCurso, tipoCurso.detalle FROM cursoAlumno"
+            ps=(PreparedStatement)con.prepareStatement("SELECT curso.idCurso, tipoCurso.detalle FROM cursoAlumno"
                     + " INNER JOIN curso ON cursoAlumno.idCurso = curso.idCurso"
                     + " INNER JOIN tipoCurso ON curso.idTipoCurso = tipoCurso.idTipoCurso"
                     + " WHERE cursoAlumno.idAlumno = ? AND cursoAlumno.idEstadoAlumno = 1");
             ps.setInt(1, idAlumno);
+            
+            //ps=(PreparedStatement)con.prepareStatement("SELECT c");
             
             rs=ps.executeQuery();
             
             while(rs.next()){
                 TipoCurso tipoCurso=new TipoCurso();
                 
-                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
+                tipoCurso.setIdTipoCurso(rs.getInt("idCurso"));
                 tipoCurso.setDetalle(rs.getString("detalle"));
                 
                 modelo.addElement(tipoCurso);
@@ -206,10 +208,15 @@ public class CtrlCursoAlumno {
         
         try {
             con=clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.idTipoCurso, tipoCurso.detalle FROM cursoAlumno"
+            /*ps=(PreparedStatement)con.prepareStatement("SELECT tipoCurso.idTipoCurso, tipoCurso.detalle FROM cursoAlumno"
                     + " INNER JOIN curso ON cursoAlumno.idCurso = curso.idCurso"
                     + " INNER JOIN tipoCurso ON curso.idTipoCurso = tipoCurso.idTipoCurso"
                     + " WHERE cursoAlumno.idAlumno = ? AND cursoAlumno.idEstadoAlumno=1");
+            */
+            ps=(PreparedStatement)con.prepareStatement("SELECT curso.idCurso, tipoCurso.detalle FROM cursoAlumno"
+                    + " INNER JOIN curso ON cursoAlumno.idCurso = curso.idCurso"
+                    + " INNER JOIN tipoCurso ON curso.idTipoCurso = tipoCurso.idTipoCurso"
+                    + " WHERE cursoAlumno.idAlumno = ? AND cursoAlumno.idEstadoAlumno = 1");
             
             ps.setInt(1, idAlumno);
             rs=ps.executeQuery();
@@ -223,7 +230,7 @@ public class CtrlCursoAlumno {
                 
                 tipoCurso=new TipoCurso();
                 
-                tipoCurso.setIdTipoCurso(rs.getInt("idTipoCurso"));
+                tipoCurso.setIdTipoCurso(rs.getInt("idCurso"));
                 tipoCurso.setDetalle(rs.getString("detalle"));
                 
                 cbCurso.addItem(tipoCurso);

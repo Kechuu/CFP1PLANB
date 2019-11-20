@@ -56,7 +56,7 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
         initComponents();
         
         fecha.setDate(date);
-        
+        fecha.setEnabled(false);
         btnCursoAsignar.setEnabled(false);
         btnCursoDeshacer.setEnabled(false);
     
@@ -177,6 +177,11 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        listCursosInscriptos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listCursosInscriptosValueChanged(evt);
+            }
+        });
         jScrollPane6.setViewportView(listCursosInscriptos);
 
         listaAlumnos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -195,6 +200,11 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
         txtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBuscarActionPerformed(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
             }
         });
 
@@ -510,22 +520,23 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
         if(modeloCursos.isEmpty()){
             JOptionPane.showMessageDialog(null, "No a elegido algún curso para inscribir");
         }else{
-            //int idAlumno=ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno();
+            if (listaAlumnos.getSelectedIndex()!=-1) {
+                JOptionPane.showMessageDialog(null, listaAlumnos.getSelectedIndex());
+                int idAlumno = ctrlAlumno.leer(listaAlumnos.getSelectedValue().getIdPersona()).getIdAlumno();
 
-            //int idAlumno=listaAlumnos.getSelectedValue().getIdPersona();
-            
-            int idAlumno=ctrlAlumno.leer(listaAlumnos.getSelectedValue().getIdPersona()).getIdAlumno();
-            
-            for(int i=0; i<listaCursos.getSize();i++){
-                
-                cursoAlumno.crear(listaCursos.getElementAt(i).getCosto(), fecha.getDate(), idAlumno, 1, ctrlCursoC.leer(listaCursos.getElementAt(i).getIdTipoCurso()).getIdCurso());                    
-                
+                for (int i = 0; i < listaCursos.getSize(); i++) {
+
+                    cursoAlumno.crear(listaCursos.getElementAt(i).getCosto(), fecha.getDate(), idAlumno, 1, ctrlCursoC.leerCurso(listaCursos.getElementAt(i).getIdTipoCurso()).getIdCurso());
+
+                }
+                //ctrlCursoAlum.llenarLista(ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno(), listCursosInscriptos);
+                modeloCursos.removeAllElements();
+                listaAlumnos.clearSelection();
+                listCursosInscriptos.removeAll();
+                ctrlAlumno.cargarListaAlumno(listaAlumnos);
+            } else {
+                JOptionPane.showMessageDialog(null, "No a seleccionado a un alumno");
             }
-            //ctrlCursoAlum.llenarLista(ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno(), listCursosInscriptos);
-            modeloCursos.removeAllElements();
-            listaAlumnos.clearSelection();
-            listCursosInscriptos.removeAll();
-            ctrlAlumno.cargarListaAlumno(listaAlumnos);
         }        
     }//GEN-LAST:event_btnInscribirCursosActionPerformed
 
@@ -613,6 +624,25 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarActionPerformed
 
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        // TODO add your handling code here:
+        if(txtBuscar.getText().equals("")||txtBuscar.getText()==null){
+            ctrlAlumno.cargarListaAlumno(listaAlumnos);
+        }else{
+            ctrlAlumno.listaFiltrado(listaAlumnos, txtBuscar.getText());
+        }
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void listCursosInscriptosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listCursosInscriptosValueChanged
+        // TODO add your handling code here:
+        if(listCursosInscriptos.getSelectedIndex()!= -1){
+            //btnCursoAsignar.setEnabled(true);
+
+            listDetalle.setModel(detalleCurso(listCursosInscriptos));
+
+        }
+    }//GEN-LAST:event_listCursosInscriptosValueChanged
+
     
     DefaultListModel detalleCurso(JList<TipoCurso> lista ){
         DefaultListModel model=new DefaultListModel();
@@ -622,9 +652,7 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
             CtrlCursoHora cursoHora=new CtrlCursoHora();
             Curso obj=new Curso();
             
-            obj=curso.leer(lista.getSelectedValue().getIdTipoCurso());
-            
-                //JOptionPane.showMessageDialog(null, obj);
+            obj=curso.leerCurso(lista.getSelectedValue().getIdTipoCurso());
             
             model.addElement("Ciclo Lectivo: "+String.valueOf(obj.getCicloLectivo()));
            
@@ -653,9 +681,9 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
             model.addElement("Finalización: "+ String.valueOf(obj.getFechaFinalizacion()));
             model.addElement("Lugar de cursado: "+String.valueOf(obj.getIdLugarCurso().getDetalle()));
   
-            
-            curso.llenarTabla(curso.leer(listDisponible.getSelectedValue().getIdTipoCurso()).getIdCurso(), tablaHorario);
-        
+
+            curso.llenarTabla(curso.leerCurso(lista.getSelectedValue().getIdTipoCurso()).getIdCurso(), tablaHorario);
+                    
         } catch (SQLException ex) {
             Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
         }

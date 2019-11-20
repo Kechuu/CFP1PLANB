@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -216,6 +217,34 @@ public class CtrlEmpleado {
             
             
         }catch(Exception e){
+            
+        }
+    }
+    
+    public void cargarListaFiltrado(JList<Persona>lista, String filtro){
+        DefaultListModel <Persona> modelo=new DefaultListModel<>();
+        
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM persona"
+                    + " INNER JOIN empleado ON persona.idPersona = empleado.idPersona"
+                    + " WHERE persona.apellidoPersona LIKE '%"+filtro+"%'");
+            
+            rs=ps.executeQuery();
+            
+            while(rs.next()){
+                Persona persona=new Persona();
+                
+                persona.setIdPersona(rs.getInt("idPersona"));
+                persona.setNombrePersona(rs.getString("nombrePersona"));
+                persona.setApellidoPersona(rs.getString("apellidoPersona"));
+                
+                modelo.addElement(persona);
+            }
+            
+            con.close();
+            lista.setModel(modelo);
+        }catch(SQLException e){
             
         }
     }

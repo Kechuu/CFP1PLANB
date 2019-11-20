@@ -96,6 +96,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
        desactivar();
       
        btnSiguiente.setText("Siguiente");
+       btnCancelar.setText("Cancelar");
        txtCuil.setText(cuil);
        obtenerDni(cuil);
        
@@ -123,14 +124,14 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         txtDni = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        cbNacionalidad = new javax.swing.JComboBox<Nacionalidad>();
+        cbNacionalidad = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
-        cbNacimiento = new javax.swing.JComboBox<Lugar>();
+        cbNacimiento = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         fecha = new com.toedter.calendar.JDateChooser();
-        cbTipo = new javax.swing.JComboBox<TipoDocumento>();
-        cbSexo = new javax.swing.JComboBox<Sexo>();
+        cbTipo = new javax.swing.JComboBox<>();
+        cbSexo = new javax.swing.JComboBox<>();
         jLabel29 = new javax.swing.JLabel();
         btnAgregarSx = new javax.swing.JButton();
         jLabel25 = new javax.swing.JLabel();
@@ -141,8 +142,8 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         btnActualizarLugarNac = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        cbLocalidad = new javax.swing.JComboBox<Lugar>();
-        cbBarrio = new javax.swing.JComboBox<String>();
+        cbLocalidad = new javax.swing.JComboBox<>();
+        cbBarrio = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
         panel = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -152,7 +153,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        cbCalle = new javax.swing.JComboBox<String>();
+        cbCalle = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         txtBloque = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
@@ -171,14 +172,14 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         btnActualizarLocalidad = new javax.swing.JButton();
         btnActualizarBarrio = new javax.swing.JButton();
         panelOtros = new javax.swing.JPanel();
-        cbPlan = new javax.swing.JComboBox<Planes>();
+        cbPlan = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
-        cbTrabajo = new javax.swing.JComboBox<Trabajo>();
+        cbTrabajo = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        listPlan = new javax.swing.JList<Planes>();
+        listPlan = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
-        listTrabajo = new javax.swing.JList<Trabajo>();
+        listTrabajo = new javax.swing.JList<>();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         btnAsignarTrabajo = new javax.swing.JButton();
@@ -188,7 +189,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         btnActualizarTrabajo = new javax.swing.JButton();
         btnActualizarPlanes = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
-        btncancelar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         fotoPanel = new JPanelWebCam.JPanelWebCam();
         btnAtras = new javax.swing.JButton();
         btnAsignarCurso = new javax.swing.JButton();
@@ -904,13 +905,13 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             }
         });
 
-        btncancelar.setBackground(new java.awt.Color(38, 86, 186));
-        btncancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btncancelar.setForeground(new java.awt.Color(255, 255, 255));
-        btncancelar.setText("Cancelar");
-        btncancelar.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setBackground(new java.awt.Color(38, 86, 186));
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncancelarActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -960,7 +961,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                     .addComponent(btnAsignarCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btncancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -978,7 +979,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                         .addGap(49, 49, 49)
                         .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -1036,37 +1037,39 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         btnAsignarCurso.setEnabled(false);
     }
     
-    void limpiar(){
+    void editable(){
         //PANEL INSCRIPCION
         
-        cbTipo.setSelectedIndex(0);
-        txtDni.setText("");
-        txtCuil.setText("");
-        txtNombre.setText("");
-        txtApellido.setText("");
+        cbTipo.setEnabled(false);
+        txtDni.setEditable(false);
+        txtCuil.setEditable(false);
+        txtNombre.setEditable(false);
+        txtApellido.setEditable(false);
         
-        fecha.setDate(null);
-        cbNacimiento.setSelectedIndex(0);
-        cbNacionalidad.setSelectedIndex(0);
+        fecha.setEnabled(false);
+        cbNacimiento.setEnabled(false);;
+        cbNacionalidad.setEnabled(false);;
         
         //PANEL DOMICILIO
         
-        cbLocalidad.setSelectedIndex(0);
-        txtCasa.setText("");
-        txtBloque.setText("");
-        txtPiso.setText("");
-        txtDepto.setText("");
-        txtCelular.setText("");
-        txtFijo.setText("");
-        txtCorreo.setText("");
+        cbLocalidad.setEnabled(false);
+        cbBarrio.setEnabled(false);
+        cbCalle.setEnabled(false);
+        txtCasa.setEditable(false);
+        txtBloque.setEditable(false);
+        txtPiso.setEditable(false);
+        txtDepto.setEditable(false);
+        txtCelular.setEditable(false);
+        txtFijo.setEditable(false);
+        txtCorreo.setEditable(false);
         
         //PANEL OTROS DATOS
         
-        txtHijos.setText("");
-        cbPlan.setSelectedIndex(0);
-        cbTrabajo.setSelectedIndex(0);
-        listPlan.removeAll();
-        listTrabajo.removeAll();
+        txtHijos.setEditable(false);
+        cbPlan.setEnabled(false);;
+        cbTrabajo.setEnabled(false);;
+        //listPlan.removeAll();
+        //listTrabajo.removeAll();
         
     }
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
@@ -1133,11 +1136,11 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
-    private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         Principal.activarPanel();
         dispose();
-    }//GEN-LAST:event_btncancelarActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void cbPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPlanActionPerformed
         // TODO add your handling code here:
@@ -1249,11 +1252,13 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             alumno.crear(personaDatos.getIdPersona());
     
             btnSiguiente.setText("Siguiente");
+            btnCancelar.setText("Salir");
             contadorGuardar++;
             btnAsignarCurso.setEnabled(true);
             panelContenedor.setSelectedIndex(0);
             panelContenedor.setEnabledAt(2, false);
             btnAtras.setEnabled(false);
+            editable();
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo guardar los datos");
         }
@@ -1538,11 +1543,11 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnBarrio;
     private javax.swing.JButton btnCalle;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnDeshacerPlanes;
     private javax.swing.JButton btnDeshacerTrabajo;
     private javax.swing.JButton btnLocalidad;
     private javax.swing.JButton btnSiguiente;
-    private javax.swing.JButton btncancelar;
     private javax.swing.JComboBox<String> cbBarrio;
     private javax.swing.JComboBox<String> cbCalle;
     private javax.swing.JComboBox<Lugar> cbLocalidad;
