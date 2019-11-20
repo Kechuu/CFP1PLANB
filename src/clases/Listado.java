@@ -135,7 +135,7 @@ public class Listado {
 	            datos[1]=rs.getString(3);
 	            datos[2]=rs.getString(4)+" | Ciclo Lectivo: "+rs.getString(5);
                 
-                    saldo=rs.getFloat(3);
+                    saldo=saldo+rs.getFloat(3);
                 
             	    modelo.addRow(datos);
             }
@@ -181,7 +181,7 @@ public class Listado {
                 datos[1]=rs.getString(3);
                 datos[2]=rs.getString(4);
                 
-                saldo=rs.getFloat(3);
+                saldo=saldo+rs.getFloat(3);
                 modelo.addRow(datos);
             }
             
