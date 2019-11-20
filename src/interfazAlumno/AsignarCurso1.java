@@ -360,7 +360,6 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
         tablaHorario.setFocusable(false);
         jScrollPane1.setViewportView(tablaHorario);
 
-        listDetalle.setEnabled(false);
         listDetalle.setFocusable(false);
         jScrollPane5.setViewportView(listDetalle);
 
