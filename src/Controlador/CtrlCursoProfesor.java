@@ -11,7 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
@@ -142,7 +144,7 @@ public class CtrlCursoProfesor {
             }else{
                 JOptionPane.showMessageDialog(null, "cursoProfesor No existe lo que está buscando");
             }
-            
+            con.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
@@ -217,6 +219,7 @@ public class CtrlCursoProfesor {
             	    modelo.addRow(datos);
             }
 
+            con.close();
              tabla.setModel(modelo);
          }
         catch(SQLException ex){
@@ -248,6 +251,7 @@ public class CtrlCursoProfesor {
                 
                 listaCursoProfesor.add(cursoProfesor);
             } 
+            con.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error, "+e);
         }
@@ -286,11 +290,50 @@ public class CtrlCursoProfesor {
                 
                 cbCursoProfesor.addItem(caracter2);
             }
-            
+            con.close();
         } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Tipo de Documento: "+e.getMessage());       
         }
         
+    }
+    
+    public void borradoLogicoGeneral(int idEmpleado){
+        CursoProfesor cursoProfesor;
+        CtrlCurso ctrlCurso=new CtrlCurso();
+        CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
+        CtrlPersona ctrlPersona=new CtrlPersona();
+        
+        Vector<CursoProfesor> vector=new Vector<>();
+        
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM cursoProfesor "
+                    + " WHERE idEmpleado = ?");
+            ps.setInt(1, idEmpleado);
+            rs=ps.executeQuery();
+            
+            while(rs.next()){
+                cursoProfesor=new CursoProfesor();
+                
+                cursoProfesor.setIdCursoProfesor(rs.getInt("idCursoProfesor"));
+                cursoProfesor.setIdCurso(ctrlCurso.leerCurso(rs.getInt("idCurso")));
+                
+                vector.add(cursoProfesor);
+            }
+        
+            for(int i=0; i<vector.size();i++){
+                borrar(idEmpleado, vector.get(i).getIdCurso().getIdCurso());
+            }
+            
+            java.util.Date fecha=new Date();
+            int idPersona=ctrlEmpleado.leerIdEmpleado(idEmpleado).getIdPersona().getIdPersona();
+            ctrlEmpleado.darDeBaja(fecha, idPersona, 2);
+            ctrlPersona.borrar(idPersona);
+            
+            con.close();
+        }catch(SQLException e){
+            
+        }
     }
     
 }

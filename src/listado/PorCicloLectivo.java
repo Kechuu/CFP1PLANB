@@ -107,7 +107,15 @@ public class PorCicloLectivo extends javax.swing.JInternalFrame {
             new String [] {
                 "Alumnos", "Estado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane5.setViewportView(tablaAlumno);
 
         cbCicloLectivo.addItemListener(new java.awt.event.ItemListener() {

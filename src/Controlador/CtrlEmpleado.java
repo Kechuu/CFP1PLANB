@@ -56,7 +56,7 @@ public class CtrlEmpleado {
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE empleado SET fechaBaja = ?, idEstadoEmpleado = ?"
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE empleado SET fechaBaja = ?, idEstadoEmpleado = ?, borrado = TRUE"
                     + " WHERE idPersona = ?");
             
             ps.setDate(1, fecha);

@@ -102,7 +102,15 @@ public class ListadoPorCurso extends javax.swing.JInternalFrame {
             new String [] {
                 "Día", "Desde", "Hasta"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaHorario.setEnabled(false);
         tablaHorario.setFocusable(false);
         jScrollPane2.setViewportView(tablaHorario);
@@ -143,7 +151,15 @@ public class ListadoPorCurso extends javax.swing.JInternalFrame {
             new String [] {
                 "Apellido - Nombre", "Estado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(tablaAlumno);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N

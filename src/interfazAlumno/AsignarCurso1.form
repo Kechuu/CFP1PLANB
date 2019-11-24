@@ -555,10 +555,29 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="3" rowCount="3">
-                        <Column editable="true" title="D&#xed;a" type="java.lang.Object"/>
-                        <Column editable="true" title="Desde" type="java.lang.Object"/>
-                        <Column editable="true" title="Hasta" type="java.lang.Object"/>
+                        <Column editable="false" title="D&#xed;a" type="java.lang.Object"/>
+                        <Column editable="false" title="Desde" type="java.lang.Object"/>
+                        <Column editable="false" title="Hasta" type="java.lang.Object"/>
                       </Table>
+                    </Property>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
                     </Property>
                     <Property name="enabled" type="boolean" value="false"/>
                     <Property name="focusable" type="boolean" value="false"/>
