@@ -294,7 +294,7 @@ if(Inscripcion.banderaInscripcionLugar==1){
                 crear.setVisible(true);
             }else{
                 this.setVisible(false);
-            Principal.crearBarrio();//Llama al frame de Crear barrio                
+                Principal.crearBarrio();//Llama al frame de Crear barrio                
             }
 
         } catch (ClassNotFoundException | SQLException ex) {

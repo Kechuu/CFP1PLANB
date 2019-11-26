@@ -11,6 +11,8 @@ import Controlador.CtrlLugar;
 import Controlador.CtrlPersonaTrabajo;
 import Controlador.CtrlPlanPersona;
 import java.sql.SQLException;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import menu.Principal;
 import modelo.Lugar;
 import modelo.Persona;
@@ -21,6 +23,7 @@ import modelo.Persona;
  */
 public class EstadoAlumno extends javax.swing.JInternalFrame {
 
+    
     CtrlLugar ctrlLugar=new CtrlLugar();
     CtrlCursoAlumno ctrlCursoAlumno=new CtrlCursoAlumno();
     CtrlPersonaTrabajo ctrlPersonaTrabajo=new CtrlPersonaTrabajo();
@@ -435,9 +438,24 @@ public class EstadoAlumno extends javax.swing.JInternalFrame {
 
     private void btnEliminarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAlumnoActionPerformed
         // TODO add your handling code here:
+
+        if(JOptionPane.showConfirmDialog(null, "¿Desea dar de baja este alumno?","",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+            // 'ELIMINAR' la persona
+            MotivoBajaA fr=new MotivoBajaA(ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno());
+            
+            Principal.panelPrincipal.add(fr);
+            this.setComponentZOrder(fr, 0);
+            fr.setVisible(true);
+            
+        }else{
+            //NADA :v
+        }
     }//GEN-LAST:event_btnEliminarAlumnoActionPerformed
 
-
+    @Override
+    public boolean isOptimizedDrawingEnabled() {
+        return false;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminarAlumno;
     private javax.swing.JButton btncancelar;

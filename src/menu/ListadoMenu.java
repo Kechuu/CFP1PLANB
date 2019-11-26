@@ -6,6 +6,7 @@
 package menu;
 
 import listado.Deudores;
+import listado.EgresadoDesercion;
 import listado.ListadoPorCurso;
 import listado.PorCicloLectivo;
 
@@ -56,8 +57,18 @@ public class ListadoMenu extends javax.swing.JPanel {
         });
 
         btnListadoDeEgresado.setText("Listado de Egresados");
+        btnListadoDeEgresado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListadoDeEgresadoActionPerformed(evt);
+            }
+        });
 
         btnListadoAbandono.setText("Listado de Deserción");
+        btnListadoAbandono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListadoAbandonoActionPerformed(evt);
+            }
+        });
 
         btnListadoDeudores.setText("Listado de Deudores");
         btnListadoDeudores.addActionListener(new java.awt.event.ActionListener() {
@@ -129,6 +140,28 @@ public class ListadoMenu extends javax.swing.JPanel {
         Principal.panelPrincipal.add(fr);
         fr.setVisible(true);
     }//GEN-LAST:event_btnListadoPorCicloLectivoActionPerformed
+
+    private void btnListadoDeEgresadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListadoDeEgresadoActionPerformed
+        // TODO add your handling code here:
+        //EGRESADO
+        this.setVisible(false);
+        Principal.desactivarPanel();
+        
+        EgresadoDesercion ed=new EgresadoDesercion(3);
+        Principal.panelPrincipal.add(ed);
+        ed.setVisible(true);
+    }//GEN-LAST:event_btnListadoDeEgresadoActionPerformed
+
+    private void btnListadoAbandonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListadoAbandonoActionPerformed
+        // TODO add your handling code here:
+        //DE BAJA
+        this.setVisible(false);
+        Principal.desactivarPanel();
+        
+        EgresadoDesercion ed=new EgresadoDesercion(2);
+        Principal.panelPrincipal.add(ed);
+        ed.setVisible(true);
+    }//GEN-LAST:event_btnListadoAbandonoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

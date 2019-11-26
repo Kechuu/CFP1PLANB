@@ -185,7 +185,15 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
             new String [] {
                 "Día", "Desde", "Hasta"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaHorario.setEnabled(false);
         tablaHorario.setFocusable(false);
         jScrollPane1.setViewportView(tablaHorario);

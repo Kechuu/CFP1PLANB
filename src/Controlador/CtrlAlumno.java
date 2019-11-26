@@ -44,7 +44,7 @@ public class CtrlAlumno {
     public void borrar(int idPersona, int idAlumno){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE alumno borrado SET = TRUE WHERE idPersona = ? AND idAlumno = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE alumno SET borrado = TRUE WHERE idPersona = ? AND idAlumno = ?");
             
             ps.setInt(1, idPersona);
             ps.setInt(2, idAlumno);

@@ -53,6 +53,7 @@ public class Listado {
                 modelo.addElement(tipoCurso);
             }
             
+            con.close();
             lista.setModel(modelo);
             
         }catch(SQLException e){
@@ -97,7 +98,8 @@ public class Listado {
             	    modelo.addRow(datos);
             }
 
-             tabla.setModel(modelo);
+            con.close();
+            tabla.setModel(modelo);
          }
         catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "ERROR"); 
@@ -135,12 +137,14 @@ public class Listado {
 	            datos[1]=rs.getString(3);
 	            datos[2]=rs.getString(4)+" | Ciclo Lectivo: "+rs.getString(5);
                 
-                    saldo=rs.getFloat(3);
+                    saldo=saldo+rs.getFloat(3);
                 
             	    modelo.addRow(datos);
             }
 
-             tabla.setModel(modelo);
+            con.close();
+            
+            tabla.setModel(modelo);
          }
         catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "ERROR"); 
@@ -181,7 +185,7 @@ public class Listado {
                 datos[1]=rs.getString(3);
                 datos[2]=rs.getString(4);
                 
-                saldo=rs.getFloat(3);
+                saldo=saldo+rs.getFloat(3);
                 modelo.addRow(datos);
             }
             
@@ -208,6 +212,8 @@ public class Listado {
                 cb.addItem(rs.getObject("cicloLectivo"));
                 
             }
+            
+            con.close();
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
@@ -238,6 +244,7 @@ public class Listado {
                 modelo.addElement(tipoCurso);
             }
             
+            con.close();
             lista.setModel(modelo);
             
         }catch(SQLException e){
@@ -245,4 +252,45 @@ public class Listado {
         }        
     }
     
+    public void listadoEgresadoDesercion(JList<Persona> lista, int tipo){
+        
+        DefaultListModel <Persona> modelo=new DefaultListModel<>();
+        
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT persona.idPersona, persona.apellidoPersona, persona.nombrePersona, cursoAlumno.fechaBaja FROM persona"
+                    + " INNER JOIN alumno ON persona.idPersona = alumno.idPersona"
+                    + " INNER JOIN cursoAlumno ON alumno.idAlumno = cursoAlumno.idAlumno"
+                    + " INNER JOIN estadoAlumno ON cursoAlumno.idEstadoAlumno = estadoAlumno.idEstadoAlumno"
+                    + " WHERE cursoAlumno.idEstadoAlumno = ?");
+            ps.setInt(1, tipo);
+            
+            rs=ps.executeQuery();
+            
+            while(rs.next()){
+            
+                Persona persona=new Persona();
+                persona.setIdPersona(rs.getInt(1));
+                persona.setApellidoPersona(rs.getString(2));
+                
+                if(tipo==2){
+                    persona.setNombrePersona(rs.getString(3)+" | Fecha de baja: "+rs.getString(4));
+                    
+                }else{
+                    if(tipo==3){
+                        persona.setNombrePersona(rs.getString(3)+" | Fecha de egreso: "+rs.getString(4));                           
+                    }
+                }
+                
+                modelo.addElement(persona);
+            }
+            
+            con.close();
+            
+            lista.setModel(modelo);
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+    }
 }

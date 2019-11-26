@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.CursoAlumno;
+import modelo.Lugar;
 import modelo.TipoCurso;
 /**
  *
@@ -95,6 +97,7 @@ public class CtrlCursoAlumno {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
     }
+    
     
     public void costo(int idAlumno,int idCurso, float costo, int cursoAlumno){
         try {
@@ -273,11 +276,52 @@ public class CtrlCursoAlumno {
             	    modelo.addRow(datos);
             }
 
-             tabla.setModel(modelo);
+            con.close();
+            tabla.setModel(modelo);
          }
         catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "ERROR"); 
         }
         
+    }
+    
+    public void borradoLogico(int idAlumno, int idMotivo, java.util.Date fecha){
+        CtrlCurso ctrlCurso=new CtrlCurso();
+        CtrlAlumno ctrlAlumno=new CtrlAlumno();
+        CtrlPersona ctrlPersona=new CtrlPersona();
+        
+        CursoAlumno cursoAlumno;
+        Vector<CursoAlumno> vector = new Vector<>();
+        
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM cursoAlumno"
+                    + " WHERE idAlumno = ? AND idEstadoAlumno = 1");
+            ps.setInt(1, idAlumno);
+            
+            rs=ps.executeQuery();
+            
+            while(rs.next()){
+                cursoAlumno=new CursoAlumno();
+                
+                cursoAlumno.setIdCursoAlumno(rs.getInt("idCursoAlumno"));
+                cursoAlumno.setIdCurso(ctrlCurso.leerCurso(rs.getInt("idCurso")));
+                
+                vector.add(cursoAlumno);
+            }
+         
+    //public void alumnoBajaEgresado(int idAlumno,int idCurso, int idMotivoBaja,int idEstadoAlumno, java.util.Date fechaBajaEgreso){
+            java.sql.Date fechaS=new Date(fecha.getTime());
+        
+            for(int i=0; i<vector.size(); i++){
+                alumnoBajaEgresado(idAlumno, vector.get(i).getIdCurso().getIdCurso(), idMotivo, 2, fechaS);
+            }
+            
+            ctrlAlumno.borrar(ctrlAlumno.leerId(idAlumno).getIdPersona().getIdPersona(), idAlumno);
+            ctrlPersona.borrar(ctrlAlumno.leerId(idAlumno).getIdPersona().getIdPersona());
+            
+        }catch(SQLException e){
+            
+        }
     }
 }

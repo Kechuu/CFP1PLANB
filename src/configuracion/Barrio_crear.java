@@ -241,7 +241,6 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
     private void btnAgregarCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCalleActionPerformed
         this.setVisible(false);
         try {
-            // TODO add your handling code here:
             if(Inscripcion.banderaInscripcionLugar==1){
             
             Calles_crear crear1=new Calles_crear();
@@ -250,9 +249,10 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
             this.setComponentZOrder(crear1, 0);
             crear1.setVisible(true);
             }else{
+                this.setVisible(false);
                 Principal.crearCalle();
             }
-            
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Barrio_crear.class.getName()).log(Level.SEVERE, null, ex);
         }

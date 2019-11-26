@@ -225,7 +225,7 @@ public class Login extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         String clave=null;
         clave=JOptionPane.showInputDialog("Ingrese la clave dada");
-        
+        //CAMBIAR LUEGO CON un if(JOptionPane.show.... etc
         if(clave.equals("claveDirector")){
            this.setVisible(false);
 /*                PanelDni.alumnoEmpleado=3;

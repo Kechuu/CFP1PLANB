@@ -5,12 +5,31 @@
  */
 package listado;
 
+import Controlador.CtrlAlumno;
+import Controlador.CtrlCurso;
+import Controlador.CtrlCursoAlumno;
+import Controlador.CtrlCursoHora;
+import clases.Listado;
+import interfazAlumno.Inscripcion;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.ListModel;
+import menu.Principal;
+import modelo.Curso;
+import modelo.Persona;
+import modelo.TipoCurso;
+
 /**
  *
  * @author araa
  */
 public class EgresadoDesercion extends javax.swing.JInternalFrame {
 
+    Listado listado=new Listado();
+    
     /**
      * Creates new form Egresados
      */
@@ -18,6 +37,11 @@ public class EgresadoDesercion extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public EgresadoDesercion(int tipo){
+        initComponents();
+        
+        listado.listadoEgresadoDesercion(listaAlumnos, tipo);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,8 +61,12 @@ public class EgresadoDesercion extends javax.swing.JInternalFrame {
         tablaHorario = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
         listDetalle = new javax.swing.JList<>();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaAlumnos = new javax.swing.JList<>();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listaCursos = new javax.swing.JList<>();
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
 
@@ -96,12 +124,19 @@ public class EgresadoDesercion extends javax.swing.JInternalFrame {
             new String [] {
                 "Día", "Desde", "Hasta"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaHorario.setEnabled(false);
         tablaHorario.setFocusable(false);
         jScrollPane2.setViewportView(tablaHorario);
 
-        listDetalle.setEnabled(false);
         listDetalle.setFocusable(false);
         jScrollPane5.setViewportView(listDetalle);
 
@@ -126,52 +161,71 @@ public class EgresadoDesercion extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Alumno", "Nombre de curso"
+        listaAlumnos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaAlumnosValueChanged(evt);
             }
-        ));
-        jScrollPane4.setViewportView(jTable3);
+        });
+        jScrollPane1.setViewportView(listaAlumnos);
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel11.setText("Alumnos");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel12.setText("Cursos:");
+
+        listaCursos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaCursosValueChanged(evt);
+            }
+        });
+        jScrollPane3.setViewportView(listaCursos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel12)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(101, 101, 101)
+                .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(52, Short.MAX_VALUE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -185,7 +239,7 @@ public class EgresadoDesercion extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -193,26 +247,97 @@ public class EgresadoDesercion extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-
+        dispose();
+        Principal.activarPanel();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnImprimirActionPerformed
 
+    private void listaAlumnosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaAlumnosValueChanged
+        // TODO add your handling code here:
+        if(listaAlumnos.getSelectedIndex()!=-1){
+            CtrlAlumno ctrlAlumno = new CtrlAlumno();
+            CtrlCursoAlumno ctrlCursoAlumno=new CtrlCursoAlumno();
+            
+            int idAlumno= ctrlAlumno.leer(listaAlumnos.getSelectedValue().getIdPersona()).getIdAlumno();
+            ctrlCursoAlumno.llenarLista(idAlumno, listaCursos);
+            
+        }
+    }//GEN-LAST:event_listaAlumnosValueChanged
+
+    private void listaCursosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaCursosValueChanged
+        // TODO add your handling code here:
+        if(listaCursos.getSelectedIndex()!=-1){
+            
+            listDetalle.setModel(detalleCurso(listaCursos));
+
+        }
+    }//GEN-LAST:event_listaCursosValueChanged
+
+    DefaultListModel detalleCurso(JList<TipoCurso> lista) {
+        DefaultListModel model = new DefaultListModel();
+
+        try {
+            CtrlCurso curso = new CtrlCurso();
+            CtrlCursoHora cursoHora = new CtrlCursoHora();
+            Curso obj = new Curso();
+
+            obj = curso.leerCurso(lista.getSelectedValue().getIdTipoCurso());
+
+            model.addElement("Ciclo Lectivo: " + String.valueOf(obj.getCicloLectivo()));
+
+            switch (obj.getTurno()) {
+
+                case 1:
+                    model.addElement("Turno: Matutino");
+                    break;
+
+                case 2:
+                    model.addElement("Turno: Tarde");
+                    break;
+
+                case 3:
+                    model.addElement("Turno: Vespertino");
+                    break;
+
+                case 4:
+                    model.addElement("Turno: Nocturno");
+                    break;
+            }
+
+            model.addElement("Costo: " + String.valueOf(obj.getCosto()));
+            model.addElement("Cupo actual: " + String.valueOf(obj.getCupo()));
+            model.addElement("Fecha de inicio: " + String.valueOf(obj.getFechaInicio()));
+            model.addElement("Finalización: " + String.valueOf(obj.getFechaFinalizacion()));
+            model.addElement("Lugar de cursado: " + String.valueOf(obj.getIdLugarCurso().getDetalle()));
+
+            curso.llenarTabla(curso.leerCurso(lista.getSelectedValue().getIdTipoCurso()).getIdCurso(), tablaHorario);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Inscripcion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return model;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnImprimir;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable3;
     private javax.swing.JList<String> listDetalle;
+    private javax.swing.JList<Persona> listaAlumnos;
+    private javax.swing.JList<TipoCurso> listaCursos;
     private javax.swing.JTable tablaHorario;
     // End of variables declaration//GEN-END:variables
 }

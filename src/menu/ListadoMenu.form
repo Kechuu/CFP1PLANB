@@ -67,11 +67,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Listado de Egresados"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListadoDeEgresadoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnListadoAbandono">
       <Properties>
         <Property name="text" type="java.lang.String" value="Listado de Deserci&#xf3;n"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListadoAbandonoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnListadoDeudores">
       <Properties>

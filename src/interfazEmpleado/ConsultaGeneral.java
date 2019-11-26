@@ -11,6 +11,7 @@ import Controlador.CtrlCursoProfesor;
 import Controlador.CtrlEmpleado;
 import Controlador.CtrlGremio;
 import Controlador.CtrlLugar;
+import Controlador.CtrlPersona;
 import Controlador.CtrlPersonaTrabajo;
 import Controlador.CtrlPlanPersona;
 import Controlador.CtrlTitulo;
@@ -33,6 +34,7 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
     Lugar barrio=new Lugar();
     Persona personaDatos=new Persona();
 
+    CtrlPersona ctrlPersona=new CtrlPersona();
     CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
     CtrlGremio ctrlGremio=new CtrlGremio();
     CtrlTitulo ctrlTitulo=new CtrlTitulo();
@@ -459,6 +461,16 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
 
     private void btnEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEmpleadoActionPerformed
         // TODO add your handling code here:
+        if(JOptionPane.showConfirmDialog(null, "","",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+            // 'ELIMINAR' la persona
+    //ctrlCursoProfesor.borrar(ctrlEmpleado.leer(personaModelo.getIdPersona()).getIdEmpleado(), idCurso);
+            int idEmpleado=ctrlEmpleado.leer(personaDatos.getIdPersona()).getIdEmpleado();
+            
+            ctrlCursoP.borradoLogicoGeneral(idEmpleado);
+            
+        }else{
+            //NADA :v
+        }
     }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
 
 

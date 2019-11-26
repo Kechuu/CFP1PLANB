@@ -88,7 +88,15 @@ public class Deudores extends javax.swing.JInternalFrame {
             new String [] {
                 "Apellido - Nombre", "Saldo", "Curso"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(tablaAlumno);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
