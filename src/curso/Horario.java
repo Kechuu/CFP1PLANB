@@ -8,7 +8,6 @@ package curso;
 import Controlador.CtrlHorario;
 import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
-import java.sql.Time;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -32,6 +31,13 @@ public final class Horario extends javax.swing.JInternalFrame {
         cargarCombo(cbDias);
         llenarTablaHorario(tablaHorarios);
         tablaHorarios.setEnabled(false);
+        horaEstandar();
+    }
+    public void horaEstandar(){
+        hDesde.setText("08");
+        mDesde.setText("00");
+        hHasta.setText("09");
+        mHasta.setText("00");
     }
     
     public void cargarCombo(JComboBox combo){
@@ -112,85 +118,6 @@ public final class Horario extends javax.swing.JInternalFrame {
         }
     }
     
-    /*
-    public void llenarTabla(JTable tabla) throws SQLException{
-        String dia=null;
-         
-        Horario horario = new Horario();
-        CtrlHorario ctrlHorario=new CtrlHorario();
-        
-        
-        con=clases.Conectar.conexion();
-        PreparedStatement ps=(PreparedStatement)con.prepareStatement("SELECT * FROM horario");
-        
-        ResultSet rs=ps.executeQuery();
-        
-        DefaultTableModel modelo =new DefaultTableModel();
-        modelo.addColumn("Día");
-        modelo.addColumn("Desde");
-        modelo.addColumn("Hasta");
-        
-        tabla.setModel(modelo);
-        
-        String[] datos= new String[3];
-        try{
-            
-            while(rs.next()){
-                ctrlHorario=new CtrlHorario();
-                
-                switch(){
-                    case 1:
-                        dia="Lunes";
-                        
-                        break;
-                        
-                    case 2:
-                        dia="Martes";
-                        
-                        break;
-                    
-                    case 3:
-                        dia="Miercoles";
-                        
-                        break;
-                        
-                    case 4:
-                        dia="Jueves";
-                        
-                        break;
-                        
-                    case 5:
-                        dia="Viernes";
-                        
-                        break;
-                        
-                    case 6:
-                        dia="Sábado";
-                        
-                        break;
-                        
-                    case 7:
-                        dia="Domingo";
-                        
-                        break;
-                }
-                
-                datos[0]=dia;
-                datos[1]=String.valueOf(hora.getIdHorario().getDesde().toLocalTime());
-                datos[2]=String.valueOf(hora.getIdHorario().getHasta().toLocalTime());
-                
-                modelo.addRow(datos);
-            }
-            
-            tabla.setModel(modelo);
-         }
-        catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LAS LOCALIDADES EN LA TABLA"); 
-        }
-        
-    }
-    */
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -240,33 +167,11 @@ public final class Horario extends javax.swing.JInternalFrame {
             }
         });
 
-        hDesde.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hDesdeActionPerformed(evt);
-            }
-        });
-        hDesde.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                hDesdeKeyTyped(evt);
-            }
-        });
-
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel10.setText("Desde");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setText("Hasta");
-
-        hHasta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hHastaActionPerformed(evt);
-            }
-        });
-        hHasta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                hHastaKeyTyped(evt);
-            }
-        });
 
         tablaHorarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -332,14 +237,14 @@ public final class Horario extends javax.swing.JInternalFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(hDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(mDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(mDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(68, 68, 68)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(76, 76, 76))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(hHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(hHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(mHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(63, 63, 63)))
@@ -394,45 +299,68 @@ public final class Horario extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         CtrlHorario ctrlHorario=new CtrlHorario();
-        
+        int hDesde1 = Integer.parseInt(hDesde.getText());
+        int mDesde1 = Integer.parseInt(mDesde.getText());
+        int hHasta1 = Integer.parseInt(hHasta.getText());
+        int mHasta1 = Integer.parseInt(mHasta.getText());
         //ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 2);
         //CtrlHorario ctrlHorario = new CtrlHorario();
 
         
-        if (cbDias.getSelectedIndex()==0 || hDesde.getText().equalsIgnoreCase("") || 
-                hHasta.getText().equalsIgnoreCase("")) {
-            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
+        if (cbDias.getSelectedIndex()==0 || hDesde1>23 || hDesde1<0 || mDesde1 >59 || mDesde1<0
+                || hHasta1>23 || hHasta1<0 || mHasta1>59 || mHasta1<0) {
+            JOptionPane.showMessageDialog(null, "Hora inexistente o no selecciono un dia");
         }else{
+            String desde,hasta;
+            desde = hDesde.getText()+":"+mDesde.getText();
+            hasta = hHasta.getText()+":"+mHasta.getText();
             switch(cbDias.getSelectedItem().toString()){
                 case "Lunes":
-                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 1);
+                    ctrlHorario.crear(desde,hasta, 1);
+                    horaEstandar();
+                    cbDias.setSelectedIndex(0);
+                    llenarTablaHorario(tablaHorarios);
                     break;
                 case "Martes":
-                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 2);
+                    ctrlHorario.crear(desde,hasta, 2);
+                    horaEstandar();
+                    cbDias.setSelectedIndex(0);
+                    llenarTablaHorario(tablaHorarios);
                     break;
                 case "Miercoles":
-                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 3);
+                    ctrlHorario.crear(desde,hasta, 3);
+                    horaEstandar();
+                    cbDias.setSelectedIndex(0);
+                    llenarTablaHorario(tablaHorarios);
                     break;
                 case "Jueves":
-                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 4);
+                    ctrlHorario.crear(desde,hasta, 4);
+                    horaEstandar();
+                    cbDias.setSelectedIndex(0);
+                    llenarTablaHorario(tablaHorarios);
                     break;
                 case "Viernes":
-                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 5);
+                    ctrlHorario.crear(desde,hasta, 5);
+                    horaEstandar();
+                    cbDias.setSelectedIndex(0);
+                    llenarTablaHorario(tablaHorarios);
                     break;
                 case "Sabado":
-                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 6);
+                    ctrlHorario.crear(desde,hasta, 6);
+                    horaEstandar();
+                    cbDias.setSelectedIndex(0);
+                    llenarTablaHorario(tablaHorarios);
                     break;
                 case "Domingo":
-                    ctrlHorario.crear(hDesde.getText(), hHasta.getText(), 7);
+                    ctrlHorario.crear(desde,hasta, 7);
+                    horaEstandar();
+                    cbDias.setSelectedIndex(0);
+                    llenarTablaHorario(tablaHorarios);
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "No es un dia de semana");
                     break;
             }
-             hDesde.setText("");
-             hHasta.setText("");
-             cbDias.setSelectedIndex(0);
-             llenarTablaHorario(tablaHorarios);
         }
         
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -459,22 +387,6 @@ public final class Horario extends javax.swing.JInternalFrame {
     private void cbDiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDiasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbDiasActionPerformed
-
-    private void hHastaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_hHastaKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_hHastaKeyTyped
-
-    private void hHastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hHastaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_hHastaActionPerformed
-
-    private void hDesdeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_hDesdeKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_hDesdeKeyTyped
-
-    private void hDesdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hDesdeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_hDesdeActionPerformed
 
     private void btnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarKeyPressed
         if (evt.getKeyCode()==KeyEvent.VK_ENTER) {

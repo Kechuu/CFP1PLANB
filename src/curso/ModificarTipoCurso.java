@@ -57,13 +57,14 @@ public final class ModificarTipoCurso extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtcosto = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        cbxPeriodo = new javax.swing.JComboBox<>();
+        cbxPeriodo = new javax.swing.JComboBox<Periodo>();
         btnPeriodo = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        cbxNombreCurso = new javax.swing.JComboBox<>();
+        cbxNombreCurso = new javax.swing.JComboBox<TipoCurso>();
         jLabel2 = new javax.swing.JLabel();
         txtNombreNuevo = new javax.swing.JTextField();
+        btnActualizarPlanes1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -144,6 +145,13 @@ public final class ModificarTipoCurso extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Nuevo Nombre");
 
+        btnActualizarPlanes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/actualizar(2).png"))); // NOI18N
+        btnActualizarPlanes1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarPlanes1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -167,13 +175,17 @@ public final class ModificarTipoCurso extends javax.swing.JInternalFrame {
                         .addGap(50, 50, 50)
                         .addComponent(jLabel10))
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)
-                        .addComponent(btnPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnActualizarPlanes1)
+                        .addGap(15, 15, 15)
+                        .addComponent(btnPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,13 +198,15 @@ public final class ModificarTipoCurso extends javax.swing.JInternalFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel2))
                     .addComponent(txtNombreNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
+                .addGap(35, 35, 35)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(cbxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPeriodo))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10)
+                        .addComponent(cbxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnPeriodo)
+                    .addComponent(btnActualizarPlanes1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(70, 70, 70)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
@@ -313,6 +327,11 @@ public final class ModificarTipoCurso extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnCancelarKeyPressed
 
+    private void btnActualizarPlanes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarPlanes1ActionPerformed
+        cbxPeriodo.removeAllItems();
+        ctrlPeriodo.cargarCombo(cbxPeriodo);
+    }//GEN-LAST:event_btnActualizarPlanes1ActionPerformed
+
     public void vaciarCampos(){
         txtNombreNuevo.setText("");
         txtcosto.setText("");
@@ -334,6 +353,7 @@ public final class ModificarTipoCurso extends javax.swing.JInternalFrame {
         return false;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizarPlanes1;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnPeriodo;

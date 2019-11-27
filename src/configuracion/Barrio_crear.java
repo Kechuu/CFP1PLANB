@@ -239,16 +239,16 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCalleActionPerformed
+        this.setVisible(false);
         try {
-            // TODO add your handling code here:
-            if (Inscripcion.banderaInscripcionLugar == 1) {
-                //this.setVisible(false);
-                Calles_crear crear1 = new Calles_crear();
-
-                Principal.panelPrincipal.add(crear1);
-                this.setComponentZOrder(crear1, 0);
-                crear1.setVisible(true);
-            } else {
+            if(Inscripcion.banderaInscripcionLugar==1){
+            
+            Calles_crear crear1=new Calles_crear();
+            
+            Principal.panelPrincipal.add(crear1);
+            this.setComponentZOrder(crear1, 0);
+            crear1.setVisible(true);
+            }else{
                 this.setVisible(false);
                 Principal.crearCalle();
             }
