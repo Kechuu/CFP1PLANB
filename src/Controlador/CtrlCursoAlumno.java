@@ -316,9 +316,9 @@ public class CtrlCursoAlumno {
             for(int i=0; i<vector.size(); i++){
                 alumnoBajaEgresado(idAlumno, vector.get(i).getIdCurso().getIdCurso(), idMotivo, 2, fechaS);
             }
-            
-            ctrlAlumno.borrar(ctrlAlumno.leerId(idAlumno).getIdPersona().getIdPersona(), idAlumno);
+    //HAY QUE VERIFICAR SI ESTA DADO DE BAJA SI LOS CURSOS EN QUE ESTÁ SIGUE ACTIVO        
             ctrlPersona.borrar(ctrlAlumno.leerId(idAlumno).getIdPersona().getIdPersona());
+            ctrlAlumno.borrar(ctrlAlumno.leerId(idAlumno).getIdPersona().getIdPersona(), idAlumno);
             
         }catch(SQLException e){
             

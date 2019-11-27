@@ -248,4 +248,18 @@ public class CtrlEmpleado {
             
         }
     }
+    
+    public void cambiarEstado(int idPersona){
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("UPDATE empleado SET borrado = FALSE WHERE idPersona = ?");
+            
+            ps.setInt(1, idPersona);
+            ps.executeUpdate();
+            
+            con.close();
+        }catch(SQLException e){
+            
+        }
+    }
 }

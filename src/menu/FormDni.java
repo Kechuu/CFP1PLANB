@@ -5,6 +5,8 @@
  */
 package menu;
 
+import Controlador.CtrlAlumno;
+import Controlador.CtrlEmpleado;
 import Controlador.CtrlPersona;
 import Controlador.CtrlUsuario;
 import clases.CambiaPanel;
@@ -315,9 +317,28 @@ public class FormDni extends javax.swing.JInternalFrame {
                             break;
 
                         case 6:
-                            EstadoAlumno consulta=new EstadoAlumno(personaObj);
-                            Principal.panelPrincipal.add(consulta);
-                            consulta.setVisible(true);
+                            if(personaObj.isBorrado()){
+                                if(JOptionPane.showConfirmDialog(null, "Los datos del alumno están dados de baja ¿Desea volver a cambiar el estado?","",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+                                    CtrlAlumno ctrlAlumno=new CtrlAlumno();
+                                    int idPersona=personaObj.getIdPersona();
+                                    //personaObj=null;
+                                    JOptionPane.showMessageDialog(null, "jaop");
+                                    ctrlPersona.cambiarEstado(idPersona);
+                                    ctrlAlumno.cambiarEstado(idPersona);
+                                    
+                                    EstadoAlumno consulta = new EstadoAlumno(personaObj);
+                                    Principal.panelPrincipal.add(consulta);
+                                    consulta.setVisible(true);
+                                }else{
+                                    Principal.activarPanel();
+                                    dispose();
+                                }
+                            } else {
+                                EstadoAlumno consulta = new EstadoAlumno(personaObj);
+                                Principal.panelPrincipal.add(consulta);
+                                consulta.setVisible(true);
+                            }
+                            
                             break;
                     }
                 }
@@ -361,9 +382,28 @@ public class FormDni extends javax.swing.JInternalFrame {
                         break;
                             
                         case 5:
-                            ConsultaGeneral consulta=new ConsultaGeneral(personaObj);
-                            Principal.panelPrincipal.add(consulta);
-                            consulta.setVisible(true);
+                            if (personaObj.isBorrado()) {
+                                if (JOptionPane.showConfirmDialog(null, "Los datos del empleado están dados de baja ¿Desea volver a cambiar el estado?", "", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                                    CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
+                                    int idPersona = personaObj.getIdPersona();
+                                    
+                                    ctrlPersona.cambiarEstado(idPersona);
+                                    ctrlEmpleado.cambiarEstado(idPersona);
+
+                                    ConsultaGeneral consulta=new ConsultaGeneral(personaObj);
+                                    Principal.panelPrincipal.add(consulta);
+                                    consulta.setVisible(true);
+                            
+                                } else {
+                                    Principal.activarPanel();
+                                    dispose();
+                                }
+                            } else {
+                                ConsultaGeneral consulta=new ConsultaGeneral(personaObj);
+                                Principal.panelPrincipal.add(consulta);
+                                consulta.setVisible(true);
+                            
+                            }
                         break;
                     }
                 }

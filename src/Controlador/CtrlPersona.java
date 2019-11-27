@@ -389,6 +389,7 @@ public class CtrlPersona {
                 persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("idNacionalidad")));
                 persona.setIdFoto(ctrlFoto.leer(rs.getInt("idFoto")));
                 persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("lugarNacimiento")));
+                persona.setBorrado(rs.getBoolean("borrado"));
                 
             }else{
                 JOptionPane.showMessageDialog(null, "La persona no está registrada");
@@ -426,5 +427,28 @@ public class CtrlPersona {
         }
         
         return persona;
+    }
+    
+    public void cambiarEstado(int idPersona){
+        Persona persona = new Persona();
+        CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
+        CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
+        CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
+        CtrlFoto ctrlFoto = new CtrlFoto();
+        CtrlLugar ctrlLugarNacimiento = new CtrlLugar();
+        CtrlSexo ctrlSexo=new CtrlSexo();
+        
+        try {
+            con = clases.Conectar.conexion();
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE persona SET borrado = FALSE WHERE idPersona = ?");
+            JOptionPane.showMessageDialog(null, idPersona);
+            ps.setInt(1, idPersona);
+            ps.executeUpdate();
+          
+            con.close();
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        //return persona;
     }
 }

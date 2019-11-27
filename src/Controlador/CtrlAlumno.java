@@ -7,6 +7,7 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -154,6 +155,7 @@ public class CtrlAlumno {
             rs = ps.executeQuery();
             
             if(rs.next()){
+                alumno.setIdAlumno(rs.getInt("idAlumno"));
                 alumno.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
@@ -226,6 +228,21 @@ public class CtrlAlumno {
             con.close();
             lista.setModel(modelo);
         }catch(Exception e){
+            
+        }
+        
+    }
+    
+    public void cambiarEstado(int idPersona){
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("UPDATE alumno SET borrado = FALSE WHERE idPersona = ?");
+            
+            ps.setInt(1, idPersona);
+            ps.executeUpdate();
+            
+            con.close();
+        }catch(SQLException e){
             
         }
     }

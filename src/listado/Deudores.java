@@ -7,6 +7,7 @@ package listado;
 
 import clases.Listado;
 import menu.Principal;
+import reporte.GenerarReporte;
 
 /**
  *
@@ -223,6 +224,8 @@ public class Deudores extends javax.swing.JInternalFrame {
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         // TODO add your handling code here:
+        GenerarReporte g=new GenerarReporte();
+        g.listaDeudores();
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed

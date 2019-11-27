@@ -461,7 +461,7 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
 
     private void btnEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEmpleadoActionPerformed
         // TODO add your handling code here:
-        if(JOptionPane.showConfirmDialog(null, "","",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+        if(JOptionPane.showConfirmDialog(null, "¿Desea dar de baja al empleado?","",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
             // 'ELIMINAR' la persona
     //ctrlCursoProfesor.borrar(ctrlEmpleado.leer(personaModelo.getIdPersona()).getIdEmpleado(), idCurso);
             int idEmpleado=ctrlEmpleado.leer(personaDatos.getIdPersona()).getIdEmpleado();
