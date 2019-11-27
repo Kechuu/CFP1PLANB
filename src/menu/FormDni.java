@@ -322,7 +322,7 @@ public class FormDni extends javax.swing.JInternalFrame {
                                     CtrlAlumno ctrlAlumno=new CtrlAlumno();
                                     int idPersona=personaObj.getIdPersona();
                                     //personaObj=null;
-                                    JOptionPane.showMessageDialog(null, "jaop");
+                                    
                                     ctrlPersona.cambiarEstado(idPersona);
                                     ctrlAlumno.cambiarEstado(idPersona);
                                     

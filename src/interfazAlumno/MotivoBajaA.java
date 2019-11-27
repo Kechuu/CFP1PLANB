@@ -261,11 +261,19 @@ public class MotivoBajaA extends javax.swing.JInternalFrame {
 
     private void cbMotivoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbMotivoItemStateChanged
         // TODO add your handling code here:
-        if(cbMotivo.getSelectedIndex()!=0 || cbMotivo.getSelectedIndex()!= -1){
+        /*if(cbMotivo.getSelectedIndex()!=0 || cbMotivo.getSelectedIndex()!= -1){
             txtDetalle.setEnabled(false);
         }else{
             if(cbMotivo.getSelectedIndex()==0){
                 txtDetalle.setEnabled(true);                
+            }
+        }*/
+        
+        if(cbMotivo.getSelectedIndex()==0){
+            txtDetalle.setEnabled(true);
+        }else{
+            if(cbMotivo.getSelectedIndex()!=0){
+                txtDetalle.setEnabled(false);
             }
         }
     }//GEN-LAST:event_cbMotivoItemStateChanged

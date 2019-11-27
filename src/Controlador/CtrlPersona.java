@@ -430,18 +430,11 @@ public class CtrlPersona {
     }
     
     public void cambiarEstado(int idPersona){
-        Persona persona = new Persona();
-        CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
-        CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
-        CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
-        CtrlFoto ctrlFoto = new CtrlFoto();
-        CtrlLugar ctrlLugarNacimiento = new CtrlLugar();
-        CtrlSexo ctrlSexo=new CtrlSexo();
         
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("UPDATE persona SET borrado = FALSE WHERE idPersona = ?");
-            JOptionPane.showMessageDialog(null, idPersona);
+            
             ps.setInt(1, idPersona);
             ps.executeUpdate();
           
