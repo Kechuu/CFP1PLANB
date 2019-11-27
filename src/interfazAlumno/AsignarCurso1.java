@@ -522,21 +522,26 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         CtrlCursoAlumno cursoAlumno=new CtrlCursoAlumno();
         CtrlCurso ctrlCursoC=new CtrlCurso();
+        Curso curso;
         ListModel<TipoCurso> listaCursos=listCursos.getModel();
 
         if(modeloCursos.isEmpty()){
             JOptionPane.showMessageDialog(null, "No a elegido algún curso para inscribir");
         }else{
             if (listaAlumnos.getSelectedIndex()!=-1) {
-                JOptionPane.showMessageDialog(null, listaAlumnos.getSelectedIndex());
+                
                 int idAlumno = ctrlAlumno.leer(listaAlumnos.getSelectedValue().getIdPersona()).getIdAlumno();
 
                 for (int i = 0; i < listaCursos.getSize(); i++) {
-
-                    cursoAlumno.crear(listaCursos.getElementAt(i).getCosto(), fecha.getDate(), idAlumno, 1, ctrlCursoC.leerCurso(listaCursos.getElementAt(i).getIdTipoCurso()).getIdCurso());
-
+                    curso=new Curso();
+                    curso=ctrlCursoC.leerCurso(listaCursos.getElementAt(i).getIdTipoCurso());
+                    cursoAlumno.crear(listaCursos.getElementAt(i).getCosto(), fecha.getDate(), idAlumno, 1, curso.getIdCurso());
+                    
+                    int numCupo=0;
+                    numCupo=curso.getCupo()-1;
+                    ctrlCurso.actualizarCupo(numCupo, curso.getIdCurso());
                 }
-                //ctrlCursoAlum.llenarLista(ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno(), listCursosInscriptos);
+                
                 modeloCursos.removeAllElements();
                 listaAlumnos.clearSelection();
                 listCursosInscriptos.removeAll();

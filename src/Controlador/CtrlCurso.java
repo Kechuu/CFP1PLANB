@@ -396,14 +396,25 @@ public class CtrlCurso {
                 
                 modelo.addElement(tipoCurso);
             }
-            
+            con.close();
             lista.setModel(modelo);
             
-        }catch(Exception e){
+        }catch(SQLException e){
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         
     }
     
-    
+    public void actualizarCupo(int cupo, int idCurso){
+        try{
+            con=clases.Conectar.conexion();
+            ps=(PreparedStatement)con.prepareStatement("UPDATE curso SET cupo = ? WHERE idCurso = ?");
+            ps.setInt(1, cupo);
+            ps.setInt(2, idCurso);
+            
+            ps.executeUpdate();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+    }
 }

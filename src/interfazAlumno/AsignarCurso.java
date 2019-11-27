@@ -472,6 +472,7 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         CtrlCursoAlumno cursoAlumno=new CtrlCursoAlumno();
         CtrlCurso ctrlCursoC=new CtrlCurso();
+        Curso curso;
         ListModel<TipoCurso> listaCursos=listCursos.getModel();
 
         if(modeloCursos.isEmpty()){
@@ -480,10 +481,15 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
             int idAlumno=ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno();
 
             for(int i=0; i<listaCursos.getSize();i++){
+                curso=new Curso();
+                curso=ctrlCursoC.leer(listaCursos.getElementAt(i).getIdTipoCurso());
+                cursoAlumno.crear(listaCursos.getElementAt(i).getCosto(), fecha.getDate(), idAlumno, 1, curso.getIdCurso());                    
                 
-                cursoAlumno.crear(listaCursos.getElementAt(i).getCosto(), fecha.getDate(), idAlumno, 1, ctrlCursoC.leer(listaCursos.getElementAt(i).getIdTipoCurso()).getIdCurso());                    
-                
+                int numCupo=0;
+                numCupo=curso.getCupo()-1;
+                ctrlCurso.actualizarCupo(numCupo, curso.getIdCurso());
             }
+            
             ctrlCursoAlum.llenarLista(ctrlAlumno.leer(persona.getIdPersona()).getIdAlumno(), listCursosInscriptos);
             modeloCursos.removeAllElements();
             ctrlCurso.llenarLista(listDisponible);//se carga la lista con los cursos disponibles
