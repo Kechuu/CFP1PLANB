@@ -28,7 +28,9 @@ public class PorCicloLectivo extends javax.swing.JInternalFrame {
         initComponents();
         
         listado.cargarCicloLectivo(cbCicloLectivo);
-        filtrar();
+        if(cbCicloLectivo.getItemCount()<0){
+            filtrar();    
+        }
     }
 
     /**
