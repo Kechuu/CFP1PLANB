@@ -7,17 +7,12 @@ package usuario;
 
 import Controlador.CtrlEscuela;
 import Controlador.CtrlUsuario;
-import clases.CambiaPanel;
-import interfazEmpleado.Registro;
 import javax.swing.JOptionPane;
 import menu.Principal;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import menu.ConfiguracionGeneral;
 import menu.FormDni;
-import static menu.Principal.panelSubMenu;
 import modelo.Escuela;
 import modelo.Usuario;
 /**
