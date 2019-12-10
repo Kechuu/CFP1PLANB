@@ -11,7 +11,7 @@ import Controlador.CtrlHorario;
 import Controlador.CtrlLugarCurso;
 import Controlador.CtrlTipoCurso;
 import com.sun.glass.events.KeyEvent;
-import menu.Principal;
+import principal.Principal;
 import configuracion.Cursado_crear;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
@@ -742,14 +742,13 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
         origenBandera=1;
         
         Horario curso=new Horario();
-        Principal.panelPrincipal.add(curso);
+        Principal.principal.add(curso);
         this.setComponentZOrder(curso, 0);
         curso.setVisible(true);
     }//GEN-LAST:event_btnAgregarHorarioActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -765,7 +764,7 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
         Cursado_crear configuracion=null;
         try {
             configuracion = new Cursado_crear();
-            Principal.panelPrincipal.add(configuracion);
+            Principal.principal.add(configuracion);
             this.setComponentZOrder(configuracion, 0);
             configuracion.setVisible(true);
             
@@ -798,7 +797,7 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
         //vaciarTablas(TablaHorario2);
 
         CrearTipoCurso curso=new CrearTipoCurso();
-        Principal.panelPrincipal.add(curso);
+        Principal.principal.add(curso);
         this.setComponentZOrder(curso, 0);
         curso.setVisible(true);
 

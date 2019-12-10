@@ -15,7 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import menu.Principal;
+import principal.Principal;
 
 /**
  *
@@ -373,7 +373,6 @@ public final class Horario extends javax.swing.JInternalFrame {
             break;
             
             case 2:
-                Principal.activarPanel();
                 dispose();
             break;
         }

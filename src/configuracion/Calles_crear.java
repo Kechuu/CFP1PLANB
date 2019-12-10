@@ -16,7 +16,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Lugar;
 /**
  *
@@ -225,7 +225,6 @@ public final class Calles_crear extends javax.swing.JInternalFrame {
         if(Inscripcion.banderaInscripcionLugar==1){
             dispose();
         }else{
-            Principal.activarPanel();
             dispose();
         
         }

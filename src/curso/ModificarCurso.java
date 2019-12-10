@@ -10,7 +10,7 @@ import Controlador.CtrlCursoHora;
 import Controlador.CtrlHorario;
 import Controlador.CtrlLugarCurso;
 import Controlador.CtrlTipoCurso;
-import menu.Principal;
+import principal.Principal;
 import configuracion.Cursado_modificar;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -681,10 +681,9 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
         
         
         this.setVisible(false);
-        Principal.desactivarPanel();
         
         ModificarCurso curso1= new ModificarCurso();
-        Principal.panelPrincipal.add(curso1);
+        Principal.principal.add(curso1);
         curso1.setVisible(true);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -751,7 +750,6 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
     
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
         
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -764,7 +762,7 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
         ModificarTipoCurso cursoM=new ModificarTipoCurso();
-        Principal.panelPrincipal.add(cursoM);
+        Principal.principal.add(cursoM);
         this.setComponentZOrder(cursoM, 0);
         cursoM.setVisible(true);
         
@@ -780,7 +778,7 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
         Cursado_modificar configuracion=null;
         try {
             configuracion = new Cursado_modificar();
-            Principal.panelPrincipal.add(configuracion);
+            Principal.principal.add(configuracion);
             this.setComponentZOrder(configuracion, 0);
             configuracion.setVisible(true);
         

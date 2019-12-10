@@ -20,7 +20,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Alumno;
 import modelo.Curso;
 import modelo.Persona;
@@ -435,7 +435,7 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
         
         PagoAlumno pago=new PagoAlumno(persona);
         
-        Principal.panelPrincipal.add(pago);
+        Principal.principal.add(pago);
         
         this.setComponentZOrder(pago, 0);
         this.isOptimizedDrawingEnabled();
@@ -455,12 +455,10 @@ public class AsignarCurso extends javax.swing.JInternalFrame {
             break;
             
             case 2:
-                Principal.activarPanel();
                 dispose();
             break;
             
             default:
-                Principal.activarPanel();
                 dispose();
 
                 break;

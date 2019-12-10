@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import menu.Principal;
+import principal.Principal;
 import modelo.Empleado;
 import modelo.Licencia;
 import modelo.Persona;
@@ -330,7 +330,6 @@ public final class AsignarLicencia extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

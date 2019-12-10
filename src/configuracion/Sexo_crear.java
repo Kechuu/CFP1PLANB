@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Sexo;
 
 
@@ -202,7 +202,6 @@ public final class Sexo_crear extends javax.swing.JInternalFrame {
         if(sxBandera==1){
             dispose();
         }else{
-            Principal.activarPanel();
             dispose();    
         }
     }//GEN-LAST:event_btnCancelarActionPerformed

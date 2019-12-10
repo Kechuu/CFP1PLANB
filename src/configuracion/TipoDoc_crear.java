@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.TipoDocumento;
 
 
@@ -221,7 +221,6 @@ public final class TipoDoc_crear extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Sexo;
 
 /**
@@ -206,12 +206,14 @@ public final class Sexo_consulta extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        try {
-            Principal.crearSexo();
-        } catch (ClassNotFoundException ex) {
-        Logger.getLogger(Sexo_consulta.class.getName()).log(Level.SEVERE, null, ex);
-
+//            Principal.crearSexo();
+        try{
+            Sexo_crear cr=new Sexo_crear();
+            Principal.principal.add(cr);
+            cr.setVisible(true);
+            cr.toFront();
+        }catch(ClassNotFoundException e){
+            
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -220,19 +222,19 @@ public final class Sexo_consulta extends javax.swing.JInternalFrame {
         String nombre = (String) listaSexo.getSelectedValuesList().toString();
         nombreSexo = nombre.substring(1, nombre.length()-1);
         
-        this.setVisible(false);
-        try {
-            Principal.modificarSexo();
-        } catch (ClassNotFoundException ex) {
-        Logger.getLogger(Sexo_consulta.class.getName()).log(Level.SEVERE, null, ex);
-
+        //          Principal.modificarSexo();
+        try{
+            Sexo_modificar md=new Sexo_modificar();
+            Principal.principal.add(md);
+            md.setVisible(true);
+            md.toFront();
+        }catch(ClassNotFoundException e){
+            
         }
-        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

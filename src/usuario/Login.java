@@ -7,12 +7,16 @@ package usuario;
 
 import Controlador.CtrlEscuela;
 import Controlador.CtrlUsuario;
+import clases.CambiaPanel;
+import interfazEmpleado.Registro;
 import javax.swing.JOptionPane;
-import menu.Principal;
+import principal.Principal;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
-import menu.ConfiguracionGeneral;
-import menu.FormDni;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import principal.ConfiguracionGeneral;
+import principal.FormDni;
 import modelo.Escuela;
 import modelo.Usuario;
 /**
@@ -38,7 +42,7 @@ public class Login extends javax.swing.JInternalFrame {
         Dimension medida1= this.getSize();
         Dimension medida2= this.getSize();
         //menu.Principal.centrarPantalla(medida1.height, medida2.width, this.getLocation());
-        this.setLocation((menu.Principal.pantalla.width - medida1.width)/2,(menu.Principal.pantalla.height - medida2.height)/2);
+//        this.setLocation((menu.Principal.pantalla.width - medida1.width)/2,(menu.Principal.pantalla.height - medida2.height)/2);
     
         contador=0;
     }
@@ -220,7 +224,7 @@ public class Login extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         String clave=null;
         clave=JOptionPane.showInputDialog("Ingrese la clave dada");
-        //CAMBIAR LUEGO CON un if(JOptionPane.show.... etc
+        
         if(clave.equals("claveDirector")){
            this.setVisible(false);
 /*                PanelDni.alumnoEmpleado=3;
@@ -228,7 +232,7 @@ public class Login extends javax.swing.JInternalFrame {
             */
             FormDni.alumnoEmpleadoUser=3;
             FormDni dni=new FormDni();
-            Principal.panelPrincipal.add(dni);
+            Principal.principal.add(dni);
             dni.setVisible(true);
             
         }else{
@@ -247,33 +251,34 @@ public class Login extends javax.swing.JInternalFrame {
         if(usuario.getIdUsuario()!=0){
             this.setVisible(false);
             dispose();
+            Principal.menuBar.setVisible(true);
             
             if(usuario.getJerarquia()==3){
-                Principal.menuBar.setVisible(false);
+              //  Principal.menuBar.setVisible(false);
             }
             
             escuela=ctrlEscuela.leer();
             
             if(escuela.getIdEscuela()!=0){
-                Principal.labelInstitucion.setText(escuela.getNombreEscuela());                    
-                Principal.activarPanel();
+                //Principal.labelInstitucion.setText(escuela.getNombreEscuela());                    
                 
             }else{
                 if (usuario.getJerarquia() == 1) {
                     if (JOptionPane.showConfirmDialog(null, "No a terminado su configuración general ¿Desea completarla antes de continuar?", "", +JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
                         ConfiguracionGeneral confi = new ConfiguracionGeneral();
-                        Principal.panelPrincipal.add(confi);
+                        Principal.principal.add(confi);
                         confi.setVisible(true);
                     } else {
-                        Principal.labelInstitucion.setText(escuela.getNombreEscuela());
-                        Principal.activarPanel();
+                        Principal.menuBar.setVisible(true);
+                      //  Principal.labelInstitucion.setText(escuela.getNombreEscuela());
+                        //Principal.activarPanel();
                     }
 
                 }else{
-                    
-                    Principal.labelInstitucion.setText(escuela.getNombreEscuela());
-                    Principal.activarPanel();
+                    Principal.menuBar.setVisible(true);
+                    //Principal.labelInstitucion.setText(escuela.getNombreEscuela());
+                   // Principal.activarPanel();
                 }
 
             }

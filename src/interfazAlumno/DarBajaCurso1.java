@@ -18,7 +18,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.MotivoBaja;
 import modelo.Persona;
 import modelo.TipoCurso;
@@ -322,7 +322,6 @@ public class DarBajaCurso1 extends javax.swing.JInternalFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         //JOptionPane.showMessageDialog(null, listCursos.getSelectedIndices());
-            Principal.activarPanel();
             dispose();    
         
     }//GEN-LAST:event_btnCancelarActionPerformed

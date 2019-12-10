@@ -4,8 +4,8 @@ import Controlador.CtrlUsuario;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
-import menu.Principal;
-import static menu.Principal.panelPrincipal;
+import principal.Principal;
+//import static menu.Principal.panelPrincipal;
 import modelo.Usuario;
 
 /*
@@ -265,14 +265,13 @@ public class ModificarPass extends javax.swing.JInternalFrame {
         
             dispose();
             Login log=new Login();
-            panelPrincipal.add(log);
+            Principal.principal.add(log);
             log.setVisible(true);
         }
     }//GEN-LAST:event_btnModificarPassActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Caracter;
 
 /**
@@ -185,11 +185,16 @@ public final class Caracter_Consulta extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        try {
-            Principal.crearCaracter();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Caracter_Consulta.class.getName()).log(Level.SEVERE, null, ex);
+//        this.setVisible(false);
+        //   Principal.crearCaracter();
+        
+        try{
+            Caracter_crear cr=new Caracter_crear();
+            Principal.principal.add(cr);
+            cr.setVisible(true);
+            cr.toFront();
+        }catch(Exception e){
+            
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -205,12 +210,15 @@ public final class Caracter_Consulta extends javax.swing.JInternalFrame {
         String nombre = (String) listaCaracter.getSelectedValuesList().toString();
         nombreCaracter = nombre.substring(1, nombre.length()-1);
 
-        this.setVisible(false);
-
-        try {
-            Principal.modificarCaracter();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Caracter_Consulta.class.getName()).log(Level.SEVERE, null, ex);
+        //this.setVisible(false);
+        // Principal.modificarCaracter();
+        try{
+            Caracter_modificar md=new Caracter_modificar();
+            Principal.principal.add(md);
+            md.setVisible(true);
+            md.toFront();
+        }catch(Exception e){
+            
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -223,7 +231,6 @@ public final class Caracter_Consulta extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

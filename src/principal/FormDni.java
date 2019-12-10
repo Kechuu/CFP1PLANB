@@ -3,13 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package menu;
+package principal;
 
-import Controlador.CtrlAlumno;
-import Controlador.CtrlEmpleado;
 import Controlador.CtrlPersona;
 import Controlador.CtrlUsuario;
-import clases.CambiaPanel;
 import interfazAlumno.AsignarCurso;
 import interfazAlumno.DarBajaCurso;
 import interfazAlumno.EstadoAlumno;
@@ -23,11 +20,10 @@ import interfazEmpleado.Registro;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import static menu.Principal.panelSubMenu;
+//simport static menu.Principal.panelSubMenu;
 import modelo.Persona;
 import modelo.Usuario;
 import usuario.CrearUsuario;
@@ -276,69 +272,47 @@ public class FormDni extends javax.swing.JInternalFrame {
                 if(resp==0){
                     dispose();
                     Inscripcion ins=new Inscripcion(cuil);
-                    Principal.panelPrincipal.add(ins);
+                    Principal.principal.add(ins);
                     ins.setVisible(true);
                 }else{
                     
-                    Principal.desactivarPanel();
                     
-                    switch (AlumnoMenu.alumnoMenu) {
+                    switch (Principal.alumnoMenu) {
                         
                         case 1:
                             JOptionPane.showMessageDialog(null, "EL ALUMNO YA HA SIDO REGISTRADO");
                             
-                            Principal.activarPanel();
-                            new CambiaPanel(panelSubMenu, new AlumnoMenu());
                         break;
                         
                         case 2:
 
                             Modificar modificar = new Modificar(personaObj);
-                            Principal.panelPrincipal.add(modificar);
+                            Principal.principal.add(modificar);
                             modificar.setVisible(true);
                             break;
 
                         case 3:
                             AsignarCurso asignar=new AsignarCurso(personaObj);
-                            Principal.panelPrincipal.add(asignar);
+                            Principal.principal.add(asignar);
                             asignar.setVisible(true);
                             break;
 
                         case 4:
                             DarBajaCurso curso=new DarBajaCurso(personaObj);
-                            Principal.panelPrincipal.add(curso);
+                            Principal.principal.add(curso);
                             curso.setVisible(true);
                             break;
 
                         case 5:
                             PagoAlumno pago=new PagoAlumno(personaObj);
-                            Principal.panelPrincipal.add(pago);
+                            Principal.principal.add(pago);
                             pago.setVisible(true);
                             break;
 
                         case 6:
-                            if(personaObj.isBorrado()){
-                                if(JOptionPane.showConfirmDialog(null, "Los datos del alumno están dados de baja ¿Desea volver a cambiar el estado?","",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
-                                    CtrlAlumno ctrlAlumno=new CtrlAlumno();
-                                    int idPersona=personaObj.getIdPersona();
-                                    //personaObj=null;
-                                    
-                                    ctrlPersona.cambiarEstado(idPersona);
-                                    ctrlAlumno.cambiarEstado(idPersona);
-                                    
-                                    EstadoAlumno consulta = new EstadoAlumno(personaObj);
-                                    Principal.panelPrincipal.add(consulta);
-                                    consulta.setVisible(true);
-                                }else{
-                                    Principal.activarPanel();
-                                    dispose();
-                                }
-                            } else {
-                                EstadoAlumno consulta = new EstadoAlumno(personaObj);
-                                Principal.panelPrincipal.add(consulta);
-                                consulta.setVisible(true);
-                            }
-                            
+                            EstadoAlumno consulta=new EstadoAlumno(personaObj);
+                            Principal.principal.add(consulta);
+                            consulta.setVisible(true);
                             break;
                     }
                 }
@@ -350,60 +324,39 @@ public class FormDni extends javax.swing.JInternalFrame {
                 if(resp==0){
                     dispose();
                     Registro reg=new Registro(cuil);
-                    Principal.panelPrincipal.add(reg);
+                    Principal.principal.add(reg);
                     reg.setVisible(true);
                 }else{
-                    Principal.desactivarPanel();
-                    switch(EmpleadoMenu.empleadoMenu){
+
+                    switch(Principal.empleadoMenu){
                         
                         case 1:
                             JOptionPane.showMessageDialog(null, "EL EMPLEADO YA HA SIDO REGISTRADO");
                             
-                            Principal.activarPanel();
-                            new CambiaPanel(panelSubMenu, new EmpleadoMenu());
                         break;
                         
                         case 2:
                             ModificarEmpleado empleado=new ModificarEmpleado(personaObj);
-                            Principal.panelPrincipal.add(empleado);
+                            Principal.principal.add(empleado);
                             empleado.setVisible(true);
                         break;
                             
                         case 3:
                             AsignarCursoAcargo curso=new AsignarCursoAcargo(personaObj);
-                            Principal.panelPrincipal.add(curso);
+                            Principal.principal.add(curso);
                             curso.setVisible(true);
                         break;
                             
                         case 4:
                             DarBajaCurso baja=new DarBajaCurso(personaObj);
-                            Principal.panelPrincipal.add(baja);
+                            Principal.principal.add(baja);
                             baja.setVisible(true);
                         break;
                             
                         case 5:
-                            if (personaObj.isBorrado()) {
-                                if (JOptionPane.showConfirmDialog(null, "Los datos del empleado están dados de baja ¿Desea volver a cambiar el estado?", "", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                                    CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
-                                    int idPersona = personaObj.getIdPersona();
-                                    
-                                    ctrlPersona.cambiarEstado(idPersona);
-                                    ctrlEmpleado.cambiarEstado(idPersona);
-
-                                    ConsultaGeneral consulta=new ConsultaGeneral(personaObj);
-                                    Principal.panelPrincipal.add(consulta);
-                                    consulta.setVisible(true);
-                            
-                                } else {
-                                    Principal.activarPanel();
-                                    dispose();
-                                }
-                            } else {
-                                ConsultaGeneral consulta=new ConsultaGeneral(personaObj);
-                                Principal.panelPrincipal.add(consulta);
-                                consulta.setVisible(true);
-                            
-                            }
+                            ConsultaGeneral consulta=new ConsultaGeneral(personaObj);
+                            Principal.principal.add(consulta);
+                            consulta.setVisible(true);
                         break;
                     }
                 }
@@ -415,7 +368,7 @@ public class FormDni extends javax.swing.JInternalFrame {
                     //ENTRA AQUI SI NO EXISTE TANTO EL EMPLEADO COMO EL USUARIO
                     dispose();
                     Registro empleadoUs=new Registro(cuil);
-                    Principal.panelPrincipal.add(empleadoUs);
+                    Principal.principal.add(empleadoUs);
                     empleadoUs.setVisible(true);                    
                 }else{
                     try{
@@ -429,7 +382,7 @@ public class FormDni extends javax.swing.JInternalFrame {
                     if(usuarioObj.getIdUsuario()==0){
                         JOptionPane.showMessageDialog(null, "NO EXISTE UN USUARIO PARA ESE EMPLEADO");
                         CrearUsuario user=new CrearUsuario(personaObj);
-                        Principal.panelPrincipal.add(user);
+                        Principal.principal.add(user);
                         user.setVisible(true);
                     }else{
                         JOptionPane.showMessageDialog(null, "EL USUARIO SÍ EXISTE");

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Trabajo;
 
 /**
@@ -200,11 +200,14 @@ public final class Trabajo_consulta extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        try {
-            Principal.crearTrabajo();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Trabajo_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        //            Principal.crearTrabajo();
+        try{
+            Trabajo_crear cr=new Trabajo_crear();
+            Principal.principal.add(cr);
+            cr.setVisible(true);
+            cr.toFront();
+        }catch(ClassNotFoundException e){
+            
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -213,18 +216,19 @@ public final class Trabajo_consulta extends javax.swing.JInternalFrame {
         String nombre = (String) listaTrabajo.getSelectedValuesList().toString();
         nombreTrabajo = nombre.substring(1,nombre.length()-1);
         
-        this.setVisible(false);
-
-        try {
-            Principal.modificarTrabajo();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Trabajo_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        //          Principal.modificarTrabajo();
+        try{
+            Trabajo_modificar md=new Trabajo_modificar();
+            Principal.principal.add(md);
+            md.setVisible(true);
+            md.toFront();
+        }catch(ClassNotFoundException e ){
+            
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -6,7 +6,7 @@
 package listado;
 
 import clases.Listado;
-import menu.Principal;
+import principal.Principal;
 
 /**
  *
@@ -203,7 +203,7 @@ public class Deudores extends javax.swing.JInternalFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
 
         dispose();
-        Principal.activarPanel();
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed

@@ -10,7 +10,7 @@ import Controlador.CtrlLicencia;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
-import menu.Principal;
+import principal.Principal;
 import modelo.Licencia;
 import modelo.Caracter;
 /**
@@ -256,7 +256,6 @@ public final class ModificarLicencia extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Lugar;
 
 
@@ -250,11 +250,15 @@ public final class Calles_consulta extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        try {
-            Principal.crearCalle();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Calles_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        //this.setVisible(false);
+//            Principal.crearCalle();
+        try{
+            Calles_crear cr=new Calles_crear();
+            Principal.principal.add(cr);
+            cr.setVisible(true);
+            cr.toFront();
+        }catch(ClassNotFoundException e){
+            
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -269,18 +273,20 @@ public final class Calles_consulta extends javax.swing.JInternalFrame {
         nombreBarrio = lugar1.getNombre();
         nombreCalle = nombre.substring(1, nombre.length()-1);
         
-        this.setVisible(false);
-
-        try {
-            Principal.modificarCalle();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Calles_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        //this.setVisible(false);
+        //    Principal.modificarCalle();
+        try{
+            Calles_modificar md=new Calles_modificar();
+            Principal.principal.add(md);
+            md.setVisible(true);
+            md.toFront();
+        }catch(ClassNotFoundException e){
+            
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
 

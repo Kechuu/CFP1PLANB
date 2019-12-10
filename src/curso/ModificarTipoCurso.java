@@ -8,7 +8,7 @@ package curso;
 
 import Controlador.CtrlPeriodo;
 import Controlador.CtrlTipoCurso;
-import menu.Principal;
+import principal.Principal;
 import configuracion.Periodo_modificar;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -273,7 +273,7 @@ public final class ModificarTipoCurso extends javax.swing.JInternalFrame {
             // TODO add your handling code here:
             
             Periodo_modificar curso=new Periodo_modificar();
-            Principal.panelPrincipal.add(curso);
+            Principal.principal.add(curso);
             this.setComponentZOrder(curso, 0);
             curso.setVisible(true);
         } catch (ClassNotFoundException ex) {

@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import menu.Principal;
+import principal.Principal;
 import modelo.Curso;
 import modelo.TipoCurso;
 
@@ -277,7 +277,7 @@ public class ListadoPorCurso extends javax.swing.JInternalFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
 
         dispose();
-        Principal.activarPanel();
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void cursosDisponiblesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_cursosDisponiblesValueChanged

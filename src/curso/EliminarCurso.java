@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Curso;
 import modelo.LugarCurso;
 import modelo.TipoCurso;
@@ -340,7 +340,6 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
 
     private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
         // TODO add your handling code here:
-          Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelar1ActionPerformed
 

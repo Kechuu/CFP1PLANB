@@ -12,7 +12,7 @@ import com.sun.glass.events.KeyEvent;
 import configuracion.Periodo_crear;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
-import menu.Principal;
+import principal.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -256,7 +256,7 @@ public final class CrearTipoCurso extends javax.swing.JInternalFrame {
             // TODO add your handling code here:
             
             Periodo_crear curso=new Periodo_crear();
-            Principal.panelPrincipal.add(curso);
+            Principal.principal.add(curso);
             this.setComponentZOrder(curso, 0);
             curso.setVisible(true);
         } catch (ClassNotFoundException ex) {

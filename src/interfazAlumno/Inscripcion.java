@@ -34,7 +34,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Foto;
 import modelo.Nacionalidad;
 import modelo.Planes;
@@ -1138,7 +1138,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -1346,7 +1345,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         
         AsignarCurso asignar=new AsignarCurso(personaDatos);
         
-        Principal.panelPrincipal.add(asignar);
+        Principal.principal.add(asignar);
         this.setComponentZOrder(asignar, 0);
         this.isOptimizedDrawingEnabled();//esto permite que si se pasa el foco a la anterior interfaz, sus componentes, no se sobre ponga al superior
         asignar.setVisible(true);
@@ -1359,7 +1358,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             Sexo_crear.sxBandera=1;
             
             Sexo_crear sxC = new Sexo_crear();
-            Principal.panelPrincipal.add(sxC);
+            Principal.principal.add(sxC);
             this.setComponentZOrder(sxC, 0);
             sxC.setVisible(true);
         } catch (ClassNotFoundException ex) {
@@ -1422,7 +1421,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         banderaInscripcionLugar=1;
         try {
             Localidad_crear crear = new Localidad_crear();
-            Principal.panelPrincipal.add(crear);
+            Principal.principal.add(crear);
             this.setComponentZOrder(crear, 0);
             crear.setVisible(true);
         } catch (ClassNotFoundException ex) {
@@ -1436,7 +1435,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         banderaInscripcionLugar=1;
         try {
             Barrio_crear crear=new Barrio_crear();
-            Principal.panelPrincipal.add(crear);
+            Principal.principal.add(crear);
             this.setComponentZOrder(crear, 0);
             crear.setVisible(true);
         } catch (ClassNotFoundException | SQLException ex) {
@@ -1449,7 +1448,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         banderaInscripcionLugar=1;
         try {
             Calles_crear crear=new Calles_crear();
-            Principal.panelPrincipal.add(crear);
+            Principal.principal.add(crear);
             this.setComponentZOrder(crear, 0);
             crear.setVisible(true);
         } catch (ClassNotFoundException ex) {

@@ -9,7 +9,7 @@ import Controlador.CtrlCurso;
 import clases.Listado;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import menu.Principal;
+import principal.Principal;
 import modelo.Curso;
 import modelo.TipoCurso;
 
@@ -216,7 +216,6 @@ public class PorCicloLectivo extends javax.swing.JInternalFrame {
     }
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
-        Principal.activarPanel();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void cbCicloLectivoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCicloLectivoItemStateChanged

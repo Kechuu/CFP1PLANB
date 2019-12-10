@@ -8,9 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import menu.Principal;
-import static menu.Principal.panelPrincipal;
-import menu.UsuarioMenu;
+import principal.Principal;
+//import static menu.Principal.panelPrincipal;
+//import menu.UsuarioMenu;
 import modelo.Cargo;
 import modelo.Usuario;
 
@@ -228,7 +228,7 @@ public class ModificarNombre extends javax.swing.JInternalFrame {
             this.setVisible(false);
             
             Login log=new Login();
-            panelPrincipal.add(log);
+            Principal.principal.add(log);
             log.setVisible(true);          
         }else{
             JOptionPane.showMessageDialog(null, "Necesita ingresar un nuevo nombre de usuario");
@@ -237,7 +237,6 @@ public class ModificarNombre extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

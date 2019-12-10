@@ -36,8 +36,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
-import menu.FormDni;
-import menu.Principal;
+import principal.FormDni;
+import principal.Principal;
 import modelo.Cargo;
 import modelo.Empleado;
 import modelo.Foto;
@@ -1347,7 +1347,7 @@ public final class Registro extends javax.swing.JInternalFrame {
                 try{
                     this.setVisible(false);
                     CrearUsuario crear = new CrearUsuario(personaDatos);
-                    Principal.panelPrincipal.add(crear);
+                    Principal.principal.add(crear);
                     //this.setComponentZOrder(crear, 0);
 
                     crear.setVisible(true);
@@ -1366,7 +1366,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         
         AsignarCursoAcargo asignar=new AsignarCursoAcargo(personaDatos);
         
-        Principal.panelPrincipal.add(asignar);
+        Principal.principal.add(asignar);
         this.setComponentZOrder(asignar, 0);
         this.isOptimizedDrawingEnabled();
         asignar.setVisible(true);
@@ -1379,10 +1379,9 @@ public final class Registro extends javax.swing.JInternalFrame {
         if(FormDni.alumnoEmpleadoUser==3){
             dispose();
             Login log=new Login();
-            Principal.panelPrincipal.add(log);
+            Principal.principal.add(log);
             log.setVisible(true);
         }else{    
-            Principal.activarPanel();
             dispose();
         }
     }//GEN-LAST:event_btncancelarActionPerformed
@@ -1402,7 +1401,7 @@ public final class Registro extends javax.swing.JInternalFrame {
             Sexo_crear.sxBandera=1;
             
             Sexo_crear sxC = new Sexo_crear();
-            Principal.panelPrincipal.add(sxC);
+            Principal.principal.add(sxC);
             this.setComponentZOrder(sxC, 0);
             sxC.setVisible(true);
         } catch (ClassNotFoundException ex) {
@@ -1458,7 +1457,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try {
             Localidad_crear crear = new Localidad_crear();
-            Principal.panelPrincipal.add(crear);
+            Principal.principal.add(crear);
             this.setComponentZOrder(crear, 0);
             crear.setVisible(true);
         } catch (ClassNotFoundException ex) {
@@ -1470,7 +1469,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
          try {
             Barrio_crear crear=new Barrio_crear();
-            Principal.panelPrincipal.add(crear);
+            Principal.principal.add(crear);
             this.setComponentZOrder(crear, 0);
             crear.setVisible(true);
         } catch (ClassNotFoundException | SQLException ex) {
@@ -1482,7 +1481,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
          try {
             Calles_crear crear=new Calles_crear();
-            Principal.panelPrincipal.add(crear);
+            Principal.principal.add(crear);
             this.setComponentZOrder(crear, 0);
             crear.setVisible(true);
         } catch (ClassNotFoundException ex) {

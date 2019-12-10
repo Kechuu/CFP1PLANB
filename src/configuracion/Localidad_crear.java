@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Lugar;
 
 /**
@@ -260,7 +260,6 @@ public final class Localidad_crear extends javax.swing.JInternalFrame {
 if(Inscripcion.banderaInscripcionLugar==1){
             dispose();
         }else{
-            Principal.activarPanel();
             dispose();
         
         }
@@ -289,12 +288,12 @@ if(Inscripcion.banderaInscripcionLugar==1){
         try {
             if(Inscripcion.banderaInscripcionLugar==1){
                 Barrio_crear crear=new Barrio_crear();
-                Principal.panelPrincipal.add(crear);
+                Principal.principal.add(crear);
                 this.setComponentZOrder(crear, 0);
                 crear.setVisible(true);
             }else{
                 this.setVisible(false);
-                Principal.crearBarrio();//Llama al frame de Crear barrio                
+            //Principal.crearBarrio();//Llama al frame de Crear barrio                
             }
 
         } catch (ClassNotFoundException | SQLException ex) {

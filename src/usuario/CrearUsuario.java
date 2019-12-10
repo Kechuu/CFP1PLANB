@@ -15,8 +15,8 @@ import java.util.Arrays;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import menu.FormDni;
-import menu.Principal;
+import principal.FormDni;
+import principal.Principal;
 import modelo.Cargo;
 import modelo.Persona;
 import modelo.Usuario;
@@ -338,7 +338,6 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
                     if (ctrlUsuario.verificar(txtUser.getText(), String.copyValueOf(txtPass.getPassword()))) {
                         JOptionPane.showMessageDialog(null, "EL usuario ya ha sido creado... ");
                         dispose();
-                        Principal.activarPanel();
                     }
 
                 }else{
@@ -360,7 +359,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "EL usuario ya ha sido creado... ");
                     dispose();
                     Login log=new Login();
-                    Principal.panelPrincipal.add(log);
+                    Principal.principal.add(log);
                     log.setVisible(true);
                 }
             }else{
@@ -437,10 +436,9 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
         if(FormDni.alumnoEmpleadoUser==3){
             dispose();
             Login log=new Login();
-            Principal.panelPrincipal.add(log);
+            Principal.principal.add(log);
             log.setVisible(true);
         }else{
-            Principal.activarPanel();
             dispose();    
         }
     }//GEN-LAST:event_btnCancelarActionPerformed

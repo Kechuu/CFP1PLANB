@@ -9,7 +9,7 @@ import Controlador.CtrlCaracter;
 import Controlador.CtrlLicencia;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
-import menu.Principal;
+import principal.Principal;
 import modelo.Caracter;
 /**
  *
@@ -150,7 +150,6 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

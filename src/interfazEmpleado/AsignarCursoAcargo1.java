@@ -20,7 +20,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Cargo;
 import modelo.Curso;
 import modelo.Empleado;
@@ -512,7 +512,6 @@ public class AsignarCursoAcargo1 extends javax.swing.JInternalFrame {
 
                 break;
         }*/
-        Principal.activarPanel();
         dispose();
         
     }//GEN-LAST:event_btnCancelarActionPerformed

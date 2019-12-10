@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Cargo;
 import modelo.Persona;
 import modelo.Usuario;
@@ -270,7 +270,6 @@ public class EliminarUsuario extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

@@ -14,7 +14,7 @@ import Controlador.CtrlUsuario;
 import java.awt.event.KeyEvent;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import menu.Principal;
+import principal.Principal;
 import modelo.Curso;
 import modelo.CursoAlumno;
 import modelo.Persona;
@@ -504,7 +504,6 @@ public class PagoAlumno extends javax.swing.JInternalFrame {
                 break;
                 
             case 2:
-                Principal.activarPanel();
                 dispose();
                 break;
         }

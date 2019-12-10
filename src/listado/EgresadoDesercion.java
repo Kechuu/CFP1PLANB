@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Curso;
 import modelo.Persona;
 import modelo.TipoCurso;
@@ -233,7 +233,7 @@ public class EgresadoDesercion extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
-        Principal.activarPanel();
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void listaAlumnosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaAlumnosValueChanged

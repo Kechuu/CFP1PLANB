@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import menu.Principal;
+import principal.Principal;
 import modelo.Gremio;
 
 
@@ -197,7 +197,6 @@ public final class Gremio_modificar extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

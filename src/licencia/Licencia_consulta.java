@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Licencia;
 
 /**
@@ -263,7 +263,6 @@ public final class Licencia_consulta extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -272,7 +271,7 @@ public final class Licencia_consulta extends javax.swing.JInternalFrame {
         this.setVisible(false);
         
         AsignarLicencia lic=new AsignarLicencia();
-        Principal.panelPrincipal.add(lic);
+        Principal.principal.add(lic);
         lic.setVisible(true);
     }//GEN-LAST:event_btnAsignarActionPerformed
 
@@ -292,7 +291,7 @@ public final class Licencia_consulta extends javax.swing.JInternalFrame {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Licencia_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Principal.panelPrincipal.add(lic);
+        Principal.principal.add(lic);
         lic.setVisible(true);
     }//GEN-LAST:event_btnModificarActionPerformed
 

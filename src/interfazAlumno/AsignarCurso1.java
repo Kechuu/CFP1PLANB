@@ -23,7 +23,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Alumno;
 import modelo.Curso;
 import modelo.Persona;
@@ -481,7 +481,7 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
         }else{
             Persona item = (Persona) listaAlumnos.getSelectedValue();
             PagoAlumno pago = new PagoAlumno(item);
-            Principal.panelPrincipal.add(pago);
+            Principal.principal.add(pago);
 
             this.setComponentZOrder(pago, 0);
             this.isOptimizedDrawingEnabled();
@@ -513,7 +513,6 @@ public class AsignarCurso1 extends javax.swing.JInternalFrame {
 
                 break;
         }*/
-        Principal.activarPanel();
         dispose();
 
     }//GEN-LAST:event_btnCancelarActionPerformed

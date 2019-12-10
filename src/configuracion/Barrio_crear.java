@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Lugar;
 
 
@@ -232,27 +232,25 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
         if(Inscripcion.banderaInscripcionLugar==1){
             dispose();
         }else{
-            Principal.activarPanel();
             dispose();
         
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCalleActionPerformed
-        this.setVisible(false);
         try {
+            // TODO add your handling code here:
             if(Inscripcion.banderaInscripcionLugar==1){
-            
+                //this.setVisible(false);
             Calles_crear crear1=new Calles_crear();
             
-            Principal.panelPrincipal.add(crear1);
+            Principal.principal.add(crear1);
             this.setComponentZOrder(crear1, 0);
             crear1.setVisible(true);
             }else{
-                this.setVisible(false);
-                Principal.crearCalle();
+                //Principal.crearCalle();
             }
-
+            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Barrio_crear.class.getName()).log(Level.SEVERE, null, ex);
         }

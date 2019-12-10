@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import menu.Principal;
+import principal.Principal;
 import modelo.Periodo;
 
 /**
@@ -195,18 +195,19 @@ public final class Periodo_consulta extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
 
-        this.setVisible(false);
-        try {
-            Principal.crearPeriodo();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Periodo_consulta.class.getName()).log(Level.SEVERE, null, ex);
+//            Principal.crearPeriodo();
+        try{
+            Periodo_crear cr=new Periodo_crear();
+            Principal.principal.add(cr);
+            cr.setVisible(true);
+            cr.toFront();
+        }catch(ClassNotFoundException e){
+            
         }
-        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnAtrasActionPerformed
 
@@ -215,12 +216,14 @@ public final class Periodo_consulta extends javax.swing.JInternalFrame {
         String nombre = (String) listaPeriodicidad.getSelectedValuesList().toString();
         nombrePeriodo = nombre.substring(1, nombre.length()-1);
         
-        this.setVisible(false);
-        
-        try {
-            Principal.modificarPeriodo();
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Periodo_consulta.class.getName()).log(Level.SEVERE, null, ex);
+        //          Principal.modificarPeriodo();
+        try{
+            Periodo_modificar md = new Periodo_modificar();
+            Principal.principal.add(md);
+            md.setVisible(true);
+            md.toFront();
+        }catch(ClassNotFoundException e){
+            
         }
         
     }//GEN-LAST:event_btnModificarActionPerformed

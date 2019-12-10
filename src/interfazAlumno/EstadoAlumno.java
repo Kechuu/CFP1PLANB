@@ -13,7 +13,7 @@ import Controlador.CtrlPlanPersona;
 import java.sql.SQLException;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import menu.Principal;
+import principal.Principal;
 import modelo.Lugar;
 import modelo.Persona;
 
@@ -432,7 +432,6 @@ public class EstadoAlumno extends javax.swing.JInternalFrame {
 
     private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btncancelarActionPerformed
 
@@ -443,7 +442,7 @@ public class EstadoAlumno extends javax.swing.JInternalFrame {
             // 'ELIMINAR' la persona
             MotivoBajaA fr=new MotivoBajaA(ctrlAlumno.leer(personaDatos.getIdPersona()).getIdAlumno());
             
-            Principal.panelPrincipal.add(fr);
+            Principal.principal.add(fr);
             this.setComponentZOrder(fr, 0);
             fr.setVisible(true);
             

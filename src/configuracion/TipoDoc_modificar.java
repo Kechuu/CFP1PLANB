@@ -10,7 +10,7 @@ import com.sun.glass.events.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
-import menu.Principal;
+import principal.Principal;
 import modelo.TipoDocumento;
 
 
@@ -193,7 +193,6 @@ public final class TipoDoc_modificar extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 

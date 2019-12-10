@@ -11,7 +11,6 @@ import Controlador.CtrlMotivoBaja;
 import java.util.Date;
 import modelo.MotivoBaja;
 import javax.swing.JOptionPane;
-import menu.Principal;
 
 /**
  *

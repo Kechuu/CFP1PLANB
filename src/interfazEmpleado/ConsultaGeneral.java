@@ -19,7 +19,7 @@ import Controlador.CtrlTrabajo;
 import java.sql.Date;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import menu.Principal;
+import principal.Principal;
 import modelo.Empleado;
 import modelo.Lugar;
 import modelo.Persona;
@@ -455,7 +455,6 @@ public class ConsultaGeneral extends javax.swing.JInternalFrame {
 
     private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
         // TODO add your handling code here:
-        Principal.activarPanel();
         dispose();
     }//GEN-LAST:event_btncancelarActionPerformed
 
