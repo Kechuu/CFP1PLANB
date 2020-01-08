@@ -763,7 +763,7 @@ public class Principal extends javax.swing.JFrame {
     private void asignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asignarCursoActionPerformed
         // TODO add your handling code here:
         alumnoMenu=3;
-        
+        FormDni.alumnoEmpleadoUser=1;
         AsignarCurso1 asignar=new AsignarCurso1();
         Principal.principal.add(asignar);
         asignar.setVisible(true);
@@ -772,7 +772,7 @@ public class Principal extends javax.swing.JFrame {
     private void darBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_darBajaActionPerformed
         // TODO add your handling code here:7
         alumnoMenu=4;
-        
+        FormDni.alumnoEmpleadoUser=1;
         DarBajaCurso1 baja=new DarBajaCurso1();
         Principal.principal.add(baja);
         baja.setVisible(true);
@@ -790,19 +790,21 @@ public class Principal extends javax.swing.JFrame {
     private void registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarActionPerformed
         // TODO add your handling code here:
         empleadoMenu=1;
+        FormDni.alumnoEmpleadoUser=2;
         panelDni();
     }//GEN-LAST:event_registrarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
         // TODO add your handling code here:
         empleadoMenu=2;
+        FormDni.alumnoEmpleadoUser=2;
         panelDni();
     }//GEN-LAST:event_modificarActionPerformed
 
     private void asignarCursoEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asignarCursoEmpleadoActionPerformed
         // TODO add your handling code here:
         empleadoMenu=3;
-        
+        FormDni.alumnoEmpleadoUser=2;
         AsignarCursoAcargo1 acargo=new AsignarCursoAcargo1();
         Principal.principal.add(acargo);
         acargo.setVisible(true);
@@ -811,6 +813,7 @@ public class Principal extends javax.swing.JFrame {
     private void darBajaEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_darBajaEmpleadoActionPerformed
         // TODO add your handling code here:
         empleadoMenu=4;
+        FormDni.alumnoEmpleadoUser=2;
         DarBajaCurso1 baja=new DarBajaCurso1();
         Principal.principal.add(baja);
         baja.setVisible(true);
@@ -819,6 +822,7 @@ public class Principal extends javax.swing.JFrame {
     private void consultarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarEmpleadoActionPerformed
         // TODO add your handling code here:
         empleadoMenu=5;
+        FormDni.alumnoEmpleadoUser=2;
         panelDni();
     }//GEN-LAST:event_consultarEmpleadoActionPerformed
 

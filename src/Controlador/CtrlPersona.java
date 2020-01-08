@@ -390,7 +390,7 @@ public class CtrlPersona {
                 persona.setIdFoto(ctrlFoto.leer(rs.getInt("idFoto")));
                 persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("lugarNacimiento")));
                 persona.setBorrado(rs.getBoolean("borrado"));
-                
+                                
             }else{
                 JOptionPane.showMessageDialog(null, "La persona no está registrada");
             }

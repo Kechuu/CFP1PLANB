@@ -251,6 +251,8 @@ public class FormDni extends javax.swing.JInternalFrame {
         
         if(alumnoEmpleadoUser!=3){
             try {
+                JOptionPane.showMessageDialog(null, "hasdioa");
+                JOptionPane.showMessageDialog(null, sql);
 
                 personaObj = ctrlPersona.buscarPersona(sql, cuil);
 
