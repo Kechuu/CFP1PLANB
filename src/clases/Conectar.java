@@ -32,32 +32,5 @@ public class Conectar {
                 
         return conexion;
                 
-   }
-    /*
-    public void LlenarcomboLocalidad(Connection conexion, JComboBox<Lugarconfiguracion> comboLocalidad){//Este metodo para llenar el combo con las localidades 
-        try {
-            
-            Statement st = (Statement) conexion.createStatement();
-            ResultSet rs= st.executeQuery("SELECT * FROM lugar WHERE nivel = 3 ORDER BY nombre ASC");
-            Lugarconfiguracion dat= new Lugarconfiguracion();
-            dat.setIdLugar(0);
-            dat.setNombre("Selecciona una opción...");
-            dat.setNivel(0);
-            dat.setDe(0);
-            comboLocalidad.addItem(dat);
-
-            while(rs.next()){
-                dat= new Lugarconfiguracion();
-                dat.setIdLugar(rs.getInt("idLugar"));
-                dat.setNombre(rs.getString("nombre"));
-                dat.setNivel(rs.getInt("nivel"));
-                dat.setDe(rs.getInt("de"));
-                comboLocalidad.addItem(dat); 
-            }
-                
-        } catch (SQLException ex) {
-         
-            JOptionPane.showMessageDialog(null, "ERROR AL MOSTRAR Las localidades");
-        }
-    }*/
+    }
 }
