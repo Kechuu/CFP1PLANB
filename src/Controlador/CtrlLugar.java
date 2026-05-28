@@ -359,7 +359,7 @@ public class CtrlLugar {
         con =clases.Conectar.conexion();
         try {
             ps = (PreparedStatement)con.prepareStatement("SELECT idLugar, nombre, nivel, de, codigoPostal FROM lugar INNER JOIN codigoPostal"
-                    + " WHERE idLugar = localidad AND nivel = 3 ORDER BY nombre ASC");
+                    + " WHERE idLugar = nombre AND nivel = 3 ORDER BY nombre ASC");
             
             rst= ps.executeQuery();
             

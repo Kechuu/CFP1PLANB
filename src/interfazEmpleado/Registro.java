@@ -151,16 +151,16 @@ public final class Registro extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         txtDni = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        cbTipoDoc = new javax.swing.JComboBox<TipoDocumento>();
+        cbTipoDoc = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
-        cbNacionalidad = new javax.swing.JComboBox<Nacionalidad>();
+        cbNacionalidad = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
-        cbNacimiento = new javax.swing.JComboBox<Lugar>();
+        cbNacimiento = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         fecha = new com.toedter.calendar.JDateChooser();
         jLabel29 = new javax.swing.JLabel();
-        cbSexo = new javax.swing.JComboBox<Sexo>();
+        cbSexo = new javax.swing.JComboBox<>();
         jLabel33 = new javax.swing.JLabel();
         txtHijos = new javax.swing.JTextField();
         btnAgregarSx = new javax.swing.JButton();
@@ -170,8 +170,8 @@ public final class Registro extends javax.swing.JInternalFrame {
         btnActualizarLugarNac = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        cbLocalidad = new javax.swing.JComboBox<Lugar>();
-        cbBarrio = new javax.swing.JComboBox<Lugar>();
+        cbLocalidad = new javax.swing.JComboBox<>();
+        cbBarrio = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
         panel = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -188,7 +188,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         txtDepto = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        cbCalle = new javax.swing.JComboBox<Lugar>();
+        cbCalle = new javax.swing.JComboBox<>();
         jLabel20 = new javax.swing.JLabel();
         txtCasa = new javax.swing.JTextField();
         btnLocalidad = new javax.swing.JButton();
@@ -201,15 +201,15 @@ public final class Registro extends javax.swing.JInternalFrame {
         btnActualizarCalle = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        cbGremio = new javax.swing.JComboBox<Gremio>();
+        cbGremio = new javax.swing.JComboBox<>();
         jLabel25 = new javax.swing.JLabel();
-        cbCargo = new javax.swing.JComboBox<Cargo>();
+        cbCargo = new javax.swing.JComboBox<>();
         jLabel26 = new javax.swing.JLabel();
-        cbTitulo = new javax.swing.JComboBox<Titulo>();
+        cbTitulo = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        listCargo = new javax.swing.JList<Cargo>();
+        listCargo = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
-        listTitulo = new javax.swing.JList<Titulo>();
+        listTitulo = new javax.swing.JList<>();
         btnAsignarCargo = new javax.swing.JButton();
         btnAsignarTitulo = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
@@ -223,7 +223,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         btnSiguiente = new javax.swing.JButton();
         btnAsignarCurso = new javax.swing.JButton();
         btncancelar = new javax.swing.JButton();
-        fotoPanel = new JPanelWebCam.JPanelWebCam();
+        fotoPanel = new javax.swing.JPanel();
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
 
@@ -1009,7 +1009,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         );
         fotoPanelLayout.setVerticalGroup(
             fotoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 201, Short.MAX_VALUE)
+            .addGap(0, 193, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1025,9 +1025,9 @@ public final class Registro extends javax.swing.JInternalFrame {
                         .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
-                    .addComponent(fotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAsignarCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btncancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btncancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -1037,8 +1037,9 @@ public final class Registro extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelContenedor)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
                         .addComponent(fotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1046,7 +1047,7 @@ public final class Registro extends javax.swing.JInternalFrame {
                         .addComponent(btnAsignarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 4, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -1261,7 +1262,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         Nacionalidad nacionalidad=(Nacionalidad) cbNacionalidad.getSelectedItem();
         Lugar calle=(Lugar)cbCalle.getSelectedItem();
         Empleado empleadoNew=new Empleado();
-        byte[] imagen = fotoPanel.getBytes();
+        //byte[] imagen = fotoPanel.getBytes();
 
         int hijos=0;
         
@@ -1281,7 +1282,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         //<SE CREA REGISTRO DE FOTO Y TRAE EL ULTIMO id
             Foto foto = new Foto();
     
-            ctrlFoto.crear(imagen);
+            //ctrlFoto.crear(imagen);
             foto = (Foto) ctrlFoto.leerUltimaFoto();
        
         //<AQUI SE DA DE ALTA UNA PERSONA..
@@ -1592,7 +1593,7 @@ public final class Registro extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<TipoDocumento> cbTipoDoc;
     private javax.swing.JComboBox<Titulo> cbTitulo;
     private com.toedter.calendar.JDateChooser fecha;
-    private JPanelWebCam.JPanelWebCam fotoPanel;
+    private javax.swing.JPanel fotoPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

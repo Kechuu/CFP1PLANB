@@ -94,9 +94,9 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnSiguiente" pref="120" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="fotoPanel" max="32767" attributes="0"/>
                       <Component id="btnAsignarCurso" alignment="0" max="32767" attributes="0"/>
                       <Component id="btncancelar" alignment="0" max="32767" attributes="0"/>
+                      <Component id="fotoPanel" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -109,8 +109,9 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="panelContenedor" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                           <Component id="fotoPanel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnAtras" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="btnSiguiente" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
@@ -119,7 +120,7 @@
                           <Component id="btnAsignarCurso" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btncancelar" min="-2" pref="40" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="4" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -1431,7 +1432,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btncancelarActionPerformed"/>
           </Events>
         </Component>
-        <Container class="JPanelWebCam.JPanelWebCam" name="fotoPanel">
+        <Container class="javax.swing.JPanel" name="fotoPanel">
 
           <Layout>
             <DimensionLayout dim="0">
@@ -1441,7 +1442,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="201" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="193" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>

@@ -204,7 +204,10 @@ public class FormDni extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtDniKeyReleased
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-        
+        if(txtDni.getText().trim().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Ingrese su DNI.");
+            return;
+        }
         // TODO add your handling code here:
         //  <VALIDACION>
         if (masculino.isSelected()==false && femenino.isSelected()==false) {
@@ -230,16 +233,16 @@ public class FormDni extends javax.swing.JInternalFrame {
     
         switch(alumnoEmpleadoUser){
             case 1://sql en caso de que venga desde alumno..
-                sql="SELECT * FROM persona INNER JOIN alumno ON persona.idPersona = alumno.idPersona WHERE persona.CUIL=?";
+                sql="SELECT * FROM persona INNER JOIN alumno ON persona.idPersona = alumno.persona_idPersona WHERE persona.CUIL=?";
             break;
                 
             case 2://sql en caso de que venga desde empleado..
-                sql="SELECT * FROM persona INNER JOIN empleado ON persona.idPersona = empleado.idPersona WHERE persona.CUIL=?";
+                sql="SELECT * FROM persona INNER JOIN empleado ON persona.idPersona = empleado.persona_idPersona WHERE persona.CUIL=?";
             break;
                 
             case 3://buscar un usuario..
                 sql="SELECT persona.idPersona, persona.nombrePersona, persona.apellidoPersona, empleado.idEmpleado FROM persona"
-                        + " INNER JOIN empleado ON persona.idPersona = empleado.idPersona"
+                        + " INNER JOIN empleado ON persona.idPersona = empleado.persona_idPersona"
                         + " WHERE persona.CUIL=?";
                 try{
                     metodo(personaObj=ctrlPersona.buscarUsuario(sql, cuil));                    
