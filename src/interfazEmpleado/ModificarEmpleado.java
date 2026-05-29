@@ -155,16 +155,16 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         txtDni = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        cbTipoDoc = new javax.swing.JComboBox<TipoDocumento>();
+        cbTipoDoc = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
-        cbNacionalidad = new javax.swing.JComboBox<Nacionalidad>();
+        cbNacionalidad = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
-        cbNacimiento = new javax.swing.JComboBox<Lugar>();
+        cbNacimiento = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         fecha = new com.toedter.calendar.JDateChooser();
         jLabel29 = new javax.swing.JLabel();
-        cbSexo = new javax.swing.JComboBox<Sexo>();
+        cbSexo = new javax.swing.JComboBox<>();
         jLabel33 = new javax.swing.JLabel();
         txtHijos = new javax.swing.JTextField();
         btnAgregarSx = new javax.swing.JButton();
@@ -174,7 +174,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         btnActualizarLugarNac = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        cbLocalidad = new javax.swing.JComboBox<Lugar>();
+        cbLocalidad = new javax.swing.JComboBox<>();
         panel = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         txtCelular = new javax.swing.JTextField();
@@ -190,9 +190,9 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         txtDepto = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        cbBarrio = new javax.swing.JComboBox<Lugar>();
+        cbBarrio = new javax.swing.JComboBox<>();
         jLabel21 = new javax.swing.JLabel();
-        cbCalle = new javax.swing.JComboBox<Lugar>();
+        cbCalle = new javax.swing.JComboBox<>();
         jLabel20 = new javax.swing.JLabel();
         txtCasa = new javax.swing.JTextField();
         btnLocalidad = new javax.swing.JButton();
@@ -205,15 +205,15 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         btnActualizarCalle = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        cbGremio = new javax.swing.JComboBox<Gremio>();
+        cbGremio = new javax.swing.JComboBox<>();
         jLabel25 = new javax.swing.JLabel();
-        cbCargo = new javax.swing.JComboBox<Cargo>();
+        cbCargo = new javax.swing.JComboBox<>();
         jLabel26 = new javax.swing.JLabel();
-        cbTitulo = new javax.swing.JComboBox<Titulo>();
+        cbTitulo = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        listCargo = new javax.swing.JList<Cargo>();
+        listCargo = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
-        listTitulo = new javax.swing.JList<Titulo>();
+        listTitulo = new javax.swing.JList<>();
         btnAsignarCargo = new javax.swing.JButton();
         btnAsignarTitulo = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
@@ -227,7 +227,6 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         btnSiguiente = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btncancelar = new javax.swing.JButton();
-        fotoPanel = new JPanelWebCam.JPanelWebCam();
 
         jPanel2.setBackground(new java.awt.Color(38, 86, 186));
 
@@ -967,17 +966,6 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout fotoPanelLayout = new javax.swing.GroupLayout(fotoPanel);
-        fotoPanel.setLayout(fotoPanelLayout);
-        fotoPanelLayout.setHorizontalGroup(
-            fotoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        fotoPanelLayout.setVerticalGroup(
-            fotoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -988,7 +976,6 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fotoPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1003,8 +990,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelContenedor)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(fotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
+                        .addGap(232, 232, 232)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1012,7 +998,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btncancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 4, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -1058,14 +1044,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         txtApellido.setText(persona.getApellidoPersona());
         fecha.setDate(persona.getFechaNacimiento());
         
-        //CARGAR FOTO EN EL PANEL
-        CtrlFoto ctrlFoto = new CtrlFoto();
-        
-        foto = ctrlFoto.leer(persona.getIdFoto().getIdFoto());
-        
-        fotoPanel.setImagen(foto.getImagen());
-        
-        
+       
         //ES IGUAL QUE TIPO DOCUMENTO, SOLO QUE CON LUGAR DE NACIMIENTO
         for(int i=0; i<cbNacimiento.getItemCount();i++){
             if(cbNacimiento.getItemAt(i).getNombre().equals(persona.getLugarNacimiento().getNombre())){
@@ -1344,11 +1323,9 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
             }
         }
              
-    //FOTO
     
-    byte[] imagen = fotoPanel.getBytes();
-    CtrlFoto ctrlFoto = new CtrlFoto();
-    ctrlFoto.editar(foto.getIdFoto(), imagen);
+    
+    
     
         
     //DOMICILIO    
@@ -1635,7 +1612,6 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<TipoDocumento> cbTipoDoc;
     private javax.swing.JComboBox<Titulo> cbTitulo;
     private com.toedter.calendar.JDateChooser fecha;
-    private JPanelWebCam.JPanelWebCam fotoPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

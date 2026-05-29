@@ -34,6 +34,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
+
 import principal.Principal;
 import modelo.Foto;
 import modelo.Nacionalidad;
@@ -190,7 +191,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         btnActualizarPlanes = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        fotoPanel = new JPanelWebCam.JPanelWebCam();
         btnAtras = new javax.swing.JButton();
         btnAsignarCurso = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -915,17 +915,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout fotoPanelLayout = new javax.swing.GroupLayout(fotoPanel);
-        fotoPanel.setLayout(fotoPanelLayout);
-        fotoPanelLayout.setHorizontalGroup(
-            fotoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 252, Short.MAX_VALUE)
-        );
-        fotoPanelLayout.setVerticalGroup(
-            fotoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 201, Short.MAX_VALUE)
-        );
-
         btnAtras.setBackground(new java.awt.Color(38, 86, 186));
         btnAtras.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnAtras.setForeground(new java.awt.Color(255, 255, 255));
@@ -955,11 +944,10 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
                 .addComponent(panelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                        .addComponent(btnSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
                     .addComponent(btnAsignarCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -969,10 +957,9 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelContenedor)
+                    .addComponent(panelContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(fotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1192,7 +1179,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         Lugar nacimiento=(Lugar) cbNacimiento.getSelectedItem();
         Nacionalidad nacionalidad=(Nacionalidad) cbNacionalidad.getSelectedItem();
         Lugar calle=(Lugar)cbCalle.getSelectedItem();
-        byte[] imagen = fotoPanel.getBytes();
+        
     
         int hijos=0;
         
@@ -1213,11 +1200,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         //<SE CREA UN DOMICILIO...            
         domicilioId.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calle.getIdLugar(), idEdificio);
 
-        //<SE CREA REGISTRO DE FOTO Y TRAE EL ULTIMO id
-        Foto foto = new Foto();
-
-        ctrlFoto.crear(imagen);
-        foto = (Foto) ctrlFoto.leerUltimaFoto();
+       
 
         //<AQUI SE DA DE ALTA UNA PERSONA..       
         if (txtHijos.getText().equals("")) {
@@ -1226,7 +1209,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             hijos = Integer.parseInt(txtHijos.getText());
         }
         Sexo item = (Sexo) cbSexo.getSelectedItem();
-        personaCrear.crear(txtNombre.getText(), txtApellido.getText(), fecha.getDate(), item.getIdSexo(), txtCuil.getText(), hijos, txtCorreo.getText(), txtCelular.getText(), domicilioId.leer().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), foto.getIdFoto(), nacimiento.getIdLugar(), false);
+        personaCrear.crear(txtNombre.getText(), txtApellido.getText(), fecha.getDate(), item.getIdSexo(), txtCuil.getText(), hijos, txtCorreo.getText(), txtCelular.getText(), domicilioId.leer().getIdDomicilio(), documento.getIdTipoDocumento(), nacionalidad.getIdNacionalidad(), nacimiento.getIdLugar(), false);
 
         personaDatos = personaCrear.leer(txtCuil.getText());
 
@@ -1557,7 +1540,6 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<TipoDocumento> cbTipo;
     private javax.swing.JComboBox<Trabajo> cbTrabajo;
     private com.toedter.calendar.JDateChooser fecha;
-    private JPanelWebCam.JPanelWebCam fotoPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

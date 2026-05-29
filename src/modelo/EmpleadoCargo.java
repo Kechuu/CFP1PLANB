@@ -11,16 +11,16 @@ package modelo;
  */
 public class EmpleadoCargo {
     
-    private int EmpleadoCargo;
+    private int idEmpleadoCargo;
     private Cargo idCargo;
     private Empleado idEmpleado;
 
     public int getEmpleadoCargo() {
-        return EmpleadoCargo;
+        return idEmpleadoCargo;
     }
 
     public void setEmpleadoCargo(int EmpleadoCargo) {
-        this.EmpleadoCargo = EmpleadoCargo;
+        this.idEmpleadoCargo = EmpleadoCargo;
     }
 
     public Cargo getIdCargo() {

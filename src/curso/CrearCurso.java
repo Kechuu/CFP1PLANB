@@ -197,7 +197,6 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        fechaInicio = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         txtcosto = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -205,10 +204,10 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         txtCupo = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        cbxNombreCurso = new javax.swing.JComboBox<TipoCurso>();
+        cbxNombreCurso = new javax.swing.JComboBox<>();
         btnCrearTipoCurso = new javax.swing.JButton();
-        cbxTurno = new javax.swing.JComboBox<String>();
-        cbxLugarCurso = new javax.swing.JComboBox<LugarCurso>();
+        cbxTurno = new javax.swing.JComboBox<>();
+        cbxLugarCurso = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         btnCursado = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -219,10 +218,11 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
         TablaHorario2 = new javax.swing.JTable();
         BotonAgregar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        fechaFinalizacion = new com.toedter.calendar.JDateChooser();
         btnActualizarPlanes1 = new javax.swing.JButton();
         btnActualizarPlanes2 = new javax.swing.JButton();
         btnActualizarPlanes3 = new javax.swing.JButton();
+        fechaInicio = new com.toedter.calendar.JDateChooser();
+        fechaFinalizacion = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -328,7 +328,7 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
             }
         });
 
-        cbxTurno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Mañana", "Tarde", "Vespertino", "Noche" }));
+        cbxTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Mañana", "Tarde", "Vespertino", "Noche" }));
         cbxTurno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxTurnoActionPerformed(evt);
@@ -474,33 +474,6 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
                         .addGap(8, 8, 8)
                         .addComponent(btnCrearTipoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel2)
-                        .addGap(34, 34, 34)
-                        .addComponent(txtCicloLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(142, 142, 142)
-                        .addComponent(jLabel10)
-                        .addGap(106, 106, 106)
-                        .addComponent(cbxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel4)
-                        .addGap(23, 23, 23)
-                        .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(142, 142, 142)
-                        .addComponent(jLabel5)
-                        .addGap(3, 3, 3)
-                        .addComponent(fechaFinalizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel7)
-                        .addGap(84, 84, 84)
-                        .addComponent(txtCupo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(142, 142, 142)
-                        .addComponent(jLabel3)
-                        .addGap(40, 40, 40)
-                        .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -528,8 +501,42 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(cbxLugarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnActualizarPlanes2)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                        .addComponent(btnActualizarPlanes2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel7))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jLabel4)))
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(fechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCupo, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(142, 142, 142)
+                                .addComponent(jLabel3)
+                                .addGap(40, 40, 40)
+                                .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(126, 126, 126)
+                                .addComponent(jLabel5))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel2)
+                        .addGap(34, 34, 34)
+                        .addComponent(txtCicloLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(142, 142, 142)
+                        .addComponent(jLabel10)
+                        .addGap(106, 106, 106)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(fechaFinalizacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(4, 4, 4)))))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -557,17 +564,18 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(cbxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel4))
-                    .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(fechaFinalizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel4)
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fechaInicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fechaFinalizacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -645,15 +653,15 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
             
             if (cicloLectivo > yearInicio) {
                 JOptionPane.showMessageDialog(null, "El año lectivo es mayor al año de inicio de curso\n "
-                        + "Por favor revice bien las fechas");
+                        + "Por favor revise bien las fechas");
             } else {
                 if (cicloLectivo > yearFinalizacion) {
                     JOptionPane.showMessageDialog(null, "El año lectivo es mayor al año de finalizacion de curso\n"
-                            + "Por favor revice bien las fechas");
+                            + "Por favor revise bien las fechas");
                 } else {
                     if (yearFinalizacion > yearInicio) {
                         JOptionPane.showMessageDialog(null, "El año de finalizacion de curso es mayor al de inicio\n"
-                                + "Por favor revice bien las fechas");
+                                + "Por favor revise bien las fechas");
                     } else {
 
                         String turno = (String) cbxTurno.getSelectedItem();
