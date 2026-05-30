@@ -62,7 +62,7 @@ public class CtrlAcciones {
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
-        }
+        }//probando 
     }
     /*
     public Acciones leer(int idEmpleado){
