@@ -56,8 +56,8 @@ public final class Localidad_crear extends javax.swing.JInternalFrame {
         
         try {
             Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT nombre, codigoPostal FROM lugar RIGTH JOIN codigoPostal"
-                    + " WHERE idLugar = localidad AND nivel = '"+idLugar+"' ORDER BY nombre ASC");
+            ResultSet rs= st.executeQuery("SELECT lugar.nombre, codigopostal.codigoPostal FROM lugar INNER JOIN codigoPostal on lugar.idlugar = codigopostal.lugar_idlugar"
+                    + " WHERE lugar.nivel = '"+idLugar+"' " + "ORDER BY lugar.nombre ASC");
             
             while (rs.next()) {                
                 dato[0]=rs.getString(1);
@@ -269,7 +269,7 @@ if(Inscripcion.banderaInscripcionLugar==1){
         if (txtLocalidad.getText().equalsIgnoreCase("") || txtCodigoPostal.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "Tienen que estar cargados todos los campos para guardar");
         }else{
-            ctrlLugar.crear(txtLocalidad.getText(), 3, 0);
+            ctrlLugar.crear(txtLocalidad.getText(), 2, 0);
             
             lugar = ctrlLugar.leer(txtLocalidad.getText(),3);
             

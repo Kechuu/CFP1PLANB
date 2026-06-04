@@ -1262,6 +1262,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         Nacionalidad nacionalidad=(Nacionalidad) cbNacionalidad.getSelectedItem();
         Lugar calle=(Lugar)cbCalle.getSelectedItem();
         Empleado empleadoNew=new Empleado();
+        JOptionPane.showMessageDialog(null, "Empleado");
         //byte[] imagen = fotoPanel.getBytes();
 
         int hijos=0;

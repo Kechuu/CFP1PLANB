@@ -191,7 +191,7 @@ public class CtrlLugar {
         ResultSet rst;
         try {
             con= clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM lugar WHERE nivel = 3 ORDER BY nombre ASC");
+            ps=(PreparedStatement)con.prepareStatement("SELECT * FROM lugar WHERE nivel = 2 ORDER BY nombre ASC");
             rst=ps.executeQuery();
             
             Lugar dat= new Lugar();
@@ -257,7 +257,7 @@ public class CtrlLugar {
         ResultSet rst;
         con =clases.Conectar.conexion();
         try {
-            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM lugar WHERE nivel = 2 AND de = '"+ idLugar +"'ORDER BY nombre ASC");
+            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM lugar WHERE nivel = 3 AND de = '"+ idLugar +"'ORDER BY nombre ASC");
             
             rst= ps.executeQuery();
             
@@ -283,7 +283,7 @@ public class CtrlLugar {
         List<Lugar> lista = new ArrayList();
         con = clases.Conectar.conexion();
         try {
-            ps= (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE nivel = 2 AND de = '"+ idLugar +"'ORDER BY nombre ASC");
+            ps= (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE nivel = 3 AND de = '"+ idLugar +"'ORDER BY nombre ASC");
             
             rst=ps.executeQuery();
             
@@ -309,7 +309,7 @@ public class CtrlLugar {
         List<Lugar> lista = new ArrayList();
         con = clases.Conectar.conexion();
         try {
-            ps= (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE nivel = 1 AND de = '"+ idLugar +"'ORDER BY nombre ASC");
+            ps= (PreparedStatement) con.prepareStatement("SELECT * FROM lugar WHERE nivel = 4 AND de = '"+ idLugar +"'ORDER BY nombre ASC");
             
             rst=ps.executeQuery();
             
@@ -334,7 +334,7 @@ public class CtrlLugar {
         ResultSet rst;
         con =clases.Conectar.conexion();
         try {
-            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM lugar WHERE nivel = 1 AND de = '"+ idLugar +"'ORDER BY nombre ASC");
+            ps = (PreparedStatement)con.prepareStatement("SELECT * FROM lugar WHERE nivel = 4 AND de = '"+ idLugar +"'ORDER BY nombre ASC");
             
             rst= ps.executeQuery();
             
@@ -358,8 +358,8 @@ public class CtrlLugar {
         ResultSet rst;
         con =clases.Conectar.conexion();
         try {
-            ps = (PreparedStatement)con.prepareStatement("SELECT idLugar, nombre, nivel, de, codigoPostal FROM lugar INNER JOIN codigoPostal"
-                    + " WHERE idLugar = nombre AND nivel = 3 ORDER BY nombre ASC");
+            ps = (PreparedStatement)con.prepareStatement("SELECT lugar.idLugar, lugar.nombre, lugar.nivel, lugar.de, codigopostal.codigoPostal FROM lugar INNER JOIN codigoPostal on lugar.idlugar=codigopostal.lugar_idlugar"
+                    + " WHERE Lugar.nivel = 2 ORDER BY lugar.nombre ASC");
             
             rst= ps.executeQuery();
             
@@ -382,8 +382,8 @@ public class CtrlLugar {
         List<String> lista = new ArrayList();
         con = clases.Conectar.conexion();
         try {
-            ps= (PreparedStatement) con.prepareStatement("SELECT nombre, codigoPostal FROM lugar INNER JOIN codigoPostal"
-                    + " WHERE idLugar = localidad AND nivel = '"+idLugar+"' ORDER BY nombre ASC");
+            ps= (PreparedStatement) con.prepareStatement("SELECT lugar.nombre, codigoPostal.codigopostal FROM lugar INNER JOIN codigoPostal on lugar.idlugar = codigopostal.lugar_idlugar"
+                    + " WHERE lugar.nivel = ? ORDER BY lugar.nombre ASC");
             
             rst=ps.executeQuery();
             
