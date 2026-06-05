@@ -225,6 +225,7 @@ public class Login extends javax.swing.JInternalFrame {
         String clave=null;
         clave=JOptionPane.showInputDialog("Ingrese la clave dada");
         
+        //clave
         if(clave.equals("claveDirector")){
            this.setVisible(false);
 /*                PanelDni.alumnoEmpleado=3;
@@ -236,7 +237,7 @@ public class Login extends javax.swing.JInternalFrame {
             dni.setVisible(true);
             
         }else{
-            JOptionPane.showMessageDialog(null, "no");
+            JOptionPane.showMessageDialog(null, "Clave dada incorrecta");
         }
     }//GEN-LAST:event_btnNuevoUserActionPerformed
 

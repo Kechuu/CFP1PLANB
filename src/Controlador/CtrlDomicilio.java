@@ -25,7 +25,7 @@ public class CtrlDomicilio {
     public void crear(int nroLote, String telefono, int idCalle, int idEdificio){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO domicilio (nroLote,telefono,idLugar,idEdificio) VALUES (?,?,?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO domicilio (nroLote,telefono,Lugar_idLugar,Edificio_idEdificio) VALUES (?,?,?,?)");
             
             ps.setInt(1, nroLote);
             ps.setString(2, telefono);
@@ -61,8 +61,8 @@ public class CtrlDomicilio {
     public void cambiarDomicilio(int idDomicilio, int nroLote, String telefono, int idCalle, int idEdificio){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE domicilio SET nroLote = ?, telefono = ?, idLugar = ?,"
-                    + "idEdificio = ? WHERE idDomicilio = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE domicilio SET nroLote = ?, telefono = ?, Lugar_idLugar = ?,"
+                    + "Edificio_idEdificio = ? WHERE idDomicilio = ?");
             
             ps.setInt(1, nroLote);
             ps.setString(2, telefono);

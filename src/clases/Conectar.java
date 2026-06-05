@@ -10,9 +10,9 @@ import java.sql.DriverManager;
 public class Conectar {
       
     public static Connection conexion = null;
-    public static final String SERVIDOR="jdbc:mysql://localhost:3306/DatosCFP?useSSL=false";
+    public static final String SERVIDOR="jdbc:mysql://localhost:3306/mydb?useSSL=false";
     public static final String USUARIO = "root";
-    public static final String PASS = "root";
+    public static final String PASS = "";
     
     
       

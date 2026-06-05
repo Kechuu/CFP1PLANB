@@ -27,7 +27,7 @@ public class CtrlAlumno {
      
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO alumno (idPersona,borrado) VALUES (?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO alumno (Persona_idPersona,borrado) VALUES (?,?)");
         
             ps.setInt(1, idPersona);
             ps.setBoolean(2, false);
@@ -41,11 +41,10 @@ public class CtrlAlumno {
         
     }
     
-    
     public void borrar(int idPersona, int idAlumno){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE alumno SET borrado = TRUE WHERE idPersona = ? AND idAlumno = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE alumno SET borrado = TRUE WHERE Persona_idPersona = ? AND idAlumno = ?");
             
             ps.setInt(1, idPersona);
             ps.setInt(2, idAlumno);
@@ -70,17 +69,16 @@ public class CtrlAlumno {
         CtrlPersona ctrlPersona = new CtrlPersona();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM alumno WHERE idPersona = ? AND borrado = FALSE");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM alumno WHERE Persona_idPersona = ? AND borrado = FALSE");
             
             ps.setInt(1, idPersona);
             rs = ps.executeQuery();
             
             if(rs.next()){
                 alumno.setIdAlumno(rs.getInt("idAlumno"));
-                alumno.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
+                alumno.setIdPersona(ctrlPersona.leer(rs.getInt("Persona_idPersona")));
                 alumno.setBorrado(rs.getBoolean("borrado"));
             }else{
-                
                 JOptionPane.showMessageDialog(null, "\nCtrl ALumno No existe lo que está buscando");
             }
             
@@ -104,10 +102,9 @@ public class CtrlAlumno {
             
             if(rs.next()){
                 alumno.setIdAlumno(rs.getInt("idAlumno"));
-                alumno.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
+                alumno.setIdPersona(ctrlPersona.leer(rs.getInt("Persona_idPersona")));
                 alumno.setBorrado(rs.getBoolean("borrado"));
             }else{
-                
                 JOptionPane.showMessageDialog(null, "\nCtrl ALumno No existe lo que está buscando");
             }
             
@@ -130,7 +127,7 @@ public class CtrlAlumno {
             
             if(rs.next()){
                 alumno.setIdAlumno(rs.getInt("idAlumno"));
-                alumno.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
+                alumno.setIdPersona(ctrlPersona.leer(rs.getInt("Persona_idPersona")));
                 alumno.setBorrado(rs.getBoolean("borrado"));
             }else{
                 JOptionPane.showMessageDialog(null, "\n 2CtrlAlumn No existe lo que está buscando");
@@ -149,14 +146,14 @@ public class CtrlAlumno {
         CtrlPersona ctrlPersona = new CtrlPersona();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM alumno WHERE idPersona = ? AND borrado = TRUE");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM alumno WHERE Persona_idPersona = ? AND borrado = TRUE");
             
             ps.setInt(1, idPersona);
             rs = ps.executeQuery();
             
             if(rs.next()){
                 alumno.setIdAlumno(rs.getInt("idAlumno"));
-                alumno.setIdPersona(ctrlPersona.leer(rs.getInt("idPersona")));
+                alumno.setIdPersona(ctrlPersona.leer(rs.getInt("Persona_idPersona")));
             }else{
                 JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
             }
@@ -172,11 +169,10 @@ public class CtrlAlumno {
     public void cargarListaAlumno(JList<Persona>lista){
         DefaultListModel<Persona> modelo=new DefaultListModel<>();
         
-        
         try{
             con=clases.Conectar.conexion();
             ps=(PreparedStatement)con.prepareStatement("SELECT * FROM persona"
-                    + " INNER JOIN alumno ON persona.idPersona = alumno.idPersona"
+                    + " INNER JOIN alumno ON persona.idPersona = alumno.Persona_idPersona"
                     + " WHERE alumno.borrado = false");
             
             rs=ps.executeQuery();
@@ -188,13 +184,12 @@ public class CtrlAlumno {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setCUIL(rs.getString("CUIL"));
+                persona.setCUIL(rs.getString("cuil"));
                 
                 modelo.addElement(persona);
             }
             
             con.close();
-            
             lista.setModel(modelo);
             
         }catch(Exception e){
@@ -208,7 +203,7 @@ public class CtrlAlumno {
         try{
             con=clases.Conectar.conexion();
             ps=(PreparedStatement)con.prepareStatement("SELECT * FROM persona"
-                    + " INNER JOIN alumno ON persona.idPersona = alumno.idPersona"
+                    + " INNER JOIN alumno ON persona.idPersona = alumno.Persona_idPersona"
                     + " WHERE persona.apellidoPersona LIKE '%"+filtro+"%'");
             
             rs=ps.executeQuery();
@@ -220,7 +215,7 @@ public class CtrlAlumno {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setCUIL(rs.getString("CUIL"));
+                persona.setCUIL(rs.getString("cuil"));
                 
                 modelo.addElement(persona);
             }
@@ -236,7 +231,7 @@ public class CtrlAlumno {
     public void cambiarEstado(int idPersona){
         try{
             con=clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("UPDATE alumno SET borrado = FALSE WHERE idPersona = ?");
+            ps=(PreparedStatement)con.prepareStatement("UPDATE alumno SET borrado = FALSE WHERE Persona_idPersona = ?");
             
             ps.setInt(1, idPersona);
             ps.executeUpdate();

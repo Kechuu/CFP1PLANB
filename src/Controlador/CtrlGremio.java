@@ -118,8 +118,8 @@ public class CtrlGremio {
         con=clases.Conectar.conexion();
     
         ps=(PreparedStatement)con.prepareStatement("SELECT gremio.detalle FROM gremio"
-                + " INNER JOIN empleado ON empleado.idGremio = gremio.idGremio"
-                + " WHERE empleado.idPersona=?");
+                + " INNER JOIN empleado ON empleado.Gremio_idGremio = gremio.idGremio"
+                + " WHERE empleado.Persona_idPersona=?");
         
         ps.setInt(1, idPersona);
         

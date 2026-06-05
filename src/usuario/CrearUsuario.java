@@ -327,7 +327,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
         if(FormDni.alumnoEmpleadoUser!=3){
     //si no es 3 quiere decir que entro estando ya en el sistema... por lo tal se tendria que hacer una busqueda previa en caso de que
     //el usuario a crear hacia un empleado, ya esté creado...
-            if (ctrlUsuario.leer(idEmpleado).getIdUsuario() != 0){
+            if (ctrlUsuario.leer(idEmpleado).getIdUsuario() == 0){
                 
                 if(Arrays.equals(txtPass.getPassword(), txtPass2.getPassword())){
                     Cargo item = (Cargo) cbJerarquia.getSelectedItem();

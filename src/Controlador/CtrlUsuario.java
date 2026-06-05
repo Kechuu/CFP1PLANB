@@ -24,7 +24,7 @@ public class CtrlUsuario {
     public void crear(String user, String pass, int jerarquia, int idEmpleado){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO usuario (user,pass,jerarquia,idEmpleado,borrado) "
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO usuario (user,pass,jerarquia,Empleado_idEmpleado,borrado) " //CORREGIDO SEGUN COLUMNA EN DB
                     + "VALUES (?,?,?,?,?)");
         
             ps.setString(1, user);
@@ -117,7 +117,7 @@ public class CtrlUsuario {
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM usuario WHERE idEmpleado = ? AND borrado = FALSE");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM usuario WHERE Empleado_idEmpleado = ? AND borrado = FALSE"); // CORREGIDO
             
             ps.setInt(1, idEmpleado);
             rs = ps.executeQuery();
@@ -127,10 +127,7 @@ public class CtrlUsuario {
                 usuario.setUser(rs.getString("user"));
                 usuario.setPass(rs.getString("pass"));
                 usuario.setJerarquia(rs.getInt("jerarquia"));
-                usuario.setIdEmpleado(ctrlEmpleado.leerIdEmpleado(rs.getInt("idEmpleado")));
-                
-            }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                usuario.setIdEmpleado(ctrlEmpleado.leerIdEmpleado(rs.getInt("Empleado_idEmpleado"))); // CORREGIDO
             }
             
             con.close();
@@ -159,7 +156,7 @@ public class CtrlUsuario {
                 usuario.setUser(rs.getString("user"));
                 usuario.setPass(rs.getString("pass"));
                 usuario.setJerarquia(rs.getInt("jerarquia"));
-                usuario.setIdEmpleado(ctrlEmpleado.leerIdEmpleado(rs.getInt("idEmpleado")));
+                usuario.setIdEmpleado(ctrlEmpleado.leerIdEmpleado(rs.getInt("Empleado_idEmpleado"))); // CORREGIDO
                 
             }else{
                 JOptionPane.showMessageDialog(null, "No está registrado");

@@ -230,17 +230,17 @@ public class FormDni extends javax.swing.JInternalFrame {
     
         switch(alumnoEmpleadoUser){
             case 1://sql en caso de que venga desde alumno..
-                sql="SELECT * FROM persona INNER JOIN alumno ON persona.idPersona = alumno.idPersona WHERE persona.CUIL=?";
+                sql="SELECT * FROM persona INNER JOIN alumno ON persona.idPersona = alumno.Persona_idPersona WHERE persona.cuil=?";
             break;
                 
             case 2://sql en caso de que venga desde empleado..
-                sql="SELECT * FROM persona INNER JOIN empleado ON persona.idPersona = empleado.idPersona WHERE persona.CUIL=?";
+                sql="SELECT * FROM persona INNER JOIN empleado ON persona.idPersona = empleado.Persona_idPersona WHERE persona.cuil=?";
             break;
                 
             case 3://buscar un usuario..
                 sql="SELECT persona.idPersona, persona.nombrePersona, persona.apellidoPersona, empleado.idEmpleado FROM persona"
-                        + " INNER JOIN empleado ON persona.idPersona = empleado.idPersona"
-                        + " WHERE persona.CUIL=?";
+                        + " INNER JOIN empleado ON persona.idPersona = empleado.Persona_idPersona"
+                        + " WHERE persona.cuil=?";
                 try{
                     metodo(personaObj=ctrlPersona.buscarUsuario(sql, cuil));                    
                 }catch(Exception e){
