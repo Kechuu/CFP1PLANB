@@ -190,6 +190,7 @@ public class Caracter_modificar extends javax.swing.JInternalFrame {
             ctrlCaracter.cargarCombo(cbCaracterActual);
             txtCambiarCaracter.setText("");
             txtCambiarCaracter.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Caracter modificado correctamente.");
         }
 
     }//GEN-LAST:event_btnAceptarActionPerformed

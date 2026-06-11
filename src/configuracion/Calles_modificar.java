@@ -238,7 +238,7 @@ public final class Calles_modificar extends javax.swing.JInternalFrame {
             
             cbCalles.setModel(modelo2);
             //FIN
-            
+            JOptionPane.showMessageDialog(null, "Calle modificada correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

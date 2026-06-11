@@ -218,6 +218,7 @@ public final class Cursado_crear extends javax.swing.JInternalFrame {
             llenarTablaCursado(tablaCursado);
             txtCursado.setText("");
             txtCursado.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Lugar de cursado agregado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

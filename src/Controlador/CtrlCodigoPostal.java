@@ -23,7 +23,7 @@ public class CtrlCodigoPostal {
     public void crear(int idLocalidad, String codigoPostal){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO codigoPostal (localidad,codigoPostal) VALUES (?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO codigoPostal (idLugar,codigoPostal) VALUES (?,?)"); // ← CORREGIDO
             
             ps.setInt(1, idLocalidad);
             ps.setString(2, codigoPostal);
@@ -39,7 +39,7 @@ public class CtrlCodigoPostal {
     public void editar(int idLocalidad, String codigoPostal){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE codigoPostal SET codigoPostal = ? WHERE localidad = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE codigoPostal SET codigoPostal = ? WHERE idLugar = ?"); // ← CORREGIDO
             
             ps.setString(1, codigoPostal);
             ps.setInt(2, idLocalidad);
@@ -64,17 +64,16 @@ public class CtrlCodigoPostal {
         CtrlLugar ctrlLugar = new CtrlLugar();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM codigoPostal WHERE localidad = ?");
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM codigoPostal WHERE idLugar = ?"); // ← CORREGIDO
             
             ps.setInt(1, idLocalidad);
             rs = ps.executeQuery();
             
             if (rs.next()) {
                 codigoPostal.setIdCodigoPostal(rs.getInt("idCodigoPostal"));
-                //codigoPostal.setLocalidad(ctrlLugar.leer(rs.getInt("localidad"), 3));
                 codigoPostal.setCodigoPostal(rs.getString("codigoPostal"));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando :v");
+                //JOptionPane.showMessageDialog(null, "No existe lo que está buscando :v");
             }
             
         } catch (Exception e) {

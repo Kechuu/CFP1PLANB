@@ -194,6 +194,7 @@ public final class Sexo_crear extends javax.swing.JInternalFrame {
             llenarTablaSexo(tablaSexo);
             txtSexo.setText("");
             txtSexo.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Sexo agregado correctamente.");
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 

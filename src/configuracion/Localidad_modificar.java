@@ -247,8 +247,12 @@ public final class Localidad_modificar extends javax.swing.JInternalFrame {
         }else{
             bandera=1;
             lugar = (Lugar) cbLocalidadActual.getSelectedItem();
-            ctrlLugar.editar(lugar.getIdLugar(), txtLocalidad.getText(), 3, 1);
-            ctrlCodigoPostal.editar(lugar.getIdLugar(), txtCambiarCodigo.getText());
+            ctrlLugar.editar(lugar.getIdLugar(), txtLocalidad.getText(), 3, 0);
+            if(codigoPostal.getIdCodigoPostal() != 0){
+                ctrlCodigoPostal.editar(lugar.getIdLugar(), txtCambiarCodigo.getText());
+            }else{
+                ctrlCodigoPostal.crear(lugar.getIdLugar(), txtCambiarCodigo.getText());
+            }
             cbLocalidadActual.removeAllItems();
             bandera=1;
             ctrlLugar.cargarComboLocalidad(cbLocalidadActual);
@@ -257,6 +261,7 @@ public final class Localidad_modificar extends javax.swing.JInternalFrame {
             txtLocalidad.setText("");
             txtCambiarCodigo.setText("");
             bandera=0;
+            JOptionPane.showMessageDialog(null, "Localidad modificada correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

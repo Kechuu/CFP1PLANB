@@ -218,6 +218,7 @@ public final class Gremio_crear extends javax.swing.JInternalFrame {
             llenarTablaGremio(tablaGremios);
             txtGremios.setText("");
             txtGremios.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Gremio agregado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

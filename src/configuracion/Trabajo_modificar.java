@@ -186,6 +186,7 @@ public final class Trabajo_modificar extends javax.swing.JInternalFrame {
             ctrlTrabajo.cargarComboTrabajo(cbTrabajoActual);
             txtTrabajo.setText("");
             txtTrabajo.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Trabajo modificado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

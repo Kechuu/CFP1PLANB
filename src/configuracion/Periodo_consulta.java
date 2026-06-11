@@ -201,6 +201,12 @@ public final class Periodo_consulta extends javax.swing.JInternalFrame {
             Principal.principal.add(cr);
             cr.setVisible(true);
             cr.toFront();
+            cr.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+                public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
+                    modelo.clear();
+                    cargarListaPeriodo();
+                }
+            });
         }catch(ClassNotFoundException e){
             
         }
@@ -222,6 +228,12 @@ public final class Periodo_consulta extends javax.swing.JInternalFrame {
             Principal.principal.add(md);
             md.setVisible(true);
             md.toFront();
+            md.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+                public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
+                    modelo.clear();
+                    cargarListaPeriodo();
+                }
+            });
         }catch(ClassNotFoundException e){
             
         }

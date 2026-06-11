@@ -185,6 +185,7 @@ public final class Periodo_modificar extends javax.swing.JInternalFrame {
             ctrlPeriodo.cargarCombo(cbPeriodoActual);
             txtPeriodicidad.setText("");
             txtPeriodicidad.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Periodo modificado correctamente.");
         }
         
         

@@ -50,9 +50,47 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         menuBar.setVisible(false);
+        colocarLogo();           // <-- logo institucional centrado en el fondo
         Login log=new Login();
         principal.add(log);
         log.setVisible(true);
+    }
+
+    private void colocarLogo(){
+        try{
+            java.net.URL urlLogo = getClass().getResource("/imagenes/logo.png");
+            if(urlLogo == null){
+                return;
+            }
+            javax.swing.ImageIcon icono = new javax.swing.ImageIcon(urlLogo);
+
+            int anchoMax = 300;
+            if(icono.getIconWidth() > anchoMax){
+                int nuevoAlto = (int)(icono.getIconHeight() * (anchoMax / (double) icono.getIconWidth()));
+                java.awt.Image img = icono.getImage().getScaledInstance(anchoMax, nuevoAlto, java.awt.Image.SCALE_SMOOTH);
+                icono = new javax.swing.ImageIcon(img);
+            }
+
+            final javax.swing.JLabel lblLogo = new javax.swing.JLabel(icono);
+            lblLogo.setSize(icono.getIconWidth(), icono.getIconHeight());
+
+            centrarLogo(lblLogo);
+            principal.addComponentListener(new java.awt.event.ComponentAdapter() {
+                @Override
+                public void componentResized(java.awt.event.ComponentEvent e){
+                    centrarLogo(lblLogo);
+                }
+            });
+
+            principal.add(lblLogo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        }catch(Exception e){
+        }
+    }
+
+    private void centrarLogo(javax.swing.JLabel lblLogo){
+        int x = (principal.getWidth()  - lblLogo.getWidth())  / 2;
+        int y = (principal.getHeight() - lblLogo.getHeight()) / 2;
+        lblLogo.setLocation(Math.max(x, 0), Math.max(y, 0));
     }
 
     /**

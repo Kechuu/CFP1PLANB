@@ -114,30 +114,30 @@ public class CtrlGremio {
     }    
         
     public void llenarTabla(int idPersona, JTable tabla) throws SQLException{
-        
+
         con=clases.Conectar.conexion();
-    
+
         ps=(PreparedStatement)con.prepareStatement("SELECT gremio.detalle FROM gremio"
-                + " INNER JOIN empleado ON empleado.Gremio_idGremio = gremio.idGremio"
-                + " WHERE empleado.Persona_idPersona=?");
-        
+                + " INNER JOIN empleado ON empleado.idGremio = gremio.idGremio" // ← CORREGIDO
+                + " WHERE empleado.idPersona=?"); // ← CORREGIDO
+
         ps.setInt(1, idPersona);
-        
+
         rs=ps.executeQuery();
-        
+
         DefaultTableModel modelo =new DefaultTableModel();
         modelo.addColumn("Gremio");
-        
+
         tabla.setModel(modelo);
-        
+
         String[] datos= new String[1];
         try{
-            
+
             while(rs.next()){
-                
-	            datos[0]=rs.getString(1);
-	            
-            	    modelo.addRow(datos);
+
+                datos[0]=rs.getString(1);
+
+                modelo.addRow(datos);
             }
 
              tabla.setModel(modelo);
@@ -145,7 +145,7 @@ public class CtrlGremio {
         catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LAS LOCALIDADES EN LA TABLA"); 
         }
-        
+
     }
     
     public List<Gremio> cargarListaGremio(){

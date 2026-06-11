@@ -328,7 +328,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
     //si no es 3 quiere decir que entro estando ya en el sistema... por lo tal se tendria que hacer una busqueda previa en caso de que
     //el usuario a crear hacia un empleado, ya esté creado...
             if (ctrlUsuario.leer(idEmpleado).getIdUsuario() == 0){
-                
+                // == 0 significa que NO existe usuario → crear
                 if(Arrays.equals(txtPass.getPassword(), txtPass2.getPassword())){
                     Cargo item = (Cargo) cbJerarquia.getSelectedItem();
                     jerarquia(item.getDetalle());
@@ -336,7 +336,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
                     ctrlUsuario.crear(txtUser.getText(), String.copyValueOf(txtPass.getPassword()), jerarquia, idEmpleado);
 
                     if (ctrlUsuario.verificar(txtUser.getText(), String.copyValueOf(txtPass.getPassword()))) {
-                        JOptionPane.showMessageDialog(null, "EL usuario ya ha sido creado... ");
+                        JOptionPane.showMessageDialog(null, "El usuario ha sido creado correctamente.");
                         dispose();
                     }
 
@@ -345,6 +345,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
                 }
                 
             }else{
+                // != 0 significa que YA existe usuario para ese empleado
                 JOptionPane.showMessageDialog(null, "Ya existe un usuario para ese empleado");
             }
 
@@ -356,7 +357,7 @@ public class CrearUsuario extends javax.swing.JInternalFrame {
                 ctrlUsuario.crear(txtUser.getText(), String.copyValueOf(txtPass.getPassword()),jerarquia, idEmpleado);
             
                 if(ctrlUsuario.verificar(txtUser.getText(), String.copyValueOf(txtPass.getPassword()))){
-                    JOptionPane.showMessageDialog(null, "EL usuario ya ha sido creado... ");
+                    JOptionPane.showMessageDialog(null, "Usuario creado correctamente.");
                     dispose();
                     Login log=new Login();
                     Principal.principal.add(log);

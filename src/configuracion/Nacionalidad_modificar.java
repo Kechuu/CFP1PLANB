@@ -187,6 +187,7 @@ public final class Nacionalidad_modificar extends javax.swing.JInternalFrame {
             ctrlNacionalidad.cargarComboNacionalidad(cbNacionalidadActual);
             txtNacionalidad.setText("");
             txtNacionalidad.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Nacionalidad modificada correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

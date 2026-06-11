@@ -8,6 +8,7 @@ package principal;
 import Controlador.CtrlEscuela;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -322,8 +323,9 @@ public class ConfiguracionGeneral extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        ctrlEscuela.crear(txtInstitucion.getText(), txtDireccion.getText(), txtTelefono.getText(), txtCorreo.getText(), txtDirector.getText(), null, null);
-        
+    ctrlEscuela.crear(txtInstitucion.getText(), txtDireccion.getText(), txtTelefono.getText(), txtCorreo.getText(), txtDirector.getText(), null, null);
+    JOptionPane.showMessageDialog(null, "Configuración guardada correctamente.");
+    dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

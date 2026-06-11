@@ -41,6 +41,9 @@ public class Login extends javax.swing.JInternalFrame {
         
         Dimension medida1= this.getSize();
         Dimension medida2= this.getSize();
+        setTitle("Login");
+        setClosable(true);
+        setIconifiable(true);
         //menu.Principal.centrarPantalla(medida1.height, medida2.width, this.getLocation());
 //        this.setLocation((menu.Principal.pantalla.width - medida1.width)/2,(menu.Principal.pantalla.height - medida2.height)/2);
     
@@ -235,6 +238,8 @@ public class Login extends javax.swing.JInternalFrame {
             FormDni dni=new FormDni();
             Principal.principal.add(dni);
             dni.setVisible(true);
+            Principal.principal.repaint();
+            Principal.principal.revalidate();
             
         }else{
             JOptionPane.showMessageDialog(null, "Clave dada incorrecta");

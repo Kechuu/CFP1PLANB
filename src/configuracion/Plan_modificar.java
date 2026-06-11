@@ -187,6 +187,7 @@ public class Plan_modificar extends javax.swing.JInternalFrame {
             ctrlPlanes.cargarComboPlan(cbPlanActual);
             txtPlan.setText("");
             txtPlan.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Plan modificado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

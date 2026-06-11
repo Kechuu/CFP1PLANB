@@ -234,6 +234,7 @@ public final class Cargo_crear extends javax.swing.JInternalFrame {
             llenarTablaCargo(tablaCargo);
             txtCargo.setText("");
             txtCargo.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Cargo agregado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

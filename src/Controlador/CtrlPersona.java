@@ -30,8 +30,8 @@ public class CtrlPersona {
         
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO persona (nombrePersona,apellidoPersona,fechaNacimiento,Sexo_idSexo,"
-                    + "cuil,hijoPersona,correo,celular,Domicilio_idDomicilio,TipoDocumento_idTipoDocumento,Nacionalidad_idNacionalidad,Foto_idFoto,Lugar_idLugar,borrado"
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO persona (nombrePersona,apellidoPersona,fechaNacimiento,idSexo,"
+                    + "cuil,hijoPersona,correo,celular,idDomicilio,idTipoDocumento,idNacionalidad,idFoto,idLugar,borrado"
                     + ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         
             ps.setString(1, nombrePersona.toUpperCase());
@@ -61,13 +61,13 @@ public class CtrlPersona {
     public void editar(int idPersona, String nombrePersona, String apellidoPersona, java.util.Date fechaNacimiento, int sexo, String CUIL, String hijoPersona,
             String correo, String celular, int idDomicilio, int idTipoDocumento, int idNacionalidad, int idFoto, int lugarNacimiento,
             boolean borrado){
-        java.sql.Date fecha =new Date(fechaNacimiento.getTime());
-        int hijo=Integer.parseInt(hijoPersona);
+        java.sql.Date fecha = new Date(fechaNacimiento.getTime());
+        int hijo = Integer.parseInt(hijoPersona);
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE persona SET nombrePersona = ?, apellidoPersona = ?,"
-                    + "fechaNacimiento = ?, Sexo_idSexo = ?, cuil = ?, hijoPersona = ?, correo = ?, celular = ?, Domicilio_idDomicilio = ?,"
-                    + "TipoDocumento_idTipoDocumento = ?, Nacionalidad_idNacionalidad = ?, Foto_idFoto = ?, Lugar_idLugar = ?, borrado = ? WHERE idPersona = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE persona SET nombrePersona = ?, apellidoPersona = ?,"
+                    + "fechaNacimiento = ?, idSexo = ?, cuil = ?, hijoPersona = ?, correo = ?, celular = ?, idDomicilio = ?,"
+                    + "idTipoDocumento = ?, idNacionalidad = ?, idFoto = ?, idLugar = ?, borrado = ? WHERE idPersona = ?");
             
             ps.setString(1, nombrePersona.toUpperCase());
             ps.setString(2, apellidoPersona.toUpperCase());
@@ -103,7 +103,7 @@ public class CtrlPersona {
     public void borrar(int idPersona){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE persona SET borrado = TRUE WHERE idPersona = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE persona SET borrado = TRUE WHERE idPersona = ?");
             
             ps.setInt(1, idPersona);
             
@@ -123,16 +123,16 @@ public class CtrlPersona {
     }
     
     public Persona leer(int idPersona){
-     Persona persona = new Persona();
-     CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
-     CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
-     CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
-     CtrlFoto ctrlFoto = new CtrlFoto();
-     CtrlLugar ctrlLugarNacimiento = new CtrlLugar();
-     CtrlSexo ctrlSexo = new CtrlSexo();
+        Persona persona = new Persona();
+        CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
+        CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
+        CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
+        CtrlFoto ctrlFoto = new CtrlFoto();
+        CtrlLugar ctrlLugarNacimiento = new CtrlLugar();
+        CtrlSexo ctrlSexo = new CtrlSexo();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM persona WHERE idPersona = ?");
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM persona WHERE idPersona = ?");
             
             ps.setInt(1, idPersona);
             rs = ps.executeQuery();
@@ -142,16 +142,16 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setSexo(ctrlSexo.leer(rs.getInt("Sexo_idSexo")));
+                persona.setSexo(ctrlSexo.leer(rs.getInt("idSexo")));
                 persona.setCUIL(rs.getString("cuil"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
                 persona.setCelular(rs.getString("celular"));
-                persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("Domicilio_idDomicilio")));
-                persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("TipoDocumento_idTipoDocumento")));
-                persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("Nacionalidad_idNacionalidad")));
-                persona.setIdFoto(ctrlFoto.leer(rs.getInt("Foto_idFoto")));
-                persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("Lugar_idLugar")));
+                persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("idDomicilio")));
+                persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("idTipoDocumento")));
+                persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("idNacionalidad")));
+                persona.setIdFoto(ctrlFoto.leer(rs.getInt("idFoto")));
+                persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("idLugar")));
             }else{
                 JOptionPane.showMessageDialog(null, "-P No existe lo que está buscando");
             }
@@ -160,20 +160,20 @@ public class CtrlPersona {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
         
-     return persona;
+        return persona;
     }
     
     public Persona leer(){
-     Persona persona = new Persona();
-     CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
-     CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
-     CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
-     CtrlFoto ctrlFoto = new CtrlFoto();
-     CtrlLugar ctrlLugarNacimiento = new CtrlLugar();
-     CtrlSexo ctrlSexo = new CtrlSexo();
+        Persona persona = new Persona();
+        CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
+        CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
+        CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
+        CtrlFoto ctrlFoto = new CtrlFoto();
+        CtrlLugar ctrlLugarNacimiento = new CtrlLugar();
+        CtrlSexo ctrlSexo = new CtrlSexo();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM persona ORDER BY idPersona DESC LIMIT 1");
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM persona ORDER BY idPersona DESC LIMIT 1");
         
             rs = ps.executeQuery();
             
@@ -182,16 +182,16 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setSexo(ctrlSexo.leer(rs.getInt("Sexo_idSexo")));
+                persona.setSexo(ctrlSexo.leer(rs.getInt("idSexo")));
                 persona.setCUIL(rs.getString("cuil"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
                 persona.setCelular(rs.getString("celular"));
-                persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("Domicilio_idDomicilio")));
-                persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("TipoDocumento_idTipoDocumento")));
-                persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("Nacionalidad_idNacionalidad")));
-                persona.setIdFoto(ctrlFoto.leer(rs.getInt("Foto_idFoto")));
-                persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("Lugar_idLugar")));
+                persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("idDomicilio")));
+                persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("idTipoDocumento")));
+                persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("idNacionalidad")));
+                persona.setIdFoto(ctrlFoto.leer(rs.getInt("idFoto")));
+                persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("idLugar")));
             }else{
                 JOptionPane.showMessageDialog(null, "-Persona No existe lo que está buscando");
             }
@@ -200,20 +200,20 @@ public class CtrlPersona {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         
-     return persona;
+        return persona;
     }
     
     public Persona leer(String dni){
-     Persona persona = new Persona();
-     CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
-     CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
-     CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
-     CtrlFoto ctrlFoto = new CtrlFoto();
-     CtrlLugar ctrlLugarNacimiento = new CtrlLugar();
-     CtrlSexo ctrlSexo = new CtrlSexo();
+        Persona persona = new Persona();
+        CtrlDomicilio ctrlDomicilio = new CtrlDomicilio();
+        CtrlTipoDocumento ctrlTipoDocumento = new CtrlTipoDocumento();
+        CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
+        CtrlFoto ctrlFoto = new CtrlFoto();
+        CtrlLugar ctrlLugarNacimiento = new CtrlLugar();
+        CtrlSexo ctrlSexo = new CtrlSexo();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM persona WHERE cuil like '%"+dni+"%'");
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM persona WHERE cuil like '%"+dni+"%'");
         
             rs = ps.executeQuery();
             
@@ -222,16 +222,16 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setSexo(ctrlSexo.leer(rs.getInt("Sexo_idSexo")));
+                persona.setSexo(ctrlSexo.leer(rs.getInt("idSexo")));
                 persona.setCUIL(rs.getString("cuil"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
                 persona.setCelular(rs.getString("celular"));
-                persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("Domicilio_idDomicilio")));
-                persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("TipoDocumento_idTipoDocumento")));
-                persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("Nacionalidad_idNacionalidad")));
-                persona.setIdFoto(ctrlFoto.leer(rs.getInt("Foto_idFoto")));
-                persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("Lugar_idLugar")));
+                persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("idDomicilio")));
+                persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("idTipoDocumento")));
+                persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("idNacionalidad")));
+                persona.setIdFoto(ctrlFoto.leer(rs.getInt("idFoto")));
+                persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("idLugar")));
             }else{
                 JOptionPane.showMessageDialog(null, "-Persona No existe lo que está buscando");
             }
@@ -240,7 +240,7 @@ public class CtrlPersona {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
         
-     return persona;
+        return persona;
     }
 
     public void generarCUIL(int DNI, char sx) throws ClassNotFoundException{
@@ -253,11 +253,11 @@ public class CtrlPersona {
         CtrlNacionalidad ctrlNacionalidad = new CtrlNacionalidad();
         CtrlFoto ctrlFoto = new CtrlFoto();
         CtrlLugar ctrlLugarNacimiento = new CtrlLugar();
-        CtrlSexo ctrlSexo=new CtrlSexo();
+        CtrlSexo ctrlSexo = new CtrlSexo();
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement(sql);
+            ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setString(1, cuil);
             rs = ps.executeQuery();
             
@@ -266,16 +266,16 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                persona.setSexo(ctrlSexo.leer(rs.getInt("Sexo_idSexo")));
+                persona.setSexo(ctrlSexo.leer(rs.getInt("idSexo")));
                 persona.setCUIL(rs.getString("cuil"));
                 persona.setHijoPersona(rs.getInt("hijoPersona"));
                 persona.setCorreo(rs.getString("correo"));
                 persona.setCelular(rs.getString("celular"));
-                persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("Domicilio_idDomicilio")));
-                persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("TipoDocumento_idTipoDocumento")));
-                persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("Nacionalidad_idNacionalidad")));
-                persona.setIdFoto(ctrlFoto.leer(rs.getInt("Foto_idFoto")));
-                persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("Lugar_idLugar")));
+                persona.setIdDomicilio(ctrlDomicilio.leer(rs.getInt("idDomicilio")));
+                persona.setIdTipoDocumento(ctrlTipoDocumento.leer(rs.getInt("idTipoDocumento")));
+                persona.setIdNacionalidad(ctrlNacionalidad.leer(rs.getInt("idNacionalidad")));
+                persona.setIdFoto(ctrlFoto.leer(rs.getInt("idFoto")));
+                persona.setLugarNacimiento(ctrlLugarNacimiento.leer(rs.getInt("idLugar")));
                 persona.setBorrado(rs.getBoolean("borrado"));
             }else{
                 JOptionPane.showMessageDialog(null, "La persona no está registrada");
@@ -293,7 +293,7 @@ public class CtrlPersona {
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement(sql);
+            ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setString(1, cuil);
             rs = ps.executeQuery();
             
@@ -302,7 +302,6 @@ public class CtrlPersona {
                 persona.setNombrePersona(rs.getString("nombrePersona"));
                 persona.setApellidoPersona(rs.getString("apellidoPersona"));
                 persona.setHijoPersona(rs.getInt("idEmpleado"));
-            }else{
             }
             con.close();
         } catch (HeadlessException | SQLException e) {
@@ -315,7 +314,7 @@ public class CtrlPersona {
     public void cambiarEstado(int idPersona){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE persona SET borrado = FALSE WHERE idPersona = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE persona SET borrado = FALSE WHERE idPersona = ?");
             ps.setInt(1, idPersona);
             ps.executeUpdate();
             con.close();

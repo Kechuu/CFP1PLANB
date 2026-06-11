@@ -215,6 +215,7 @@ public final class TipoDoc_crear extends javax.swing.JInternalFrame {
             llenarTablaTipoDocumento(tablaTipo);
             txtTipo.setText("");
             txtTipo.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Tipo de Documento agregado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

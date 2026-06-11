@@ -217,6 +217,7 @@ public final class Plan_crear extends javax.swing.JInternalFrame {
             llenarTablaPlan(tablaPlan);
             txtPlan.setText("");
             txtPlan.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Plan agregado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

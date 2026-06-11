@@ -215,6 +215,7 @@ public final class Trabajo_crear extends javax.swing.JInternalFrame {
             llenarTablaTrabajo(tablaTrabajo);
             txtTrabajo.setText("");
             txtTrabajo.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Trabajo agregado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

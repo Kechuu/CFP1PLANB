@@ -188,6 +188,7 @@ public final class Cursado_modificar extends javax.swing.JInternalFrame {
             ctrlLugarCurso.cargarCombo(cbCursado);
             txtCursado.setText("");
             txtCursado.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Lugar de cursado modificado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

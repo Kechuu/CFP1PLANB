@@ -238,6 +238,8 @@ public final class Calles_crear extends javax.swing.JInternalFrame {
             ctrlLugar.crear(txtNuevaCalle.getText(), 1, lugar.getIdLugar());
             llenarTablaCalle(tablaCalles, lugar.getIdLugar());
             txtNuevaCalle.setText("");
+            JOptionPane.showMessageDialog(null, "Calle agregada correctamente.");
+            txtNuevaCalle.setText("");
             txtNuevaCalle.setFocusable(true);
         }
         

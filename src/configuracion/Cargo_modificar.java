@@ -186,6 +186,7 @@ public final class Cargo_modificar extends javax.swing.JInternalFrame {
             ctrlCargo.cargarCombo(cbCargoActual);
             txtCambiarCargo.setText("");
             txtCambiarCargo.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Cargo modificado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

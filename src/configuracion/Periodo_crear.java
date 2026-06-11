@@ -217,6 +217,7 @@ public final class Periodo_crear extends javax.swing.JInternalFrame {
             llenarTablaPeriodo(tablaPeriodicidad);
             txtPeriodicidad.setText("");
             txtPeriodicidad.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Periodo agregado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

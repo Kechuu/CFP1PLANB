@@ -53,20 +53,21 @@ public final class Localidad_crear extends javax.swing.JInternalFrame {
         modelo.addColumn("Codigo Postal");
         tabla.setModel(modelo);
         String[] dato = new String[2];
-        
+
         try {
             Statement st = (Statement) con.createStatement();
-            ResultSet rs= st.executeQuery("SELECT nombre, codigoPostal FROM lugar RIGTH JOIN codigoPostal"
-                    + " WHERE idLugar = localidad AND nivel = '"+idLugar+"' ORDER BY nombre ASC");
-            
+            ResultSet rs = st.executeQuery("SELECT lugar.nombre, codigoPostal.codigoPostal FROM lugar"
+                    + " LEFT JOIN codigoPostal ON lugar.idLugar = codigoPostal.idLugar"
+                    + " WHERE lugar.nivel = 3 ORDER BY lugar.nombre ASC");
+
             while (rs.next()) {                
-                dato[0]=rs.getString(1);
-                dato[1]=rs.getString(2);
+                dato[0] = rs.getString(1);
+                dato[1] = rs.getString(2) != null ? rs.getString(2) : "";
                 modelo.addRow(dato);
             }
-            
+
             tabla.setModel(modelo);
-            
+
         } catch (SQLException e) {
              JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LAS LOCALIDADES EN LA TABLA: : "+e); 
         }
@@ -279,6 +280,7 @@ if(Inscripcion.banderaInscripcionLugar==1){
             txtLocalidad.setText("");
             txtCodigoPostal.setText("");
             txtLocalidad.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Localidad agregada correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

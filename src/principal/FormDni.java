@@ -205,62 +205,63 @@ public class FormDni extends javax.swing.JInternalFrame {
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         
-        // TODO add your handling code here:
-        //  <VALIDACION>
-        if (masculino.isSelected()==false && femenino.isSelected()==false) {
-            JOptionPane.showMessageDialog(null, "Seleccione Genero");
-        }
+     // TODO add your handling code here:
+    //  <VALIDACION>
+    if (masculino.isSelected()==false && femenino.isSelected()==false) {
+        JOptionPane.showMessageDialog(null, "Seleccione Genero");
+    }
 
-        //  <DESCACTIVAR PANEL>
-        this.setVisible(false);
-        //Principal.desactivarPanel();
-        //  </FIN DESACTIVAR PANEL>
+    //  <DESCACTIVAR PANEL>
+    this.setVisible(false);
+    //Principal.desactivarPanel();
+    //  </FIN DESACTIVAR PANEL>
 
-        int dni = Integer.parseInt(txtDni.getText());
-        boolean mas;
-        if (masculino.isSelected() == true && femenino.isSelected() == false) {
-            mas = true;
-            sx = 'm';
-        } else {
-            mas = false;
-            sx = 'f';
-        }
-        //AQUI PASO LOS DATOS NECESARIOS PARA QUE SE GENERE EL CUIL Y SE GUARDE EN cuil...
-        cuil = clases.Cuil.generar(dni, sx);
-    
-        switch(alumnoEmpleadoUser){
-            case 1://sql en caso de que venga desde alumno..
-                sql="SELECT * FROM persona INNER JOIN alumno ON persona.idPersona = alumno.Persona_idPersona WHERE persona.cuil=?";
-            break;
+    int dni = Integer.parseInt(txtDni.getText());
+    boolean mas;
+    if (masculino.isSelected() == true && femenino.isSelected() == false) {
+        mas = true;
+        sx = 'm';
+    } else {
+        mas = false;
+        sx = 'f';
+    }
+    //AQUI PASO LOS DATOS NECESARIOS PARA QUE SE GENERE EL CUIL Y SE GUARDE EN cuil...
+    cuil = clases.Cuil.generar(dni, sx);
+
+    switch(alumnoEmpleadoUser){
+        case 1://sql en caso de que venga desde alumno..
+            sql="SELECT * FROM persona INNER JOIN alumno ON persona.idPersona = alumno.idPersona WHERE persona.cuil=?";
+        break;
+            
+        case 2://sql en caso de que venga desde empleado..
+            sql="SELECT * FROM persona INNER JOIN empleado ON persona.idPersona = empleado.idPersona WHERE persona.cuil=?";
+        break;
+            
+        case 3://buscar un usuario..
+            sql="SELECT persona.idPersona, persona.nombrePersona, persona.apellidoPersona, empleado.idEmpleado FROM persona"
+                    + " INNER JOIN empleado ON persona.idPersona = empleado.idPersona"
+                    + " WHERE persona.cuil=?";
+            try{
+                metodo(personaObj=ctrlPersona.buscarUsuario(sql, cuil));                    
+            }catch(Exception e){
                 
-            case 2://sql en caso de que venga desde empleado..
-                sql="SELECT * FROM persona INNER JOIN empleado ON persona.idPersona = empleado.Persona_idPersona WHERE persona.cuil=?";
-            break;
-                
-            case 3://buscar un usuario..
-                sql="SELECT persona.idPersona, persona.nombrePersona, persona.apellidoPersona, empleado.idEmpleado FROM persona"
-                        + " INNER JOIN empleado ON persona.idPersona = empleado.Persona_idPersona"
-                        + " WHERE persona.cuil=?";
-                try{
-                    metodo(personaObj=ctrlPersona.buscarUsuario(sql, cuil));                    
-                }catch(Exception e){
-                    
-                }
-            break;
-        }
-        
-        if(alumnoEmpleadoUser!=3){
-            try {
-                JOptionPane.showMessageDialog(null, "hasdioa");
-                JOptionPane.showMessageDialog(null, sql);
-
-                personaObj = ctrlPersona.buscarPersona(sql, cuil);
-
-                metodo(personaObj);
-            } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(FormDni.class.getName()).log(Level.SEVERE, null, ex);
             }
+        break;
+    }
+    
+    if(alumnoEmpleadoUser!=3){
+        try {
+            //JOptionPane.showMessageDialog(null, "hasdioa");
+            //JOptionPane.showMessageDialog(null, sql);
+
+            personaObj = ctrlPersona.buscarPersona(sql, cuil);
+
+            metodo(personaObj);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(FormDni.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
 
     }//GEN-LAST:event_btnCargarActionPerformed
 

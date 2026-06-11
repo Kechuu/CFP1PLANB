@@ -215,6 +215,7 @@ public final class Titulo_crear extends javax.swing.JInternalFrame {
             llenarTablaTitulo(tablaTitulo);
             txtTitulo.setText("");
             txtTitulo.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Título agregado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

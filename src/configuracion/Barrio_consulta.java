@@ -212,6 +212,12 @@ public final class Barrio_consulta extends javax.swing.JInternalFrame {
             Principal.principal.add(br);
             br.setVisible(true);
             br.toFront();
+            br.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+                public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
+                    modelo.clear();
+                    cargarListaBarrio();
+                }
+            });
             
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Barrio_consulta.class.getName()).log(Level.SEVERE, null, ex);
@@ -237,6 +243,12 @@ public final class Barrio_consulta extends javax.swing.JInternalFrame {
             Principal.principal.add(md);
             md.setVisible(true);
             md.toFront();
+            md.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+                public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
+                    modelo.clear();
+                    cargarListaBarrio();
+                }
+            });
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Barrio_consulta.class.getName()).log(Level.SEVERE, null, ex);
         }

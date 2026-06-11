@@ -187,6 +187,7 @@ public final class Sexo_modificar extends javax.swing.JInternalFrame {
             ctrlSexo.cargarCombo(cbSexoActual);
             txtSexo.setText("");
             txtSexo.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Nacionalidad modificada correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

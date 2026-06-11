@@ -219,6 +219,7 @@ public final class Nacionalidad_crear extends javax.swing.JInternalFrame {
             llenarTablaNacionalidad(tablaNacionalidad);
             txtNacionalidad.setText("");
             txtNacionalidad.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Nacionalidad agregada correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

@@ -24,7 +24,7 @@ public class CtrlConexionAccion {
     public void crear(int idEmpleado, String detalle, Date fecha){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO conexionAccion (idEmpleado,detalle,fecha) VALUES (?,?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO conexionacciones (idEmpleado,detalle,fecha) VALUES (?,?,?)");
             
             ps.setInt(1, idEmpleado);
             ps.setString(2, detalle);

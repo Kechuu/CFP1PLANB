@@ -195,6 +195,8 @@ public final class Barrio_modificar extends javax.swing.JInternalFrame {
             DefaultComboBoxModel modelo = new DefaultComboBoxModel(ctrlLugar.cargarFiltrado(lugar.getIdLugar(),2));
             cbBarriosActuales.setModel(modelo);
             //FIN
+            JOptionPane.showMessageDialog(null, "Barrio modificado correctamente.");
+            
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

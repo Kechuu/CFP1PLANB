@@ -25,8 +25,8 @@ public class CtrlEscuela {
             Blob logo, Blob fondo){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO escuela (nombre, direccion, telefono, correo,"
-                    + " director, logo, fondo) VALUES (?,?,?,?,?,?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO escuela (nombreEscuela, direccion, telefono, correo,"
+                + " director, logo, fondo) VALUES (?,?,?,?,?,?,?)");
         
             ps.setString(1, nombreEscuela.toUpperCase());
             ps.setString(2, direccion.toUpperCase());
@@ -47,7 +47,7 @@ public class CtrlEscuela {
     public void editarTelefonoCorreo(String telefono, String correo, int idEscuela){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE cargo SET telefono = ?, correo = ? WHERE idEscuela = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE escuela SET telefono = ?, correo = ? WHERE idEscuela = ?"); // ← CORREGIDO
             
             ps.setString(1, telefono);
             ps.setString(2, correo);
@@ -71,7 +71,7 @@ public class CtrlEscuela {
     public void editarLogoFondo(Blob logo, Blob fondo, int idEscuela){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE cargo SET logo = ?, fondo = ? WHERE idEscuela = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE escuela SET logo = ?, fondo = ? WHERE idEscuela = ?"); // ← CORREGIDO
             
             ps.setBlob(1, logo);
             ps.setBlob(2, fondo);
@@ -95,7 +95,7 @@ public class CtrlEscuela {
     public void editarDirector(String director, int idEscuela){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE cargo SET director = ? WHERE idEscuela = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE escuela SET director = ? WHERE idEscuela = ?"); // ← CORREGIDO
             
             ps.setString(1, director);
             ps.setInt(2, idEscuela);
@@ -125,16 +125,14 @@ public class CtrlEscuela {
             rs = ps.executeQuery();
             
             if(rs.next()){
-                
                 escuela.setIdEscuela(rs.getInt("idEscuela"));
-                escuela.setNombreEscuela(rs.getString("nombre"));
+                escuela.setNombreEscuela(rs.getString("nombreEscuela"));
                 escuela.setDireccion(rs.getString("direccion"));
                 escuela.setTelefono(rs.getString("telefono"));
                 escuela.setCorreo(rs.getString("correo"));
                 escuela.setDirector(rs.getString("director"));
                 escuela.setLogo(rs.getBlob("logo"));
                 escuela.setFondo(rs.getBlob("fondo"));
-            
             }
             
             con.close();

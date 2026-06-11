@@ -191,6 +191,7 @@ public final class Gremio_modificar extends javax.swing.JInternalFrame {
             ctrlGremio.cargarCombo(cbGremiosActuales);
             txtGremios.setText("");
             txtGremios.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Gremio modificado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

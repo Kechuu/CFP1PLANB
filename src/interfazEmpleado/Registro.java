@@ -1265,18 +1265,47 @@ public final class Registro extends javax.swing.JInternalFrame {
 
         int hijos=0;
         
-        if(modeloCargo.isEmpty() || modeloTitulo.isEmpty()){
-            JOptionPane.showMessageDialog(null, "No ha seleccionado un cargo y/o título del empleado");
+        if(modeloCargo.isEmpty()){
+            JOptionPane.showMessageDialog(null, "No ha seleccionado un cargo del empleado (el título es opcional).");
         }else{
             
         //SE VERIFICA SI SE INGRESÓ ALGO CORRESPONDIENTE DE EDIFICIO..
-            if(!txtBloque.getText().equals("") && !txtPiso.getText().equals("") && !txtDepto.getText().equals("")){
+            if(!txtBloque.getText().equals("") || !txtPiso.getText().equals("") || !txtDepto.getText().equals("")){
+                //Si completó al menos un dato de edificio, se completan los vacíos con "0"
+                if(txtBloque.getText().equals("")){
+                    txtBloque.setText("0");
+                }
+                if(txtPiso.getText().equals("")){
+                    txtPiso.setText("0");
+                }
+                if(txtDepto.getText().equals("")){
+                    txtDepto.setText("0");
+                }
                 edificio.crear(txtBloque.getText(), txtPiso.getText(), txtDepto.getText());
-                idEdificio=edificio.leer().getIdEdificio();
+            }else{
+                //No ingresó datos de edificio: se crea uno por defecto ("0")
+                //para que el domicilio tenga un idEdificio válido y no falle la FK.
+                edificio.crear("0", "0", "0");
+            }
+            idEdificio=edificio.leer().getIdEdificio();
+
+        //<SE VALIDA EL NÚMERO DE CASA (debe ser numérico). Si está vacío se usa 0.
+            int nroCasa;
+            if(txtCasa.getText().trim().equals("")){
+                JOptionPane.showMessageDialog(null, "No ingresó el número de casa.");
+                txtCasa.setText("0");
+                nroCasa = 0;
+            }else{
+                try{
+                    nroCasa = Integer.parseInt(txtCasa.getText().trim());
+                }catch(NumberFormatException ex){
+                    JOptionPane.showMessageDialog(null, "Ingrese un número o 0 si no tiene.");
+                    return;
+                }
             }
 
         //<SE CREA UN DOMICILIO...
-            domicilioId.crear(Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calle.getIdLugar(), idEdificio);
+            domicilioId.crear(nroCasa, txtFijo.getText(), calle.getIdLugar(), idEdificio);
 
         //<SE CREA REGISTRO DE FOTO Y TRAE EL ULTIMO id
             Foto foto = new Foto();

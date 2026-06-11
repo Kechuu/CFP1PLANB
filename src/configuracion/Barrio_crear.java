@@ -264,6 +264,8 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
             ctrlLugar.crear(txtnuevoBarrio.getText(), 2, lugar.getIdLugar());
             llenarTablaBarrio(tablaBarrios,lugar.getIdLugar());
             txtnuevoBarrio.setText("");
+            JOptionPane.showMessageDialog(null, "Barrio agregado correctamente.");
+            txtnuevoBarrio.setText("");
             txtnuevoBarrio.setFocusable(true);
         }
         

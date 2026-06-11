@@ -187,6 +187,7 @@ public final class Titulo_modificar extends javax.swing.JInternalFrame {
             ctrlTitulo.cargarCombo(cbTituloActual);
             txtTitulo.setText("");
             txtTitulo.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Título modificado correctamente.");
         }
         
     }//GEN-LAST:event_btnAceptarActionPerformed

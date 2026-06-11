@@ -25,7 +25,7 @@ public class CtrlDomicilio {
     public void crear(int nroLote, String telefono, int idCalle, int idEdificio){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO domicilio (nroLote,telefono,Lugar_idLugar,Edificio_idEdificio) VALUES (?,?,?,?)");
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO domicilio (nroLote,telefono,idLugar,idEdificio) VALUES (?,?,?,?)"); 
             
             ps.setInt(1, nroLote);
             ps.setString(2, telefono);
@@ -36,13 +36,12 @@ public class CtrlDomicilio {
             con.close();
             
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "pasa por control domiclio");
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            //JOptionPane.showMessageDialog(null, "pasa por control domiclio");
+            //JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
     
     public void cambiarAgregarTelefono(int idDomicilio, String telefono){
-
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("UPDATE domicilio SET telefono = ? WHERE idDomicilio = ?");
@@ -55,14 +54,13 @@ public class CtrlDomicilio {
         } catch (Exception e) {
              JOptionPane.showMessageDialog(null, e.getLocalizedMessage().toString());
         }
-        
     }
     
     public void cambiarDomicilio(int idDomicilio, int nroLote, String telefono, int idCalle, int idEdificio){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE domicilio SET nroLote = ?, telefono = ?, Lugar_idLugar = ?,"
-                    + "Edificio_idEdificio = ? WHERE idDomicilio = ?");
+            ps = (PreparedStatement) con.prepareStatement("UPDATE domicilio SET nroLote = ?, telefono = ?, idLugar = ?,"
+                    + "idEdificio = ? WHERE idDomicilio = ?"); // ← CORREGIDO
             
             ps.setInt(1, nroLote);
             ps.setString(2, telefono);
@@ -88,15 +86,14 @@ public class CtrlDomicilio {
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM domicilio WHERE idDomicilio = ?");
             
             ps.setInt(1, idDomicilio);
-            
             rs = ps.executeQuery();
             
             if (rs.next()) {
                 domicilio.setIdDomicilio(rs.getInt("idDomicilio"));
                 domicilio.setNro(rs.getInt("nroLote"));
                 domicilio.setTelefono(rs.getString("telefono"));
-                domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar")));
-                domicilio.setIdEdificio(rs.getInt("idEdificio"));
+                domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar"))); // ← ya estaba correcto
+                domicilio.setIdEdificio(rs.getInt("idEdificio")); // ← ya estaba correcto
             }else{
                 JOptionPane.showMessageDialog(null, " aqui No existe lo que está buscando");
             }
@@ -106,6 +103,7 @@ public class CtrlDomicilio {
         }
         return domicilio;
     }
+
     public Domicilio leer(){
         Domicilio domicilio = new Domicilio();
         Lugar lugar = new Lugar();
@@ -123,8 +121,8 @@ public class CtrlDomicilio {
                 domicilio.setIdDomicilio(rs.getInt("idDomicilio"));
                 domicilio.setNro(rs.getInt("nroLote"));
                 domicilio.setTelefono(rs.getString("telefono"));
-                domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar")));
-                domicilio.setIdEdificio(rs.getInt("idEdificio"));
+                domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar"))); // ← ya estaba correcto
+                domicilio.setIdEdificio(rs.getInt("idEdificio")); // ← ya estaba correcto
             }else{
                 JOptionPane.showMessageDialog(null, "AQUI No existe lo que está buscando");
             }

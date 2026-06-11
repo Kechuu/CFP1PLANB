@@ -193,6 +193,12 @@ public final class Caracter_Consulta extends javax.swing.JInternalFrame {
             Principal.principal.add(cr);
             cr.setVisible(true);
             cr.toFront();
+            cr.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+                public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
+                    modelo.clear();
+                    cargarListaCargo();
+                }
+            });
         }catch(Exception e){
             
         }
@@ -217,6 +223,12 @@ public final class Caracter_Consulta extends javax.swing.JInternalFrame {
             Principal.principal.add(md);
             md.setVisible(true);
             md.toFront();
+            md.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+                public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
+                    modelo.clear();
+                    cargarListaCargo();
+                }
+            });
         }catch(Exception e){
             
         }

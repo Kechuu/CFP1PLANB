@@ -217,6 +217,7 @@ public final class Caracter_crear extends javax.swing.JInternalFrame {
             llenarTablaCargo(tablaCaracter);
             txtCaracter.setText("");
             txtCaracter.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Caracter agregado correctamente.");
         }
 
     }//GEN-LAST:event_btnAceptarActionPerformed

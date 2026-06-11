@@ -188,6 +188,7 @@ public final class TipoDoc_modificar extends javax.swing.JInternalFrame {
             ctrlTipoDocumento.cargarComboTipoDocumento(cbTipo);
             txtTipo.setText("");
             txtTipo.setFocusable(true);
+            JOptionPane.showMessageDialog(null, "Tipo de Documento modificado correctamente.");
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
