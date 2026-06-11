@@ -383,7 +383,7 @@ public class CtrlLugar {
         con = clases.Conectar.conexion();
         try {
             ps= (PreparedStatement) con.prepareStatement("SELECT lugar.nombre, codigoPostal.codigopostal FROM lugar INNER JOIN codigoPostal on lugar.idlugar = codigopostal.lugar_idlugar"
-                    + " WHERE lugar.nivel = ? ORDER BY lugar.nombre ASC");
+                    + " WHERE lugar.nivel = 2 ORDER BY lugar.nombre ASC");
             
             rst=ps.executeQuery();
             
