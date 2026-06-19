@@ -231,18 +231,23 @@ public final class Calles_crear extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if (txtNuevaCalle.getText().equalsIgnoreCase("")) {
+        Lugar localidadSel = (Lugar)cbLocalidad.getSelectedItem();
+        Lugar barrioSel = (Lugar)cbBarrio.getSelectedItem();
+        if (localidadSel == null || localidadSel.getIdLugar() == 0){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una localidad.");
+        } else if (barrioSel == null || barrioSel.getIdLugar() == 0){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un barrio.");
+        } else if (txtNuevaCalle.getText().trim().equalsIgnoreCase("")){
             JOptionPane.showMessageDialog(null, "No se puede cargar un registro vacio");
         }else{
-            lugar = (Lugar) cbBarrio.getSelectedItem();
+            lugar = barrioSel;
             ctrlLugar.crear(txtNuevaCalle.getText(), 1, lugar.getIdLugar());
             llenarTablaCalle(tablaCalles, lugar.getIdLugar());
             txtNuevaCalle.setText("");
             JOptionPane.showMessageDialog(null, "Calle agregada correctamente.");
-            txtNuevaCalle.setText("");
             txtNuevaCalle.setFocusable(true);
         }
-        
+        //a la hora de agregar una nueva calle, ahora valida en orden que haya una localidad y un barrio elegido
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void cbLocalidadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLocalidadItemStateChanged
