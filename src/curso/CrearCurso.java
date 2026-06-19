@@ -98,18 +98,22 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
     
     public void llenarTabladeHorario2(JTable tabla){
         int filaSeleccionada = TablaHorario.getSelectedRow();
-        //JOptionPane.showMessageDialog(null, TablaHorario.getSelectionModel());
-        if (filaSeleccionada>=0) {
-            
-            //modelo3.addRow(TablaHorario.getSelectedRow());
-            
-            
-            String datos[] = new String[3];
-            datos[0]=TablaHorario.getValueAt(filaSeleccionada, 0).toString();
-            datos[1]=TablaHorario.getValueAt(filaSeleccionada, 1).toString();
-            datos[2]=TablaHorario.getValueAt(filaSeleccionada, 2).toString();
+        if (filaSeleccionada >= 0) {
+            String dia   = TablaHorario.getValueAt(filaSeleccionada, 0).toString();
+            String desde = TablaHorario.getValueAt(filaSeleccionada, 1).toString();
+            String hasta = TablaHorario.getValueAt(filaSeleccionada, 2).toString();
+
+            // Verifica que ese día/horario no esté ya agregado en la tabla derecha
+            for (int i = 0; i < modelo3.getRowCount(); i++) {
+                if (modelo3.getValueAt(i, 0).toString().equals(dia)&& modelo3.getValueAt(i, 1).toString().equals(desde)&& modelo3.getValueAt(i, 2).toString().equals(hasta)){
+                    JOptionPane.showMessageDialog(null, "Ese horario ya fue agregado al curso.");
+                    return;
+                }
+            }
+            String datos[] = {dia, desde, hasta};
             modelo3.addRow(datos);
-            
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un horario de la tabla de la izquierda.");
         }
     }
     
@@ -715,6 +719,7 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
                             //JOptionPane.showMessageDialog(null, "POR AQUI TAMBIEN");
                             vaciarTablas(TablaHorario);
                             vaciarTablas(TablaHorario2);
+                            JOptionPane.showMessageDialog(null, "Curso creado correctamente.");
                         }
                     }
                 }
