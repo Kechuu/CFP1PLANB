@@ -1091,7 +1091,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         //PANEL DOMICILIO
         
         if(persona.getIdDomicilio().getIdEdificio()!=0){
-            JOptionPane.showMessageDialog(null, persona.getIdDomicilio().getIdDomicilio());
+            //JOptionPane.showMessageDialog(null, persona.getIdDomicilio().getIdDomicilio());
             edificio=ctrlEdificio.leer(persona.getIdDomicilio().getIdEdificio());
             
             txtBloque.setText(edificio.getTorre());
@@ -1337,10 +1337,19 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         Sexo item = (Sexo) cbSexo.getSelectedItem();
         
     //EDIFICIO
-        if(!txtBloque.getText().equals("") && !txtPiso.getText().equals("") && !txtDepto.getText().equals("")){
-            if(!edificio.getTorre().equals(txtBloque.getText()) || !edificio.getPiso().equals(txtPiso.getText()) || !edificio.getDepto().equals(txtDepto.getText())){                
-                edificioId.editar(txtBloque.getText(), txtPiso.getText(), txtDepto.getText(), personaDatos.getIdDomicilio().getIdEdificio());
-                idEdificio=personaDatos.getIdDomicilio().getIdEdificio();
+        // Se parte del edificio que el domicilio ya tiene, para no perderlo si no se modifica.
+        idEdificio = personaDatos.getIdDomicilio().getIdEdificio();
+        if(!txtBloque.getText().equals("") || !txtPiso.getText().equals("") || !txtDepto.getText().equals("")){
+            if(txtBloque.getText().equals("")) txtBloque.setText("0");
+            if(txtPiso.getText().equals(""))   txtPiso.setText("0");
+            if(txtDepto.getText().equals(""))  txtDepto.setText("0");
+            if(idEdificio != 0){
+                //si ya tenia un edificio, se actualiza
+                edificioId.editar(txtBloque.getText(), txtPiso.getText(), txtDepto.getText(), idEdificio);
+            }else{
+                //si no tenia un edificio se crea uno nuevo
+                edificioId.crear(txtBloque.getText(), txtPiso.getText(), txtDepto.getText());
+                idEdificio = edificioId.leer().getIdEdificio();
             }
         }
              
@@ -1385,7 +1394,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         CtrlEmpleadoCargo empleadoCargo=new CtrlEmpleadoCargo();
         CtrlEmpleado ctrlEmpleado=new CtrlEmpleado();
         int idEmpleado=ctrlEmpleado.leer(personaDatos.getIdPersona()).getIdEmpleado();
-        JOptionPane.showMessageDialog(null, "arrayCargo: "+arrayCargo.size()+" listaCargo: "+listaCargo.getSize());
+        //JOptionPane.showMessageDialog(null, "arrayCargo: "+arrayCargo.size()+" listaCargo: "+listaCargo.getSize());
         if(arrayCargo.size()>listaCargo.getSize()){
             for(int i=0;i<listaCargo.getSize();i++){
                 if(arrayCargo.get(i).getIdCargo()!=listaCargo.getElementAt(i).getIdCargo()){
@@ -1418,7 +1427,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         }else{
         //EN CASO DE QUE EL TAMAÑO DE AMBAS LISTAS COINCIDAN, LO UNICO QUE SE HARÁ ES COMPARAR CADA ITEM PARA VERIFICAR QUE SON IGUALES
             for(int i=0;i<arrayCargo.size();i++){
-                    JOptionPane.showMessageDialog(null, "aqui");
+                    //JOptionPane.showMessageDialog(null, "aqui");
                 if(arrayCargo.get(i).getIdCargo()!=listaCargo.getElementAt(i).getIdCargo()){
                     int idEmpleadoCargo=empleadoCargo.leer(idEmpleado, arrayCargo.get(i).getIdCargo()).getEmpleadoCargo();  
                     empleadoCargo.modificarCargo(idEmpleadoCargo, arrayCargo.get(i).getIdCargo(),idEmpleado);                        
@@ -1459,7 +1468,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
             
         }else{
             for(int i=0;i<arrayTitulo.size();i++){
-                    JOptionPane.showMessageDialog(null, "aqui");
+                    //JOptionPane.showMessageDialog(null, "aqui");
                 if(arrayTitulo.get(i).getIdTitulo()!=listaTitulo.getElementAt(i).getIdTitulo()){
                     int idEmpleadoTitulo=empleadoTitulo.leer(idEmpleado, arrayTitulo.get(i).getIdTitulo()).getIdEmpleadoTitulo();  
                     empleadoTitulo.editar(idEmpleadoTitulo, arrayTitulo.get(i).getIdTitulo(),idEmpleado);
