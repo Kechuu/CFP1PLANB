@@ -92,7 +92,6 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
         txtnuevoBarrio = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
-        btnAgregarCalle = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaBarrios = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
@@ -182,21 +181,6 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
         });
         jPanel1.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 100, -1));
 
-        btnAgregarCalle.setBackground(new java.awt.Color(38, 86, 186));
-        btnAgregarCalle.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregarCalle.setText("Agregar calle");
-        btnAgregarCalle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarCalleActionPerformed(evt);
-            }
-        });
-        btnAgregarCalle.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                btnAgregarCalleKeyPressed(evt);
-            }
-        });
-        jPanel1.add(btnAgregarCalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, 130, -1));
-
         tablaBarrios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -236,25 +220,6 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
         
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void btnAgregarCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCalleActionPerformed
-        try {
-            // TODO add your handling code here:
-            if(Inscripcion.banderaInscripcionLugar==1){
-                //this.setVisible(false);
-            Calles_crear crear1=new Calles_crear();
-            
-            Principal.principal.add(crear1);
-            this.setComponentZOrder(crear1, 0);
-            crear1.setVisible(true);
-            }else{
-                //Principal.crearCalle();
-            }
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Barrio_crear.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnAgregarCalleActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         lugar = (Lugar) cbLocalidad.getSelectedItem();
@@ -296,13 +261,6 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtnuevoBarrioKeyPressed
 
-    private void btnAgregarCalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarCalleKeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
-            ActionEvent e = null;
-            this.btnAgregarCalleActionPerformed(e);
-        }
-    }//GEN-LAST:event_btnAgregarCalleKeyPressed
-
     private void btnCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelarKeyPressed
         if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
@@ -332,7 +290,6 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnAgregarCalle;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<Lugar> cbLocalidad;
     private javax.swing.JLabel jLabel1;
