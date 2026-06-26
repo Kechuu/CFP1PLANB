@@ -298,15 +298,13 @@ public final class Horario extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        // TODO add your handling code here:
         CtrlHorario ctrlHorario=new CtrlHorario();
         int hDesde1 = Integer.parseInt(hDesde.getText());
         int mDesde1 = Integer.parseInt(mDesde.getText());
         int hHasta1 = Integer.parseInt(hHasta.getText());
         int mHasta1 = Integer.parseInt(mHasta.getText());
-        //ctrlHorario.crear(txtDesde.getText(), txtHasta.getText(), 2);
-        //CtrlHorario ctrlHorario = new CtrlHorario();
 
-        
         if (cbDias.getSelectedIndex()==0 || hDesde1>23 || hDesde1<0 || mDesde1 >59 || mDesde1<0
                 || hHasta1>23 || hHasta1<0 || mHasta1>59 || mHasta1<0) {
             JOptionPane.showMessageDialog(null, "Hora inexistente o no selecciono un dia");
@@ -314,6 +312,24 @@ public final class Horario extends javax.swing.JInternalFrame {
             String desde,hasta;
             desde = hDesde.getText()+":"+mDesde.getText();
             hasta = hHasta.getText()+":"+mHasta.getText();
+
+            // Verifica que ese horario (dia + desde + hasta) no exista ya
+            int diaNum = 0;
+            switch(cbDias.getSelectedItem().toString()){
+                case "Lunes":     diaNum = 1; break;
+                case "Martes":    diaNum = 2; break;
+                case "Miercoles": diaNum = 3; break;
+                case "Jueves":    diaNum = 4; break;
+                case "Viernes":   diaNum = 5; break;
+                case "Sabado":    diaNum = 6; break;
+                case "Domingo":   diaNum = 7; break;
+            }
+            modelo.Horario existe = ctrlHorario.leer(diaNum, desde, hasta);
+            if (existe != null && existe.getIdHorario() != 0) {
+                JOptionPane.showMessageDialog(null, "Ese horario ya existe.");
+                return;
+            }
+
             switch(cbDias.getSelectedItem().toString()){
                 case "Lunes":
                     ctrlHorario.crear(desde,hasta, 1);

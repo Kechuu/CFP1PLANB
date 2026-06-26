@@ -120,17 +120,11 @@ public class CtrlCursoHora {
         
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("DELETE * FROM cursoHora WHERE idCurso = ?");
+            ps =  (PreparedStatement) con.prepareStatement("DELETE FROM cursoHora WHERE idCurso = ?");
             
             ps.setInt(1, idCurso);
             
-            rs = ps.executeQuery();
-            
-            if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Se eliminaron los horarios viejos");
-            }else{
-                JOptionPane.showMessageDialog(null, "Holaaaaa");
-            }
+            ps.executeUpdate();
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }

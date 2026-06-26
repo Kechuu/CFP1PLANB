@@ -882,55 +882,52 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnActualizarPlanes3ActionPerformed
 
     public void cargarCursoHorario(int idCurso){
-        for (int i = 0; i < modelo2.getRowCount(); i++) {
+        for (int i = 0; i < modelo3.getRowCount(); i++) {
             
             String dia = (String) TablaHorario2.getValueAt(i, 0);
             String desde = (String) TablaHorario2.getValueAt(i, 1);
             String hasta = (String) TablaHorario2.getValueAt(i, 2);
             
-            Time desde1 = Time.valueOf(desde);
-            Time hasta1 = Time.valueOf(hasta);
-            
             switch(dia){
                 case "Lunes":
                     
-                    modelo.Horario id1 = ctrlHorario.leer(1,desde1,hasta1);
+                    modelo.Horario id1 = ctrlHorario.leer(1,desde,hasta);
                     
                     ctrlCursoHora.crear(id1.getIdHorario(), idCurso);
                     
                     break;
                 case "Martes": 
-                    modelo.Horario id2 = ctrlHorario.leer(2,desde1,hasta1);
+                    modelo.Horario id2 = ctrlHorario.leer(2,desde,hasta);
                     
                     ctrlCursoHora.crear(id2.getIdHorario(), idCurso);
                     
                     break;
                 case "Miercoles": 
-                    modelo.Horario id3 = ctrlHorario.leer(3,desde1,hasta1);
+                    modelo.Horario id3 = ctrlHorario.leer(3,desde,hasta);
                     
                     ctrlCursoHora.crear(id3.getIdHorario(), idCurso);
                     
                     break;
                 case "Jueves": 
-                    modelo.Horario id4 = ctrlHorario.leer(4,desde1,hasta1);
+                    modelo.Horario id4 = ctrlHorario.leer(4,desde,hasta);
                     
                     ctrlCursoHora.crear(id4.getIdHorario(), idCurso);
                     
                     break;
                 case "Viernes": 
-                    modelo.Horario id5 = ctrlHorario.leer(5,desde1,hasta1);
+                    modelo.Horario id5 = ctrlHorario.leer(5,desde,hasta);
                     
                     ctrlCursoHora.crear(id5.getIdHorario(), idCurso);
                     
                     break;
-                case "Sabado": 
-                    modelo.Horario id6 = ctrlHorario.leer(6,desde1,hasta1);
+                case "Sábado": 
+                    modelo.Horario id6 = ctrlHorario.leer(6,desde,hasta);
                     
                     ctrlCursoHora.crear(id6.getIdHorario(), idCurso);
                     
                     break;
                 case "Domingo": 
-                    modelo.Horario id7 = ctrlHorario.leer(7,desde1,hasta1);
+                    modelo.Horario id7 = ctrlHorario.leer(7,desde,hasta);
                     
                     ctrlCursoHora.crear(id7.getIdHorario(), idCurso);
                     

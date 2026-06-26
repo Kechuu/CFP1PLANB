@@ -290,14 +290,14 @@ public class CtrlCurso {
     //Este metodo llena los horarios que tiene un determinado curso..
         
         String dia=null;
-         
-        CursoHora hora=new CursoHora();
-        CtrlHorario ctrlHorario=new CtrlHorario();
-        CtrlCurso ctrlCurso=new CtrlCurso();
-        
         
         con=clases.Conectar.conexion();
-        ps=(PreparedStatement)con.prepareStatement("SELECT * FROM cursoHora WHERE idCurso=?");
+        // JOIN directo con horario: lee desde/hasta como texto (varchar), sin convertir a Time
+        ps=(PreparedStatement)con.prepareStatement(
+                "SELECT horario.dia, horario.desde, horario.hasta "
+                + "FROM cursoHora "
+                + "INNER JOIN horario ON cursoHora.idHorario = horario.idHorario "
+                + "WHERE cursoHora.idCurso=?");
         ps.setInt(1, idCurso);
         
         rs=ps.executeQuery();
@@ -313,13 +313,8 @@ public class CtrlCurso {
         try{
             
             while(rs.next()){
-                ctrlHorario=new CtrlHorario();
                 
-                hora.setIdCursoHora(rs.getInt("idCursoHora"));
-                hora.setIdHorario(ctrlHorario.leer(rs.getInt("idHorario")));
-                hora.setIdCurso(ctrlCurso.leerCurso(rs.getInt("idCurso")));
-                
-                switch(hora.getIdHorario().getDia()){
+                switch(rs.getInt("dia")){
                     case 1:
                         dia="Lunes";
                         
@@ -357,8 +352,8 @@ public class CtrlCurso {
                 }
                 
                 datos[0]=dia;
-                datos[1]=String.valueOf(hora.getIdHorario().getDesde().toLocalTime());
-                datos[2]=String.valueOf(hora.getIdHorario().getHasta().toLocalTime());
+                datos[1]=rs.getString("desde");
+                datos[2]=rs.getString("hasta");
                 
                 modelo.addRow(datos);
             }

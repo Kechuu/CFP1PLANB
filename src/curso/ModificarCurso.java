@@ -145,6 +145,43 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
              JOptionPane.showMessageDialog(null, "ERROR AL CARGAR LOS BARRIOS EN LA TABLA"); 
         }
     }
+
+    // Carga en la tabla derecha (TablaHorario2) los horarios que el curso YA tiene.
+    public void cargarHorariosDelCurso(int idCurso){
+        modelo2 = new javax.swing.table.DefaultTableModel();
+        modelo2.addColumn("Dia");
+        modelo2.addColumn("Desde");
+        modelo2.addColumn("Hasta");
+        try {
+            Statement st = (Statement) con.createStatement();
+            ResultSet rs = st.executeQuery(
+                "SELECT horario.dia, horario.desde, horario.hasta "
+                + "FROM cursohora "
+                + "INNER JOIN horario ON cursohora.idHorario = horario.idHorario "
+                + "WHERE cursohora.idCurso = " + idCurso + " "
+                + "ORDER BY horario.dia ASC");
+            String[] dato = new String[3];
+            String dia = "";
+            while (rs.next()) {
+                switch (rs.getInt(1)) {
+                    case 1: dia = "Lunes";     break;
+                    case 2: dia = "Martes";    break;
+                    case 3: dia = "Miercoles"; break;
+                    case 4: dia = "Jueves";    break;
+                    case 5: dia = "Viernes";   break;
+                    case 6: dia = "Sábado";    break;
+                    case 7: dia = "Domingo";   break;
+                }
+                dato[0] = dia;
+                dato[1] = rs.getString(2);
+                dato[2] = rs.getString(3);
+                modelo2.addRow(dato);
+            }
+            TablaHorario2.setModel(modelo2);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al cargar los horarios del curso.");
+        }
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -172,11 +209,11 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         txtCupo = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        cbxNombreCurso = new javax.swing.JComboBox<TipoCurso>();
+        cbxNombreCurso = new javax.swing.JComboBox<>();
         btnNuevoTurno = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        cbxTurno = new javax.swing.JComboBox<String>();
-        cbxLugarCurso = new javax.swing.JComboBox<LugarCurso>();
+        cbxTurno = new javax.swing.JComboBox<>();
+        cbxLugarCurso = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         btnNuevoTurno1 = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -191,6 +228,9 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
         fechaFinalizacion = new com.toedter.calendar.JDateChooser();
         btnActualizarPlanes1 = new javax.swing.JButton();
         btnActualizarPlanes2 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        btnEliminarHorCurAct = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -311,7 +351,7 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
             }
         });
 
-        cbxTurno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Mañana", "Tarde", "Vespertino", "Noche" }));
+        cbxTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Mañana", "Tarde", "Vespertino", "Noche" }));
         cbxTurno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxTurnoActionPerformed(evt);
@@ -393,7 +433,7 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
         });
         jScrollPane6.setViewportView(TablaHorario1);
 
-        cboxNuevoHorario.setText("Nuevo Horario");
+        cboxNuevoHorario.setText("Modificar Horario");
         cboxNuevoHorario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboxNuevoHorarioActionPerformed(evt);
@@ -421,75 +461,99 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel8.setText("Horarios disponibles");
+
+        jLabel9.setText("Horarios actuales del curso");
+
+        btnEliminarHorCurAct.setText("Eliminar horario");
+        btnEliminarHorCurAct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarHorCurActActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jLabel7)
-                .addGap(71, 71, 71)
-                .addComponent(txtCupo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
-                .addComponent(jLabel4)
-                .addGap(89, 89, 89)
-                .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel15)
-                .addGap(43, 43, 43)
-                .addComponent(cbxLugarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnActualizarPlanes2)
-                .addGap(27, 27, 27)
-                .addComponent(jLabel5)
-                .addGap(45, 45, 45)
-                .addComponent(fechaFinalizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(190, 190, 190)
-                .addComponent(btnNuevoTurno1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90)
-                .addComponent(jLabel3)
-                .addGap(82, 82, 82)
-                .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(410, 410, 410)
-                .addComponent(cboxNuevoHorario))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78)
-                .addComponent(btnAgregarHorario)
-                .addGap(92, 92, 92)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(198, 198, 198)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(190, 190, 190)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68)
-                .addComponent(txtidCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(271, 271, 271)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(12, 12, 12)
-                    .addComponent(jLabel1)
-                    .addGap(12, 12, 12)
-                    .addComponent(cbxNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(btnActualizarPlanes1)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnNuevoTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(32, 32, 32)
-                    .addComponent(jLabel2)
-                    .addGap(41, 41, 41)
-                    .addComponent(txtCicloLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(71, 71, 71)
-                    .addComponent(jLabel10)
-                    .addGap(147, 147, 147)
-                    .addComponent(cbxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(jLabel7)
+                        .addGap(71, 71, 71)
+                        .addComponent(txtCupo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(71, 71, 71)
+                        .addComponent(jLabel4)
+                        .addGap(89, 89, 89)
+                        .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel15)
+                        .addGap(43, 43, 43)
+                        .addComponent(cbxLugarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnActualizarPlanes2)
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel5)
+                        .addGap(45, 45, 45)
+                        .addComponent(fechaFinalizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(12, 12, 12)
+                            .addComponent(jLabel1)
+                            .addGap(12, 12, 12)
+                            .addComponent(cbxNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnActualizarPlanes1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnNuevoTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(32, 32, 32)
+                            .addComponent(jLabel2)
+                            .addGap(41, 41, 41)
+                            .addComponent(txtCicloLectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(71, 71, 71)
+                            .addComponent(jLabel10)
+                            .addGap(147, 147, 147)
+                            .addComponent(cbxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(772, 772, 772)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtidCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(198, 198, 198)
+                                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(180, 180, 180)
+                                .addComponent(btnNuevoTurno1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addComponent(jLabel3)
+                                .addGap(82, 82, 82)
+                                .addComponent(txtcosto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cboxNuevoHorario)
+                                        .addGap(61, 61, 61))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(78, 78, 78)
+                                        .addComponent(btnAgregarHorario)
+                                        .addGap(92, 92, 92)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnEliminarHorCurAct)
+                                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -554,31 +618,36 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
                                 .addGap(10, 10, 10)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnNuevoTurno1)
-                                    .addComponent(jLabel3))))
-                        .addGap(11, 11, 11)
-                        .addComponent(cboxNuevoHorario))
+                                    .addComponent(jLabel3)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(btnActualizarPlanes2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel8)
+                    .addComponent(cboxNuevoHorario))
                 .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(btnAgregarHorario))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGuardar)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(32, 32, 32)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(90, 90, 90)
                         .addComponent(txtidCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(btnCancelar))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminarHorCurAct))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(btnAgregarHorario)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnGuardar))
+                .addGap(36, 36, 36))
         );
 
         jPanel3.setBackground(new java.awt.Color(38, 86, 186));
@@ -644,6 +713,33 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
 
             fechaInicio1 = fechaInicio.getDate();
             fechaFinalizacion1 = fechaFinalizacion.getDate();
+
+            //validar fechas
+            java.util.Calendar cal = java.util.Calendar.getInstance();
+            cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+            cal.set(java.util.Calendar.MINUTE, 0);
+            cal.set(java.util.Calendar.SECOND, 0);
+            cal.set(java.util.Calendar.MILLISECOND, 0);
+            java.util.Date hoy = cal.getTime();
+
+            //validar inicio no anterior a la fecha de hoy
+            if (fechaInicio1.before(hoy)) {
+                JOptionPane.showMessageDialog(null, "La fecha de inicio no puede ser anterior a hoy");
+                return;
+            }
+            //validar que el fin del curso sea posterior al inicio
+            if (!fechaFinalizacion1.after(fechaInicio1)) {
+                JOptionPane.showMessageDialog(null, "La fecha de finalizacion debe ser posterior a la de inicio.");
+                return;
+            }
+            //validar que el ciclo lectivo coincida con el año del inicio del curso
+            java.util.Calendar calInicio = java.util.Calendar.getInstance();
+            calInicio.setTime(fechaInicio1);
+            int anioInicio = calInicio.get(java.util.Calendar.YEAR);
+            if (Integer.parseInt(txtCicloLectivo.getText()) != anioInicio) {JOptionPane.showMessageDialog(null, "El ciclo lectivo debe coincidir con el año de inicio del curso.");
+                return;
+            }
+            //validaciones
             long i = fechaInicio1.getTime();
             long f = fechaFinalizacion1.getTime();
             java.sql.Date fecha1 = new java.sql.Date(i);
@@ -651,7 +747,7 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
 
             ctrlCurso.editar(curso.getIdCurso(), Integer.parseInt(txtCicloLectivo.getText()), turnoInt, 
                     Float.parseFloat(txtcosto.getText()), Integer.parseInt(txtCupo.getText()), fecha1, fecha2,
-                    Integer.parseInt(ctrlCurso.leer(tipoCurso.getIdTipoCurso()).toString()), 
+                    tipoCurso.getIdTipoCurso(), 
                     lugarCurso.getIdLugarCurso(), false);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
             cbxNombreCurso.removeAllItems();
@@ -673,6 +769,7 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
             //JOptionPane.showMessageDialog(null, "POR AQUI TAMBIEN");
             vaciarTablas(TablaHorario1);
             vaciarTablas(TablaHorario2);
+            JOptionPane.showMessageDialog(null, "Curso modificado correctamente");
             
         }
         
@@ -694,49 +791,46 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
             String desde = (String) TablaHorario2.getValueAt(i, 1);
             String hasta = (String) TablaHorario2.getValueAt(i, 2);
             
-            Time desde1 = Time.valueOf(desde);
-            Time hasta1 = Time.valueOf(hasta);
-            
             switch(dia){
                 case "Lunes":
                     
-                    modelo.Horario id1 = ctrlHorario.leer(1,desde1,hasta1);
+                    modelo.Horario id1 = ctrlHorario.leer(1,desde,hasta);
                     
                     ctrlCursoHora.crear(id1.getIdHorario(), idCurso);
                     
                     break;
                 case "Martes": 
-                    modelo.Horario id2 = ctrlHorario.leer(2,desde1,hasta1);
+                    modelo.Horario id2 = ctrlHorario.leer(2,desde,hasta);
                     
                     ctrlCursoHora.crear(id2.getIdHorario(), idCurso);
                     
                     break;
                 case "Miercoles": 
-                    modelo.Horario id3 = ctrlHorario.leer(3,desde1,hasta1);
+                    modelo.Horario id3 = ctrlHorario.leer(3,desde,hasta);
                     
                     ctrlCursoHora.crear(id3.getIdHorario(), idCurso);
                     
                     break;
                 case "Jueves": 
-                    modelo.Horario id4 = ctrlHorario.leer(4,desde1,hasta1);
+                    modelo.Horario id4 = ctrlHorario.leer(4,desde,hasta);
                     
                     ctrlCursoHora.crear(id4.getIdHorario(), idCurso);
                     
                     break;
                 case "Viernes": 
-                    modelo.Horario id5 = ctrlHorario.leer(5,desde1,hasta1);
+                    modelo.Horario id5 = ctrlHorario.leer(5,desde,hasta);
                     
                     ctrlCursoHora.crear(id5.getIdHorario(), idCurso);
                     
                     break;
-                case "Sabado": 
-                    modelo.Horario id6 = ctrlHorario.leer(6,desde1,hasta1);
+                case "Sábado": 
+                    modelo.Horario id6 = ctrlHorario.leer(6,desde,hasta);
                     
                     ctrlCursoHora.crear(id6.getIdHorario(), idCurso);
                     
                     break;
                 case "Domingo": 
-                    modelo.Horario id7 = ctrlHorario.leer(7,desde1,hasta1);
+                    modelo.Horario id7 = ctrlHorario.leer(7,desde,hasta);
                     
                     ctrlCursoHora.crear(id7.getIdHorario(), idCurso);
                     
@@ -819,6 +913,10 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
     private void cbxNombreCursoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNombreCursoItemStateChanged
         tipoCurso = (TipoCurso) cbxNombreCurso.getSelectedItem();
         
+        if (tipoCurso == null) {
+            return;
+        }
+        
         if (bandera==0) {
             if (cbxNombreCurso.getSelectedIndex()!=0) {
                     curso = ctrlCurso.leer(tipoCurso.getIdTipoCurso());
@@ -842,7 +940,10 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
         txtCupo.setText(String.valueOf(curso.getCupo()));
         fechaInicio.setDate(curso.getFechaInicio());
         fechaFinalizacion.setDate(curso.getFechaFinalizacion());
-        elegirComboLugarCurso(curso.getIdLugarCurso().getDetalle());
+        if (curso.getIdLugarCurso() != null) {
+            elegirComboLugarCurso(curso.getIdLugarCurso().getDetalle());
+        }
+        cargarHorariosDelCurso(curso.getIdCurso());
         
             }else{
                 //cbxNombreCurso.removeAllItems();
@@ -873,7 +974,14 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
             }
     }
     
-    
+    private void btnEliminarHorCurActActionPerformed(java.awt.event.ActionEvent evt) {                                                     
+        int filaSeleccionada = TablaHorario2.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            modelo2.removeRow(filaSeleccionada);
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un horario ya asignado para eliminar.");
+        }
+    }
     private void txtcosto2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcosto2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtcosto2ActionPerformed
@@ -905,7 +1013,7 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
             btnAgregarHorario.setEnabled(true);
         } else {
             vaciarTablas(TablaHorario1);
-            vaciarTablas(TablaHorario2);
+            btnAgregarHorario.setEnabled(false);
         }
         
     }//GEN-LAST:event_cboxNuevoHorarioActionPerformed
@@ -942,11 +1050,21 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
         int filaSeleccionada = TablaHorario1.getSelectedRow();
         
         if (filaSeleccionada>=0) {
-            String datos[] = new String[3];
-            datos[0]=TablaHorario1.getValueAt(filaSeleccionada, 0).toString();
-            datos[1]=TablaHorario1.getValueAt(filaSeleccionada, 1).toString();
-            datos[2]=TablaHorario1.getValueAt(filaSeleccionada, 2).toString();
+            String dia   = TablaHorario1.getValueAt(filaSeleccionada, 0).toString();
+            String desde = TablaHorario1.getValueAt(filaSeleccionada, 1).toString();
+            String hasta = TablaHorario1.getValueAt(filaSeleccionada, 2).toString();
+
+            for (int i = 0; i < modelo2.getRowCount(); i++) {
+                if (modelo2.getValueAt(i, 0).toString().equals(dia) && modelo2.getValueAt(i, 1).toString().equals(desde) && modelo2.getValueAt(i, 2).toString().equals(hasta)) {
+                    JOptionPane.showMessageDialog(null, "Este curso ya tiene ese horario asignado");
+                    return;
+                }
+            }
+
+            String datos[] = {dia, desde, hasta};
             modelo2.addRow(datos);
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un horario de la tabla de la izquierda");
         }
         banderaTabla=1;
     }
@@ -966,6 +1084,7 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnActualizarPlanes2;
     private javax.swing.JButton btnAgregarHorario;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEliminarHorCurAct;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevoTurno;
     private javax.swing.JButton btnNuevoTurno1;
@@ -984,6 +1103,8 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;

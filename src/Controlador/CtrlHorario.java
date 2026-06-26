@@ -110,6 +110,26 @@ public class CtrlHorario {
 
     }
     
+    public Horario leer(int dia, String desde, String hasta){
+        Horario horario = new Horario();
+        try {
+            con = clases.Conectar.conexion();
+            ps = (PreparedStatement) con.prepareStatement("SELECT * FROM horario WHERE desde=? AND hasta=? AND dia=?");
+            ps.setString(1, desde);
+            ps.setString(2, hasta);
+            ps.setInt(3, dia);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                horario.setIdHorario(rs.getInt("idHorario"));
+                horario.setDia(rs.getInt("dia"));
+            }
+            con.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        return horario;
+    }
+
     public Horario leer(int dia, Time desde, Time hasta){
         Horario horario = new Horario();
         try {

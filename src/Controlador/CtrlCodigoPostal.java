@@ -23,7 +23,7 @@ public class CtrlCodigoPostal {
     public void crear(int idLocalidad, String codigoPostal){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO codigoPostal (idLugar,codigoPostal) VALUES (?,?)"); // ← CORREGIDO
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO codigoPostal (idLugar,codigoPostal) VALUES (?,?)"); 
             
             ps.setInt(1, idLocalidad);
             ps.setString(2, codigoPostal);
@@ -39,7 +39,7 @@ public class CtrlCodigoPostal {
     public void editar(int idLocalidad, String codigoPostal){
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("UPDATE codigoPostal SET codigoPostal = ? WHERE idLugar = ?"); // ← CORREGIDO
+            ps = (PreparedStatement) con.prepareStatement("UPDATE codigoPostal SET codigoPostal = ? WHERE idLugar = ?"); 
             
             ps.setString(1, codigoPostal);
             ps.setInt(2, idLocalidad);
@@ -64,7 +64,7 @@ public class CtrlCodigoPostal {
         CtrlLugar ctrlLugar = new CtrlLugar();
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM codigoPostal WHERE idLugar = ?"); // ← CORREGIDO
+            ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM codigoPostal WHERE idLugar = ?"); 
             
             ps.setInt(1, idLocalidad);
             rs = ps.executeQuery();
