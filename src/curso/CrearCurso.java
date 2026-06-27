@@ -81,7 +81,9 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
     }
     
     public void vaciarTablas2(JTable tabla){
-        DefaultTableModel modelo =new DefaultTableModel();
+        // Reinicia modelo3 desde cero (sin acumular columnas) y lo deja como modelo de la tabla
+        modelo3.setRowCount(0);
+        modelo3.setColumnCount(0);
         modelo3.addColumn("Dia");
         modelo3.addColumn("Desde");
         modelo3.addColumn("Hasta");
@@ -89,6 +91,9 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
     }
     
     public void llenarTablaHorario2(JTable tabla){
+        // Prepara modelo3 una sola vez con 3 columnas limpias y lo asigna a la tabla derecha
+        modelo3.setRowCount(0);
+        modelo3.setColumnCount(0);
         modelo3.addColumn("Dia");
         modelo3.addColumn("Desde");
         modelo3.addColumn("Hasta");
@@ -97,8 +102,19 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
     
     
     public void llenarTabladeHorario2(JTable tabla){
+        // Asegura que la tabla derecha esté usando modelo3
+        if (tabla.getModel() != modelo3) {
+            tabla.setModel(modelo3);
+        }
         int filaSeleccionada = TablaHorario.getSelectedRow();
         if (filaSeleccionada >= 0) {
+            // Evita NullPointerException si se seleccionó una fila vacía
+            if (TablaHorario.getValueAt(filaSeleccionada, 0) == null
+                || TablaHorario.getValueAt(filaSeleccionada, 1) == null
+                || TablaHorario.getValueAt(filaSeleccionada, 2) == null) {
+                JOptionPane.showMessageDialog(null, "Seleccione un horario válido de la tabla de la izquierda.");
+                return;
+            }
             String dia   = TablaHorario.getValueAt(filaSeleccionada, 0).toString();
             String desde = TablaHorario.getValueAt(filaSeleccionada, 1).toString();
             String hasta = TablaHorario.getValueAt(filaSeleccionada, 2).toString();
@@ -638,95 +654,84 @@ public final class CrearCurso extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (!txtCicloLectivo.getText().equalsIgnoreCase("")) {
-            String yearInicio1 = fechaInicio.getDate().toString();
-            
-            int cicloLectivo = Integer.parseInt(txtCicloLectivo.getText());
-            String yearFinalizacion1 = fechaFinalizacion.getDate().toString();
-
-            int yearInicio = Integer.parseInt(yearInicio1.substring(24, yearInicio1.length()));
-            int yearFinalizacion = Integer.parseInt(yearFinalizacion1.substring(24, yearFinalizacion1.length()));
-            
-            if (cicloLectivo > yearInicio) {
-                JOptionPane.showMessageDialog(null, "El año lectivo es mayor al año de inicio de curso\n "
-                        + "Por favor revice bien las fechas");
-            } else {
-                if (cicloLectivo > yearFinalizacion) {
-                    JOptionPane.showMessageDialog(null, "El año lectivo es mayor al año de finalizacion de curso\n"
-                            + "Por favor revice bien las fechas");
-                } else {
-                    if (yearFinalizacion > yearInicio) {
-                        JOptionPane.showMessageDialog(null, "El año de finalizacion de curso es mayor al de inicio\n"
-                                + "Por favor revice bien las fechas");
-                    } else {
-
-                        String turno = (String) cbxTurno.getSelectedItem();
-
-                        int turnoInt = 0;
-                        if (turno.equalsIgnoreCase("Mañana")) {
-                            turnoInt = 1;
-                        } else {
-                            if (turno.equalsIgnoreCase("Tarde")) {
-                                turnoInt = 2;
-                            } else {
-                                if (turno.equalsIgnoreCase("Vespertino")) {
-                                    turnoInt = 3;
-                                } else {
-                                    if (turno.equalsIgnoreCase("Noche")) {
-                                        turnoInt = 4;
-                                    }
-                                }
-                            }
-                        }
-
-                        if (cbxNombreCurso.getSelectedIndex() == 0 || txtCicloLectivo.getText().equalsIgnoreCase("")
-                                || cbxTurno.getSelectedIndex() == 0 || fechaInicio.getDate().toString().equalsIgnoreCase("")
-                                || fechaFinalizacion.getDate().toString().equalsIgnoreCase("") || txtCupo.getText().equalsIgnoreCase("")
-                                || txtcosto.getText().equalsIgnoreCase("") || cbxLugarCurso.getSelectedIndex() == 0 || bandera == 0) {
-
-                            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
-                        } else {
-                            lugarCurso = (LugarCurso) cbxLugarCurso.getSelectedItem();
-                            tipoCurso = (TipoCurso) cbxNombreCurso.getSelectedItem();
-
-                            fechaInicio1 = fechaInicio.getDate();
-                            fechaFinalizacion1 = fechaFinalizacion.getDate();
-                            long i = fechaInicio1.getTime();
-                            long f = fechaFinalizacion1.getTime();
-                            java.sql.Date fecha1 = new java.sql.Date(i);
-                            java.sql.Date fecha2 = new java.sql.Date(f);
-
-                            ctrlCurso.crear(Integer.parseInt(txtCicloLectivo.getText()), turnoInt,
-                                    Float.parseFloat(txtcosto.getText()), Integer.parseInt(txtCupo.getText()),
-                                    fecha1, fecha2,
-                                    tipoCurso.getIdTipoCurso(), lugarCurso.getIdLugarCurso(), false);
-
-                            cbxNombreCurso.removeAllItems();
-                            cbxLugarCurso.removeAllItems();
-                            ctrlLugarCurso.cargarCombo(cbxLugarCurso);
-                            ctrlTipoCurso.cargarCombo(cbxNombreCurso);
-                            cbxTurno.setSelectedIndex(0);
-                            fechaInicio.setDate(null);
-                            fechaFinalizacion.setDate(null);
-                            txtCicloLectivo.setText("");
-                            txtCupo.setText("");
-                            txtcosto.setText("");
-
-            //Cargar tabla cursoHorarios
-                            int idCurso = ctrlCurso.traerUltimoId();
-                            //JOptionPane.showMessageDialog(null, idCurso);
-                            cargarCursoHorario(idCurso);
-                            //JOptionPane.showMessageDialog(null, "POR AQUI TAMBIEN");
-                            vaciarTablas(TablaHorario);
-                            vaciarTablas(TablaHorario2);
-                            JOptionPane.showMessageDialog(null, "Curso creado correctamente.");
-                        }
-                    }
-                }
-            }
-        } else {
+        // Validar que haya ciclo lectivo
+        if (txtCicloLectivo.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "Cargue un ciclo lectivo");
+            return;
         }
+        // Validar que se hayan elegido las dos fechas
+        if (fechaInicio.getDate() == null || fechaFinalizacion.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar la fecha de inicio y la de finalización");
+            return;
+        }
+        // Validar campos vacios y que se haya agregado al menos un horario (bandera)
+        if (cbxNombreCurso.getSelectedIndex() == 0 || cbxTurno.getSelectedIndex() == 0
+                || txtCupo.getText().equalsIgnoreCase("") || txtcosto.getText().equalsIgnoreCase("")
+                || cbxLugarCurso.getSelectedIndex() == 0 || bandera == 0) {
+            JOptionPane.showMessageDialog(null, "No se pueden cargar registros vacios");
+            return;
+        }
+
+        fechaInicio1 = fechaInicio.getDate();
+        fechaFinalizacion1 = fechaFinalizacion.getDate();
+
+        // La fecha de finalización debe ser posterior a la de inicio
+        if (!fechaFinalizacion1.after(fechaInicio1)) {
+            JOptionPane.showMessageDialog(null, "La fecha de finalizacion debe ser posterior a la de inicio.");
+            return;
+        }
+        // El ciclo lectivo debe coincidir con el año de inicio del curso
+        java.util.Calendar calInicio = java.util.Calendar.getInstance();
+        calInicio.setTime(fechaInicio1);
+        int anioInicio = calInicio.get(java.util.Calendar.YEAR);
+        if (Integer.parseInt(txtCicloLectivo.getText()) != anioInicio) {
+            JOptionPane.showMessageDialog(null, "El ciclo lectivo debe coincidir con el año de inicio del curso.");
+            return;
+        }
+
+        // Convertir turno a entero
+        String turno = (String) cbxTurno.getSelectedItem();
+        int turnoInt = 0;
+        if (turno.equalsIgnoreCase("Mañana")) {
+            turnoInt = 1;
+        } else if (turno.equalsIgnoreCase("Tarde")) {
+            turnoInt = 2;
+        } else if (turno.equalsIgnoreCase("Vespertino")) {
+            turnoInt = 3;
+        } else if (turno.equalsIgnoreCase("Noche")) {
+            turnoInt = 4;
+        }
+
+        lugarCurso = (LugarCurso) cbxLugarCurso.getSelectedItem();
+        tipoCurso = (TipoCurso) cbxNombreCurso.getSelectedItem();
+
+        long i = fechaInicio1.getTime();
+        long f = fechaFinalizacion1.getTime();
+        java.sql.Date fecha1 = new java.sql.Date(i);
+        java.sql.Date fecha2 = new java.sql.Date(f);
+
+        ctrlCurso.crear(Integer.parseInt(txtCicloLectivo.getText()), turnoInt,
+                Float.parseFloat(txtcosto.getText()), Integer.parseInt(txtCupo.getText()),
+                fecha1, fecha2,
+                tipoCurso.getIdTipoCurso(), lugarCurso.getIdLugarCurso(), false);
+
+        cbxNombreCurso.removeAllItems();
+        cbxLugarCurso.removeAllItems();
+        ctrlLugarCurso.cargarCombo(cbxLugarCurso);
+        ctrlTipoCurso.cargarCombo(cbxNombreCurso);
+        cbxTurno.setSelectedIndex(0);
+        fechaInicio.setDate(null);
+        fechaFinalizacion.setDate(null);
+        txtCicloLectivo.setText("");
+        txtCupo.setText("");
+        txtcosto.setText("");
+
+        //Cargar tabla cursoHorarios
+        int idCurso = ctrlCurso.traerUltimoId();
+        cargarCursoHorario(idCurso);
+        vaciarTablas(TablaHorario);
+        vaciarTablas(TablaHorario2);
+        JOptionPane.showMessageDialog(null, "Curso creado correctamente.");
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 

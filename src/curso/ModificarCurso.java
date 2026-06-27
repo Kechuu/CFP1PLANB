@@ -231,6 +231,7 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         btnEliminarHorCurAct = new javax.swing.JButton();
+        btnActualizarHorariosModCurso = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -472,6 +473,13 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
             }
         });
 
+        btnActualizarHorariosModCurso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/actualizar(2).png"))); // NOI18N
+        btnActualizarHorariosModCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarHorariosModCursoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -500,15 +508,6 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
                         .addComponent(fechaFinalizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(12, 12, 12)
-                            .addComponent(jLabel1)
-                            .addGap(12, 12, 12)
-                            .addComponent(cbxNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnActualizarPlanes1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnNuevoTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
                             .addGap(32, 32, 32)
                             .addComponent(jLabel2)
                             .addGap(41, 41, 41)
@@ -516,7 +515,19 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
                             .addGap(71, 71, 71)
                             .addComponent(jLabel10)
                             .addGap(147, 147, 147)
-                            .addComponent(cbxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cbxTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addGap(12, 12, 12)
+                            .addComponent(jLabel1)
+                            .addGap(12, 12, 12)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnActualizarHorariosModCurso)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(cbxNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnActualizarPlanes1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnNuevoTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -623,11 +634,13 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
                         .addGap(12, 12, 12)
                         .addComponent(btnActualizarPlanes2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel8)
-                    .addComponent(cboxNuevoHorario))
-                .addGap(16, 16, 16)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(jLabel8)
+                        .addComponent(cboxNuevoHorario))
+                    .addComponent(btnActualizarHorariosModCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
@@ -641,9 +654,9 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminarHorCurAct))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                        .addGap(36, 36, 36)
                         .addComponent(btnAgregarHorario)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnGuardar))
@@ -714,19 +727,6 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
             fechaInicio1 = fechaInicio.getDate();
             fechaFinalizacion1 = fechaFinalizacion.getDate();
 
-            //validar fechas
-            java.util.Calendar cal = java.util.Calendar.getInstance();
-            cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
-            cal.set(java.util.Calendar.MINUTE, 0);
-            cal.set(java.util.Calendar.SECOND, 0);
-            cal.set(java.util.Calendar.MILLISECOND, 0);
-            java.util.Date hoy = cal.getTime();
-
-            //validar inicio no anterior a la fecha de hoy
-            if (fechaInicio1.before(hoy)) {
-                JOptionPane.showMessageDialog(null, "La fecha de inicio no puede ser anterior a hoy");
-                return;
-            }
             //validar que el fin del curso sea posterior al inicio
             if (!fechaFinalizacion1.after(fechaInicio1)) {
                 JOptionPane.showMessageDialog(null, "La fecha de finalizacion debe ser posterior a la de inicio.");
@@ -1046,6 +1046,16 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
         ctrlLugarCurso.cargarCombo(cbxLugarCurso);
     }//GEN-LAST:event_btnActualizarPlanes2ActionPerformed
 
+    private void btnActualizarHorariosModCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarHorariosModCursoActionPerformed
+    if (cboxNuevoHorario.isSelected()) {
+        vaciarTablas(TablaHorario1);
+        llenarTablaHorario(TablaHorario1);
+    } else {
+        vaciarTablas(TablaHorario1);
+        JOptionPane.showMessageDialog(null, "Tilda 'Modificar Horario' para ver los cursos disponibles");
+    }
+    }//GEN-LAST:event_btnActualizarHorariosModCursoActionPerformed
+
     public void llenarTabladeHorario2(JTable tabla){
         int filaSeleccionada = TablaHorario1.getSelectedRow();
         
@@ -1080,6 +1090,7 @@ public final class ModificarCurso extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaHorario1;
     private javax.swing.JTable TablaHorario2;
+    private javax.swing.JButton btnActualizarHorariosModCurso;
     private javax.swing.JButton btnActualizarPlanes1;
     private javax.swing.JButton btnActualizarPlanes2;
     private javax.swing.JButton btnAgregarHorario;

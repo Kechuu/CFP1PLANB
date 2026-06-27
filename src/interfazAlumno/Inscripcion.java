@@ -1076,14 +1076,17 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         switch(panelContenedor.getSelectedIndex()){
             case 0:
                 
-                if(cbTipo.getSelectedIndex()==0 || txtDni.getText().equals("") || txtCuil.getText().equals("") || txtNombre.getText().equals("")
-                    || txtApellido.getText().equals("") || cbNacimiento.getSelectedIndex()==0 || cbNacionalidad.getSelectedIndex()==0){
-            
-                    JOptionPane.showMessageDialog(null, "Faltan datos qué ingresar");
-                }else{
-                    panelContenedor.setEnabledAt(1, true);
-                    panelContenedor.setSelectedIndex(1);
-                    panelContenedor.setEnabledAt(0, false);
+            if(cbTipo.getSelectedIndex()==0 || txtDni.getText().equals("") || txtCuil.getText().equals("") || txtNombre.getText().equals("") || txtApellido.getText().equals("") || cbNacimiento.getSelectedIndex()==0 || cbNacionalidad.getSelectedIndex()==0){
+                JOptionPane.showMessageDialog(null, "Faltan datos qué ingresar");
+            }else if(fecha.getDate()==null){
+                JOptionPane.showMessageDialog(null, "Debe ingresar la fecha de nacimiento");
+            }else if(fecha.getDate().after(new java.util.Date())){
+                JOptionPane.showMessageDialog(null, "La fecha de nacimiento no puede ser posterior a hoy");
+            }else{
+                
+                panelContenedor.setEnabledAt(1, true);
+                panelContenedor.setSelectedIndex(1);
+                panelContenedor.setEnabledAt(0, false);
                     
                     btnAtras.setEnabled(true);
                 }
