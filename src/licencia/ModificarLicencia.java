@@ -260,21 +260,21 @@ public final class ModificarLicencia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.jButton2ActionPerformed(e);
         }
     }//GEN-LAST:event_jButton2KeyPressed
 
     private void btnAceptarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAceptarKeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.btnAceptarActionPerformed(e);
         }
     }//GEN-LAST:event_btnAceptarKeyPressed
 
     private void txtDetalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDetalleKeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.btnAceptarActionPerformed(e);
         }

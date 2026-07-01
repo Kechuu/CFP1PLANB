@@ -168,14 +168,14 @@ public class CrearLicencia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarKeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.btnAgregarActionPerformed(e);
         }
     }//GEN-LAST:event_btnAgregarKeyPressed
 
     private void btnCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelarKeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.btnCancelarActionPerformed(e);
         }

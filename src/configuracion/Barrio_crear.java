@@ -295,21 +295,21 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtnuevoBarrioKeyPressed
 
     private void btnAgregarCalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarCalleKeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.btnAgregarCalleActionPerformed(e);
         }
     }//GEN-LAST:event_btnAgregarCalleKeyPressed
 
     private void btnCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelarKeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.btnCancelarActionPerformed(e);
         }
     }//GEN-LAST:event_btnCancelarKeyPressed
 
     private void btnAceptarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAceptarKeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.btnAceptarActionPerformed(e);
         }

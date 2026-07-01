@@ -300,35 +300,35 @@ public final class Licencia_consulta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAsignarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAsignarKeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.btnAsignarActionPerformed(e);
         }
     }//GEN-LAST:event_btnAsignarKeyPressed
 
     private void btnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarKeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.btnAgregarActionPerformed(e);
         }
     }//GEN-LAST:event_btnAgregarKeyPressed
 
     private void btnModificarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarKeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.btnModificarActionPerformed(e);
         }
     }//GEN-LAST:event_btnModificarKeyPressed
 
     private void btnEliminarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarKeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.btnEliminarActionPerformed(e);
         }
     }//GEN-LAST:event_btnEliminarKeyPressed
 
     private void jButton4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton4KeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.jButton4ActionPerformed(e);
         }

@@ -321,7 +321,7 @@ public final class ModificarTipoCurso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarKeyPressed
 
     private void btnCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelarKeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.btnCancelarActionPerformed(e);
         }

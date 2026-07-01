@@ -6,7 +6,7 @@
 package configuracion;
 
 import Controlador.CtrlLugar;
-import com.sun.glass.events.KeyEvent;
+import java.awt.event.KeyEvent;
 import interfazAlumno.Inscripcion;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;

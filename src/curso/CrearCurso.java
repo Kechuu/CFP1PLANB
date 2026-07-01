@@ -10,7 +10,7 @@ import Controlador.CtrlCursoHora;
 import Controlador.CtrlHorario;
 import Controlador.CtrlLugarCurso;
 import Controlador.CtrlTipoCurso;
-import com.sun.glass.events.KeyEvent;
+import java.awt.event.KeyEvent;
 import principal.Principal;
 import configuracion.Cursado_crear;
 import java.awt.event.ActionEvent;

@@ -363,7 +363,7 @@ public final class EliminarCurso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarKeyPressed
 
     private void btnCancelar1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelar1KeyPressed
-        if (evt.getKeyCode()==com.sun.glass.events.KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {
             ActionEvent e = null;
             this.btnCancelar1ActionPerformed(e);
         }

@@ -265,8 +265,8 @@ public class CtrlCursoProfesor {
         CtrlCaracter ctrlCaracter = new CtrlCaracter();
         try {
             con=clases.Conectar.conexion();
-            ps=(PreparedStatement)con.prepareStatement("SELECT DatosCFP.cursoProfesor.idCaracter FROM DatosCFP.cursoProfesor "
-                    + "WHERE DatosCFP.cursoProfesor.idEmpleado = ?");
+            ps=(PreparedStatement)con.prepareStatement("SELECT cursoProfesor.idCaracter FROM cursoProfesor "
+                    + "WHERE cursoProfesor.idEmpleado = ?");
             ps.setInt(1, idEmpleado);
             
             rs=ps.executeQuery();

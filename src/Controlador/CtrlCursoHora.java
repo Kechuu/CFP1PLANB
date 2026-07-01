@@ -93,7 +93,7 @@ public class CtrlCursoHora {
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("UPDATE cursoHora SET idHorario = ?, idCurso = ? WHERE idCursoHora = ? AND "
-                    + "idCurso = ? AND idHorario");
+                    + "idCurso = ? AND idHorario = ?");
             
             ps.setInt(1, idHorario);
             ps.setInt(2, idCurso);

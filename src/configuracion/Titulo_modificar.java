@@ -6,7 +6,7 @@
 package configuracion;
 
 import Controlador.CtrlTitulo;
-import com.sun.glass.events.KeyEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import javax.swing.JOptionPane;

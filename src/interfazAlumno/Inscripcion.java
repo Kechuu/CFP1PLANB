@@ -20,7 +20,7 @@ import Controlador.CtrlSexo;
 import Controlador.CtrlTipoCurso;
 import Controlador.CtrlTipoDocumento;
 import Controlador.CtrlTrabajo;
-import com.sun.glass.events.KeyEvent;
+import java.awt.event.KeyEvent;
 import configuracion.Barrio_crear;
 import configuracion.Calles_crear;
 import configuracion.Localidad_crear;

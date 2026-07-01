@@ -8,7 +8,7 @@ package curso;
 
 import Controlador.CtrlPeriodo;
 import Controlador.CtrlTipoCurso;
-import com.sun.glass.events.KeyEvent;
+import java.awt.event.KeyEvent;
 import configuracion.Periodo_crear;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;

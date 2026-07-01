@@ -25,7 +25,7 @@ public class CtrlPago {
         java.sql.Date fe=new Date(fecha.getTime());
         try {
             con = clases.Conectar.conexion();
-            ps = (PreparedStatement) con.prepareStatement("INSERT INTO pago (fecha,importe,idCobrador, idCursoAlumno) "
+            ps = (PreparedStatement) con.prepareStatement("INSERT INTO pago (fecha,importe,idEmpleado, idCursoAlumno) "
                     + "VALUES (?,?,?,?)");
         
             ps.setDate(1, fe);

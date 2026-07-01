@@ -47,7 +47,7 @@ public class CtrlEscuela {
     public void editarTelefonoCorreo(String telefono, String correo, int idEscuela){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE cargo SET telefono = ?, correo = ? WHERE idEscuela = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE escuela SET telefono = ?, correo = ? WHERE idEscuela = ?");
             
             ps.setString(1, telefono);
             ps.setString(2, correo);
@@ -71,7 +71,7 @@ public class CtrlEscuela {
     public void editarLogoFondo(Blob logo, Blob fondo, int idEscuela){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE cargo SET logo = ?, fondo = ? WHERE idEscuela = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE escuela SET logo = ?, fondo = ? WHERE idEscuela = ?");
             
             ps.setBlob(1, logo);
             ps.setBlob(2, fondo);
@@ -95,7 +95,7 @@ public class CtrlEscuela {
     public void editarDirector(String director, int idEscuela){
         try {
             con = clases.Conectar.conexion();
-            ps =  (PreparedStatement) con.prepareStatement("UPDATE cargo SET director = ? WHERE idEscuela = ?");
+            ps =  (PreparedStatement) con.prepareStatement("UPDATE escuela SET director = ? WHERE idEscuela = ?");
             
             ps.setString(1, director);
             ps.setInt(2, idEscuela);
