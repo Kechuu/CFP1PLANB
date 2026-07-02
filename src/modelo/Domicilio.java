@@ -12,7 +12,7 @@ package modelo;
 public class Domicilio {
     
     private int idDomicilio;
-    private int nroLote;
+    private String nroLote;
     private String telefono;
     private Lugar idLugar;
     private int idEdificio;
@@ -25,11 +25,11 @@ public class Domicilio {
         this.idDomicilio = idDomicilio;
     }
 
-    public int getNroLote() {
+    public String getNroLote() {
         return nroLote;
     }
 
-    public void setNro(int nroLote) {
+    public void setNro(String nroLote) {
         this.nroLote = nroLote;
     }
 

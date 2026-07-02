@@ -84,7 +84,7 @@ public class CtrlLugar {
                 lugar.setNivel(rs.getInt("nivel"));
                 lugar.setDe(rs.getInt("de"));
             }else{
-                JOptionPane.showMessageDialog(null, "No existe lo que está buscando");
+                JOptionPane.showMessageDialog(null, "No se encuentra lugar");
             }
             rs.close();
             con.close();

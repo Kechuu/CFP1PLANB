@@ -1076,7 +1076,7 @@ public final class Registro extends javax.swing.JInternalFrame {
             if(cbBarrio.getSelectedIndex()!=0){
                 Lugar item=new Lugar();
                 item=(Lugar)cbBarrio.getSelectedItem();
-                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),1));
+                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),4));
             
                 cbCalle.setModel(modelo);
                 
@@ -1091,7 +1091,7 @@ public final class Registro extends javax.swing.JInternalFrame {
             if(cbLocalidad.getSelectedIndex()!=0){
                 Lugar item;
                 item=(Lugar)cbLocalidad.getSelectedItem();           
-                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(), 2));
+                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(), 3));
             
                 cbBarrio.setModel(modelo);
                 
@@ -1283,7 +1283,7 @@ public final class Registro extends javax.swing.JInternalFrame {
             Foto foto = new Foto();
     
             //ctrlFoto.crear(imagen);
-            foto = (Foto) ctrlFoto.leerUltimaFoto();
+            //foto = (Foto) ctrlFoto.leerUltimaFoto();
        
         //<AQUI SE DA DE ALTA UNA PERSONA..
             if(txtHijos.getText().equals("")){
@@ -1523,7 +1523,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         if(cbLocalidad.getSelectedIndex()!=0){
             Lugar item;
             item=(Lugar)cbLocalidad.getSelectedItem();
-            DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(), 2));
+            DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(), 3));
 
             cbBarrio.setModel(modelo);
 
@@ -1538,7 +1538,7 @@ public final class Registro extends javax.swing.JInternalFrame {
         if(cbBarrio.getSelectedIndex()!=0){
             Lugar item=new Lugar();
             item=(Lugar)cbBarrio.getSelectedItem();
-            DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),1));
+            DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),4));
 
             cbCalle.setModel(modelo);
 

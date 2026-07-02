@@ -235,7 +235,7 @@ public final class Calles_crear extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "No se puede cargar un registro vacio");
         }else{
             lugar = (Lugar) cbBarrio.getSelectedItem();
-            ctrlLugar.crear(txtNuevaCalle.getText(), 1, lugar.getIdLugar());
+            ctrlLugar.crear(txtNuevaCalle.getText(), 4, lugar.getIdLugar());
             llenarTablaCalle(tablaCalles, lugar.getIdLugar());
             txtNuevaCalle.setText("");
             txtNuevaCalle.setFocusable(true);
@@ -281,7 +281,7 @@ public final class Calles_crear extends javax.swing.JInternalFrame {
         lugar = (Lugar) cbLocalidad.getSelectedItem();
         cbBarrio.setEnabled(true);
         
-        DefaultComboBoxModel modelo2 = new DefaultComboBoxModel(ctrlLugar.cargarFiltrado(lugar.getIdLugar(), 2));
+        DefaultComboBoxModel modelo2 = new DefaultComboBoxModel(ctrlLugar.cargarFiltrado(lugar.getIdLugar(), 3));
         cbBarrio.setModel(modelo2);
         
     }//GEN-LAST:event_cbLocalidadActionPerformed

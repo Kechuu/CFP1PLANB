@@ -27,10 +27,13 @@ import interfazAlumno.AsignarCurso;
 import interfazAlumno.AsignarCurso1;
 import interfazAlumno.DarBajaCurso1;
 import interfazEmpleado.AsignarCursoAcargo1;
+import java.awt.Image;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import licencia.*;
 import listado.*;
 import usuario.*;
@@ -53,6 +56,12 @@ public class Principal extends javax.swing.JFrame {
         Login log=new Login();
         principal.add(log);
         log.setVisible(true);
+        ImageIcon icono = new ImageIcon(getClass().getResource("/imagenes/logo.png"));
+        Image imagenEscalada = icono.getImage().getScaledInstance(
+        labelicono.getWidth(), labelicono.getHeight(), Image.SCALE_SMOOTH);
+        labelicono.setIcon(new ImageIcon(imagenEscalada));
+        labelicono.setHorizontalAlignment(SwingConstants.CENTER);
+        labelicono.setVerticalAlignment(SwingConstants.CENTER);
     }
 
     /**
@@ -65,6 +74,7 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         principal = new javax.swing.JDesktopPane();
+        labelicono = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -124,6 +134,13 @@ public class Principal extends javax.swing.JFrame {
         aboutMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        labelicono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo.png"))); // NOI18N
+        labelicono.setText("jLabel1");
+        labelicono.setMaximumSize(new java.awt.Dimension(1000, 590));
+        labelicono.setPreferredSize(new java.awt.Dimension(1000, 590));
+        principal.add(labelicono);
+        labelicono.setBounds(0, 0, 1000, 590);
 
         menuBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -1085,6 +1102,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JLabel labelicono;
     public static javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem modificar;
     private javax.swing.JMenuItem modificarAlumno;

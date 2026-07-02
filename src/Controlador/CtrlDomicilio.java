@@ -30,7 +30,11 @@ public class CtrlDomicilio {
             ps.setInt(1, nroLote);
             ps.setString(2, telefono);
             ps.setInt(3, idCalle);
-            ps.setInt(4, idEdificio);
+            if(idEdificio == 0){
+                ps.setNull(4, java.sql.Types.INTEGER);
+            }else{
+                ps.setInt(4, idEdificio);
+            }
             
             int res = ps.executeUpdate();
             con.close();
@@ -58,16 +62,20 @@ public class CtrlDomicilio {
         
     }
     
-    public void cambiarDomicilio(int idDomicilio, int nroLote, String telefono, int idCalle, int idEdificio){
+    public void cambiarDomicilio(int idDomicilio, String nroLote, String telefono, int idCalle, int idEdificio){
         try {
             con = clases.Conectar.conexion();
             ps = (PreparedStatement) con.prepareStatement("UPDATE domicilio SET nroLote = ?, telefono = ?, idLugar = ?,"
                     + "idEdificio = ? WHERE idDomicilio = ?");
             
-            ps.setInt(1, nroLote);
+            ps.setString(1, nroLote);
             ps.setString(2, telefono);
             ps.setInt(3, idCalle);
-            ps.setInt(4, idEdificio);
+            if(idEdificio == 0){
+                ps.setNull(4, java.sql.Types.INTEGER);
+            }else{
+                ps.setInt(4, idEdificio);
+            }
             ps.setInt(5, idDomicilio);
             
             int res = ps.executeUpdate();
@@ -93,7 +101,7 @@ public class CtrlDomicilio {
             
             if (rs.next()) {
                 domicilio.setIdDomicilio(rs.getInt("idDomicilio"));
-                domicilio.setNro(rs.getInt("nroLote"));
+                domicilio.setNro(rs.getString("nroLote"));
                 domicilio.setTelefono(rs.getString("telefono"));
                 domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar")));
                 domicilio.setIdEdificio(rs.getInt("idEdificio"));
@@ -121,7 +129,7 @@ public class CtrlDomicilio {
             
             if (rs.next()) {
                 domicilio.setIdDomicilio(rs.getInt("idDomicilio"));
-                domicilio.setNro(rs.getInt("nroLote"));
+                domicilio.setNro(rs.getString("nroLote"));
                 domicilio.setTelefono(rs.getString("telefono"));
                 domicilio.setIdLugar(ctrlLugar.leer(rs.getInt("idLugar")));
                 domicilio.setIdEdificio(rs.getInt("idEdificio"));

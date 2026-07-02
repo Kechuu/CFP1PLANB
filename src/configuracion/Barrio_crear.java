@@ -261,7 +261,7 @@ public final class Barrio_crear extends javax.swing.JInternalFrame {
         if (txtnuevoBarrio.getText().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(null, "No se puede cargar un registro en blanco");
         }else{
-            ctrlLugar.crear(txtnuevoBarrio.getText(), 2, lugar.getIdLugar());
+            ctrlLugar.crear(txtnuevoBarrio.getText(), 3, lugar.getIdLugar());
             llenarTablaBarrio(tablaBarrios,lugar.getIdLugar());
             txtnuevoBarrio.setText("");
             txtnuevoBarrio.setFocusable(true);

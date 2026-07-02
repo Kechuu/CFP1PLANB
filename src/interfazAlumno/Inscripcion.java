@@ -1155,7 +1155,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             if(cbLocalidad.getSelectedIndex()!=0){
                 Lugar item;
                 item=(Lugar)cbLocalidad.getSelectedItem();           
-                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(), 2));
+                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(), 3));
             
                 cbBarrio.setModel(modelo);
                 
@@ -1173,7 +1173,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
             if(cbBarrio.getSelectedIndex()!=0){
                 Lugar item=new Lugar();
                 item=(Lugar)cbBarrio.getSelectedItem();
-                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),1));
+                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),4));
             
                 cbCalle.setModel(modelo);
                 
@@ -1493,7 +1493,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         if(cbLocalidad.getSelectedIndex()!=0){
                 Lugar item;
                 item=(Lugar)cbLocalidad.getSelectedItem();           
-                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(), 2));
+                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(), 3));
             
                 cbBarrio.setModel(modelo);
                 
@@ -1508,7 +1508,7 @@ public final class Inscripcion extends javax.swing.JInternalFrame {
         if(cbBarrio.getSelectedIndex()!=0){
                 Lugar item=new Lugar();
                 item=(Lugar)cbBarrio.getSelectedItem();
-                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),1));
+                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),4));
             
                 cbCalle.setModel(modelo);
                 

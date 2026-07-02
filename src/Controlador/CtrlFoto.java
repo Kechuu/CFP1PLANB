@@ -68,6 +68,9 @@ public class CtrlFoto {
     
     public Foto leer(int idFoto){
         Foto foto = new Foto();
+        if(idFoto == 0){
+        return foto;
+        }
         try {
             con = clases.Conectar.conexion();
             ps =  (PreparedStatement) con.prepareStatement("SELECT * FROM foto WHERE idFoto = ?");

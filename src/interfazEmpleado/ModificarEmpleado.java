@@ -1198,7 +1198,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
             if(cbBarrio.getSelectedIndex()!=0){
                 Lugar item=new Lugar();
                 item=(Lugar)cbBarrio.getSelectedItem();
-                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),1));
+                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),4));
             
                 cbCalle.setModel(modelo);
                 
@@ -1213,7 +1213,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
             if(cbLocalidad.getSelectedIndex()!=0){
                 Lugar item;
                 item=(Lugar)cbLocalidad.getSelectedItem();           
-                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(), 2));
+                DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(), 3));
             
                 cbBarrio.setModel(modelo);
                 
@@ -1357,10 +1357,9 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
     
         
     //DOMICILIO    
-        if(personaDatos.getIdDomicilio().getNroLote()!=Integer.parseInt(txtCasa.getText()) || !personaDatos.getIdDomicilio().getTelefono().equals(txtFijo.getText())
-                || calle.getIdLugar()!=calleId.getIdLugar()){
-            
-            domicilioId.cambiarDomicilio(personaDatos.getIdDomicilio().getIdDomicilio(), Integer.parseInt(txtCasa.getText()), txtFijo.getText(), calleId.getIdLugar(), idEdificio);        
+        if(!personaDatos.getIdDomicilio().getNroLote().equals(txtCasa.getText()) || !personaDatos.getIdDomicilio().getTelefono().equals(txtFijo.getText())
+        || calle.getIdLugar()!=calleId.getIdLugar()){
+            domicilioId.cambiarDomicilio(personaDatos.getIdDomicilio().getIdDomicilio(), txtCasa.getText(), txtFijo.getText(), calleId.getIdLugar(), idEdificio);        
         }
     
     //PERSONA
@@ -1570,7 +1569,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         if(cbLocalidad.getSelectedIndex()!=0){
             Lugar item;
             item=(Lugar)cbLocalidad.getSelectedItem();
-            DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(), 2));
+            DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(), 3));
 
             cbBarrio.setModel(modelo);
 
@@ -1585,7 +1584,7 @@ public final class ModificarEmpleado extends javax.swing.JInternalFrame {
         if(cbBarrio.getSelectedIndex()!=0){
             Lugar item=new Lugar();
             item=(Lugar)cbBarrio.getSelectedItem();
-            DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),1));
+            DefaultComboBoxModel modelo=new DefaultComboBoxModel(lugar.cargarFiltrado(item.getIdLugar(),4));
 
             cbCalle.setModel(modelo);
 
